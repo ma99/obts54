@@ -4,36 +4,30 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <form>
-                        
-                        <select v-model="selected">
-
+                        <select v-model="selected" class="form-control">
                           <option disabled value="">Please select one</option>
-                        
                           <option v-for="city in cityList">
                             {{ city.name }}
-                          </option> 
-                          
+                          </option>                          
                         </select>
                        
                         <span>Selected: {{ selected }} </span>                       
                         <input v-model="message" placeholder="edit me">
                         <p>Message is: {{ message }} </p>
-                        <!-- <select v-model="selectedTo" class="form-control">
+                        <select v-model="selectedTo" class="form-control">
                           <option disabled value="">Please select one</option>
                           <option v-for="city in cityListTo">
                             {{ city.name }}
                           </option>                          
-                        </select> -->
+                        </select>
                       <button v-on:click.prevent="dataPass" class="btn btn-default">Submit</button>
                       
                     </form>
-                    <ul class="list-group">
-                      <li class="list-group-item" v-for="city in cityToList">
-                        {{ city.arrival_city }}                                                                                         
-                      </li>                      
-                      <span v-if="error"> {{ error }} </span>
-                    </ul>
-                    
+                    <!-- <ul class="list-group">
+                      <li class="list-group-item" v-for="city in cityList">
+                        {{ city.name }}                                              
+                      </li>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -48,20 +42,10 @@
               selected: '',
               selectedTo: '',
               message: '',
-              error: false,
               cityList:[],
-              cityToList:[]
-              
+              cityListTo:[],
 
           }
-      },
-      watch: {
-       selected(val) {
-          console.log(val);
-          this.fetchCityToList(val);          
-         //this.arr.push(val);
-       }
-
       },
       methods: {
         dataPass() {
@@ -76,24 +60,6 @@
                console.log(response.data)
                vm.message= response.data
             });
-        },
-        fetchCityToList(cityName) {
-          
-          this.error = '';
-          this.cityToList = [];
-          var vm = this;
-          axios.get('api/city?q=' + cityName)          
-            .then(function (response) {
-              //vm.answer = _.capitalize(response.data.answer)
-               console.log(response.data);
-               response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-               console.log(vm.error);
-               //vm.cityToList = response.data;
-               //vm.message= response.data
-            });
-
-
-
         }
       },
       mounted() {

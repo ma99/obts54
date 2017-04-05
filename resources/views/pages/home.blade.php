@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row">
-        welcome to home page of obtb
-      <seat></seat>       
+        welcome to home page of obts
+      <seat cities= "{{ $cities }}" ></seat>       
     </div>
 </div>
 @endsection

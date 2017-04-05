@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Bus;
-use App\Rout;
+use App\City;
 use App\Fare;
-use App\Seat;
+use App\Rout;
 use App\Schedule;
+use App\Seat;
 use App\SeatPlan;
+
 
 use Illuminate\Http\Request;
 
@@ -25,8 +27,11 @@ class SearchTicketController extends Controller
     public function index()
     {
     	//dd('test');
-    	return view('pages.home');
+    	$cities = City::all();
+    	//dd($cities);
+    	return view('pages.home', compact('cities'));
     }
+
 
     public function search(Request $request)
     {
