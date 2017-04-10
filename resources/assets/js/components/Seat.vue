@@ -132,7 +132,8 @@
            //          }).on("changeDate", () => {vm.startDate = $('#startDate').val()});
 
            $('#sandbox-container .input-group.date').datepicker({
-                        format: 'dd/mm/yyyy'                     
+                        format: 'dd/mm/yyyy',
+                        startDate: '0d'                     
                     }).on("changeDate", () => {vm.startDate = $('#sandbox-container #startDate').val()});
 
         }
