@@ -12178,6 +12178,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     };
   },
+  mounted: function mounted() {
+    console.log('Seat search Component ready.');
+    this.cityList = JSON.parse(this.cities);
+    this.showDate();
+  },
+
 
   watch: {
     selected: function selected(val) {
@@ -12189,6 +12195,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     dataPass: function dataPass() {
       console.log(this.selected);
+      this.testDate();
+
       var vm = this;
       axios.post('/home', {
         firstName: this.selected,
@@ -12225,13 +12233,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).on("changeDate", function () {
         vm.startDate = $('#sandbox-container #startDate').val();
       });
+    },
+    testDate: function testDate() {
+      console.log(this.startDate); // the startDate value is ''
     }
-  },
-  mounted: function mounted() {
-    console.log('Seat search Component ready.');
-    this.cityList = JSON.parse(this.cities);
-    this.showDate();
   }
+
 });
 
 /***/ }),

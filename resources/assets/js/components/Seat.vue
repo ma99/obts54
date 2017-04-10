@@ -87,6 +87,13 @@
 
           }
       },
+      mounted() {
+           console.log('Seat search Component ready.');
+           this.cityList = JSON.parse(this.cities);         
+           this.showDate();
+         
+      },
+
       watch: {
        selected(val) {
           console.log(val);
@@ -97,7 +104,9 @@
       },
       methods: {
         dataPass() {
-          console.log(this.selected)
+          console.log(this.selected);
+          this.testDate();
+
           var vm = this
           axios.post('/home', {
               firstName: this.selected,
@@ -136,14 +145,12 @@
                         startDate: '0d'                     
                     }).on("changeDate", () => {vm.startDate = $('#sandbox-container #startDate').val()});
 
+        },
+        testDate() {
+          console.log(this.startDate); // the startDate value is ''
         }
-      },
-      mounted() {
-           console.log('Seat search Component ready.');
-           this.cityList = JSON.parse(this.cities);         
-           this.showDate();
-         
       }
+      
     }              
 </script>
 
