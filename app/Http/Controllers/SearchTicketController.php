@@ -53,10 +53,13 @@ class SearchTicketController extends Controller
 										$query->where('date', $date);
 									}])->get();		
 		//$buses = [];		
+		/*** to display seat plan ****
 		$scheduleId = 1;
 		$busId = 123;
+		*/
 		foreach ($schedules as $schedule) {
-
+			
+			/** display plan
 			if ($schedule->id == $scheduleId) {
 				$seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
 			}
@@ -64,6 +67,7 @@ class SearchTicketController extends Controller
 			if ($schedule->bus_id == $busId) {
 				$seatPlanByBusId = $this->seatPlanByBusId($schedule, $busId);
 			}
+			*/
 			
 			//return $seatsByBooking;
 			$bus = Bus::where('id', $schedule->bus_id)->first();			
@@ -97,7 +101,9 @@ class SearchTicketController extends Controller
 				'arrival_time' => $schedule->arrival_time,
 				'bus_type' => $bus->type,
 				'available_seats' => $availableSeats,
-				'fare' => $fare
+				'fare' => $fare,
+				'schedule_id' => $schedule->id,
+				'bus_id' => $schedule->bus_id,
 			];
 		}
 		// //dd($buses);
@@ -110,6 +116,8 @@ class SearchTicketController extends Controller
 		// }
 		//return $seatsByBooking;
 		//$result = array_merge($seatPlanByBusId, $seatsByBooking);
+		
+		/*********************************************
 		print_r($seatPlanByBusId);
 		echo "<Br>";
 		print_r('__________________');
@@ -119,8 +127,10 @@ class SearchTicketController extends Controller
 		$details = $this->unique_multidim_array($result,'seat_no'); // can be any key
 		sort($details);
 		dd($details);
+		**************************************/
+
 		//return $seatPlanByBusId;
-		//return $buses; 
+		return $buses; 
     }
 
     public function seatsByBooking($schedule, $scheduleId) {

@@ -56,14 +56,47 @@
                       </div>
                     
                     </form>
-                    <!-- <ul class="list-group">
-                      <li class="list-group-item" v-for="city in cityToList">
-                        {{ city.arrival_city }}                                
-                      </li>                      
-                      <span v-if="error"> {{ error }} </span>
-                    </ul> -->
+                    <div class="panel-body">
+                        <table class="table table-striped task-table">
 
+                            <!-- Table Headings -->
+                            <thead>
+                                <th>SL No.</th>                                
+                                <th>Dept. Time</th>                                
+                                <th>Arr. Time</th>                                
+                                <th>Type</th>                                
+                                <th>Available Seats</th>                                
+                                <th>Fare</th>                                
+                                <th>View</th>
+                                <th>&nbsp;</th>
+                            </thead>
+
+                            <!-- Table Body -->
+                            <tbody>
+                               <!--  @foreach ($tasks as $task) -->
+                                    <tr v-for="(bus, index) in buses">
+                                    
+                                        <!-- slNo += 1 -->
+                                        <!-- {{ increment }} -->
+                                        <!-- {{ showslNo }} -->
+                                        <td class="table-text">
+                                          <div> {{ index + 1 }} </div>
+                                        </td>
+
+                                        <td class="table-text">
+                                          <div> {{ bus.departure_time }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                          <div> {{ bus.arrival_time }} </div>
+                                        </td>
+                                    </tr>
+                                <!-- @endforeach -->
+                            </tbody>
+                        </table>
+            </div>
+                    
                   </div>  
+
                     
                 <!-- </div>
             </div>
@@ -78,11 +111,12 @@
           return {   
               startDate: '',               
               selected: '',
-              selectedTo: '',
+              selectedTo: '',             
               message: '',
               error: false,
               cityList:[],
-              cityToList:[]
+              cityToList:[],
+              buses:[]
               
 
           }
@@ -100,15 +134,16 @@
           this.fetchCityToList(val);          
          //this.arr.push(val);
        }
-
       },
+      // computed: {
+      // },
       methods: {
         dataPass() {
           console.log(this.selected);
           this.testDate();
-
+          this.slNo = 0;
           var vm = this
-          axios.post('/home', {
+          axios.post('/search', {
               firstName: this.selected,
               from: this.selected,
               to: this.selectedTo,
@@ -118,7 +153,8 @@
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
                console.log(response.data)
-               vm.message= response.data
+               vm.buses = response.data;
+               //vm.message= response.data
             });
         },
         

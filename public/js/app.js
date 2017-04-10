@@ -12163,6 +12163,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
@@ -12174,7 +12207,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       message: '',
       error: false,
       cityList: [],
-      cityToList: []
+      cityToList: [],
+      buses: []
 
     };
   },
@@ -12192,19 +12226,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //this.arr.push(val);
     }
   },
+  // computed: {
+  // },
   methods: {
     dataPass: function dataPass() {
       console.log(this.selected);
       this.testDate();
-
+      this.slNo = 0;
       var vm = this;
-      axios.post('/home', {
+      axios.post('/search', {
         firstName: this.selected,
+        from: this.selected,
+        to: this.selectedTo,
+        date: this.startDate,
         lastName: 'Flintstone'
       }).then(function (response) {
         //vm.answer = _.capitalize(response.data.answer)
         console.log(response.data);
-        vm.message = response.data;
+        vm.buses = response.data;
+        //vm.message= response.data
       });
     },
     fetchCityToList: function fetchCityToList(cityName) {
@@ -33957,7 +33997,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp\\www\\demo54\\resources\\assets\\js\\components\\Seat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -33968,9 +34008,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-daee8fec", Component.options)
+    hotAPI.createRecord("data-v-fe6965ca", Component.options)
   } else {
-    hotAPI.reload("data-v-daee8fec", Component.options)
+    hotAPI.reload("data-v-fe6965ca", Component.options)
   }
 })()}
 
@@ -34164,19 +34204,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.dataPass($event)
       }
     }
-  }, [_vm._v("Search")])])])])
+  }, [_vm._v("Search")])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table table-striped task-table"
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.buses), function(bus, index) {
+    return _c('tr', [_c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(index + 1) + " ")])]), _vm._v(" "), _c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(bus.departure_time) + " ")])]), _vm._v(" "), _c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(bus.arrival_time) + " ")])])])
+  }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('span', {
     staticClass: "input-group-addon"
   }, [_c('i', {
     staticClass: "glyphicon glyphicon-calendar"
   })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("SL No.")]), _vm._v(" "), _c('th', [_vm._v("Dept. Time")]), _vm._v(" "), _c('th', [_vm._v("Arr. Time")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Available Seats")]), _vm._v(" "), _c('th', [_vm._v("Fare")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-daee8fec", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-fe6965ca", module.exports)
   }
 }
 
@@ -34191,13 +34245,13 @@ var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(41)("7e20178c", content, false);
+var update = __webpack_require__(41)("12526fd6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
