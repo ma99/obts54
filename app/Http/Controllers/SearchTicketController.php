@@ -38,10 +38,10 @@ class SearchTicketController extends Controller
        return $test = $request->input('firstName');
     }
 
-    public function searchTicket() {
-    	$from  = 'dhaka';
-		$to = 'sylhet';
-		$date = '2016-12-30';
+    public function searchTicket(Request $request) {
+    	$from  = $request->input('from');
+		$to = $request->input('to');
+		$date = $request->input('date');
 		
 		$route = Rout::where('departure_city', $from)->
 						where( 'arrival_city', $to)->first();

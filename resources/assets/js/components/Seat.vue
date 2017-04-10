@@ -110,6 +110,9 @@
           var vm = this
           axios.post('/home', {
               firstName: this.selected,
+              from: this.selected,
+              to: this.selectedTo,
+              date: this.startDate,
               lastName: 'Flintstone'
             })          
             .then(function (response) {
