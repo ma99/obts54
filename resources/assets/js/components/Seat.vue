@@ -89,7 +89,27 @@
                                         <td class="table-text">
                                           <div> {{ bus.arrival_time }} </div>
                                         </td>
+                                        <td class="table-text">
+                                          <div> {{ bus.bus_type }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                          <div> {{ bus.available_seats }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                          <div> {{ bus.fare }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                          <div> 
+                                            <button class="btn btn-success">View</button> 
+                                          </div>
+                                        </td>
                                     </tr>
+                                    <tr> 
+                                      <td class="bg-danger" v-show="busError">
+                                       <div> {{ busError }} </div>                                        
+                                      </td>
+                                    </tr>
+                                    <!-- <span class="bg-danger" v-show="busError"> {{ busError }} </span> -->
                                 <!-- @endforeach -->
                             </tbody>
                         </table>
@@ -114,11 +134,10 @@
               selectedTo: '',             
               message: '',
               error: false,
+              busError: false,
               cityList:[],
               cityToList:[],
               buses:[]
-              
-
           }
       },
       mounted() {
@@ -140,10 +159,25 @@
       methods: {
         dataPass() {
           console.log(this.selected);
-          this.testDate();
-          this.slNo = 0;
-          var vm = this
-          axios.post('/search', {
+          this.busError = false;
+           
+          var vm = this;
+          this.buses ='';
+          axios.get('/search', {
+              params: {
+                firstName: this.selected,
+                from: this.selected,
+                to: this.selectedTo,
+                date: this.startDate,              
+              }  
+            })          
+            .then(function (response) {             
+                console.log(response.data);
+                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+            });
+         
+          /* for POST
+            axios.post('/search', {
               firstName: this.selected,
               from: this.selected,
               to: this.selectedTo,
@@ -151,13 +185,12 @@
               lastName: 'Flintstone'
             })          
             .then(function (response) {
-              //vm.answer = _.capitalize(response.data.answer)
                console.log(response.data)
-               vm.buses = response.data;
-               //vm.message= response.data
+               response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
             });
+            */
         },
-        
+
         fetchCityToList(cityName) {
           
           this.error = false;

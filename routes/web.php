@@ -21,7 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'SearchTicketController@index');
 
-Route::post('/search', 'SearchTicketController@searchTicket');
+// Route::get('/search', 'SearchTicketController@searchTest');
+
+Route::get('/search', 'SearchTicketController@searchTicket');
 
 Route::post('/home', 'SearchTicketController@search');
 
