@@ -12216,6 +12216,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
@@ -12249,7 +12250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   // computed: {
   // },
   methods: {
-    dataPass: function dataPass() {
+    searchBus: function searchBus() {
       console.log(this.selected);
       this.busError = false;
 
@@ -12280,6 +12281,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
            response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
         });
         */
+    },
+    viewSeats: function viewSeats(scheduleId, busId) {
+      console.log('schId=', scheduleId);
+      console.log('busId=', busId);
+      axios.get('/viewseats', {
+        params: {
+          from: this.selected,
+          to: this.selectedTo,
+          date: this.startDate,
+          schedule_id: scheduleId,
+          bus_id: busId
+        }
+      }).then(function (response) {
+        console.log(response.data);
+      });
     },
     fetchCityToList: function fetchCityToList(cityName) {
 
@@ -34031,7 +34047,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp\\www\\demo54\\resources\\assets\\js\\components\\Seat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34042,9 +34058,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-daee8fec", Component.options)
+    hotAPI.createRecord("data-v-fe6965ca", Component.options)
   } else {
-    hotAPI.reload("data-v-daee8fec", Component.options)
+    hotAPI.reload("data-v-fe6965ca", Component.options)
   }
 })()}
 
@@ -34235,7 +34251,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.dataPass($event)
+        _vm.searchBus($event)
       }
     }
   }, [_vm._v("Search")])])]), _vm._v(" "), _c('div', {
@@ -34255,7 +34271,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "table-text"
     }, [_c('div', [_vm._v(" " + _vm._s(bus.available_seats) + " ")])]), _vm._v(" "), _c('td', {
       staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.fare) + " ")])]), _vm._v(" "), _vm._m(2, true)])
+    }, [_c('div', [_vm._v(" " + _vm._s(bus.fare) + " ")])]), _vm._v(" "), _c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_c('button', {
+      staticClass: "btn btn-success",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.viewSeats(bus.schedule_id, bus.bus_id)
+        }
+      }
+    }, [_vm._v("View")])])])])
   }), _vm._v(" "), _c('tr', [_c('td', {
     directives: [{
       name: "show",
@@ -34273,18 +34299,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("SL No.")]), _vm._v(" "), _c('th', [_vm._v("Dept. Time")]), _vm._v(" "), _c('th', [_vm._v("Arr. Time")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Available Seats")]), _vm._v(" "), _c('th', [_vm._v("Fare")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', {
-    staticClass: "table-text"
-  }, [_c('div', [_c('button', {
-    staticClass: "btn btn-success"
-  }, [_vm._v("View")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-daee8fec", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-fe6965ca", module.exports)
   }
 }
 
@@ -34299,13 +34319,13 @@ var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(41)("7e20178c", content, false);
+var update = __webpack_require__(41)("12526fd6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

@@ -16,16 +16,12 @@ use Illuminate\Http\Request;
 
 class SearchTicketController extends Controller
 {
-    //protected $schedules;
-    protected $routeId;
-    protected $request;
+    protected $schedules;
     //protected $seatsByBooking = [];
 
-    public function __construct(Request $request)
+    public function __construct()
     {
         //$this->middleware('auth');
-        $this->request = $request;        
-
     }
 
     public function index()
@@ -37,48 +33,24 @@ class SearchTicketController extends Controller
     }
 
 
-    public function search()
+    public function search(Request $request)
     {
-       return $test = $this->request->input('firstName');
+       return $test = $request->input('firstName');
     }
 
-  //   public function searchTest(Request $request)
-  //   {
-  //   	$from  = $request->input('from');
-		// $to = $request->input('to');
-		// $date = $request->input('date');
-
-  //   	return $from . $to ;
-  //   }
-    public function test()
+    public function searchTest(Request $request)
     {
-       return 'hello';        
-    }
-    public function searchSchedules()
-    {
-        $from  = $this->request->input('from');        
-		$to = $this->request->input('to');
-		$date = $this->request->input('date');
-		// $from  = 'dhaka';
-		// $to = 'sylhet';
-		// $date = '2017-04-12';
-
-		$route = Rout::where('departure_city', $from)->
-						where( 'arrival_city', $to)->first();
+    	$from  = $request->input('from');
+		$to = $request->input('to');
+		$date = $request->input('date');
 		
-		$this->routeId = $routeId = $route->id;
-	
-		return $schedules = Schedule::where('rout_id', $routeId)->
-									with(['bookings' => function($query) use ($date) {
-										$query->where('date', $date);
-									}])->get();		
-        
+    	return $from . $to ;
     }
 
-    public function searchTicket() {
-  //   	$from  = $request->input('from');
-		// $to = $request->input('to');
-		// $date = $request->input('date');
+    public function searchTicket(Request $request) {
+    	$from  = $request->input('from');
+		$to = $request->input('to');
+		$date = $request->input('date');
 
 		// $from  = 'dhaka';
 		// $to = 'sylhet';
@@ -86,28 +58,22 @@ class SearchTicketController extends Controller
 		
 		$error = ['error' => 'No results found'];
 
-		// $route = Rout::where('departure_city', $from)->
-		// 				where( 'arrival_city', $to)->first();
+		$route = Rout::where('departure_city', $from)->
+						where( 'arrival_city', $to)->first();
 		
 
-		// $routeId= $route->id;
+		$routeId= $route->id;
 	
-		// $schedules = Schedule::where('rout_id', $routeId)->
-		// 							with(['bookings' => function($query) use ($date) {
-		// 								$query->where('date', $date);
-		// 							}])->get();		
+		$schedules = Schedule::where('rout_id', $routeId)->
+									with(['bookings' => function($query) use ($date) {
+										$query->where('date', $date);
+									}])->get();		
 		//$buses = [];		
 		/*** to display seat plan ****
 		$scheduleId = 1;
 		$busId = 123;
 		*/
 		//dd($schedules->count());
-		//return $schedules = $this->searchSchedules();
-		$schedules = $this->searchSchedules();
-		//chedules = $this->schedules;
-		$routeId = $this->routeId;
-
-
 		if ( $schedules->count() ) {
 			foreach ($schedules as $schedule) {
 				
@@ -161,40 +127,11 @@ class SearchTicketController extends Controller
 			// //dd($buses);
 
 			$buses = $object = json_decode(json_encode($buses), FALSE);		
-			return $buses; 
-		}
-		return $error;		
-
-    }
-
-    public function viewSeats()
-    {
-    	$scheduleId = $this->request->input('schedule_id'); 
-    	$busId = $this->request->input('bus_id'); 
-
-    	$error = ['error' => 'No results found'];
-
-    	$schedules = $this->searchSchedules();
-
-    	//return $schedules;
-    	
-    	if ( $schedules->count() ) {
-			foreach ($schedules as $schedule) {
-				
-				/* seat plan */
-				if ($schedule->id == $scheduleId) {
-					//return $schedule;					
-					return $seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
-					
-
-				 }
-				//$busId = $schedule->bus_id;
-				if ($schedule->bus_id == $busId) {
-					$seatPlanByBusId = $this->seatPlanByBusId($schedule, $busId);
-				}
-				
-			}
-			
+			// foreach ($buses as $bus) {
+			//  	//echo $bus['fare'];
+			//  	echo $bus->fare;
+			//  	echo "\n";
+			// }
 			//return $seatsByBooking;
 			//$result = array_merge($seatPlanByBusId, $seatsByBooking);
 			
@@ -209,40 +146,32 @@ class SearchTicketController extends Controller
 			sort($details);
 			dd($details);
 			**************************************/
-			$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
-			$viewseats = $this->unique_multidim_array($result,'seat_no'); // can be any key
-			sort($viewseats);
 
 			//return $seatPlanByBusId;			
-			return $viewseats; 
+			return $buses; 
 		}
-		return $error;	
-                
-    }
-    
-    public function seatsByBooking($schedule, $scheduleId) {
-    		if ( $schedule->bookings->count() ) {
-    			foreach ($schedule->bookings as $booking) {
-					$seats = Seat::where('booking_id', $booking->id)->get(); //collection
-					foreach ($seats as $seat) {
-						$arr_seats[] = [								
-							'seat_no' => $seat->seat_no,
-							'status'  => $seat->status 	 
-						];
-					}
-				}
-				return $arr_seats;
+		return $error;		
 
-    		}
-    		return $arr_seats = [];
-			 
+    }
+
+    public function seatsByBooking($schedule, $scheduleId) {
+
+			foreach ($schedule->bookings as $booking) {
+				$seats = Seat::where('booking_id', $booking->id)->get(); //collection
+				foreach ($seats as $seat) {
+					$arr_seats[] = [								
+						'seat_no' => $seat->seat_no,
+						'status'  => $seat->status 	 
+					];
+				}
+			}
+			return $arr_seats; 
     }
 
     public function seatPlanByBusId($schedule, $busId) {
-    		// return $schedule;
+    		
 			$seats = SeatPlan::where('bus_id', $busId)->get(); //collection
 			//dd($seats);
-
 			foreach ($seats as $seat) {
 				$arr_seats[] = [								
 					'seat_no' => $seat->seat_no,

@@ -52,7 +52,8 @@
                        </div>  
 
                       <div class="col-md-2">
-                        <button v-on:click.prevent="dataPass" class="btn btn-primary btn-search form-control">Search</button>
+                        <button v-on:click.prevent="searchBus" class="btn btn-primary btn-search form-control">Search</button>
+                       <!--  <button v-on:click.prevent="viewSeats(1,2)" class="btn btn-primary btn-search form-control">Search</button> -->
                       </div>
                     
                     </form>
@@ -100,7 +101,7 @@
                                         </td>
                                         <td class="table-text">
                                           <div> 
-                                            <button class="btn btn-success">View</button> 
+                                            <button v-on:click.prevent="viewSeats(bus.schedule_id, bus.bus_id)" class="btn btn-success">View</button> 
                                           </div>
                                         </td>
                                     </tr>
@@ -157,7 +158,7 @@
       // computed: {
       // },
       methods: {
-        dataPass() {
+        searchBus() {
           console.log(this.selected);
           this.busError = false;
            
@@ -189,6 +190,23 @@
                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
             });
             */
+        },
+
+        viewSeats(scheduleId, busId) {
+          console.log('schId=', scheduleId);
+          console.log('busId=', busId);
+          axios.get('/viewseats', {
+              params: {
+                from: this.selected,
+                to: this.selectedTo,
+                date: this.startDate,
+                schedule_id: scheduleId,
+                bus_id: busId,
+              }  
+            })          
+            .then(function (response) {             
+                console.log(response.data);                
+            });
         },
 
         fetchCityToList(cityName) {
