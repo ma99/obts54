@@ -26,4 +26,5 @@ Route::get('/viewseats', 'SearchTicketController@viewSeats');
 Route::get('/search', 'SearchTicketController@searchTicket');
 
 Route::post('/home', 'SearchTicketController@search');
+Route::get('/test', 'SearchTicketController@test');
 

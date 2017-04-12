@@ -52,8 +52,36 @@ class SearchTicketController extends Controller
   //   }
     public function test()
     {
-       return 'hello';        
+  //      	$from  = $this->request->input('from');        
+		// $to = $this->request->input('to');
+		// $date = $this->request->input('date');
+		$from  = 'dhaka';
+		$to = 'sylhet';
+		$date = '2017-12-25';
+
+		$route = Rout::where('departure_city', $from)->
+						where( 'arrival_city', $to)->first();
+		
+		$this->routeId = $routeId = $route->id;
+	
+		// return $schedules = Schedule::where('rout_id', $routeId)->
+		// 							with(['bookings' => function($query) use ($date) {
+		// 								$query->where('date', $date);
+		// 							}])->get();	
+		// $schedules = Schedule::where('rout_id', $routeId)->with('bookings')->get();
+		// return $schedules;
+		
+
+		$schedules = Schedule::where('rout_id', $routeId)->
+									with(['bookings' => function($query) use ($date) {
+										$query->where('date', $date);
+									}])->get();	
+		return $schedules;	
+
+		
     }
+
+
     public function searchSchedules()
     {
         $from  = $this->request->input('from');        
@@ -103,8 +131,9 @@ class SearchTicketController extends Controller
 		*/
 		//dd($schedules->count());
 		//return $schedules = $this->searchSchedules();
-		$schedules = $this->searchSchedules();
-		//chedules = $this->schedules;
+		$schedules = $this->searchSchedules();	
+
+
 		$routeId = $this->routeId;
 
 
@@ -125,9 +154,12 @@ class SearchTicketController extends Controller
 				$bus = Bus::where('id', $schedule->bus_id)->first();			
 				$totalSeatsBooked = 0;
 				$availableSeats = 0;
+				
+				return $schedule->bookings;
 
 			    foreach ($schedule->bookings as $booking) {
-		     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats;   		     				     		
+		     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats;   
+
 		     	}	
 		        //echo 'SeatsBooked = ' . $totalSeatsBooked;
 		        $availableSeats = $bus->total_seats - $totalSeatsBooked;
@@ -184,9 +216,7 @@ class SearchTicketController extends Controller
 				/* seat plan */
 				if ($schedule->id == $scheduleId) {
 					//return $schedule;					
-					return $seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
-					
-
+					$seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
 				 }
 				//$busId = $schedule->bus_id;
 				if ($schedule->bus_id == $busId) {
@@ -209,12 +239,17 @@ class SearchTicketController extends Controller
 			sort($details);
 			dd($details);
 			**************************************/
-			$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
-			$viewseats = $this->unique_multidim_array($result,'seat_no'); // can be any key
-			sort($viewseats);
+			if ( count($seatsByBooking) >0 ) {
+				$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
+				$viewseats = $this->unique_multidim_array($result,'seat_no'); // can be any key
+				sort($viewseats);
 
-			//return $seatPlanByBusId;			
-			return $viewseats; 
+				return $viewseats;
+				//return $seatPlanByBusId;			
+			}
+			return $seatPlanByBusId; 
+			
+			
 		}
 		return $error;	
                 
@@ -239,9 +274,10 @@ class SearchTicketController extends Controller
     }
 
     public function seatPlanByBusId($schedule, $busId) {
-    		// return $schedule;
+    		
 			$seats = SeatPlan::where('bus_id', $busId)->get(); //collection
 			//dd($seats);
+			//return $seats;
 
 			foreach ($seats as $seat) {
 				$arr_seats[] = [								
