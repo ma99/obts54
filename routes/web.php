@@ -21,10 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'SearchTicketController@index');
 
-Route::get('/viewseats', 'SearchTicketController@viewSeats');
-
 Route::get('/search', 'SearchTicketController@searchTicket');
 
-Route::post('/home', 'SearchTicketController@search');
-Route::get('/test', 'SearchTicketController@test');
+Route::get('/viewseats', 'SearchTicketController@viewSeats');
+
+//Route::post('/home', 'SearchTicketController@search');
+Route::get('/test', 'SearchTicketController@test1');
 

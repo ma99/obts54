@@ -158,8 +158,9 @@
       // computed: {
       // },
       methods: {
-        searchBus() {
-          console.log(this.selected);
+        searchBus() {         
+          console.log(this.startDate);
+
           this.busError = false;
            
           var vm = this;
@@ -173,8 +174,8 @@
               }  
             })          
             .then(function (response) {             
-                console.log(response.data);
-                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+               console.log(response.data);
+               response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
             });
          
           /* for POST
@@ -217,9 +218,9 @@
           axios.get('api/city?q=' + cityName)          
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
-               console.log(response.data);
+              // console.log(response.data);
                response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-               console.log(vm.error);
+              // console.log(vm.error);
                //vm.cityToList = response.data;
                //vm.message= response.data
             });
@@ -231,7 +232,7 @@
            //          }).on("changeDate", () => {vm.startDate = $('#startDate').val()});
 
            $('#sandbox-container .input-group.date').datepicker({
-                        format: 'dd/mm/yyyy',
+                        format: 'dd-mm-yyyy',                        
                         startDate: '0d'                     
                     }).on("changeDate", () => {vm.startDate = $('#sandbox-container #startDate').val()});
 

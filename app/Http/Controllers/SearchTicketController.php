@@ -50,14 +50,19 @@ class SearchTicketController extends Controller
 
   //   	return $from . $to ;
   //   }
-    public function test()
+    public function test1()
     {
-  //      	$from  = $this->request->input('from');        
-		// $to = $this->request->input('to');
-		// $date = $this->request->input('date');
+ 
+		// $from  = 'dhaka';
+		// $to = 'sylhet';
+		// $date = '2017-11-30';
 		$from  = 'dhaka';
 		$to = 'sylhet';
-		$date = '2017-12-25';
+		$date = '07/12/2010';
+        $date = date("Y-m-d", strtotime($date));
+  
+		
+		return $date;
 
 		$route = Rout::where('departure_city', $from)->
 						where( 'arrival_city', $to)->first();
@@ -76,6 +81,17 @@ class SearchTicketController extends Controller
 									with(['bookings' => function($query) use ($date) {
 										$query->where('date', $date);
 									}])->get();	
+
+		// $schedules = Schedule::with(['bookings' => function($query) use ($date) {
+		// 								$query->where('date' , $date);
+		// 							}])->get();	
+
+		
+		foreach ($schedules as $schedule) {
+			//print_r(count($schedule->bookings));
+			print_r($schedule->bookings->count());
+		}
+									
 		return $schedules;	
 
 		
@@ -87,10 +103,9 @@ class SearchTicketController extends Controller
         $from  = $this->request->input('from');        
 		$to = $this->request->input('to');
 		$date = $this->request->input('date');
-		// $from  = 'dhaka';
-		// $to = 'sylhet';
-		// $date = '2017-04-12';
 
+		$date = date("Y-m-d", strtotime($date)); //wk if input date is dd-mm-yyyy format in vue script
+		
 		$route = Rout::where('departure_city', $from)->
 						where( 'arrival_city', $to)->first();
 		
@@ -100,17 +115,10 @@ class SearchTicketController extends Controller
 									with(['bookings' => function($query) use ($date) {
 										$query->where('date', $date);
 									}])->get();		
-        
     }
 
     public function searchTicket() {
-  //   	$from  = $request->input('from');
-		// $to = $request->input('to');
-		// $date = $request->input('date');
-
-		// $from  = 'dhaka';
-		// $to = 'sylhet';
-		// $date = '2017-04-12';
+    // public function test() {   
 		
 		$error = ['error' => 'No results found'];
 
@@ -132,12 +140,11 @@ class SearchTicketController extends Controller
 		//dd($schedules->count());
 		//return $schedules = $this->searchSchedules();
 		$schedules = $this->searchSchedules();	
-
-
+		//return $schedules;
 		$routeId = $this->routeId;
-
-
+		
 		if ( $schedules->count() ) {
+			//return $schedules->count() ; 
 			foreach ($schedules as $schedule) {
 				
 				/** display plan
@@ -151,18 +158,25 @@ class SearchTicketController extends Controller
 				*/
 				
 				//return $seatsByBooking;
-				$bus = Bus::where('id', $schedule->bus_id)->first();			
-				$totalSeatsBooked = 0;
-				$availableSeats = 0;
-				
-				return $schedule->bookings;
+				$bus = Bus::where('id', $schedule->bus_id)->first();	
 
-			    foreach ($schedule->bookings as $booking) {
-		     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats;   
+				//return $schedule->bookings->count();
 
-		     	}	
-		        //echo 'SeatsBooked = ' . $totalSeatsBooked;
-		        $availableSeats = $bus->total_seats - $totalSeatsBooked;
+				if ( $schedule->bookings->count() ) {
+					$totalSeatsBooked = 0;
+					$availableSeats = 0;
+					
+					foreach ($schedule->bookings as $booking) {
+			     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats; 
+		     		}	
+		     		$availableSeats = $bus->total_seats - $totalSeatsBooked;
+		     		//print_r($availableSeats);
+				}
+				else {
+					$availableSeats = $bus->total_seats;
+					//print_r($availableSeats = $bus->total_seats);
+				}	
+			
 		        $bus_type = $bus->type;
 		        //fare
 		        if ($bus_type  == 'ac-deluxe') { 

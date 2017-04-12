@@ -12251,7 +12251,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   // },
   methods: {
     searchBus: function searchBus() {
-      console.log(this.selected);
+      console.log(this.startDate);
+
       this.busError = false;
 
       var vm = this;
@@ -12304,9 +12305,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       axios.get('api/city?q=' + cityName).then(function (response) {
         //vm.answer = _.capitalize(response.data.answer)
-        console.log(response.data);
+        // console.log(response.data);
         response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-        console.log(vm.error);
+        // console.log(vm.error);
         //vm.cityToList = response.data;
         //vm.message= response.data
       });
@@ -12318,7 +12319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //          }).on("changeDate", () => {vm.startDate = $('#startDate').val()});
 
       $('#sandbox-container .input-group.date').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         startDate: '0d'
       }).on("changeDate", function () {
         vm.startDate = $('#sandbox-container #startDate').val();
