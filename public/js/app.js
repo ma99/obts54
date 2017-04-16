@@ -12217,6 +12217,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
@@ -12226,6 +12263,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       selected: '',
       selectedTo: '',
       message: '',
+      modal: false,
+      loading: false,
       error: false,
       busError: false,
       cityList: [],
@@ -12250,10 +12289,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   // computed: {
   // },
   methods: {
+    close: function close() {
+      this.modal = false;
+      //this.query = '';
+    },
     searchBus: function searchBus() {
       console.log(this.startDate);
 
       this.busError = false;
+      this.loading = true;
 
       var vm = this;
       this.buses = '';
@@ -12267,6 +12311,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).then(function (response) {
         console.log(response.data);
         response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+        vm.loading = false;
       });
 
       /* for POST
@@ -12286,6 +12331,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     viewSeats: function viewSeats(scheduleId, busId) {
       console.log('schId=', scheduleId);
       console.log('busId=', busId);
+      this.loading = true;
+      var vm = this;
       axios.get('/viewseats', {
         params: {
           from: this.selected,
@@ -12296,17 +12343,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }).then(function (response) {
         console.log(response.data);
+        vm.loading = false;
+        vm.modal = true;
       });
     },
     fetchCityToList: function fetchCityToList(cityName) {
 
       this.error = false;
+      this.loading = true;
       this.cityToList = [];
       var vm = this;
       axios.get('api/city?q=' + cityName).then(function (response) {
         //vm.answer = _.capitalize(response.data.answer)
         // console.log(response.data);
         response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
+        vm.loading = false;
         // console.log(vm.error);
         //vm.cityToList = response.data;
         //vm.message= response.data
@@ -16880,7 +16931,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(35)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n    margin-top: 25px;\n}\n}\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n}\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n    display: block; \n    position: fixed; /* Stay in place */\n    z-index: 111; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content {\n    background-color: #fefefe;\n    margin: 160px auto; /* 15% from the top and centered */\n    /*padding: 20px;*/\n    padding: 35px 20px 2px;\n    border: 1px solid #888;\n    width: 89%; /* Could be more or less, depending on screen size */\n}\n\n  /* circle*/\n.circle {\n    float: right;\n    margin-top: -28px;\n    position: relative;\n    width: 24px; \n    height: 24px; \n    background: #ebccd1; \n    border-radius: 12px; \n    -moz-border-radius: 15px; \n    -webkit-border-radius: 15px;\n}\n/* The Close Button */\n.close {\n    color: #aaa;\n    /*float: right;*/\n    margin-left: 7px;\n    font-size: 20px;\n    font-weight: bold;\n    position: absolute;\n    /*margin-top: -18px;*/\n}\n.close:hover,\n.close:focus {\n    color: black;\n    text-decoration: none;\n    cursor: pointer;\n}\n", ""]);
 
 /***/ }),
 /* 35 */
@@ -34048,7 +34099,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\demo54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34059,9 +34110,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fe6965ca", Component.options)
+    hotAPI.createRecord("data-v-daee8fec", Component.options)
   } else {
-    hotAPI.reload("data-v-fe6965ca", Component.options)
+    hotAPI.reload("data-v-daee8fec", Component.options)
   }
 })()}
 
@@ -34255,7 +34306,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.searchBus($event)
       }
     }
-  }, [_vm._v("Search")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Search  \n                      "), _c('i', {
+    staticClass: "fa fa-search"
+  })])])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped task-table"
@@ -34283,7 +34336,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("View")])])])])
-  }), _vm._v(" "), _c('tr', [_c('td', {
+  }), _vm._v(" "), _c('tr', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -34291,7 +34344,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "busError"
     }],
     staticClass: "bg-danger"
-  }, [_c('div', [_vm._v(" " + _vm._s(_vm.busError) + " ")])])])], 2)])])])
+  }, [_c('div', [_vm._v(" " + _vm._s(_vm.busError) + " ")])])], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "loading"
+  }, [_c('i', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.loading),
+      expression: "loading"
+    }],
+    staticClass: "fa fa-spinner fa-pulse fa-3x"
+  })]), _vm._v(" "), (_vm.modal) ? _c('div', {
+    staticClass: "modal",
+    attrs: {
+      "id": "myModal"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "circle"
+  }, [_c('span', {
+    staticClass: "close",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "top",
+      "title": "Press esc to close"
+    },
+    on: {
+      "click": _vm.close
+    }
+  }, [_vm._v("x")])])])]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('span', {
     staticClass: "input-group-addon"
@@ -34305,7 +34387,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-fe6965ca", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-daee8fec", module.exports)
   }
 }
 
@@ -34320,13 +34402,13 @@ var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(41)("12526fd6", content, false);
+var update = __webpack_require__(41)("7e20178c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fe6965ca\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

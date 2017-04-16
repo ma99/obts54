@@ -43,6 +43,7 @@
                               <div class="input-group date">
                                 <input id="startDate" class="form-control" type="text" v-model="startDate" placeholder="select date">
                                 <span class="input-group-addon">
+                                 <!--  <i class="glyphicon glyphicon-th"></i> -->
                                   <i class="glyphicon glyphicon-calendar"></i>
                                 </span>
                               </div>
@@ -51,14 +52,11 @@
                        </div>  
 
                       <div class="col-md-2">
-                        <button v-on:click.prevent="searchBus" class="btn btn-primary btn-search form-control">Search &nbsp;
-                          <i class="fa fa-search"></i>
-                        </button>
+                        <button v-on:click.prevent="searchBus" class="btn btn-primary btn-search form-control">Search</button>
                        <!--  <button v-on:click.prevent="viewSeats(1,2)" class="btn btn-primary btn-search form-control">Search</button> -->
-                      </div>                     
+                      </div>
                     
-                    </form>                    
-
+                    </form>
                     <div class="panel-body">
                         <table class="table table-striped task-table">
 
@@ -107,51 +105,16 @@
                                           </div>
                                         </td>
                                     </tr>
-                                    <tr class="bg-danger" v-show="busError"> 
-                                      <div> {{ busError }} </div> 
+                                    <tr> 
+                                      <td class="bg-danger" v-show="busError">
+                                       <div> {{ busError }} </div>                                        
+                                      </td>
                                     </tr>
                                     <!-- <span class="bg-danger" v-show="busError"> {{ busError }} </span> -->
                                 <!-- @endforeach -->
                             </tbody>
                         </table>
-                    </div>
-                    <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x"></i></div>
-
-                    <!-- Modal -->
-                    <div class="modal" id="myModal" v-if="modal">
-                        <div class="modal-content">
-                            <div class="circle">
-                                <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
-                            </div>    
-                            
-                            <!-- <div class="alert alert-danger" role="alert" v-if="error">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                {{ error }}
-                            </div> -->
-
-                            <!-- <div id="products" class="row list-group">
-                                <div class="item col-xs-4 col-lg-4" v-for="product in products">
-                                    <div class="thumbnail">
-                                        <img class="group list-group-image" :src="product.image" :alt="product.title" />
-                                        
-                                        <div class="caption">
-                                            <h4 class="group inner list-group-item-heading">{{ product.title }}</h4>
-                                            <p class="group inner list-group-item-text">{{ product.description }}</p>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6">
-                                                    <p class="lead">${{ product.price }}</p>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6">
-                                                    <a class="btn btn-success" href="#">Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           </div> -->
-                        </div>          
-                    </div> 
+            </div>
                     
                   </div>  
 
@@ -171,8 +134,6 @@
               selected: '',
               selectedTo: '',             
               message: '',
-              modal: false,
-              loading: false,
               error: false,
               busError: false,
               cityList:[],
@@ -197,15 +158,10 @@
       // computed: {
       // },
       methods: {
-        close(){
-                this.modal = false;
-                //this.query = '';
-            },
         searchBus() {         
           console.log(this.startDate);
 
           this.busError = false;
-          this.loading = true;
            
           var vm = this;
           this.buses ='';
@@ -220,7 +176,6 @@
             .then(function (response) {             
                console.log(response.data);
                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-               vm.loading = false;
             });
          
           /* for POST
@@ -241,8 +196,6 @@
         viewSeats(scheduleId, busId) {
           console.log('schId=', scheduleId);
           console.log('busId=', busId);
-          this.loading = true;
-          var vm = this;
           axios.get('/viewseats', {
               params: {
                 from: this.selected,
@@ -253,17 +206,13 @@
               }  
             })          
             .then(function (response) {             
-                console.log(response.data);
-                vm.loading = false;
-                vm.modal = true;
-
+                console.log(response.data);                
             });
         },
 
         fetchCityToList(cityName) {
           
           this.error = false;
-          this.loading = true;
           this.cityToList = [];
           var vm = this;
           axios.get('api/city?q=' + cityName)          
@@ -271,7 +220,6 @@
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
                response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-               vm.loading = false;
               // console.log(vm.error);
                //vm.cityToList = response.data;
                //vm.message= response.data
@@ -303,61 +251,4 @@
       margin-top: 25px;
     }
   }
-  .loading {
-    text-align: center;
-  }
-  /* The Modal (background) */
-.modal {
-    display: block; 
-    position: fixed; /* Stay in place */
-    z-index: 111; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 160px auto; /* 15% from the top and centered */
-    /*padding: 20px;*/
-    padding: 35px 20px 2px;
-    border: 1px solid #888;
-    width: 89%; /* Could be more or less, depending on screen size */
-}
-
-  /* circle*/
- .circle {
-    float: right;
-    margin-top: -28px;
-    position: relative;
-    width: 24px; 
-    height: 24px; 
-    background: #ebccd1; 
-    border-radius: 12px; 
-    -moz-border-radius: 15px; 
-    -webkit-border-radius: 15px; 
-    
-}
-/* The Close Button */
-.close {
-    color: #aaa;
-    /*float: right;*/
-    margin-left: 7px;
-    font-size: 20px;
-    font-weight: bold;
-    position: absolute;
-    /*margin-top: -18px;*/
-}    
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 </style>
