@@ -12254,9 +12254,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
+
   data: function data() {
     return {
       startDate: '',
@@ -12269,7 +12290,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       busError: false,
       cityList: [],
       cityToList: [],
-      buses: []
+      buses: [],
+      // seat display
+      seatChar: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
+      seatNo: '',
+      seatError: false,
+      selectedSeat: [],
+      seatList: []
+      // end seat display
     };
   },
   mounted: function mounted() {
@@ -12343,6 +12371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
       }).then(function (response) {
         console.log(response.data);
+        response.data.error ? vm.seatError = response.data.error : vm.seatList = response.data;
         vm.loading = false;
         vm.modal = true;
       });
@@ -12365,10 +12394,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     showDate: function showDate() {
       var vm = this;
-      // $('#startDate').datepicker({
-      //              format: 'dd/mm/yyyy'                     
-      //          }).on("changeDate", () => {vm.startDate = $('#startDate').val()});
-
       $('#sandbox-container .input-group.date').datepicker({
         format: 'dd-mm-yyyy',
         startDate: '0d'
@@ -12378,7 +12403,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     testDate: function testDate() {
       console.log(this.startDate); // the startDate value is ''
+    },
+
+
+    /*** seat display methods ******/
+
+    emptySpace: function emptySpace(seatNo) {
+
+      if (this.isFiveCol(seatNo)) {
+        return false; // no need empty space between columns
+      }
+      var seatNumber = parseInt(seatNo.match(/\d+/), 10);
+      return seatNumber % 3 == 0 ? true : false;
+    },
+    isFiveCol: function isFiveCol(seatNo) {
+
+      var seatListLength = this.seatList.length;
+      var numberOfRow = (seatListLength - 1) / 4; //2
+      var lastRowChar = this.seatChar[numberOfRow - 1] || ''; //B
+      lastRowChar = lastRowChar.trim();
+
+      var seatChar = seatNo.substr(0, 1); //extract char from seat no
+      return lastRowChar == seatChar ? true : false;
+    },
+    toggle: function toggle(seat) {
+      // console.log('clicked');
+      // console.log(seat.no);
+      seat.checked = !seat.checked;
+      if (seat.checked) {
+        //console.log('seat checked=', seat.checked);
+        this.addSeat(seat.seat_no); // to selectedSeat array               
+        return;
+      }
+      //console.log('seat NOT checked=', seat.checked);               
+      this.removeSeat(seat.seat_no, seat); // to selectedSeat array                            
+    },
+    addSeat: function addSeat(seatNo) {
+      //console.log('+', seatNo);
+      this.selectedSeat.push({
+        seat_no: seatNo,
+        status: 'booked' //'selected'
+      });
+    },
+    removeSeat: function removeSeat(seatNo, seat) {
+      //console.log('-', seatNo);
+      //var indx = this.selectedSeat.indexOf(seatNo);  
+      /*
+      'findIndex' callback is invoked with three arguments: 
+      1.the value of the element, 
+      2. the index of the element, and 
+      3. the Array object being traversed.
+      ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex 
+      */
+      var indx = this.selectedSeat.findIndex(function (seat) {
+        // here 'seat' is array object of selectedSeat array
+        return seat.seat_no == seatNo;
+      });
+      //console.log(indx);
+      this.selectedSeat.splice(indx, 1);
+      return;
+    },
+    isDisabledSeatSelection: function isDisabledSeatSelection(seatStatus) {
+      //console.log('disableSelection=', seatStatus);
+      return seatStatus == 'booked' || seatStatus == 'confirmed' || seatStatus == 'n/a' ? true : false;
     }
+    // end display methods
+
   }
 
 });
@@ -16931,7 +17021,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(35)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n}\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n    display: block; \n    position: fixed; /* Stay in place */\n    z-index: 111; /* Sit on top */\n    left: 0;\n    top: 0;\n    width: 100%; /* Full width */\n    height: 100%; /* Full height */\n    overflow: auto; /* Enable scroll if needed */\n    background-color: rgb(0,0,0); /* Fallback color */\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content {\n    background-color: #fefefe;\n    margin: 160px auto; /* 15% from the top and centered */\n    /*padding: 20px;*/\n    padding: 35px 20px 2px;\n    border: 1px solid #888;\n    width: 89%; /* Could be more or less, depending on screen size */\n}\n\n  /* circle*/\n.circle {\n    float: right;\n    margin-top: -28px;\n    position: relative;\n    width: 24px; \n    height: 24px; \n    background: #ebccd1; \n    border-radius: 12px; \n    -moz-border-radius: 15px; \n    -webkit-border-radius: 15px;\n}\n/* The Close Button */\n.close {\n    color: #aaa;\n    /*float: right;*/\n    margin-left: 7px;\n    font-size: 20px;\n    font-weight: bold;\n    position: absolute;\n    /*margin-top: -18px;*/\n}\n.close:hover,\n.close:focus {\n    color: black;\n    text-decoration: none;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n}\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n      display: block; \n      position: fixed; /* Stay in place */\n      z-index: 111; /* Sit on top */\n      left: 0;\n      top: 0;\n      width: 100%; /* Full width */\n      height: 100%; /* Full height */\n      overflow: auto; /* Enable scroll if needed */\n      background-color: rgb(0,0,0); /* Fallback color */\n      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n  /* Modal Content/Box */\n.modal-content {\n      background-color: #fefefe;\n      margin: 160px auto; /* 15% from the top and centered */\n      /*padding: 20px;*/\n      padding: 35px 20px 2px;\n      border: 1px solid #888;\n      width: 89%; /* Could be more or less, depending on screen size */\n}\n\n    /* circle*/\n.circle {\n      float: right;\n      margin-top: -28px;\n      position: relative;\n      width: 24px; \n      height: 24px; \n      background: #ebccd1; \n      border-radius: 12px; \n      -moz-border-radius: 15px; \n      -webkit-border-radius: 15px;\n}\n  /* The Close Button */\n.close {\n      color: #aaa;\n      /*float: right;*/\n      margin-left: 7px;\n      font-size: 20px;\n      font-weight: bold;\n      position: absolute;\n      /*margin-top: -18px;*/\n}\n.close:hover,\n  .close:focus {\n      color: black;\n      text-decoration: none;\n      cursor: pointer;\n}\n  /* seat display */\n.active {\n    background-color: green;\n}\n.booked {\n    background-color: yellow;\n}\n.confirmed {\n    background-color: red;\n}\n.empty {\n    background-color: white;\n    border-width: 0;\n      /*color: #0a0a0a;*/\n    color:white;\n}\n#app button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#app button.col-xs-2 {\n      width: 16.76666667%;\n}\n#app button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n}\n#app button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n}\n/* end seat display */\n", ""]);
 
 /***/ }),
 /* 35 */
@@ -34353,7 +34443,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.loading),
       expression: "loading"
     }],
-    staticClass: "fa fa-spinner fa-pulse fa-3x"
+    staticClass: "fa fa-spinner fa-pulse fa-3x text-primary"
   })]), _vm._v(" "), (_vm.modal) ? _c('div', {
     staticClass: "modal",
     attrs: {
@@ -34373,7 +34463,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.close
     }
-  }, [_vm._v("x")])])])]) : _vm._e()])
+  }, [_vm._v("x")])]), _vm._v(" "), (_vm.seatError) ? _c('div', {
+    staticClass: "alert alert-danger",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-exclamation-sign",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-exclamation-circle",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                            " + _vm._s(_vm.seatError) + "\n                        ")]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-offset-9"
+  }, [_c('button', {
+    attrs: {
+      "disabled": true
+    }
+  }, [_vm._v("Driver Seat")])]), _vm._v(" "), _vm._l((_vm.seatList), function(seat) {
+    return _c('button', {
+      staticClass: "col-xs-2",
+      class: {
+        active: seat.checked,
+          booked: seat.status == 'booked' ? true : false,
+          confirmed: seat.status == 'confirmed' ? true : false,
+          empty: seat.status == 'n/a' ? true : false,
+          'col-xs-offset-2': _vm.emptySpace(seat.seat_no)
+      },
+      attrs: {
+        "disabled": _vm.isDisabledSeatSelection(seat.status)
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggle(seat)
+        }
+      }
+    }, [_vm._v("               \n                              " + _vm._s(seat.seat_no) + " - " + _vm._s(seat.status) + "\n                            ")])
+  })], 2)])]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('span', {
     staticClass: "input-group-addon"

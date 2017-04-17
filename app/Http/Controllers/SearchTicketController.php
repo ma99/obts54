@@ -276,7 +276,8 @@ class SearchTicketController extends Controller
 					foreach ($seats as $seat) {
 						$arr_seats[] = [								
 							'seat_no' => $seat->seat_no,
-							'status'  => $seat->status 	 
+							'status'  => $seat->status,
+							'checked' => false	 
 						];
 					}
 				}
@@ -296,7 +297,8 @@ class SearchTicketController extends Controller
 			foreach ($seats as $seat) {
 				$arr_seats[] = [								
 					'seat_no' => $seat->seat_no,
-					'status'  => $seat->status 	 
+					'status'  => $seat->status,
+					'checked' => false 	 
 				];
 
 			}						
