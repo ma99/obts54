@@ -15,7 +15,7 @@ class CreateDeluxesTable extends Migration
     {
         Schema::create('ac_deluxe', function (Blueprint $table) {
             $table->increments('id');
-           $table->integer('bus_id');
+            $table->integer('bus_id');
             $table->smallInteger('total_seats');
             $table->timestamps();
         });

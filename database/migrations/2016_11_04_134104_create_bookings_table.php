@@ -17,7 +17,10 @@ class CreateBookingsTable extends Migration
             $table->string('id')->primary();
             $table->integer('schedule_id');
             $table->integer('user_id');
-            $table->tinyInteger('seats');
+            // $table->string('name');
+            // $table->smallInteger('mobile_no');
+            // $table->string('email');
+            $table->tinyInteger('seats'); 
             $table->date('date');
             $table->string('boarding_point');
             $table->string('dropping_point');

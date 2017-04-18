@@ -22,4 +22,9 @@ class Booking extends Model
     	return $this->hasMany(Seat::class);
     	//return $this->belongsTo('Schedule'); don't work this way :(
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

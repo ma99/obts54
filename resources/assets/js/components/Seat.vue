@@ -41,7 +41,7 @@
                             <label for="startDate">Select Date</label> 
                             <div id="sandbox-container">
                               <div class="input-group date">
-                                <input id="startDate" class="form-control" type="text" v-model="startDate" placeholder="select date">
+                                <input name="date" id="startDate" class="form-control" type="text" v-model="startDate" placeholder="select date">
                                 <span class="input-group-addon">
                                   <i class="glyphicon glyphicon-calendar"></i>
                                 </span>
@@ -118,7 +118,7 @@
                     <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
 
                     <!-- Modal -->
-                    <div class="modal" id="myModal" v-if="modal">
+                    <div id="modal" class="modal" v-if="modal">
                         <div class="modal-content">
                             <div class="circle">
                                 <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
@@ -467,17 +467,17 @@
       /*color: #0a0a0a;*/
     color:white;        
   }
-  #app button {       
+  #modal button {       
     height: 50px;
     margin: 10px 10px 0 0;
   }
-  #app button.col-xs-2 {
+  #modal button.col-xs-2 {
       width: 16.76666667%;          
   }
-  #app button.col-xs-offset-2 {
+  #modal button.col-xs-offset-2 {
       margin-left: 17.666667%;
   }
-  #app button.is-white {
+  #modal button.is-white {
       background-color: white;
       border-width: 0;
       color: #0a0a0a;
