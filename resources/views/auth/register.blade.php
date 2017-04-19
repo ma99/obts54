@@ -13,7 +13,8 @@
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
-                            <div class="col-md-6">
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
@@ -26,8 +27,9 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
+            
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
@@ -38,10 +40,26 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
+                            <label for="mobile_no" class="col-md-4 control-label">Mobile No.</label>
+
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></span>
+                                <input id="mobile_no" type="text" class="form-control" name="mobile_no" value="{{ old('mobile_no') }}" required>
+
+                                @if ($errors->has('mobile_no'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('mobile_no') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
-                            <div class="col-md-6">
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                                 <input id="password" type="password" class="form-control" name="password" required>
 
                                 @if ($errors->has('password'))
@@ -55,14 +73,17 @@
                         <div class="form-group">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
-                            <div class="col-md-6">
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon"><i class="fa fa-check fa-fw"></i></span>
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
+
                                 <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-pencil-square-o"></i>
                                     Register
                                 </button>
                             </div>
