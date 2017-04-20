@@ -129,7 +129,7 @@
                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                 {{ seatError }}
                             </div>
-                            <div class="row">
+                            <div class="seat_display">
                                 <div class="col-xs-offset-9">
                                   <button :disabled="true">Driver Seat</button>
                                 </div>              
@@ -416,7 +416,7 @@
       background-color: #fefefe;
       margin: 160px auto; /* 15% from the top and centered */
       /*padding: 20px;*/
-      padding: 35px 20px 2px;
+      padding: 35px 20px 30px;
       border: 1px solid #888;
       width: 89%; /* Could be more or less, depending on screen size */
   }
@@ -481,6 +481,9 @@
       background-color: white;
       border-width: 0;
       color: #0a0a0a;
+  }
+  .seat_display {
+    
   }
 /* end seat display */
 </style>
