@@ -103,7 +103,7 @@
                                         </td>
                                         <td class="table-text">
                                           <div> 
-                                            <button v-on:click.prevent="viewSeats(bus.schedule_id, bus.bus_id)" class="btn btn-success">View</button> 
+                                            <button v-on:click.prevent="viewSeats(bus.schedule_id, bus.bus_id, bus.fare)" class="btn btn-success">View</button> 
                                           </div>
                                         </td>
                                     </tr>
@@ -129,47 +129,90 @@
                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                 {{ seatError }}
                             </div>
-                            <div class="seat_display">
-                                <div class="col-xs-offset-9">
-                                  <button :disabled="true">Driver Seat</button>
-                                </div>              
-                                <button 
-                                  class="col-xs-2"
-                                  v-bind:class="{ 
-                                  active : seat.checked, 
-                                  booked: seat.status=='booked'? true : false, 
-                                  confirmed: seat.status=='confirmed'? true : false, 
-                                  empty: seat.status=='n/a'? true : false,             
-                                  'col-xs-offset-2': emptySpace(seat.seat_no) }"
-                                  v-for="seat in seatList"          
-                                  @click="toggle(seat)"           
-                                  :disabled="isDisabledSeatSelection(seat.status)"                   
-                                >               
-                                  {{ seat.seat_no }} - {{ seat.status }}
-                                </button>     
-                               <!--  <button v-for="seat in seatList">  {{ seat.seat_no }} - {{ seat.status }} </button> -->
-                            </div>
-
-                            <!-- <div id="products" class="row list-group">
-                                <div class="item col-xs-4 col-lg-4" v-for="product in products">
-                                    <div class="thumbnail">
-                                        <img class="group list-group-image" :src="product.image" :alt="product.title" />
-                                        
-                                        <div class="caption">
-                                            <h4 class="group inner list-group-item-heading">{{ product.title }}</h4>
-                                            <p class="group inner list-group-item-text">{{ product.description }}</p>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6">
-                                                    <p class="lead">${{ product.price }}</p>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6">
-                                                    <a class="btn btn-success" href="#">Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-offset-8">
+                                      <button :disabled="true">Driver Seat</button>
+                                    </div>              
+                                    <button 
+                                      class="col-xs-2"
+                                      v-bind:class="{ 
+                                      active : seat.checked, 
+                                      booked: seat.status=='booked'? true : false, 
+                                      confirmed: seat.status=='confirmed'? true : false, 
+                                      empty: seat.status=='n/a'? true : false,             
+                                      'col-xs-offset-2': emptySpace(seat.seat_no) }"
+                                      v-for="seat in seatList"          
+                                      @click="toggle(seat)"           
+                                      :disabled="isDisabledSeatSelection(seat.status)"                   
+                                    >               
+                                      {{ seat.seat_no }} - {{ seat.status }}
+                                    </button>     
+                                   <!--  <button v-for="seat in seatList">  {{ seat.seat_no }} - {{ seat.status }} </button> -->
                                 </div>
-                           </div> -->
+                              </div>
+                              <div class="col-sm-6">
+                                <div v-show="showSelectedSeatList" class="row">
+                                  <table class="table table-striped">
+                                    <thead>
+                                      <th>Sl.#</th>
+                                      <th>Seat Selected</th>
+                                      <th>Price</th>
+                                      <th>&nbsp;</th>
+                                    </thead>
+                                    <tbody>
+                                     
+                                      <tr v-for="(seat, index) in selectedSeat">
+                                      <!-- v-bind:class="totalFareForSelectedSeats(seat)" -->
+
+                                        <td class="table-text">
+                                          <div> {{ index + 1 }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                          <div> {{ seat.seat_no }} </div>
+                                        </td>
+                                        <td class="table-text">
+                                           <div> {{ seat.fare }} </div>
+                                        </td>                                         
+                                      </tr>                                      
+                                      {{ totalFareForSelectedSeats }}
+                                      <span class="total"> Total Amount {{ totalFare }} </span>
+                                    </tbody>
+                                  </table> 
+                                </div>
+
+                                <div class="row">
+                                  <form>
+                                      <div class="form-group">
+                                        <label for="name" class="control-label">Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                            <input id="name" type="text" class="form-control" name="name" required autofocus>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label for="email" class="control-label">E-Mail</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                            <input id="email" type="email" class="form-control" name="email" required>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label for="phone" class="control-label">Mobile No.</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></span>
+                                            <input id="phone" type="text" class="form-control" name="phone" required>
+                                        </div>
+                                      </div>                                    
+                                      <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                                  </form>
+                                </div>
+                                <button type="submit" class="btn btn-default">Continue</button>
+                              </div>
+                            </div>                           
                         </div>          
                     </div> 
                     
@@ -204,13 +247,15 @@
               seatNo: '',
               seatError: false,                                 
               selectedSeat: [],
-              seatList: []
+              seatList: [],
+              totalFare: 0
               // end seat display
           }
       },
       
       mounted() {
            console.log('Seat search Component ready.');
+           // this.totalFare = 0;
            this.cityList = JSON.parse(this.cities);         
            this.showDate();
          
@@ -223,13 +268,28 @@
          //this.arr.push(val);
        }
       },
-      // computed: {
-      // },
+      computed: {
+        totalFareForSelectedSeats() {          
+          var fare = 0;
+          let len = this.selectedSeat.length;
+          for (var i=0; i<len; i++){
+            fare = fare + parseInt(this.selectedSeat[i].fare, 10);
+          }
+          console.log('totalfare', fare);
+          this.totalFare = fare;          
+        },
+
+        showSelectedSeatList() {
+          let len = this.selectedSeat.length;
+          return ( len >0 ) ? true : false;
+        },
+      },
       methods: {
         close() {
-                this.modal = false;
+                this.modal = false;                
+                this.selectedSeat = [];
                 //this.query = '';
-        },
+        },        
         searchBus() {         
           console.log(this.startDate);
 
@@ -267,9 +327,10 @@
             */
         },
 
-        viewSeats(scheduleId, busId) {
+        viewSeats(scheduleId, busId, busFare) {
           console.log('schId=', scheduleId);
           console.log('busId=', busId);
+         
           this.loading = true;
           var vm = this;
           axios.get('/viewseats', {
@@ -279,6 +340,7 @@
                 date: this.startDate,
                 schedule_id: scheduleId,
                 bus_id: busId,
+                bus_fare: busFare,
               }  
             })          
             .then(function (response) {             
@@ -346,16 +408,18 @@
           seat.checked = !seat.checked;                         
               if (seat.checked) {
                 //console.log('seat checked=', seat.checked);
-                this.addSeat(seat.seat_no); // to selectedSeat array               
+                //this.addSeat(seat.seat_no); // to selectedSeat array               
+                this.addSeat(seat); // to selectedSeat array               
                 return ;
               }
               //console.log('seat NOT checked=', seat.checked);               
               this.removeSeat(seat.seat_no, seat); // to selectedSeat array                            
         },
-        addSeat(seatNo) {
+        addSeat(seat) {
           //console.log('+', seatNo);
           this.selectedSeat.push({
-          seat_no: seatNo,
+          seat_no: seat.seat_no,
+          fare: seat.fare,
           status: 'booked' //'selected'
           });
         },
@@ -381,8 +445,16 @@
           //console.log('disableSelection=', seatStatus);
           return ( seatStatus == 'booked' || 
                seatStatus == 'confirmed' || seatStatus == 'n/a' ) ? true : false;
-        }
+        }        
         // end display methods
+        // totalFareForSelectedSeats(seat) {
+        //   console.log('Seatfare=', seat.fare);
+        //   let fare;
+        //   fare = parseInt(seat.fare, 10) + this.totalFare;
+        //   this.totalFare = fare;
+        //   console.log('fare=', fare);
+        //  return fare;
+        // }
       }
       
     }              
@@ -482,8 +554,8 @@
       border-width: 0;
       color: #0a0a0a;
   }
-  .seat_display {
-    
+  #modal .row  {
+    background-color: #e5ecff;
   }
 /* end seat display */
 </style>

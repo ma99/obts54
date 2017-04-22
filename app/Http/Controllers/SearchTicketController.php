@@ -217,6 +217,7 @@ class SearchTicketController extends Controller
     {
     	$scheduleId = $this->request->input('schedule_id'); 
     	$busId = $this->request->input('bus_id'); 
+    	$busFare = $this->request->input('bus_fare'); 
 
     	$error = ['error' => 'No results found'];
 
@@ -230,11 +231,11 @@ class SearchTicketController extends Controller
 				/* seat plan */
 				if ($schedule->id == $scheduleId) {
 					//return $schedule;					
-					$seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
+					$seatsByBooking = $this->seatsByBooking($schedule, $scheduleId, $busFare);
 				 }
 				//$busId = $schedule->bus_id;
 				if ($schedule->bus_id == $busId) {
-					$seatPlanByBusId = $this->seatPlanByBusId($schedule, $busId);
+					$seatPlanByBusId = $this->seatPlanByBusId($schedule, $busId, $busFare);
 				}
 				
 			}
@@ -269,7 +270,7 @@ class SearchTicketController extends Controller
                 
     }
     
-    public function seatsByBooking($schedule, $scheduleId) {
+    public function seatsByBooking($schedule, $scheduleId, $busFare) {
     		if ( $schedule->bookings->count() ) {
     			foreach ($schedule->bookings as $booking) {
 					$seats = Seat::where('booking_id', $booking->id)->get(); //collection
@@ -277,7 +278,8 @@ class SearchTicketController extends Controller
 						$arr_seats[] = [								
 							'seat_no' => $seat->seat_no,
 							'status'  => $seat->status,
-							'checked' => false	 
+							'checked' => false,
+							'fare'	  => $busFare
 						];
 					}
 				}
@@ -288,7 +290,7 @@ class SearchTicketController extends Controller
 			 
     }
 
-    public function seatPlanByBusId($schedule, $busId) {
+    public function seatPlanByBusId($schedule, $busId, $busFare) {
     		
 			$seats = SeatPlan::where('bus_id', $busId)->get(); //collection
 			//dd($seats);
@@ -298,7 +300,8 @@ class SearchTicketController extends Controller
 				$arr_seats[] = [								
 					'seat_no' => $seat->seat_no,
 					'status'  => $seat->status,
-					'checked' => false 	 
+					'checked' => false,
+					'fare'	  => $busFare 	 
 				];
 
 			}						

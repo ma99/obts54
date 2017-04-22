@@ -12274,6 +12274,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
@@ -12296,12 +12339,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       seatNo: '',
       seatError: false,
       selectedSeat: [],
-      seatList: []
+      seatList: [],
+      totalFare: 0
       // end seat display
     };
   },
   mounted: function mounted() {
     console.log('Seat search Component ready.');
+    // this.totalFare = 0;
     this.cityList = JSON.parse(this.cities);
     this.showDate();
   },
@@ -12314,11 +12359,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //this.arr.push(val);
     }
   },
-  // computed: {
-  // },
+  computed: {
+    totalFareForSelectedSeats: function totalFareForSelectedSeats() {
+      var fare = 0;
+      var len = this.selectedSeat.length;
+      for (var i = 0; i < len; i++) {
+        fare = fare + parseInt(this.selectedSeat[i].fare, 10);
+      }
+      console.log('totalfare', fare);
+      this.totalFare = fare;
+    },
+    showSelectedSeatList: function showSelectedSeatList() {
+      var len = this.selectedSeat.length;
+      return len > 0 ? true : false;
+    }
+  },
   methods: {
     close: function close() {
       this.modal = false;
+      this.selectedSeat = [];
       //this.query = '';
     },
     searchBus: function searchBus() {
@@ -12356,9 +12415,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         */
     },
-    viewSeats: function viewSeats(scheduleId, busId) {
+    viewSeats: function viewSeats(scheduleId, busId, busFare) {
       console.log('schId=', scheduleId);
       console.log('busId=', busId);
+
       this.loading = true;
       var vm = this;
       axios.get('/viewseats', {
@@ -12367,7 +12427,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           to: this.selectedTo,
           date: this.startDate,
           schedule_id: scheduleId,
-          bus_id: busId
+          bus_id: busId,
+          bus_fare: busFare
         }
       }).then(function (response) {
         console.log(response.data);
@@ -12432,16 +12493,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       seat.checked = !seat.checked;
       if (seat.checked) {
         //console.log('seat checked=', seat.checked);
-        this.addSeat(seat.seat_no); // to selectedSeat array               
+        //this.addSeat(seat.seat_no); // to selectedSeat array               
+        this.addSeat(seat); // to selectedSeat array               
         return;
       }
       //console.log('seat NOT checked=', seat.checked);               
       this.removeSeat(seat.seat_no, seat); // to selectedSeat array                            
     },
-    addSeat: function addSeat(seatNo) {
+    addSeat: function addSeat(seat) {
       //console.log('+', seatNo);
       this.selectedSeat.push({
-        seat_no: seatNo,
+        seat_no: seat.seat_no,
+        fare: seat.fare,
         status: 'booked' //'selected'
       });
     },
@@ -12468,6 +12531,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return seatStatus == 'booked' || seatStatus == 'confirmed' || seatStatus == 'n/a' ? true : false;
     }
     // end display methods
+    // totalFareForSelectedSeats(seat) {
+    //   console.log('Seatfare=', seat.fare);
+    //   let fare;
+    //   fare = parseInt(seat.fare, 10) + this.totalFare;
+    //   this.totalFare = fare;
+    //   console.log('fare=', fare);
+    //  return fare;
+    // }
 
   }
 
@@ -17021,7 +17092,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(35)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n}\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n      display: block; \n      position: fixed; /* Stay in place */\n      z-index: 111; /* Sit on top */\n      left: 0;\n      top: 0;\n      width: 100%; /* Full width */\n      height: 100%; /* Full height */\n      overflow: auto; /* Enable scroll if needed */\n      background-color: rgb(0,0,0); /* Fallback color */\n      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n  /* Modal Content/Box */\n.modal-content {\n      background-color: #fefefe;\n      margin: 160px auto; /* 15% from the top and centered */\n      /*padding: 20px;*/\n      padding: 35px 20px 30px;\n      border: 1px solid #888;\n      width: 89%; /* Could be more or less, depending on screen size */\n}\n\n    /* circle*/\n.circle {\n      float: right;\n      margin-top: -28px;\n      position: relative;\n      width: 24px; \n      height: 24px; \n      background: #ebccd1; \n      border-radius: 12px; \n      -moz-border-radius: 15px; \n      -webkit-border-radius: 15px;\n}\n  /* The Close Button */\n.close {\n      color: #aaa;\n      /*float: right;*/\n      margin-left: 7px;\n      font-size: 20px;\n      font-weight: bold;\n      position: absolute;\n      /*margin-top: -18px;*/\n}\n.close:hover,\n  .close:focus {\n      color: black;\n      text-decoration: none;\n      cursor: pointer;\n}\n  /* seat display */\n.active {\n    background-color: green;\n}\n.booked {\n    background-color: yellow;\n}\n.confirmed {\n    background-color: red;\n}\n.empty {\n    background-color: white;\n    border-width: 0;\n      /*color: #0a0a0a;*/\n    color:white;\n}\n#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#modal button.col-xs-2 {\n      width: 16.76666667%;\n}\n#modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n}\n#modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n}\n.seat_display {\n}\n/* end seat display */\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n}\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n      display: block; \n      position: fixed; /* Stay in place */\n      z-index: 111; /* Sit on top */\n      left: 0;\n      top: 0;\n      width: 100%; /* Full width */\n      height: 100%; /* Full height */\n      overflow: auto; /* Enable scroll if needed */\n      background-color: rgb(0,0,0); /* Fallback color */\n      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n  /* Modal Content/Box */\n.modal-content {\n      background-color: #fefefe;\n      margin: 160px auto; /* 15% from the top and centered */\n      /*padding: 20px;*/\n      padding: 35px 20px 30px;\n      border: 1px solid #888;\n      width: 89%; /* Could be more or less, depending on screen size */\n}\n\n    /* circle*/\n.circle {\n      float: right;\n      margin-top: -28px;\n      position: relative;\n      width: 24px; \n      height: 24px; \n      background: #ebccd1; \n      border-radius: 12px; \n      -moz-border-radius: 15px; \n      -webkit-border-radius: 15px;\n}\n  /* The Close Button */\n.close {\n      color: #aaa;\n      /*float: right;*/\n      margin-left: 7px;\n      font-size: 20px;\n      font-weight: bold;\n      position: absolute;\n      /*margin-top: -18px;*/\n}\n.close:hover,\n  .close:focus {\n      color: black;\n      text-decoration: none;\n      cursor: pointer;\n}\n  /* seat display */\n.active {\n    background-color: green;\n}\n.booked {\n    background-color: yellow;\n}\n.confirmed {\n    background-color: red;\n}\n.empty {\n    background-color: white;\n    border-width: 0;\n      /*color: #0a0a0a;*/\n    color:white;\n}\n#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#modal button.col-xs-2 {\n      width: 16.76666667%;\n}\n#modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n}\n#modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n}\n#modal .row  {\n    background-color: #e5ecff;\n}\n/* end seat display */\n", ""]);
 
 /***/ }),
 /* 35 */
@@ -34189,7 +34260,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34423,7 +34494,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
-          _vm.viewSeats(bus.schedule_id, bus.bus_id)
+          _vm.viewSeats(bus.schedule_id, bus.bus_id, bus.fare)
         }
       }
     }, [_vm._v("View")])])])])
@@ -34480,9 +34551,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-hidden": "true"
     }
   }), _vm._v("\n                            " + _vm._s(_vm.seatError) + "\n                        ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "seat_display"
+    staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-xs-offset-9"
+    staticClass: "col-sm-6"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-offset-8"
   }, [_c('button', {
     attrs: {
       "disabled": true
@@ -34505,8 +34580,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.toggle(seat)
         }
       }
-    }, [_vm._v("               \n                              " + _vm._s(seat.seat_no) + " - " + _vm._s(seat.status) + "\n                            ")])
-  })], 2)])]) : _vm._e()])
+    }, [_vm._v("               \n                                  " + _vm._s(seat.seat_no) + " - " + _vm._s(seat.status) + "\n                                ")])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-6"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.showSelectedSeatList),
+      expression: "showSelectedSeatList"
+    }],
+    staticClass: "row"
+  }, [_c('table', {
+    staticClass: "table table-striped"
+  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_vm._l((_vm.selectedSeat), function(seat, index) {
+    return _c('tr', [_c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(index + 1) + " ")])]), _vm._v(" "), _c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(seat.seat_no) + " ")])]), _vm._v(" "), _c('td', {
+      staticClass: "table-text"
+    }, [_c('div', [_vm._v(" " + _vm._s(seat.fare) + " ")])])])
+  }), _vm._v("                                      \n                                  " + _vm._s(_vm.totalFareForSelectedSeats) + "\n                                  "), _c('span', {
+    staticClass: "total"
+  }, [_vm._v(" Total Amount " + _vm._s(_vm.totalFare) + " ")])], 2)])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Continue")])])])])]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('span', {
     staticClass: "input-group-addon"
@@ -34515,6 +34617,76 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('th', [_vm._v("SL No.")]), _vm._v(" "), _c('th', [_vm._v("Dept. Time")]), _vm._v(" "), _c('th', [_vm._v("Arr. Time")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Available Seats")]), _vm._v(" "), _c('th', [_vm._v("Fare")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Sl.#")]), _vm._v(" "), _c('th', [_vm._v("Seat Selected")]), _vm._v(" "), _c('th', [_vm._v("Price")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('form', [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group"
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "fa fa-user fa-fw"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "name",
+      "type": "text",
+      "name": "name",
+      "required": "",
+      "autofocus": ""
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("E-Mail")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group"
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "fa fa-envelope-o fa-fw"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "email",
+      "type": "email",
+      "name": "email",
+      "required": ""
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "phone"
+    }
+  }, [_vm._v("Mobile No.")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group"
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('i', {
+    staticClass: "fa fa-mobile fa-fw"
+  })]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "phone",
+      "type": "text",
+      "name": "phone",
+      "required": ""
+    }
+  })])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
