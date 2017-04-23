@@ -210,7 +210,7 @@
                                       <!-- <button type="submit" class="btn btn-default">Submit</button> -->
                                   </form>
                                 </div>
-                                <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue</button>
+                                <button v-on:click.prevent="bookSeats(bus.schedule_id, bus.bus_id, totalSeats)" class="btn btn-primary">Continue</button>
                               </div>
                             </div>                           
                         </div>          
@@ -249,11 +249,8 @@
               selectedSeat: [],
               seatList: [],
               totalFare: 0,
-              totalSeats: 0,              
+              totalSeats: 0
               // end seat display
-              scheduleId:'',
-              busId:''
-
           }
       },
       
@@ -336,9 +333,6 @@
         viewSeats(scheduleId, busId, busFare) {
           console.log('schId=', scheduleId);
           console.log('busId=', busId);
-
-          this.scheduleId = scheduleId;
-          this.busId = busId;
          
           this.loading = true;
           var vm = this;
@@ -361,18 +355,6 @@
             });
         },
 
-        seatBooking() {
-           axios.post('/seatbooking', {
-              schedule_id: this.scheduleId,
-              bus_id: this.busId,
-              total_seats: this.totalSeats,
-              selected_seats:this.selectedSeat
-            })          
-            .then(function (response) {
-               console.log(response.data)
-               // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-            });
-        },
         fetchCityToList(cityName) {
           
           this.error = false;

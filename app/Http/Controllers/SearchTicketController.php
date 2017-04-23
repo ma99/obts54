@@ -98,6 +98,18 @@ class SearchTicketController extends Controller
     }
 
 
+    public function bookSeats()
+    {
+    	$scheduleId = $this->request->input('schedule_id'); 
+    	$busId = $this->request->input('bus_id'); 
+    	$totalSeats = $this->request->input('total_seats'); 
+    	$selectedSeats[] = $this->request->input('selected_seats'); 
+    	return view('pages.home');
+    	dd($selectedSeats);
+    	return $selectedSeats;
+    	
+    }
+
     public function searchSchedules()
     {
         $from  = $this->request->input('from');        

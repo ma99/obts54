@@ -12340,8 +12340,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       seatError: false,
       selectedSeat: [],
       seatList: [],
-      totalFare: 0
+      totalFare: 0,
+      totalSeats: 0,
       // end seat display
+      scheduleId: '',
+      busId: ''
+
     };
   },
   mounted: function mounted() {
@@ -12366,8 +12370,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       for (var i = 0; i < len; i++) {
         fare = fare + parseInt(this.selectedSeat[i].fare, 10);
       }
-      console.log('totalfare', fare);
+      console.log('total fare:', fare);
+      console.log('total seats:', len);
       this.totalFare = fare;
+      this.totalSeats = len;
     },
     showSelectedSeatList: function showSelectedSeatList() {
       var len = this.selectedSeat.length;
@@ -12419,6 +12425,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log('schId=', scheduleId);
       console.log('busId=', busId);
 
+      this.scheduleId = scheduleId;
+      this.busId = busId;
+
       this.loading = true;
       var vm = this;
       axios.get('/viewseats', {
@@ -12435,6 +12444,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         response.data.error ? vm.seatError = response.data.error : vm.seatList = response.data;
         vm.loading = false;
         vm.modal = true;
+      });
+    },
+    seatBooking: function seatBooking() {
+      axios.post('/seatbooking', {
+        schedule_id: this.scheduleId,
+        bus_id: this.busId,
+        total_seats: this.totalSeats,
+        selected_seats: this.selectedSeat
+      }).then(function (response) {
+        console.log(response.data);
+        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
       });
     },
     fetchCityToList: function fetchCityToList(cityName) {
@@ -34260,7 +34280,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -34604,9 +34624,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v("                                      \n                                  " + _vm._s(_vm.totalFareForSelectedSeats) + "\n                                  "), _c('span', {
     staticClass: "total"
   }, [_vm._v(" Total Amount " + _vm._s(_vm.totalFare) + " ")])], 2)])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "type": "submit"
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.seatBooking()
+      }
     }
   }, [_vm._v("Continue")])])])])]) : _vm._e()])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
