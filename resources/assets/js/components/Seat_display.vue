@@ -31,8 +31,7 @@
       },
       
       mounted() {
-           console.log('Seat search Component ready.');
-           // this.totalFare = 0;
+           console.log('Seat search Component ready.');           
            this.cityList = JSON.parse(this.cities);         
            this.showDate();
          
@@ -71,8 +70,7 @@
       methods: {
         close() {
                 this.modal = false;                
-                this.selectedSeat = [];
-                //this.query = '';
+                this.selectedSeat = [];                
         },        
         searchBus() {         
           console.log(this.startDate);

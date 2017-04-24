@@ -12124,7 +12124,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   mounted: function mounted() {
     console.log('Seat search Component ready.');
-    // this.totalFare = 0;
     this.cityList = JSON.parse(this.cities);
     this.showDate();
   },
@@ -12162,7 +12161,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     close: function close() {
       this.modal = false;
       this.selectedSeat = [];
-      //this.query = '';
     },
     searchBus: function searchBus() {
       console.log(this.startDate);
