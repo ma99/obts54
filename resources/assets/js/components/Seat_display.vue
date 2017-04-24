@@ -58,6 +58,11 @@
           this.totalSeats = len;         
         },
 
+        isBusAvailable() {
+          let len = this.buses.length;
+          return ( len >0 ) ? true : false;  //true display table
+        },
+
         showSelectedSeatList() {
           let len = this.selectedSeat.length;
           return ( len >0 ) ? true : false;
@@ -259,7 +264,17 @@
     .btn-search {
       margin-top: 25px;
     }
+    #app .alert {
+      margin-top: 65px;
+    }
   }
+  @media (max-width: 991px) { 
+    #app .alert {
+      margin-top: 15px;
+    }
+  }
+
+  
   .loading {
     text-align: center;
   }
@@ -333,6 +348,8 @@
       /*color: #0a0a0a;*/
     color:white;        
   }
+  
+  
   #modal button {       
     height: 50px;
     margin: 10px 10px 0 0;

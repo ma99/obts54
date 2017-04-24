@@ -56,9 +56,8 @@
                     
                     </form>     
                     <div class="panel-body">
-                        <table class="table table-striped task-table">
-
-                            <!-- Table Headings -->
+                        <table v-show="isBusAvailable" class="table table-striped task-table">
+                           <!-- Table Headings -->
                             <thead>
                                 <th>SL No.</th>                                
                                 <th>Dept. Time</th>                                
@@ -101,8 +100,7 @@
                             </tbody>
                         </table>
                         <div v-show="busError" class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>                            
                             @{{ busError }}
                         </div>
                     </div>
