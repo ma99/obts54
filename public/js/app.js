@@ -12133,6 +12133,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selected: function selected(val) {
       console.log(val);
       this.fetchCityToList(val);
+      //this.fetchPickupStopList(val);   // Pickup Area List based On From City       
       //this.arr.push(val);
     }
   },
@@ -12150,7 +12151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     isBusAvailable: function isBusAvailable() {
       var len = this.buses.length;
-      return len > 0 ? true : false; //true display table
+      return len > 0 ? true : false; //true show table
     },
     showSelectedSeatList: function showSelectedSeatList() {
       var len = this.selectedSeat.length;
@@ -12223,6 +12224,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     seatBooking: function seatBooking() {
+      this.loading = true;
+      this.buses = []; // hide table
+      var vm = this;
       axios.post('/seatbooking', {
         schedule_id: this.scheduleId,
         bus_id: this.busId,
@@ -12230,6 +12234,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selected_seats: this.selectedSeat
       }).then(function (response) {
         console.log(response.data);
+        vm.loading = false;
+        vm.modal = false;
         // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
       });
     },
@@ -34056,7 +34062,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
