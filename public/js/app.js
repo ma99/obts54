@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -11231,7 +11231,8 @@ __webpack_require__(31);
  */
 
 // Vue.component('example', require('./components/Example.vue'));
-Vue.component('seat', __webpack_require__(37));
+//Vue.component('seat', require('./components/Seat.vue'));
+Vue.component('seat-display', __webpack_require__(37));
 
 var app = new Vue({
   el: '#app'
@@ -12090,233 +12091,6 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['cities'],
@@ -12587,7 +12361,7 @@ __webpack_require__(33);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(43);
+window.Vue = __webpack_require__(42);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -34260,7 +34034,7 @@ module.exports = function() {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(44)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(43)(module)))
 
 /***/ }),
 /* 37 */
@@ -34268,21 +34042,20 @@ module.exports = function() {
 
 
 /* styles */
-__webpack_require__(40)
+__webpack_require__(39)
 
 var Component = __webpack_require__(38)(
   /* script */
   __webpack_require__(30),
   /* template */
-  __webpack_require__(39),
+  null,
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Seat.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -34291,9 +34064,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-daee8fec", Component.options)
+    hotAPI.createRecord("data-v-c3bf27e6", Component.options)
   } else {
-    hotAPI.reload("data-v-daee8fec", Component.options)
+    hotAPI.reload("data-v-c3bf27e6", Component.options)
   }
 })()}
 
@@ -34361,368 +34134,6 @@ module.exports = function normalizeComponent (
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('form', [_c('div', {
-    staticClass: "col-md-3"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "cityFrom"
-    }
-  }, [_vm._v(" From")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.selected),
-      expression: "selected"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "id": "cityFrom"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "disabled": "",
-      "value": ""
-    }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.cityList), function(city) {
-    return _c('option', [_vm._v("\n                          " + _vm._s(city.name) + "\n                        ")])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-3"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "cityTo"
-    }
-  }, [_vm._v("To")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.selectedTo),
-      expression: "selectedTo"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "id": "cityTo"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.selectedTo = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [(!_vm.error) ? _c('option', {
-    attrs: {
-      "disabled": "",
-      "value": ""
-    }
-  }, [_vm._v("Please select one")]) : _vm._e(), _vm._v(" "), (_vm.error) ? _c('option', {
-    attrs: {
-      "disabled": "",
-      "value": ""
-    }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _vm._v(" "), _vm._l((_vm.cityToList), function(city) {
-    return _c('option', [_vm._v("\n                          " + _vm._s(city.arrival_city) + "                            \n                        ")])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "startDate"
-    }
-  }, [_vm._v("Select Date")]), _vm._v(" "), _c('div', {
-    attrs: {
-      "id": "sandbox-container"
-    }
-  }, [_c('div', {
-    staticClass: "input-group date"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.startDate),
-      expression: "startDate"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "date",
-      "id": "startDate",
-      "type": "text",
-      "placeholder": "select date"
-    },
-    domProps: {
-      "value": (_vm.startDate)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.startDate = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _vm._m(0)])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-2"
-  }, [_c('button', {
-    staticClass: "btn btn-primary btn-search form-control",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.searchBus($event)
-      }
-    }
-  }, [_vm._v("Search  \n                      "), _c('i', {
-    staticClass: "fa fa-search"
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('table', {
-    staticClass: "table table-striped task-table"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', [_vm._l((_vm.buses), function(bus, index) {
-    return _c('tr', [_c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(index + 1) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.departure_time) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.arrival_time) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.bus_type) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.available_seats) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(bus.fare) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_c('button', {
-      staticClass: "btn btn-success",
-      on: {
-        "click": function($event) {
-          $event.preventDefault();
-          _vm.viewSeats(bus.schedule_id, bus.bus_id, bus.fare)
-        }
-      }
-    }, [_vm._v("View")])])])])
-  }), _vm._v(" "), _c('tr', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.busError),
-      expression: "busError"
-    }],
-    staticClass: "bg-danger"
-  }, [_c('div', [_vm._v(" " + _vm._s(_vm.busError) + " ")])])], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "loading"
-  }, [_c('i', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.loading),
-      expression: "loading"
-    }],
-    staticClass: "fa fa-spinner fa-pulse fa-3x text-primary"
-  })]), _vm._v(" "), (_vm.modal) ? _c('div', {
-    staticClass: "modal",
-    attrs: {
-      "id": "modal"
-    }
-  }, [_c('div', {
-    staticClass: "modal-content"
-  }, [_c('div', {
-    staticClass: "circle"
-  }, [_c('span', {
-    staticClass: "close",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "top",
-      "title": "Press esc to close"
-    },
-    on: {
-      "click": _vm.close
-    }
-  }, [_vm._v("x")])]), _vm._v(" "), (_vm.seatError) ? _c('div', {
-    staticClass: "alert alert-danger",
-    attrs: {
-      "role": "alert"
-    }
-  }, [_c('span', {
-    staticClass: "glyphicon glyphicon-exclamation-sign",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-exclamation-circle",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v("\n                            " + _vm._s(_vm.seatError) + "\n                        ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-sm-6"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-offset-8"
-  }, [_c('button', {
-    attrs: {
-      "disabled": true
-    }
-  }, [_vm._v("Driver Seat")])]), _vm._v(" "), _vm._l((_vm.seatList), function(seat) {
-    return _c('button', {
-      staticClass: "col-xs-2",
-      class: {
-        active: seat.checked,
-          booked: seat.status == 'booked' ? true : false,
-          confirmed: seat.status == 'confirmed' ? true : false,
-          empty: seat.status == 'n/a' ? true : false,
-          'col-xs-offset-2': _vm.emptySpace(seat.seat_no)
-      },
-      attrs: {
-        "disabled": _vm.isDisabledSeatSelection(seat.status)
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggle(seat)
-        }
-      }
-    }, [_vm._v("               \n                                  " + _vm._s(seat.seat_no) + " - " + _vm._s(seat.status) + "\n                                ")])
-  })], 2)]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-6"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.showSelectedSeatList),
-      expression: "showSelectedSeatList"
-    }],
-    staticClass: "row"
-  }, [_c('table', {
-    staticClass: "table table-striped"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_vm._l((_vm.selectedSeat), function(seat, index) {
-    return _c('tr', [_c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(index + 1) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(seat.seat_no) + " ")])]), _vm._v(" "), _c('td', {
-      staticClass: "table-text"
-    }, [_c('div', [_vm._v(" " + _vm._s(seat.fare) + " ")])])])
-  }), _vm._v("                                      \n                                  " + _vm._s(_vm.totalFareForSelectedSeats) + "\n                                  "), _c('span', {
-    staticClass: "total"
-  }, [_vm._v(" Total Amount " + _vm._s(_vm.totalFare) + " ")])], 2)])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.seatBooking()
-      }
-    }
-  }, [_vm._v("Continue")])])])])]) : _vm._e()])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "glyphicon glyphicon-calendar"
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("SL No.")]), _vm._v(" "), _c('th', [_vm._v("Dept. Time")]), _vm._v(" "), _c('th', [_vm._v("Arr. Time")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Available Seats")]), _vm._v(" "), _c('th', [_vm._v("Fare")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("Sl.#")]), _vm._v(" "), _c('th', [_vm._v("Seat Selected")]), _vm._v(" "), _c('th', [_vm._v("Price")]), _vm._v(" "), _c('th', [_vm._v(" ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
-  }, [_c('form', [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "control-label",
-    attrs: {
-      "for": "name"
-    }
-  }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
-    staticClass: "input-group"
-  }, [_c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "fa fa-user fa-fw"
-  })]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "name",
-      "type": "text",
-      "name": "name",
-      "required": "",
-      "autofocus": ""
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "control-label",
-    attrs: {
-      "for": "email"
-    }
-  }, [_vm._v("E-Mail")]), _vm._v(" "), _c('div', {
-    staticClass: "input-group"
-  }, [_c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "fa fa-envelope-o fa-fw"
-  })]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "email",
-      "type": "email",
-      "name": "email",
-      "required": ""
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "control-label",
-    attrs: {
-      "for": "phone"
-    }
-  }, [_vm._v("Mobile No.")]), _vm._v(" "), _c('div', {
-    staticClass: "input-group"
-  }, [_c('span', {
-    staticClass: "input-group-addon"
-  }, [_c('i', {
-    staticClass: "fa fa-mobile fa-fw"
-  })]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "phone",
-      "type": "text",
-      "name": "phone",
-      "required": ""
-    }
-  })])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-daee8fec", module.exports)
-  }
-}
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
@@ -34730,13 +34141,13 @@ var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(41)("7e20178c", content, false);
+var update = __webpack_require__(40)("7b442e70", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-daee8fec\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -34746,7 +34157,7 @@ if(false) {
 }
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -34765,7 +34176,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(42)
+var listToStyles = __webpack_require__(41)
 
 /*
 type StyleObject = {
@@ -34967,7 +34378,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /**
@@ -35000,7 +34411,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44328,7 +43739,7 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(9)))
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -44356,7 +43767,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);

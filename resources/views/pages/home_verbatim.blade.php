@@ -6,6 +6,8 @@
         welcome to home page of obts
      {{--  <seat cities= "{{ $cities }}" ></seat>        --}}
       <seat-display cities= "{{ $cities }}" inline-template>
+      	@verbatim
+		    
                 <div>
                     <form>
                       <div class="col-md-3">
@@ -15,7 +17,7 @@
                           <select v-model="selected" class="form-control" id="cityFrom">
                             <option disabled value="">Please select one</option>
                             <option v-for="city in cityList">
-                              @{{ city.name }}
+                              {{ city.name }}
                             </option>                           
                           </select>
                         </div>
@@ -26,9 +28,9 @@
                           <label for="cityTo">To</label>  
                           <select v-model="selectedTo" class="form-control" id="cityTo">
                             <option v-if="!error" disabled value="">Please select one</option>
-                            <option v-if="error" disabled value="">@{{ error }}</option>
+                            <option v-if="error" disabled value="">{{ error }}</option>
                             <option v-for="city in cityToList">
-                              @{{ city.arrival_city }}                            
+                              {{ city.arrival_city }}                            
                             </option>                          
                           </select>                         
                         </div>
@@ -74,23 +76,23 @@
                             <tbody>
                                 <tr v-for="(bus, index) in buses">
                                     <td class="table-text">
-                                      <div> @{{ index + 1 }} </div>
+                                      <div> {{ index + 1 }} </div>
                                     </td>
 
                                     <td class="table-text">
-                                      <div> @{{ bus.departure_time }} </div>
+                                      <div> {{ bus.departure_time }} </div>
                                     </td>
                                     <td class="table-text">
-                                      <div> @{{ bus.arrival_time }} </div>
+                                      <div> {{ bus.arrival_time }} </div>
                                     </td>
                                     <td class="table-text">
-                                      <div> @{{ bus.bus_type }} </div>
+                                      <div> {{ bus.bus_type }} </div>
                                     </td>
                                     <td class="table-text">
-                                      <div> @{{ bus.available_seats }} </div>
+                                      <div> {{ bus.available_seats }} </div>
                                     </td>
                                     <td class="table-text">
-                                      <div> @{{ bus.fare }} </div>
+                                      <div> {{ bus.fare }} </div>
                                     </td>
                                     <td class="table-text">
                                       <div> 
@@ -103,7 +105,7 @@
                         <div v-show="busError" class="alert alert-danger" role="alert">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                            @{{ busError }}
+                            {{ busError }}
                         </div>
                     </div>
                     <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
@@ -118,7 +120,7 @@
                             <div class="alert alert-danger" role="alert" v-if="seatError">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                @{{ seatError }}
+                                {{ seatError }}
                             </div>
                             <div class="row">
                               <div class="col-sm-6">
@@ -138,7 +140,7 @@
                                       @click="toggle(seat)"           
                                       :disabled="isDisabledSeatSelection(seat.status)"                   
                                     >               
-                                      @{{ seat.seat_no }} - @{{ seat.status }}
+                                      {{ seat.seat_no }} - {{ seat.status }}
                                     </button> 
                                 </div>
                               </div>
@@ -154,19 +156,19 @@
                                     <tbody>
                                       <tr v-for="(seat, index) in selectedSeat">
                                         <td class="table-text">
-                                          <div> @{{ index + 1 }} </div>
+                                          <div> {{ index + 1 }} </div>
                                         </td>
                                         <td class="table-text">
-                                          <div> @{{ seat.seat_no }} </div>
+                                          <div> {{ seat.seat_no }} </div>
                                         </td>
                                         <td class="table-text">
-                                           <div> @{{ seat.fare }} </div>
+                                           <div> {{ seat.fare }} </div>
                                         </td>                                         
                                       </tr>                                      
-                                      @{{ totalFareForSelectedSeats }}                                       
+                                      {{ totalFareForSelectedSeats }}                                       
                                     </tbody>
                                   </table> 
-                                  <span class="total"> Total Amount @{{ totalFare }} </span>
+                                  <span class="total"> Total Amount {{ totalFare }} </span>
                                 </div>
 
                                 <div class="row">
@@ -202,7 +204,7 @@
                         </div>          
                     </div> 
                   </div>  
-		
+		@endverbatim
       </seat-display>       
     </div>
 </div>
