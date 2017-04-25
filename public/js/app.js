@@ -12133,7 +12133,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selected: function selected(val) {
       console.log(val);
       this.fetchCityToList(val);
-      //this.fetchPickupStopList(val);   // Pickup Area List based On From City       
+      //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
       //this.arr.push(val);
     }
   },
@@ -12228,10 +12228,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.buses = []; // hide table
       var vm = this;
       axios.post('/seatbooking', {
-        schedule_id: this.scheduleId,
         bus_id: this.busId,
+        date: this.startDate,
+        schedule_id: this.scheduleId,
+        selected_seats: this.selectedSeat,
         total_seats: this.totalSeats,
-        selected_seats: this.selectedSeat
+        total_fare: this.totalFare
       }).then(function (response) {
         console.log(response.data);
         vm.selectedSeat = [];
@@ -12260,7 +12262,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       $('#sandbox-container .input-group.date').datepicker({
         format: 'dd-mm-yyyy',
-        startDate: '0d'
+        startDate: '0d',
+        todayHighlight: true,
+        autoclose: true
       }).on("changeDate", function () {
         vm.startDate = $('#sandbox-container #startDate').val();
       });
@@ -34063,7 +34067,7 @@ var Component = __webpack_require__(38)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */

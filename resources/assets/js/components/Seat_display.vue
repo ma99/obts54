@@ -147,11 +147,12 @@
           this.buses = []; // hide table
           var vm = this;
           axios.post('/seatbooking', {
-              schedule_id: this.scheduleId,
               bus_id: this.busId,
+              date: this.startDate,
+              schedule_id: this.scheduleId,
+              selected_seats:this.selectedSeat,
               total_seats: this.totalSeats,
-              total_fare: this.totalFare,
-              selected_seats:this.selectedSeat
+              total_fare: this.totalFare
           })          
           .then(function (response) {
                console.log(response.data)
@@ -182,7 +183,9 @@
           var vm = this;
           $('#sandbox-container .input-group.date').datepicker({
                         format: 'dd-mm-yyyy',                        
-                        startDate: '0d'                     
+                        startDate: '0d',
+                        todayHighlight: true,
+                        autoclose: true
                     }).on("changeDate", () => {vm.startDate = $('#sandbox-container #startDate').val()});
 
         },
