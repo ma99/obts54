@@ -20,9 +20,10 @@ class CreateBookingsTable extends Migration
             // $table->string('name');
             // $table->smallInteger('mobile_no');
             // $table->string('email');
-            $table->tinyInteger('seats'); 
+            $table->tinyInteger('seats');
+            $table->float('amount', 5, 2); 
             $table->date('date');
-            $table->string('boarding_point');
+            $table->string('pickup_point');
             $table->string('dropping_point');
             $table->timestamps();
         });

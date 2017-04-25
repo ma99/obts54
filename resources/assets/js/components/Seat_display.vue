@@ -41,12 +41,12 @@
        selected(val) {
           console.log(val);
           this.fetchCityToList(val);          
-          //this.fetchPickupStopList(val);   // Pickup Area List based On From City       
+          //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
          //this.arr.push(val);
        },
        /*selectedTo(val) {
           console.log(val);
-          this.fetchDropingStopList(val);   // Drop Area List based On To City
+          this.fetchDropingPointList(val);   // Drop Area List based On To City
        }*/
       },
       computed: {
@@ -150,10 +150,12 @@
               schedule_id: this.scheduleId,
               bus_id: this.busId,
               total_seats: this.totalSeats,
+              total_fare: this.totalFare,
               selected_seats:this.selectedSeat
           })          
           .then(function (response) {
                console.log(response.data)
+               vm.selectedSeat= [];
                vm.loading = false;
                vm.modal = false;
                // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
