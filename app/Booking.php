@@ -11,6 +11,10 @@ class Booking extends Model
    // protected $primaryKey = 'column_name';
     public $incrementing = false; 
 
+    protected $fillable = [
+        'id','schedule_id', 'seats', 'amount', 'date', 'pickup_point', 'dropping_point',
+    ];
+
     public function schedule()
     {
     	return $this->belongsTo(Schedule::class);

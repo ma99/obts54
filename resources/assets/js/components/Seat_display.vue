@@ -25,7 +25,8 @@
               totalSeats: 0,              
               // end seat display
               scheduleId:'',
-              busId:''
+              busId:'',
+              guestUser: true
 
           }
       },

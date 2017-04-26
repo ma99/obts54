@@ -7,6 +7,9 @@
      {{--  <seat cities= "{{ $cities }}" ></seat>        --}}
       <seat-display cities= "{{ $cities }}" inline-template>
                 <div>
+                    @if (auth()->check())
+                    <div v-show="false">  @{{ guestUser = false }} </div>
+                    @endif
                     <form>
                       <div class="col-md-3">
                         <div class="form-group">
@@ -166,10 +169,11 @@
                                   </table> 
                                   <span class="total"> Total Amount @{{ totalFare }} </span>
                                 </div>
-
+                                
                                 <div class="row">
                                   <form>
-                                      <div class="form-group">
+                                     {{ csrf_field() }} 
+                                      <div v-show="guestUser" class="form-group">
                                         <label for="name" class="control-label">Name</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
@@ -177,7 +181,7 @@
                                         </div>
                                       </div>
                                       
-                                      <div class="form-group">
+                                      <div v-show="guestUser" class="form-group">
                                         <label for="email" class="control-label">E-Mail</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
@@ -185,16 +189,19 @@
                                         </div>
                                       </div>
                                       
-                                      <div class="form-group">
+                                      <div v-show="guestUser" class="form-group">
                                         <label for="phone" class="control-label">Mobile No.</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></span>
                                             <input id="phone" type="text" class="form-control" name="phone" required>
                                         </div>
-                                      </div>                                      
+                                      </div>
+                                      <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue
+                                      </button>                                      
                                   </form>
                                 </div>
-                                <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue</button>
+                                {{-- <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue
+                                </button> --}}
                               </div>
                             </div>                           
                         </div>          
