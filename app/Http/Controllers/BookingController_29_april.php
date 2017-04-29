@@ -47,60 +47,30 @@ class BookingController extends Controller
 
             $date = date("Y-m-d", strtotime($date));            
             //return 'success';
-
-            // Storing Guest User Info 
-            //$guestUser = GuestUser::find($phone);  // user not available in table
-            $guestUser = GuestUser::where('phone', $phone)->first();  // user not available in table
-            if ( $guestUser ) {
-                $guestUser->delete();
-                GuestUser::create([
-                    'name' => $name,
-                    'email' => $email,
-                    'phone' => $phone,           
-                    // 'booking_id' => $bookingId,
-                    // 'schedule_id' => $scheduleId,
-                    // 'seats' => $totalSeats,
-                    // 'amount' => $totalFare,
-                    // 'date' => $date,
-                    // 'pickup_point' => 'AAA',
-                    // 'dropping_point' => 'BBB',
-                ]);
-            }
-            else {
-                GuestUser::create([
-                    'name' => $name,
-                    'email' => $email,
-                    'phone' => $phone,
-                ]);
-
-            }
-
+            // GuestUser::create([
+            //     'name' => $name,
+            //     'email' => $email,
+            //     'phone' => $phone,           
+            //     'booking_id' => $bookingId,
+            //     'schedule_id' => $scheduleId,
+            //     'seats' => $totalSeats,
+            //     'amount' => $totalFare,
+            //     'date' => $date,
+            //     'pickup_point' => 'AAA',
+            //     'dropping_point' => 'BBB',
+            // ]);
             //return 'success';
        // }
-
-        //****storing booking info corrosponding guest user ***
-            //Booking::create([            
-            GuestUser::bookings()->create([            
-                'id' => $bookingId,
-                'schedule_id' => $scheduleId,
-                'user_id' => $phone, // guest phn as user id
-                'seats' => $totalSeats,
-                'amount' => $totalFare,
-                'date' => $date,
-                'pickup_point' => 'AAA',
-                'dropping_point' => 'BBB',
-            ]);
-
        // $seatNo = '';
         $selectedSeats = json_decode(json_encode($selectedSeats), FALSE); // array to object
         $seatNo = '';
         foreach ($selectedSeats as $seat ) {
            $seatNo = $seatNo .' '. $seat->seat_no;
-            Seat::create([
-                'booking_id' => $bookingId,
-                'seat_no' => $seat->seat_no,
-                'status' => $seat->status,
-                ]);
+            // Seat::create([
+            //     'booking_id' => $bookingId,
+            //     'seat_no' => $seat->seat_no,
+            //     'status' => $seat->status,
+            //     ]);
         }
         //return $seatNo;
         $seats = trim($seatNo);

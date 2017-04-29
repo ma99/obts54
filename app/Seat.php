@@ -14,8 +14,8 @@ class Seat extends Model
     	return $this->belongsTo(Booking::class);
     }
 
-    public function guest_booking()
-    {
-    	return $this->belongsTo(GuestUser::class);
-    }
+    // public function guest_booking()
+    // {
+    // 	return $this->belongsTo(GuestUser::class);
+    // }
 }

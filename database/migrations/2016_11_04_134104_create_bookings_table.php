@@ -16,7 +16,8 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->integer('schedule_id');
-            $table->integer('user_id');
+            //$table->integer('user_id');
+            $table->string('user_id', 25);
             // $table->string('name');
             // $table->smallInteger('mobile_no');
             // $table->string('email');

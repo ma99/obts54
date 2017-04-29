@@ -12,7 +12,7 @@ class Booking extends Model
     public $incrementing = false; 
 
     protected $fillable = [
-        'id','schedule_id', 'seats', 'amount', 'date', 'pickup_point', 'dropping_point',
+        'id', 'user_id', 'schedule_id', 'seats', 'amount', 'date', 'pickup_point', 'dropping_point',
     ];
 
     public function schedule()
@@ -30,5 +30,10 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function guest_user()
+    {
+        return $this->belongsTo(GuestUser::class, 'user_id', 'phone'); // user_id of booking table link with phone column of guest_users table
     }
 }
