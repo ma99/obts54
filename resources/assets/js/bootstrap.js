@@ -27,12 +27,15 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
+import Form from './utilities/Form';
+
 window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN': window.Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest'
 };
 
 require('bootstrap-datepicker');
+window.Form = Form;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

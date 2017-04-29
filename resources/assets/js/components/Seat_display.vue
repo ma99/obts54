@@ -26,8 +26,19 @@
               // end seat display
               scheduleId:'',
               busId:'',
-              guestUser: true
-
+              guestUser: true,              
+              form: new Form({  //data as object
+                name: '',
+                email:'',
+                phone:'',
+                //non form data
+                bus_id: '',
+                date: '',
+                schedule_id: '',
+                selected_seats: '',
+                total_seats: '',
+                total_fare: ''
+              })
           }
       },
       
@@ -44,7 +55,7 @@
           this.fetchCityToList(val);          
           //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
          //this.arr.push(val);
-       },
+       },       
        /*selectedTo(val) {
           console.log(val);
           this.fetchDropingPointList(val);   // Drop Area List based On To City
@@ -61,12 +72,22 @@
           console.log('total seats:', len);
           this.totalFare = fare; 
           this.totalSeats = len;         
-        },
+        },        
+        
 
         isBusAvailable() {
           let len = this.buses.length;
           return ( len >0 ) ? true : false;  //true show table
         },
+
+        isDisabled(){
+          //return ( this.selected=='' || this.selectedTo=='' || this.startDate='' ) ? true : false;
+          // if ( this.selected == "" || this.selectedTo == "" || this.startDate =='' ){
+          //   return true;
+          // }
+          // return false ;
+          return ( this.selected == "" || this.selectedTo == "" || this.startDate =='' ) ? true : false;
+       },
 
         showSelectedSeatList() {
           let len = this.selectedSeat.length;
@@ -75,7 +96,8 @@
       },
       methods: {
         close() {
-                this.modal = false;                
+                this.modal = false;
+                this.loading = false;                
                 this.selectedSeat = [];                
         },        
         searchBus() {         
@@ -146,7 +168,26 @@
         seatBooking() {
           this.loading = true;
           this.buses = []; // hide table
-          var vm = this;
+          var vm = this;  
+          // non form data  
+          this.form.bus_id = this.busId;
+          this.form.date = this.startDate;
+          this.form.schedule_id = this.scheduleId;
+          this.form.selected_seats = this.selectedSeat;
+          this.form.total_seats = this.totalSeats;
+          this.form.total_fare = this.totalFare;       
+
+          this.form.post('/seatbooking')
+                //.then(response => alert('Wahoo!'));
+                .then(function (response) {
+                 //console.log(response.data)
+                 vm.selectedSeat= [];
+                 vm.loading = false;
+                 vm.modal = false;
+                 // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+          });
+          
+          /*
           axios.post('/seatbooking', {
               bus_id: this.busId,
               date: this.startDate,
@@ -162,6 +203,7 @@
                vm.modal = false;
                // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
           });
+          */
         },
         fetchCityToList(cityName) {
           
@@ -288,6 +330,7 @@
     }
   }
 
+  /*[v-cloak] { display:none; }*/
   
   .loading {
     text-align: center;
@@ -381,6 +424,6 @@
   }
   #modal .row  {
     background-color: #e5ecff;
-  }
+  }  
 /* end seat display */
 </style>
