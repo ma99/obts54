@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class GuestUser extends Model
 {
 	use Notifiable;
-    protected $primaryKey = 'phone'; // or null
-    public $incrementing = false;
-    
 	protected $fillable = [
         'name', 'email', 'phone',
     ];
