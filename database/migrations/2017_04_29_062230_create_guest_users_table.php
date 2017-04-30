@@ -17,7 +17,7 @@ class CreateGuestUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->string('phone', 25)->primary();
+            $table->string('phone', 25);
             // $table->string('booking_id');
             // $table->integer('schedule_id');
             // //$table->integer('user_id');

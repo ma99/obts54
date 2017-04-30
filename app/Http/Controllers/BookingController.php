@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\GuestUser;
+use App\Booking;
 use App\Seat;
 
 
@@ -24,8 +25,61 @@ class BookingController extends Controller
 
     public function store()
     {
+        // $user = false;
+
+        // if ( auth()->check() ) {
+        //     $user = true;
+        // }
+        // For Registered USER
+        if ( auth()->check() ) {
+            $scheduleId = $this->request->input('schedule_id'); 
+            $totalSeats = $this->request->input('total_seats'); 
+            $totalFare = (float) $this->request->input('total_fare'); 
+            $date = $this->request->input('date');
+            $selectedSeats = $this->request->input('selected_seats'); //
+            $dt = date_format(date_create($date),"Ymd");        
+            $bookingId = strtoupper(bin2hex(random_bytes(4)));            
+
+            $date = date("Y-m-d", strtotime($date));    
+
+            $this->request->user()->bookings()->create([            
+                'id' => $bookingId,
+                'schedule_id' => $scheduleId,
+                'seats' => $totalSeats,
+                'amount' => $totalFare,
+                'date' => $date,
+                'pickup_point' => 'AAA',
+                'dropping_point' => 'BBB',
+            ]);
+
+            $selectedSeats = json_decode(json_encode($selectedSeats), FALSE); // array to object
+            $seatNo = '';
+            foreach ($selectedSeats as $seat ) {
+               $seatNo = $seatNo .' '. $seat->seat_no;
+                Seat::create([
+                    'booking_id' => $bookingId,
+                    'seat_no' => $seat->seat_no,
+                    'status' => $seat->status,
+                    ]);
+            }
+            //return $seatNo;
+            $seats = trim($seatNo);
+
+            return response()->json([
+                'booking_id' => $bookingId,
+                //'schedule_id' => $scheduleId,
+                'seats' => $totalSeats,
+                'seat_no' => $seats,
+                'amount' => $totalFare,
+                'date' => $date,
+                'pickup_point' => 'AAA',
+                'dropping_point' => 'BBB',
+            ]);
+
+        }
         
-       // if($this->request->ajax()) {
+        //**** For GUEST user      
+
             $this->validate($this->request, [
                 'name' => 'required',
                 "email" => 'required',
@@ -48,22 +102,14 @@ class BookingController extends Controller
             $date = date("Y-m-d", strtotime($date));            
             //return 'success';
 
-            // Storing Guest User Info 
-            //$guestUser = GuestUser::find($phone);  // user not available in table
-            $guestUser = GuestUser::where('phone', $phone)->first();  // user not available in table
-            if ( $guestUser ) {
-                $guestUser->delete();
+            // Storing Guest User Info             
+            $guestUserIsAvailable = GuestUser::where('phone', $phone)->first();  // user available or not in guest_user table
+            if ( $guestUserIsAvailable ) {
+                $guestUserIsAvailable->delete();
                 GuestUser::create([
                     'name' => $name,
                     'email' => $email,
-                    'phone' => $phone,           
-                    // 'booking_id' => $bookingId,
-                    // 'schedule_id' => $scheduleId,
-                    // 'seats' => $totalSeats,
-                    // 'amount' => $totalFare,
-                    // 'date' => $date,
-                    // 'pickup_point' => 'AAA',
-                    // 'dropping_point' => 'BBB',
+                    'phone' => $phone, 
                 ]);
             }
             else {
@@ -72,15 +118,13 @@ class BookingController extends Controller
                     'email' => $email,
                     'phone' => $phone,
                 ]);
-
             }
 
-            //return 'success';
-       // }
+            
 
         //****storing booking info corrosponding guest user ***
-            //Booking::create([            
-            GuestUser::bookings()->create([            
+            //GuestUser::bookings()->create([            
+            Booking::create([            
                 'id' => $bookingId,
                 'schedule_id' => $scheduleId,
                 'user_id' => $phone, // guest phn as user id
@@ -91,35 +135,35 @@ class BookingController extends Controller
                 'dropping_point' => 'BBB',
             ]);
 
-       // $seatNo = '';
-        $selectedSeats = json_decode(json_encode($selectedSeats), FALSE); // array to object
-        $seatNo = '';
-        foreach ($selectedSeats as $seat ) {
-           $seatNo = $seatNo .' '. $seat->seat_no;
-            Seat::create([
-                'booking_id' => $bookingId,
-                'seat_no' => $seat->seat_no,
-                'status' => $seat->status,
-                ]);
-        }
-        //return $seatNo;
-        $seats = trim($seatNo);
+           
+            /** User + Guest User **/
 
-        return response()->json([
-            // 'name' => 'Abigail',
-            // 'state' => 'CA'
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,           
-            'booking_id' => $bookingId,
-            //'schedule_id' => $scheduleId,
-            'seats' => $totalSeats,
-            'seat_no' => $seats,
-            'amount' => $totalFare,
-            'date' => $date,
-            'pickup_point' => 'AAA',
-            'dropping_point' => 'BBB',
-        ]);
+            $selectedSeats = json_decode(json_encode($selectedSeats), FALSE); // array to object
+            $seatNo = '';
+            foreach ($selectedSeats as $seat ) {
+               $seatNo = $seatNo .' '. $seat->seat_no;
+                Seat::create([
+                    'booking_id' => $bookingId,
+                    'seat_no' => $seat->seat_no,
+                    'status' => $seat->status,
+                    ]);
+            }
+            //return $seatNo;
+            $seats = trim($seatNo);
+
+            return response()->json([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,           
+                'booking_id' => $bookingId,
+                //'schedule_id' => $scheduleId,
+                'seats' => $totalSeats,
+                'seat_no' => $seats,
+                'amount' => $totalFare,
+                'date' => $date,
+                'pickup_point' => 'AAA',
+                'dropping_point' => 'BBB',
+            ]);
 
         // for registered user
     	/*if($this->request->ajax()) {

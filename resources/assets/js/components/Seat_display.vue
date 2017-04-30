@@ -26,7 +26,7 @@
               // end seat display
               scheduleId:'',
               busId:'',
-              guestUser: true,              
+              //guestUser: true,              
               form: new Form({  //data as object
                 name: '',
                 email:'',
@@ -89,7 +89,8 @@
           return ( this.selected == "" || this.selectedTo == "" || this.startDate =='' ) ? true : false;
        },
 
-        showSelectedSeatList() {
+        //showSelectedSeatList() {
+        isSeatSelected() {
           let len = this.selectedSeat.length;
           return ( len >0 ) ? true : false;
         },
@@ -165,7 +166,7 @@
             });
         },
 
-        seatBooking() {
+        seatBookingByGuest() {
           this.loading = true;
           this.buses = []; // hide table
           var vm = this;  
@@ -205,6 +206,30 @@
           });
           */
         },
+        seatBookingByUser() {
+          this.loading = true;
+          this.buses = []; // hide table
+          var vm = this;            
+          
+          
+          axios.post('/seatbooking', {
+              bus_id: this.busId,
+              date: this.startDate,
+              schedule_id: this.scheduleId,
+              selected_seats:this.selectedSeat,
+              total_seats: this.totalSeats,
+              total_fare: this.totalFare
+          })          
+          .then(function (response) {
+               console.log(response.data)
+               vm.selectedSeat= [];
+               vm.loading = false;
+               vm.modal = false;
+               // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+          });
+          
+        },
+
         fetchCityToList(cityName) {
           
           this.error = false;
