@@ -43,10 +43,16 @@ window.Form = Form;
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
+import Echo from "laravel-echo"
+	window.Echo = new Echo({
+	    broadcaster: 'pusher',
+	    key: '98b9f6229a65f62bb1da'
+	});
+	
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
