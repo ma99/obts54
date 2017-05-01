@@ -191,7 +191,7 @@
 </div>
 @endsection
 @section('scripts')
-    <script> 
+   {{--  <script> 
             // Briding with broadcaster
             // import Echo from "laravel-echo"
             // window.Echo = new Echo({
@@ -212,10 +212,10 @@
             //         console.log(notification.name);
             //         console.log(notification.email);
             // });
-          Echo.channel('channel.1')
-              .listen('SeatStatusUpdatedEvent', (e) => {
-                  console.log(e);
-              });  
+          // Echo.channel('mychannel.1')
+          //     .listen('SeatStatusUpdatedEvent', function(e) {
+          //         console.log(e.seat, e.scheduleId);
+          //     });  
             
-        </script> 
+        </script>  --}}
 @endsection  

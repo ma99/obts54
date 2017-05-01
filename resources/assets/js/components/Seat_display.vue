@@ -46,9 +46,14 @@
            console.log('Seat search Component ready.');           
            this.cityList = JSON.parse(this.cities);         
            this.showDate();
-         
+           //
+           // Echo.channel('mychannel.1')
+           //    .listen('SeatStatusUpdatedEvent', function(e) {
+           //        console.log(e.seat, e.scheduleId);
+           //    });
+            Echo.channel('mychannel.1')
+              .listen('SeatStatusUpdatedEvent', this.updateSeatStatus); 
       },
-
       watch: {
        selected(val) {
           console.log(val);
@@ -100,6 +105,28 @@
                 this.modal = false;
                 this.loading = false;                
                 this.selectedSeat = [];                
+        },
+        updateSeatStatus(evnt) {          
+          var seatNo = evnt.seat.seat_no;
+          console.log('seaaatno=', seatNo);
+          var vm = this;
+          if ( this.scheduleId == evnt.scheduleId && this.startDate == evnt.date) {
+            
+              var indx = vm.seatList.findIndex(function(seat){ 
+                // here 'seat' is array object of selectedSeat array
+                return seat.seat_no == seatNo;
+              });
+
+              this.seatList[indx].status = "booked";
+
+
+            
+          // this.seatList.push({
+          //     seat_no: seat.seat_no,              
+          //     status: seat.status
+          // });
+          }
+          console.log(evnt.seat.seat_no, evnt.scheduleId, evnt.date);
         },        
         searchBus() {         
           console.log(this.startDate);

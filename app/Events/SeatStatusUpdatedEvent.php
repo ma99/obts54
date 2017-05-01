@@ -15,10 +15,15 @@ class SeatStatusUpdatedEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $seat;
+    public $scheduleId;
+    public $date;
 
-    public function __construct(Seat $seat)
+
+    public function __construct($seat, $scheduleId, $date)
     {
         $this->seat = $seat;
+        $this->scheduleId = $scheduleId;
+        $this->date = $date;
     }
 
     /**
@@ -28,6 +33,6 @@ class SeatStatusUpdatedEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return Channel('channel.1');
+        return new Channel('mychannel.1');
     }
 }

@@ -40,7 +40,7 @@ class BookingController extends Controller
             $selectedSeats = $this->request->input('selected_seats'); //
             $dt = date_format(date_create($date),"Ymd");        
             $bookingId = strtoupper(bin2hex(random_bytes(4)));            
-
+            
             $date = date("Y-m-d", strtotime($date));    
 
             $this->request->user()->bookings()->create([            
@@ -62,6 +62,7 @@ class BookingController extends Controller
                     'seat_no' => $seat->seat_no,
                     'status' => $seat->status,
                     ]);
+                broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $date)); //->toOthers();
             }
             //return $seatNo;
             $seats = trim($seatNo);
@@ -143,7 +144,7 @@ class BookingController extends Controller
             $seatNo = '';
             foreach ($selectedSeats as $seat ) {
                $seatNo = $seatNo .' '. $seat->seat_no;
-               $seat = Seat::create([
+               Seat::create([
                     'booking_id' => $bookingId,
                     'seat_no' => $seat->seat_no,
                     'status' => $seat->status,
