@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\GuestUser;
+use App\Events\SeatStatusUpdatedEvent;
 use App\Booking;
 use App\Seat;
 
@@ -142,11 +143,13 @@ class BookingController extends Controller
             $seatNo = '';
             foreach ($selectedSeats as $seat ) {
                $seatNo = $seatNo .' '. $seat->seat_no;
-                Seat::create([
+               $seat = Seat::create([
                     'booking_id' => $bookingId,
                     'seat_no' => $seat->seat_no,
                     'status' => $seat->status,
                     ]);
+                // fire broadcast event 
+                broadcast(new SeatStatusUpdatedEvent($seat))->toOthers();
             }
             //return $seatNo;
             $seats = trim($seatNo);
