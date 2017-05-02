@@ -26,17 +26,14 @@ class BookingController extends Controller
 
     public function store()
     {
-        // $user = false;
-
-        // if ( auth()->check() ) {
-        //     $user = true;
-        // }
+        
         // For Registered USER
+        //(Auth::check()
         if ( auth()->check() ) {
             $scheduleId = $this->request->input('schedule_id'); 
             $totalSeats = $this->request->input('total_seats'); 
             $totalFare = (float) $this->request->input('total_fare'); 
-            $date = $this->request->input('date');
+            $date = $travelDate = $this->request->input('date');
             $selectedSeats = $this->request->input('selected_seats'); //
             $dt = date_format(date_create($date),"Ymd");        
             $bookingId = strtoupper(bin2hex(random_bytes(4)));            
@@ -62,7 +59,7 @@ class BookingController extends Controller
                     'seat_no' => $seat->seat_no,
                     'status' => $seat->status,
                     ]);
-                broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $date)); //->toOthers();
+                broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $travelDate))->toOthers();
             }
             //return $seatNo;
             $seats = trim($seatNo);
@@ -95,7 +92,7 @@ class BookingController extends Controller
             $scheduleId = $this->request->input('schedule_id'); 
             $totalSeats = $this->request->input('total_seats'); 
             $totalFare = (float) $this->request->input('total_fare'); 
-            $date = $this->request->input('date');
+            $date = $travelDate = $this->request->input('date');
             $selectedSeats = $this->request->input('selected_seats'); //
 
             $dt = date_format(date_create($date),"Ymd");        
@@ -150,7 +147,7 @@ class BookingController extends Controller
                     'status' => $seat->status,
                     ]);
                 // fire broadcast event 
-                broadcast(new SeatStatusUpdatedEvent($seat))->toOthers();
+                broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $travelDate))->toOthers();
             }
             //return $seatNo;
             $seats = trim($seatNo);
@@ -168,50 +165,6 @@ class BookingController extends Controller
                 'pickup_point' => 'AAA',
                 'dropping_point' => 'BBB',
             ]);
-
-        // for registered user
-    	/*if($this->request->ajax()) {
-            //$busId = $this->request->input('bus_id'); 
-            $scheduleId = $this->request->input('schedule_id'); 
-            $date = $this->request->input('date');
-        	$totalSeats = $this->request->input('total_seats'); 
-        	$totalFare = (float) $this->request->input('total_fare'); 
-        	$selectedSeats[] = $this->request->input('selected_seats');
-
-
-            $dt = date_format(date_create($date),"Ymd");        
-            $bookingId = strtoupper(bin2hex(random_bytes(4)));
-
-            $date = date("Y-m-d", strtotime($date));            
-            //return 'success';
-            $this->request->user()->bookings()->create([            
-                'id' => $bookingId,
-                'schedule_id' => $scheduleId,
-                'seats' => $totalSeats,
-                'amount' => $totalFare,
-                'date' => $date,
-                'pickup_point' => 'AAA',
-                'dropping_point' => 'BBB',
-            ]);
-            return 'success';
-        }*/
-        
-
-        // foreach ($selectedSeats as $seat) {
-        //     Seat::create([
-        //         'id' => $bookingId,
-        //         'seat_no' => $seat->seat_no,
-        //         'status' => $seat->status,
-        //         ]);
-        // }
-
-        
-       // return 'FAILURE';
-
-        // return $busId .'/' . $scheduleId . '/' . $date . '/' . $totalSeats . '/' .$totalFare;
-    	// return view('pages.home');
-    	// dd($selectedSeats);
-    	//return $selectedSeats;
     	
     }
 
