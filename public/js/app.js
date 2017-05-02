@@ -12111,6 +12111,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // seat display
       seatChar: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
       seatNo: '',
+      seatStatus: '',
       seatError: false,
       selectedSeat: [],
       seatList: [],
@@ -12138,7 +12139,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     console.log('Seat search Component ready.');
     this.cityList = JSON.parse(this.cities);
     this.showDate();
-    //
     // Echo.channel('mychannel.1')
     //    .listen('SeatStatusUpdatedEvent', function(e) {
     //        console.log(e.seat, e.scheduleId);
@@ -12195,15 +12195,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     updateSeatStatus: function updateSeatStatus(evnt) {
       var seatNo = evnt.seat.seat_no;
       console.log('seaaatno=', seatNo);
-      var vm = this;
+      //var vm = this;
       if (this.scheduleId == evnt.scheduleId && this.startDate == evnt.date) {
 
-        var indx = vm.seatList.findIndex(function (seat) {
+        var indx = this.seatList.findIndex(function (seat) {
           // here 'seat' is array object of selectedSeat array
           return seat.seat_no == seatNo;
         });
 
         this.seatList[indx].status = "booked";
+        this.seatNo = seatNo;
+        this.seatStatus = evnt.seat.status;
+        this.showAlert();
 
         // this.seatList.push({
         //     seat_no: seat.seat_no,              
@@ -12211,6 +12214,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // });
       }
       console.log(evnt.seat.seat_no, evnt.scheduleId, evnt.date);
+    },
+    showAlert: function showAlert() {
+      $("#status-alert").alert();
+      $("#status-alert").fadeTo(2000, 500).slideUp(500, function () {
+        $("#status-alert").slideUp(500);
+      });
     },
     searchBus: function searchBus() {
       console.log(this.startDate);

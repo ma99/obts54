@@ -130,11 +130,11 @@
                                     <button 
                                       class="col-xs-2"
                                       v-bind:class="{ 
-                                      active : seat.checked, 
-                                      booked: seat.status=='booked'? true : false, 
-                                      confirmed: seat.status=='confirmed'? true : false, 
-                                      empty: seat.status=='n/a'? true : false,             
-                                      'col-xs-offset-2': emptySpace(seat.seat_no) }"
+                                        active: seat.checked, 
+                                        booked: seat.status=='booked'? true : false, 
+                                        confirmed: seat.status=='confirmed'? true : false, 
+                                        empty: seat.status=='n/a'? true : false,             
+                                        'col-xs-offset-2': emptySpace(seat.seat_no) }"
                                       v-for="seat in seatList"          
                                       @click="toggle(seat)"           
                                       :disabled="isDisabledSeatSelection(seat.status)"                   
@@ -142,6 +142,21 @@
                                       @{{ seat.seat_no }} - @{{ seat.status }}
                                     </button> 
                                 </div>
+                                <div v-show="false" class="alert" 
+                                     v-bind:class="{ 
+                                        'alert-info': seatStatus=='available'? true : false, 
+                                        'alert-warning': seatStatus=='booked'? true : false, 
+                                        'alert-danger': seatStatus=='confirmed'? true : false 
+                                     }" 
+                                     id="status-alert"
+                                >
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                    <strong>@{{ seatNo }} </strong> has been <strong>@{{ seatStatus }} </strong>
+                                </div>
+
                               </div>
                               <div class="col-sm-6">
                                 <div v-show="isSeatSelected" class="row">
