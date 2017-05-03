@@ -25,5 +25,18 @@
 	</div>
 	<span class="help text-danger" v-if="form.errors.has('phone')" v-text="form.errors.get('phone')"></span>
 	</div>
+	<div class="radio">
+	  <label class="radio-inline">
+	    <input type="radio" name="optionsRadios" id="optionsRadios1" value="book" v-model="picked">
+	    Book 
+	  </label>	  
+	</div>
+	<div class="radio">
+	  <label class="radio-inline">
+	    <input type="radio" name="optionsRadios" id="optionsRadios2" value="buy" v-model="picked">
+	    Buy
+	  </label>
+	</div>
+	<span>Picked: @{{ picked }}</span>
 	<button v-show="isSeatSelected" class="btn btn-primary" :disabled="form.errors.any()">Continue</button>                                      
 </form>

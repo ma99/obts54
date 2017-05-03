@@ -3,7 +3,8 @@
       props: ['cities'],
       
       data() {
-          return {   
+          return {
+              picked: 'book',   
               startDate: '',               
               selected: '',
               selectedTo: '',             

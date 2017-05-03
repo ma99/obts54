@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->string('booking_id');
             $table->float('amount', 8, 2);
+            $table->string('transaction_id');
             $table->string('status');
             $table->timestamps();
         });
