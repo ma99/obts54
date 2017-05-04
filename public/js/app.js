@@ -12097,18 +12097,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   data: function data() {
     return {
-      picked: 'book',
+      bookedSeatInfo: {},
+      busId: '',
+      busError: false,
+      buses: [],
+      cityList: [],
+      cityToList: [],
+      error: false,
+      loading: false,
+      message: '',
+      modal: false,
+      scheduleId: '',
       startDate: '',
       selected: '',
       selectedTo: '',
-      message: '',
-      modal: false,
-      loading: false,
-      error: false,
-      busError: false,
-      cityList: [],
-      cityToList: [],
-      buses: [],
+      url: 'seatbooking',
       // seat display
       seatChar: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
       seatNo: '',
@@ -12119,8 +12122,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       totalFare: 0,
       totalSeats: 0,
       // end seat display
-      scheduleId: '',
-      busId: '',
       //guestUser: true,              
       form: new Form({ //data as object
         name: '',
@@ -12184,6 +12185,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //showSelectedSeatList() {
     isSeatSelected: function isSeatSelected() {
       var len = this.selectedSeat.length;
+      return len > 0 ? true : false;
+    },
+    isSeatBooked: function isSeatBooked() {
+      //Object.keys(this.bookedSeatInfo).length;
+      //let len = this.bookedSeatInfo.length;
+      var len = Object.keys(this.bookedSeatInfo).length;
       return len > 0 ? true : false;
     }
   },
@@ -12294,14 +12301,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.form.total_seats = this.totalSeats;
       this.form.total_fare = this.totalFare;
 
-      this.form.post('/seatbooking')
+      this.form.post(this.url)
       //.then(response => alert('Wahoo!'));
       .then(function (response) {
         //console.log(response.data)
         vm.selectedSeat = [];
-        vm.loading = false;
+        vm.bookedSeatInfo = response;
         vm.modal = false;
-        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+        vm.loading = false;
+        //console.log('res=', response);
       });
 
       /*
@@ -12327,7 +12335,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.buses = []; // hide table
       var vm = this;
 
-      axios.post('/seatbooking', {
+      //axios.post('/seatbooking', {
+      axios.post(this.url, {
         bus_id: this.busId,
         date: this.startDate,
         schedule_id: this.scheduleId,

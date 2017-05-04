@@ -4,18 +4,21 @@
       
       data() {
           return {
-              picked: 'book',   
-              startDate: '',               
-              selected: '',
-              selectedTo: '',             
-              message: '',
-              modal: false,
-              loading: false,
-              error: false,
+              bookedSeatInfo: { },
+              busId:'',
               busError: false,
+              buses:[],
               cityList:[],
               cityToList:[],
-              buses:[],
+              error: false,
+              loading: false,
+              message: '',
+              modal: false,              
+              scheduleId:'',
+              startDate: '',               
+              selected: '',
+              selectedTo: '',
+              url: 'seatbooking',             
               // seat display
               seatChar:["A","B", "C" , "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],                             
               seatNo: '',
@@ -26,8 +29,6 @@
               totalFare: 0,
               totalSeats: 0,              
               // end seat display
-              scheduleId:'',
-              busId:'',
               //guestUser: true,              
               form: new Form({  //data as object
                 name: '',
@@ -98,6 +99,12 @@
         //showSelectedSeatList() {
         isSeatSelected() {
           let len = this.selectedSeat.length;
+          return ( len >0 ) ? true : false;
+        },
+        isSeatBooked() {
+          //Object.keys(this.bookedSeatInfo).length;
+          //let len = this.bookedSeatInfo.length;
+          let len = Object.keys(this.bookedSeatInfo).length;
           return ( len >0 ) ? true : false;
         },
       },
@@ -216,14 +223,15 @@
           this.form.total_seats = this.totalSeats;
           this.form.total_fare = this.totalFare;       
 
-          this.form.post('/seatbooking')
+          this.form.post(this.url)
                 //.then(response => alert('Wahoo!'));
                 .then(function (response) {
                  //console.log(response.data)
-                 vm.selectedSeat= [];
-                 vm.loading = false;
+                 vm.selectedSeat= [];                                  
+                 vm.bookedSeatInfo = response;
                  vm.modal = false;
-                 // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+                 vm.loading = false;
+                 //console.log('res=', response);
           });
           
           /*
@@ -250,7 +258,8 @@
           var vm = this;            
           
           
-          axios.post('/seatbooking', {
+          //axios.post('/seatbooking', {
+          axios.post(this.url, {
               bus_id: this.busId,
               date: this.startDate,
               schedule_id: this.scheduleId,

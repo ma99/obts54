@@ -103,11 +103,29 @@
                             </tbody>
                         </table>
                         <div v-show="busError" class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>                            
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             @{{ busError }}
                         </div>
                     </div>
                     <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
+                    <div class="col-sm-6 col-sm-offset-2">
+                        <div v-show="isSeatBooked" class="panel panel-info row">
+                            <div class="panel-heading">Booking Information</div>
+                            Dear <strong> @{{ bookedSeatInfo.name}} </strong>! Your Booking Request has been completed with the following details.
+                            <div class="panel-body">                            
+                                    <div class="col-sm-4">
+                                     Booking Ref: <strong>@{{ bookedSeatInfo.booking_id}}</strong>
+                                    </div>
+                                    <div class="col-sm-4">
+                                     Seat No: <strong>@{{ bookedSeatInfo.seat_no}}</strong>
+                                    </div>
+                                    <div class="col-sm-4">
+                                     Date: <strong>@{{ bookedSeatInfo.date}}</strong>
+                                    </div>
+                                
+                            </div>  
+                        </div>
+                    </div>                    
 
                     <!-- Modal -->
                     <div id="modal" class="modal" v-if="modal">
@@ -200,7 +218,7 @@
                         </div>          
                     </div> 
                   </div>  
-		
+    
       </seat-display>       
     </div>
 </div>
