@@ -12109,7 +12109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       modal: false,
       scheduleId: '',
       startDate: '',
-      selected: '',
+      selectedCityFrom: '',
       selectedTo: '',
       url: 'seatbooking',
       // seat display
@@ -12149,9 +12149,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   watch: {
-    selected: function selected(val) {
-      console.log(val);
-      this.fetchCityToList(val);
+    selectedCityFrom: function selectedCityFrom() {
+      //console.log();
+      this.fetchCityToList(this.selectedCityFrom);
       //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
       //this.arr.push(val);
     }
@@ -12178,7 +12178,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //   return true;
       // }
       // return false ;
-      return this.selected == "" || this.selectedTo == "" || this.startDate == '' ? true : false;
+      return this.selectedCityFrom == "" || this.selectedTo == "" || this.startDate == '' ? true : false;
     },
 
 
@@ -12239,8 +12239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.buses = '';
       axios.get('/search', {
         params: {
-          firstName: this.selected,
-          from: this.selected,
+          from: this.selectedCityFrom,
           to: this.selectedTo,
           date: this.startDate
         }
@@ -12275,7 +12274,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var vm = this;
       axios.get('/viewseats', {
         params: {
-          from: this.selected,
+          from: this.selectedCityFrom,
           to: this.selectedTo,
           date: this.startDate,
           schedule_id: scheduleId,
@@ -12348,6 +12347,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         vm.selectedSeat = [];
         vm.loading = false;
         vm.modal = false;
+        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+      });
+    },
+    makePayment: function makePayment() {
+      this.loading = true;
+      var vm = this;
+      var code = '30303';
+      axios.get('api/zipcode?q=' + code).then(function (response) {
+        console.log(response.data);
+        // vm.selectedSeat= [];
+        vm.loading = false;
+        //vm.modal = false;
         // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
       });
     },
@@ -17278,7 +17289,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(37)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n#app .alert {\n      margin-top: 65px;\n}\n}\n@media (max-width: 991px) {\n#app .alert {\n      margin-top: 15px;\n}\n}\n\n  /*[v-cloak] { display:none; }*/\n.loading {\n    text-align: center;\n}\n  /* The Modal (background) */\n.modal {\n      display: block; \n      position: fixed; /* Stay in place */\n      z-index: 111; /* Sit on top */\n      left: 0;\n      top: 0;\n      width: 100%; /* Full width */\n      height: 100%; /* Full height */\n      overflow: auto; /* Enable scroll if needed */\n      background-color: rgb(0,0,0); /* Fallback color */\n      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n  /* Modal Content/Box */\n.modal-content {\n      background-color: #fefefe;\n      margin: 160px auto; /* 15% from the top and centered */\n      /*padding: 20px;*/\n      padding: 35px 20px 30px;\n      border: 1px solid #888;\n      width: 89%; /* Could be more or less, depending on screen size */\n}\n\n    /* circle*/\n.circle {\n      float: right;\n      margin-top: -28px;\n      position: relative;\n      width: 24px; \n      height: 24px; \n      background: #ebccd1; \n      border-radius: 12px; \n      -moz-border-radius: 15px; \n      -webkit-border-radius: 15px;\n}\n  /* The Close Button */\n.close {\n      color: #aaa;\n      /*float: right;*/\n      margin-left: 7px;\n      font-size: 20px;\n      font-weight: bold;\n      position: absolute;\n      /*margin-top: -18px;*/\n}\n.close:hover,\n  .close:focus {\n      color: black;\n      text-decoration: none;\n      cursor: pointer;\n}\n  /* seat display */\n.active {\n    background-color: green;\n}\n.booked {\n    background-color: yellow;\n}\n.confirmed {\n    background-color: red;\n}\n.empty {\n    background-color: white;\n    border-width: 0;\n      /*color: #0a0a0a;*/\n    color:white;\n}\n#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#modal button.col-xs-2 {\n      width: 16.76666667%;\n}\n#modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n}\n#modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n}\n#modal .row  {\n    background-color: #e5ecff;\n}  \n/* end seat display */\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search {\n      margin-top: 25px;\n}\n#app .alert {\n      margin-top: 65px;\n}\n}\n@media (max-width: 991px) {\n#app .alert {\n      margin-top: 15px;\n}\n}\n\n  /*[v-cloak] { display:none; }*/\n.loading {\n    text-align: center;\n    z-index: 11111;\n}\n  /* The Modal (background) */\n.modal {\n      display: block; \n      position: fixed; /* Stay in place */\n      z-index: 111; /* Sit on top */\n      left: 0;\n      top: 0;\n      width: 100%; /* Full width */\n      height: 100%; /* Full height */\n      overflow: auto; /* Enable scroll if needed */\n      background-color: rgb(0,0,0); /* Fallback color */\n      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n}\n\n  /* Modal Content/Box */\n.modal-content {\n      background-color: #fefefe;\n      margin: 160px auto; /* 15% from the top and centered */\n      /*padding: 20px;*/\n      padding: 35px 20px 30px;\n      border: 1px solid #888;\n      width: 89%; /* Could be more or less, depending on screen size */\n}\n\n    /* circle*/\n.circle {\n      float: right;\n      margin-top: -28px;\n      position: relative;\n      width: 24px; \n      height: 24px; \n      background: #ebccd1; \n      border-radius: 12px; \n      -moz-border-radius: 15px; \n      -webkit-border-radius: 15px;\n}\n  /* The Close Button */\n.close {\n      color: #aaa;\n      /*float: right;*/\n      margin-left: 7px;\n      font-size: 20px;\n      font-weight: bold;\n      position: absolute;\n      /*margin-top: -18px;*/\n}\n.close:hover,\n  .close:focus {\n      color: black;\n      text-decoration: none;\n      cursor: pointer;\n}\n  /* seat display */\n.active {\n    background-color: green;\n}\n.booked {\n    background-color: yellow;\n}\n.confirmed {\n    background-color: red;\n}\n.empty {\n    background-color: white;\n    border-width: 0;\n      /*color: #0a0a0a;*/\n    color:white;\n}\n#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#modal button.col-xs-2 {\n      width: 16.76666667%;\n}\n#modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n}\n#modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n}\n#modal .row  {\n    background-color: #e5ecff;\n}  \n/* end seat display */\n", ""]);
 
 /***/ }),
 /* 37 */
@@ -39357,7 +39368,7 @@ var Component = __webpack_require__(42)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */

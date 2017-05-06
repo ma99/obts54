@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -29,6 +30,17 @@ class SearchCitiesController extends Controller
 	        return $cities->count() ? $cities : $error;
 	        //return $cities;
        
+   }
+
+   public function cityName(Request $request )
+   {
+     $city_code = $request->input('q');
+     //$client = new Client(['base_uri' => 'https://foo.com/api/']);
+     $client = new Client(['base_uri' => 'https://ziptasticapi.com/']);
+      // Send a request to https://foo.com/api/test
+      $response = $client->request('GET', $city_code );
+      return $response->getBody();
+
    }
 
 

@@ -24,3 +24,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/test', 'Api\SearchCitiesController@index');
+Route::get('/zipcode', 'Api\SearchCitiesController@cityName');

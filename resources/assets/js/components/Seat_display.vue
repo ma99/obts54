@@ -16,7 +16,7 @@
               modal: false,              
               scheduleId:'',
               startDate: '',               
-              selected: '',
+              selectedCityFrom: '',
               selectedTo: '',
               url: 'seatbooking',             
               // seat display
@@ -57,9 +57,9 @@
               .listen('SeatStatusUpdatedEvent', this.updateSeatStatus); 
       },
       watch: {
-       selected(val) {
-          console.log(val);
-          this.fetchCityToList(val);          
+       selectedCityFrom() {
+          //console.log();
+          this.fetchCityToList(this.selectedCityFrom);          
           //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
          //this.arr.push(val);
        },       
@@ -93,7 +93,7 @@
           //   return true;
           // }
           // return false ;
-          return ( this.selected == "" || this.selectedTo == "" || this.startDate =='' ) ? true : false;
+          return ( this.selectedCityFrom == "" || this.selectedTo == "" || this.startDate =='' ) ? true : false;
        },
 
         //showSelectedSeatList() {
@@ -155,9 +155,8 @@
           var vm = this;
           this.buses ='';
           axios.get('/search', {
-              params: {
-                firstName: this.selected,
-                from: this.selected,
+              params: {                
+                from: this.selectedCityFrom,
                 to: this.selectedTo,
                 date: this.startDate,              
               }  
@@ -194,7 +193,7 @@
           var vm = this;
           axios.get('/viewseats', {
               params: {
-                from: this.selected,
+                from: this.selectedCityFrom,
                 to: this.selectedTo,
                 date: this.startDate,
                 schedule_id: scheduleId,
@@ -275,6 +274,20 @@
                // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
           });
           
+        },
+        makePayment() {
+          this.loading = true;
+          var vm = this;
+          var code = '30303';          
+          axios.get('api/zipcode?q=' + code)
+              .then(function (response) {
+               console.log(response.data)
+               // vm.selectedSeat= [];
+               vm.loading = false;
+               //vm.modal = false;
+               // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+          });
+
         },
 
         fetchCityToList(cityName) {
@@ -406,6 +419,7 @@
   
   .loading {
     text-align: center;
+    z-index: 11111;
   }
   /* The Modal (background) */
   .modal {

@@ -35,7 +35,7 @@ class BookingController extends Controller
             $totalFare = (float) $this->request->input('total_fare'); 
             $date = $travelDate = $this->request->input('date');
             $selectedSeats = $this->request->input('selected_seats'); //
-            $dt = date_format(date_create($date),"Ymd");        
+            //$dt = date_format(date_create($date),"Ymd");        
             $bookingId = strtoupper(bin2hex(random_bytes(4)));            
             
             $date = date("Y-m-d", strtotime($date));    
@@ -95,7 +95,7 @@ class BookingController extends Controller
             $date = $travelDate = $this->request->input('date');
             $selectedSeats = $this->request->input('selected_seats'); //
 
-            $dt = date_format(date_create($date),"Ymd");        
+            //$dt = date_format(date_create($date),"Ymd");        
             $bookingId = strtoupper(bin2hex(random_bytes(4)));            
 
             $date = date("Y-m-d", strtotime($date));            
