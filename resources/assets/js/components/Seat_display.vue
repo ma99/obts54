@@ -13,7 +13,8 @@
               error: false,
               loading: false,
               message: '',
-              modal: false,              
+              modal: false,
+              showSearch: true,              
               scheduleId:'',
               startDate: '',               
               selectedCityFrom: '',
@@ -105,7 +106,12 @@
           //Object.keys(this.bookedSeatInfo).length;
           //let len = this.bookedSeatInfo.length;
           let len = Object.keys(this.bookedSeatInfo).length;
-          return ( len >0 ) ? true : false;
+          //return ( len >0 ) ? true : false;
+          if (len >0) {
+            this.showSearch = false;
+            return true;
+          } 
+          return false;
         },
       },
       methods: {
@@ -267,8 +273,9 @@
               total_fare: this.totalFare
           })          
           .then(function (response) {
-               console.log(response.data)
+               console.log(response)
                vm.selectedSeat= [];
+               vm.bookedSeatInfo = response.data;
                vm.loading = false;
                vm.modal = false;
                // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;

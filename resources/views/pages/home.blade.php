@@ -11,7 +11,7 @@
               <div v-show="false">  @{{ guestUser = false }} </div>
               @endif --}}
               <div class="panel panel-default">
-                <div class="panel-heading">Search Schedule</div>
+                {{-- <div class="panel-heading">Search Schedule</div> --}}
                 <div class="panel-body">
                   <form>
                     <div class="col-md-3">

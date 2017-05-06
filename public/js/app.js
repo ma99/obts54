@@ -12107,6 +12107,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       loading: false,
       message: '',
       modal: false,
+      showSearch: true,
       scheduleId: '',
       startDate: '',
       selectedCityFrom: '',
@@ -12191,7 +12192,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //Object.keys(this.bookedSeatInfo).length;
       //let len = this.bookedSeatInfo.length;
       var len = Object.keys(this.bookedSeatInfo).length;
-      return len > 0 ? true : false;
+      //return ( len >0 ) ? true : false;
+      if (len > 0) {
+        this.showSearch = false;
+        return true;
+      }
+      return false;
     }
   },
   methods: {
@@ -12343,8 +12349,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         total_seats: this.totalSeats,
         total_fare: this.totalFare
       }).then(function (response) {
-        console.log(response.data);
+        console.log(response);
         vm.selectedSeat = [];
+        vm.bookedSeatInfo = response.data;
         vm.loading = false;
         vm.modal = false;
         // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
