@@ -148,12 +148,12 @@
                           @{{ seatError }}
                       </div>
                       <div class="row">
-                        <div class="col-sm-6">
+                        <div id="seat-layout" class="col-sm-6">
                           <div class="row">
                               <div class="col-xs-offset-8">
                                 <button :disabled="true">Driver Seat</button>
                               </div>              
-                              <button 
+                              <button
                                 class="col-xs-2"
                                 v-bind:class="{ 
                                   active: seat.checked, 
@@ -192,6 +192,7 @@
                                 <th>Sl.#</th>
                                 <th>Seat Selected</th>
                                 <th>Price</th>
+                                <th>Remove</th>
                                 <!-- <th>&nbsp;</th> -->
                               </thead>
                               <tbody>
@@ -202,9 +203,16 @@
                                   <td class="table-text">
                                     <div> @{{ seat.seat_no }} </div>
                                   </td>
-                                  <td class="table-text">
+                                  <td class="table-text text-primary">
                                      <div> @{{ seat.fare }} </div>
-                                  </td>                                         
+                                  </td>
+                                  <td class="table-text">
+                                     <div>
+                                        <button @click.prevent="removeSeat(seat.seat_no, seat)" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                         <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                        </button>
+                                      </div>
+                                    </td>                                          
                                 </tr>                                      
                                 @{{ totalFareForSelectedSeats }}                                       
                               </tbody>

@@ -68,6 +68,22 @@
           console.log(val);
           this.fetchDropingPointList(val);   // Drop Area List based On To City
        }*/
+      //  selectedSeat() {
+      //     // sort the array
+      //     this.selectedSeat.sort(function(a, b) {
+      //     var nameA = a.seat_no.toUpperCase(); // ignore upper and lowercase
+      //     var nameB = b.seat_no.toUpperCase(); // ignore upper and lowercase
+      //     if (nameA < nameB) {
+      //       return -1;
+      //     }
+      //     if (nameA > nameB) {
+      //       return 1;
+      //     }
+
+      //     // names must be equal
+      //     return 0;
+      //   });
+      // }
       },
       computed: {
         totalFareForSelectedSeats() {          
@@ -369,6 +385,22 @@
           fare: seat.fare,
           status: 'booked' //'selected'
           });
+          this.sortSelectedSeat();
+        },
+        sortSelectedSeat(){
+          this.selectedSeat.sort(function(a, b) {
+            var nameA = a.seat_no.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.seat_no.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+
+            // names must be equal
+            return 0;
+          });
         },
         removeSeat(seatNo, seat) {
           //console.log('-', seatNo);
@@ -380,6 +412,16 @@
           3. the Array object being traversed.
           ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex 
           */      
+          
+          this.removeSeatCheckedStatus(seatNo, seat); // checked = false 
+          // var indx = this.seatList.findIndex(function(seat){ 
+          //       // here 'seat' is array object of selectedSeat array
+          //       return seat.seat_no == seatNo;
+          //     });
+
+          //     this.seatList[indx].checked = false;
+          //
+
           var indx = this.selectedSeat.findIndex(function(seat){ 
             // here 'seat' is array object of selectedSeat array
              return seat.seat_no == seatNo;
@@ -387,6 +429,13 @@
         //console.log(indx);
           this.selectedSeat.splice(indx, 1);
           return;
+        },
+        removeSeatCheckedStatus(seatNo, seat){
+          var indx = this.seatList.findIndex(function(seat){ 
+                // here 'seat' is array object of selectedSeat array
+                return seat.seat_no == seatNo;
+              });
+              this.seatList[indx].checked = false;               
         },
         isDisabledSeatSelection(seatStatus) {
           //console.log('disableSelection=', seatStatus);
@@ -500,7 +549,7 @@
   }
   
   
-  #modal button {       
+  /*#modal button {       
     height: 50px;
     margin: 10px 10px 0 0;
   }
@@ -511,6 +560,21 @@
       margin-left: 17.666667%;
   }
   #modal button.is-white {
+      background-color: white;
+      border-width: 0;
+      color: #0a0a0a;
+  }*/
+  #seat-layout button {       
+    height: 50px;
+    margin: 10px 10px 0 0;
+  }
+  #seat-layout button.col-xs-2 {
+      width: 16.76666667%;          
+  }
+  #seat-layout button.col-xs-offset-2 {
+      margin-left: 17.666667%;
+  }
+  #seat-layout button.is-white {
       background-color: white;
       border-width: 0;
       color: #0a0a0a;
