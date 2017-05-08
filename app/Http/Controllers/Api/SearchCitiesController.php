@@ -32,7 +32,7 @@ class SearchCitiesController extends Controller
        
    }
 
-   public function cityName(Request $request )
+   public function cityName(Request $request)
    {
      $city_code = $request->input('q');
      //$client = new Client(['base_uri' => 'https://foo.com/api/']);
@@ -40,6 +40,27 @@ class SearchCitiesController extends Controller
       // Send a request to https://foo.com/api/test
       $response = $client->request('GET', $city_code );
       return $response->getBody();
+
+   }
+
+   public function testApi(Request $request)
+   {
+     # code...
+    $city_code = $request->input('q');
+     //$client = new Client(['base_uri' => 'https://foo.com/api/']);
+     //$client = new Client(['base_uri' => 'https://ziptasticapi.com/']);
+     $client = new Client(['base_uri' => 'http://www.mocky.io/v2/']);
+      // Send a request to https://foo.com/api/test
+     // http://obts.dev/api/testapi?q=30303
+     //$response = $client->request('GET', $city_code );
+      $response = $client->request('GET', '59103024110000f504591914' );
+      //return $response->hello;
+     $r = $response->getBody();
+
+     //read json data from Guzzle response
+     $obj = json_decode($r); // https://laracasts.com/discuss/channels/requests/request
+     //dd($obj);
+      return $obj->hello . '/' . $obj->i . '/' . $obj->status  ; //responsecountry;
 
    }
 
