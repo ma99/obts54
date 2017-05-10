@@ -142,53 +142,58 @@
                           <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
                       </div>    
                       
-                      <div class="alert alert-danger" role="alert" v-if="seatError">
+                      {{-- <div class="alert alert-danger" role="alert" v-if="seatError">
                           <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                           <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                           @{{ seatError }}
-                      </div>
+                      </div> --}}
                       <div class="row">
                         <div id="seat-layout" class="col-sm-6">
-                          <div class="row">
-                              <div class="col-xs-offset-8">
-                                <button :disabled="true">Driver Seat</button>
-                              </div>              
-                              <button
-                                class="col-xs-2"
-                                v-bind:class="{ 
-                                  active: seat.checked, 
-                                  booked: seat.status=='booked'? true : false,
-                                  buying: isSeatBuying(seat.status),
-                                  {{-- 'fa fa-refresh fa-spin': seat.status=='buying'? true : false,  --}}
-                                  confirmed: seat.status=='confirmed'? true : false, 
-                                  empty: seat.status=='n/a'? true : false,             
-                                  'col-xs-offset-2': emptySpace(seat.seat_no) }"
-                                v-for="seat in seatList"          
-                                @click="toggle(seat)"           
-                                :disabled="isDisabledSeatSelection(seat.status)"                   
-                              >               
-                                {{-- @{{ seat.seat_no }} - @{{ seat.status }} --}}
-                                <span v-show="!isSeatBuying(seat.status)" > @{{ seat.seat_no }} </span>
-                                <span v-show="isSeatBuying(seat.status)" class="fa fa-refresh fa-spin text-danger"></span>  
-                                {{-- <i v-show="seat.status=='buying' class="fa fa-refresh fa-spin text-danger"></i>   --}}
-                              </button> 
-                          </div>
-                          <div v-show="false" class="alert" 
+                          <div class="panel panel-default">
+                            <div class="panel-heading">Seat Plan</div>
+                            <div class="row panel-body">
+                              <div class="seat-plan-body">
+                                <div class="col-xs-offset-8">
+                                  <button :disabled="true">Driver Seat</button>
+                                </div>              
+                                <button
+                                  class="col-xs-2"
+                                  v-bind:class="{ 
+                                    active: seat.checked, 
+                                    booked: seat.status=='booked'? true : false,
+                                    buying: isSeatBuying(seat.status),
+                                    {{-- 'fa fa-refresh fa-spin': seat.status=='buying'? true : false,  --}}
+                                    confirmed: seat.status=='confirmed'? true : false, 
+                                    empty: seat.status=='n/a'? true : false,             
+                                    'col-xs-offset-2': emptySpace(seat.seat_no) }"
+                                  v-for="seat in seatList"          
+                                  @click="toggle(seat)"           
+                                  :disabled="isDisabledSeatSelection(seat.status)"                   
+                                >               
+                                  {{-- @{{ seat.seat_no }} - @{{ seat.status }} --}}
+                                  <span v-show="!isSeatBuying(seat.status)" > @{{ seat.seat_no }} </span>
+                                  <span v-show="isSeatBuying(seat.status)" class="fa fa-refresh fa-spin text-danger"></span>  
+                                  {{-- <i v-show="seat.status=='buying' class="fa fa-refresh fa-spin text-danger"></i>   --}}
+                                </button> 
+                              </div>
+                            </div>
+                            {{-- panel-footer --}}
+                            <div v-show="false" class="panel-footer" 
                                v-bind:class="{ 
                                   'alert-info': seatStatus=='available'? true : false, 
                                   'alert-warning': seatStatus=='booked'? true : false, 
                                   'alert-danger': seatStatus=='confirmed'? true : false 
                                }" 
                                id="status-alert"
-                          >
+                            >
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
-
                               <strong>@{{ seatNo }} </strong> has been <strong>@{{ seatStatus }} </strong>
-                          </div>
-
+                            </div>                            
+                          </div> 
                         </div>
+
                         <div class="col-sm-6">                              
                           <div v-show="isSeatSelected" class="panel panel-primary row">
                             <div class="panel-heading">Selected Seat Info</div>

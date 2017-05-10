@@ -589,8 +589,11 @@
       border-width: 0;
       color: #0a0a0a;
   }
-  #modal .row  {
+  .seat-plan-body {
+    padding-left: 20px;
+  }
+  /*#modal .row  {
     background-color: #e5ecff;
-  }  
+  }*/  
 /* end seat display */
 </style>
