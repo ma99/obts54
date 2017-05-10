@@ -165,7 +165,7 @@
                                 @click="toggle(seat)"           
                                 :disabled="isDisabledSeatSelection(seat.status)"                   
                               >               
-                                @{{ seat.seat_no }} - @{{ seat.status }}
+                                @{{ seat.seat_no }} - @{{ seat.status }}                                 
                               </button> 
                           </div>
                           <div v-show="false" class="alert" 
