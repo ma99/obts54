@@ -136,6 +136,9 @@
                 this.loading = false;                
                 this.selectedSeat = [];                
         },
+        isSeatBuying(seatStatus){
+          return seatStatus=='buying' ? true : false;
+        },
         updateSeatStatus(evnt) {          
           var seatNo = evnt.seat.seat_no;
           console.log('seaaatno=', seatNo);
@@ -440,7 +443,11 @@
         isDisabledSeatSelection(seatStatus) {
           //console.log('disableSelection=', seatStatus);
           return ( seatStatus == 'booked' || 
-               seatStatus == 'confirmed' || seatStatus == 'n/a' ) ? true : false;
+              seatStatus == 'buying' ||
+              seatStatus == 'confirmed' || 
+              seatStatus == 'n/a' ) 
+              ? 
+              true : false;
         }        
         // end display methods
         // totalFareForSelectedSeats(seat) {
@@ -537,6 +544,9 @@
   }     
   .booked {
     background-color: yellow; 
+  }
+  .buying {
+    background-color: orange; 
   }
   .confirmed {
     background-color: red;

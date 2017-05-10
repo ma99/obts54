@@ -157,7 +157,9 @@
                                 class="col-xs-2"
                                 v-bind:class="{ 
                                   active: seat.checked, 
-                                  booked: seat.status=='booked'? true : false, 
+                                  booked: seat.status=='booked'? true : false,
+                                  buying: isSeatBuying(seat.status),
+                                  {{-- 'fa fa-refresh fa-spin': seat.status=='buying'? true : false,  --}}
                                   confirmed: seat.status=='confirmed'? true : false, 
                                   empty: seat.status=='n/a'? true : false,             
                                   'col-xs-offset-2': emptySpace(seat.seat_no) }"
@@ -165,7 +167,10 @@
                                 @click="toggle(seat)"           
                                 :disabled="isDisabledSeatSelection(seat.status)"                   
                               >               
-                                @{{ seat.seat_no }} - @{{ seat.status }}
+                                {{-- @{{ seat.seat_no }} - @{{ seat.status }} --}}
+                                <span v-show="!isSeatBuying(seat.status)" > @{{ seat.seat_no }} </span>
+                                <span v-show="isSeatBuying(seat.status)" class="fa fa-refresh fa-spin text-danger"></span>  
+                                {{-- <i v-show="seat.status=='buying' class="fa fa-refresh fa-spin text-danger"></i>   --}}
                               </button> 
                           </div>
                           <div v-show="false" class="alert" 
