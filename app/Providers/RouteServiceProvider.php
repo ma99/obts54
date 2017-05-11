@@ -26,6 +26,14 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        //Route::model('user', \App\User::class);
+         // To find a specific user by name (using explicit binding)
+        
+        //  Route::bind('user', function ($value) {
+        //     return \App\User::where('name', $value)->first();
+        // });
+
     }
 
     /**

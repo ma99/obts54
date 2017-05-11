@@ -29,6 +29,17 @@ Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BuyingController@store');
 Route::get('/test', 'BookingController@test');
 
+/* Explicit route model binding see RouteServiceProvider.php
+
+Route::get('users/{user}', function(\App\User $user) {
+    return $user;
+});
+
+*/
+
+
+
+
 
 //Route::post('/home', 'SearchTicketController@search');
 //Route::get('/test', 'SearchTicketController@test1');
