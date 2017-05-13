@@ -301,20 +301,20 @@
           });
           
         },
-        makePayment() {
-          this.loading = true;
-          var vm = this;
-          var code = '30303';          
-          axios.get('api/zipcode?q=' + code)
-              .then(function (response) {
-               console.log(response.data)
-               // vm.selectedSeat= [];
-               vm.loading = false;
-               //vm.modal = false;
-               // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-          });
+        // makePayment() {
+        //   this.loading = true;
+        //   var vm = this;
+        //   var code = '30303';          
+        //   axios.get('api/zipcode?q=' + code)
+        //       .then(function (response) {
+        //        console.log(response.data)
+        //        // vm.selectedSeat= [];
+        //        vm.loading = false;
+        //        //vm.modal = false;
+        //        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+        //   });
 
-        },
+        // },
 
         fetchCityToList(cityName) {
           

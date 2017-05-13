@@ -130,7 +130,11 @@
                               </div>
                       </div>
                       <div class="panel-footer">
-                        <button v-on:click.prevent="makePayment" class="btn btn-primary">Pay Now</button>
+                        
+
+                        {{-- <button href="{{ route('payment', ['booking' => $bookingId]) }}" type="button" class="btn btn-primary">Pay Now</button> --}}
+                        {{-- <button href="{{ url('pay/'.$bookingId) }}" type="button" class="btn btn-primary">Pay Now</button> --}}
+                        <a :href="'/pay/' + bookedSeatInfo.booking_id" type="button" class="btn btn-primary">Pay Now</a>
                       </div>  
                   </div>
               </div>                    

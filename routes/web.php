@@ -29,6 +29,8 @@ Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BuyingController@store');
 Route::get('/test', 'BookingController@test');
 
+Route::get('/pay/{booking}', 'PaymentController@payNow')->name('payment');
+
 /* Explicit route model binding see RouteServiceProvider.php
 
 Route::get('users/{user}', function(\App\User $user) {
