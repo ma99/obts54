@@ -62,7 +62,7 @@ class PaymentRepository
 	    // Set the customer's identifying information
 	    $customerData = new AnetAPI\CustomerDataType();
 	    $customerData->setType("individual");
-	    $customerData->setId($user->userId); // customerId
+	    $customerData->setId($user->id); // customerId
 	    //$customerData->setEmail("EllenJohnson@example.com");
 	    $customerData->setEmail($user->email);
 	    
