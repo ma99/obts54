@@ -236,6 +236,21 @@
                           </div>
                           
                           <div class="row">
+                              {{--
+                              @if (auth()->check())
+                                { 
+                                  $user = auth()->user ;
+                                  $user = User::find($user->id)->roles // all info of roles table                                
+                                  @if ($user->role == 'normal')
+                                    @include('includes.user')
+                                  @else
+                                    @include('includes.guest')  
+                                  @endif  
+                                }                                
+                              @else
+                                @include('includes.guest')
+                              @endif  
+                              --}}
                               @if (auth()->check())
                                 @include('includes.user')
                                {{--  <div v-show="false">  @{{ guestUser = false }} --}}

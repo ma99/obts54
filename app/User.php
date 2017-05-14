@@ -32,4 +32,11 @@ class User extends Authenticatable
         //return $this->hasMany('Booking');
         return $this->hasMany(Booking::class);
     }
+
+    public function roles()
+    {
+        return $this->hasMany(Role::class);
+    }
+
+
 }
