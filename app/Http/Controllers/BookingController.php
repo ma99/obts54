@@ -52,11 +52,14 @@ class BookingController extends Controller
                     ]);
                 }
                 else {
+                    $passwaord = strtoupper(bin2hex(random_bytes(4)));
                     User::create([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
+                        'password' =>bcrypt($password),
                     ]);
+                    // mail2user $pass about account & password
                 }
     }
 
