@@ -14,9 +14,9 @@ use App\Seat;
 class BookingController extends Controller
 {
     protected $request;   
-    protected $scheduleId;
-    protected $bookingId;
-	protected $travelDate;
+    protected $phone;
+    protected $email;
+	//protected $travelDate;
 
 
 
@@ -27,7 +27,7 @@ class BookingController extends Controller
 
     }
 
-    public function createOrUpdateForGuest()
+    public function createOrUpdateGuest()
     {
         $this->validate($this->request, [
                     'name' => 'required',
@@ -35,8 +35,8 @@ class BookingController extends Controller
                     "phone" => 'required',            
                 ]); 
                 //$busId = $this->request->input('bus_id'); 
-                $name = $this->request->input('name');
-                $email = $this->request->input('email');
+                $this->name = $name = $this->request->input('name');
+                $this->email = $email = $this->request->input('email');
                 $phone = $this->request->input('phone'); 
 
                 // Storing Guest User Info             
@@ -71,7 +71,7 @@ class BookingController extends Controller
           //user
           if ( ! auth()->check() ) 
             { 
-                $this->createOrUpdateForGuest();
+                $this->createOrUpdateGuest();
             }
 
            return $infos = [ 
@@ -90,8 +90,23 @@ class BookingController extends Controller
     public function createBooking($inputsInfo)
     {
         extract($inputsInfo);
-        $this->request->user()->bookings()->create([            
+
+        if (auth()->check()) {
+            $user = auth()->user(); // authenticated user's object
+            $userIsd = $user->id;
+            //role: admin/staff/normal/guest
+            /*if ( $user->roles()->role == 'normal') {  
+                $userIsd = $user->id;
+            }*/
+        } else {
+            $user = User::where('phone', $this->phone)->first();
+            $userIsd = $user->id;
+        }
+
+        //$this->request->user()->bookings()->create([ 
+            Booking::create([                       
                 'id' => $bookingId,
+                'user_id' => $userId,
                 'schedule_id' => $scheduleId,
                 'seats' => $totalSeats,
                 'amount' => $totalFare,
