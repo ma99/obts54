@@ -9,6 +9,7 @@ use App\GuestUser;
 use App\Events\SeatStatusUpdatedEvent;
 use App\Booking;
 use App\Seat;
+use App\User;
 
 
 class BookingController extends Controller
@@ -40,19 +41,19 @@ class BookingController extends Controller
                 $phone = $this->request->input('phone'); 
 
                 // Storing Guest User Info             
-                $guestUserIsAvailable = User::where('phone', $phone)->
+                $guestUserIsAvailable = User::where('phone', $phone)
                                                 ->orWhere('email', $email)
                                                 ->first();  // user available or not in guest_user table
                 if ( $guestUserIsAvailable ) {
                     //$guestUserIsAvailable->delete();
-                    User::update([
+                    $guestUserIsAvailable->update([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone, 
                     ]);
                 }
                 else {
-                    $passwaord = strtoupper(bin2hex(random_bytes(4)));
+                    $password = strtoupper(bin2hex(random_bytes(4)));
                     User::create([
                         'name' => $name,
                         'email' => $email,
@@ -94,10 +95,17 @@ class BookingController extends Controller
         if (auth()->check()) {
             $user = auth()->user(); // authenticated user's object
             $userIsd = $user->id;
-            //role: admin/staff/normal/guest
+            //role: admin/staff
+            //m-1
             /*if ( $user->roles()->role == 'normal') {  
                 $userIsd = $user->id;
             }*/
+            //m-2 collect info from roles tble for this user. if no info found means he is normal user.  
+            /*if (!$user->roles->count()) {  
+                $userIsd = $user->id;
+            }*/
+
+
         } else {
             $user = User::where('phone', $this->phone)->first();
             $userIsd = $user->id;
@@ -163,7 +171,7 @@ class BookingController extends Controller
             $date = date("Y-m-d", strtotime($date));  */  
             //extract($this.getInputsInfo());
 
-            $inputsInfo = $this->getInputsInfo($userStatus);
+            $inputsInfo = $this->getInputsInfo();
             $this->createBooking($inputsInfo);
             return $this->createSeat($inputsInfo);
 

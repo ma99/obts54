@@ -238,7 +238,10 @@
         seatBookingByGuest() {
           this.loading = true;
           this.buses = []; // hide table
-          var vm = this;  
+          var vm = this; 
+          this.changeStatusOfSelectedSeat(this.selectedSeat); 
+          console.log('modified selected seat'); 
+          console.log(this.selectedSeat); 
           // non form data  
           this.form.bus_id = this.busId;
           this.form.date = this.startDate;
@@ -279,8 +282,8 @@
         seatBookingByUser() {
           this.loading = true;
           this.buses = []; // hide table
-          var vm = this;            
-          
+          var vm = this; 
+          this.changeStatusOfSelectedSeat(this.selectedSeat);         
           
           //axios.post('/seatbooking', {
           axios.post(this.url, {
@@ -300,6 +303,13 @@
                // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
           });
           
+        },
+        changeStatusOfSelectedSeat(selectedSeat) {
+          var vm = this;
+          selectedSeat.forEach( function(seat){
+            seat.status = (vm.url == 'seatbooking') ? 'booked' : 'buying';
+          });
+
         },
         // makePayment() {
         //   this.loading = true;
