@@ -29,6 +29,7 @@ Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BookingController@store');
 //Route::post('seatbuying', 'BuyingController@store');
 Route::get('/test', 'BookingController@test');
+Route::get('/test1', 'BookingController@test1');
 
 Route::get('/pay/{booking}', 'PaymentController@payNow')->name('payment');
 
