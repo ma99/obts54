@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('transaction_id');
             $table->string('auth_code');
             $table->string('status');
+            $table->text('description');
             $table->timestamps();
         });
     }

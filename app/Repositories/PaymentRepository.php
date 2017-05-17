@@ -87,7 +87,84 @@ class PaymentRepository
 	    $request->setTransactionRequest( $transactionRequestType);
 	    $controller = new AnetController\CreateTransactionController($request);
 	    $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+
+	    //
+	    if ($response != null)
+	    {
+	      if($response->getMessages()->getResultCode() == Constants::RESPONSE_OK)
+	      {
+	        $tresponse = $response->getTransactionResponse();
+	        
+	        if ($tresponse != null && $tresponse->getMessages() != null)   
+	        {
+	          //echo " Transaction Response Code : " . $tresponse->getResponseCode() . "\n";
+	        	$trxResponseCode = $tresponse->getResponseCode();
+	        	switch($trxResponseCode) {
+	        		case 1:
+				        $status = 'Approved';
+				        break;
+				    case 2:
+				        $status = 'Declined';				        
+				        break;
+				    case 3:
+				        $status = 'Error';				        
+				        break;
+				    case 4:				        
+				        $status = 'Held for Review';
+				        break;    
+	        	}
+	         // echo " Successfully created an authCapture transaction with Auth Code : " . $tresponse->getAuthCode() . "\n";
+	        	$trxAuthCode = $tresponse->getAuthCode();
+	          //echo " Transaction ID : " . $tresponse->getTransId() . "\n";
+	        	$trxId = $tresponse->getTransId(); 
+	          //echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n"; 
+	          //echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+	        	$trxDescription = $tresponse->getMessages()[0]->getDescription();
+	        	
+	        	$trxData = [
+	        	'auth_code'=> $trxAuthCode,
+	        	'transaction_id' => $trxId,
+				'status'=> $status,
+				'description'=> $trxDescription
+	        	];
+	        	$trxData = $object = json_decode(json_encode($trxData), FALSE);	
+	        	return $trxData;
+	        }
+	        else
+	        {
+	          /*echo "Transaction Failed \n";
+	          if($tresponse->getErrors() != null)
+	          {
+	            echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+	            echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";            
+	          }*/
+	          return;
+	        }
+	      }  // response NOT Ok
+	      else
+	      {
+	        /*echo "Transaction Failed \n";
+	        $tresponse = $response->getTransactionResponse();
+	        
+	        if($tresponse != null && $tresponse->getErrors() != null)
+	        {
+	          echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+	          echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";                      
+	        }
+	        else
+	        {
+	          echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
+	          echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+	        }*/
+	        return;
+	      }      
+	    }
 	    
+	    return;
+	    
+	    
+	    // end 
+	    /*
 	    if ($response != null)
 	    {
 	      if($response->getMessages()->getResultCode() == Constants::RESPONSE_OK)
@@ -134,6 +211,7 @@ class PaymentRepository
 	      echo  "No response returned \n";
 	    }
 	    return $response;
+	    */
   	}
 
 }

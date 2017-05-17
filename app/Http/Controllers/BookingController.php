@@ -34,8 +34,7 @@ class BookingController extends Controller
         $this->validate($this->request, [
                     'name' => 'required',
                     'email' => 'required',
-                    'phone' => 'required',
-                    'password' => 'required',            
+                    'phone' => 'required',                    
                 ]); 
                 //$busId = $this->request->input('bus_id'); 
                 $name = $this->request->input('name');
@@ -69,6 +68,7 @@ class BookingController extends Controller
                     $user = new User;
                     $user->name = $name;
                     $user->email = $email;
+                    $user->phone = $phone;
                     $user->password = bcrypt($password);
                     $user->save();
                 }
