@@ -15,6 +15,7 @@ use App\User;
 class BookingController extends Controller
 {
     protected $request;   
+    //protected $name;
     protected $phone;
     protected $email;
 	//protected $travelDate;
@@ -28,7 +29,7 @@ class BookingController extends Controller
 
     }
 
-    public function createOrUpdateGuest()
+    protected function createOrUpdateGuest()
     {
         $this->validate($this->request, [
                     'name' => 'required',
@@ -36,11 +37,11 @@ class BookingController extends Controller
                     "phone" => 'required',            
                 ]); 
                 //$busId = $this->request->input('bus_id'); 
-                $this->name = $name = $this->request->input('name');
+                $name = $this->request->input('name');
                 $this->email = $email = $this->request->input('email');
-                $phone = $this->request->input('phone'); 
+                $this->phone = $phone= $this->request->input('phone'); 
 
-                // Storing Guest User Info             
+                // Save/ Upadte Guest User Info             
                 $guestUserIsAvailable = User::where('phone', $phone)
                                                 ->orWhere('email', $email)
                                                 ->first();  // user available or not in guest_user table
@@ -53,12 +54,12 @@ class BookingController extends Controller
                     ]);
                 }
                 else {
-                    $password = strtoupper(bin2hex(random_bytes(4)));
+                    $password = bin2hex(random_bytes(4));
                     User::create([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
-                        'password' =>bcrypt($password),
+                        'password' => bcrypt($password),
                     ]);
                     // mail2user $pass about account & password
                 }
@@ -107,7 +108,8 @@ class BookingController extends Controller
 
 
         } else {
-            $user = User::where('phone', trim($this->phone)->first();                  
+
+            $user = User::where('phone', $this->phone)->first();
             $userId = $user->id;
         }
 
@@ -449,7 +451,18 @@ class BookingController extends Controller
         
     }  
     ***/
-
+    public function test1()
+    {
+        $password = bin2hex(random_bytes(4));
+        //return $password;
+                  $user =  User::create([
+                        'name' => 'mas',
+                        'phone' => '5554',
+                        'email' => 'a@aa.com',
+                        'password' => bcrypt($password),
+                    ]);
+           return $user;         
+    }
     public function test()
     {
         
