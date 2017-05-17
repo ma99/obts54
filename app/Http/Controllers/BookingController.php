@@ -55,13 +55,21 @@ class BookingController extends Controller
                 }
                 else {
                     $password = bin2hex(random_bytes(4));
+                    /* 
+                    Create will through ERROR as password is not included in $fillable array. To avoid we will make instance of User.
                     User::create([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
                         'password' => bcrypt($password),
                     ]);
-                    // mail2user $pass about account & password
+                    */
+                    // mail2user $password about account & password
+                    $user = new User;
+                    $user->name = $name;
+                    $user->email = $email;
+                    $user->password = bcrypt($password);
+                    $user->save();
                 }
     }
 
