@@ -107,8 +107,8 @@ class BookingController extends Controller
 
 
         } else {
-            $user = User::where('phone', $this->phone)->first();
-            $userIsd = $user->id;
+            $user = User::where('phone', trim($this->phone)->first();                  
+            $userId = $user->id;
         }
 
         //$this->request->user()->bookings()->create([ 
@@ -483,5 +483,5 @@ class BookingController extends Controller
 
         return 'success';
 
-    }
+    }    
 }
