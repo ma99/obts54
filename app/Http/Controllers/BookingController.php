@@ -33,8 +33,9 @@ class BookingController extends Controller
     {
         $this->validate($this->request, [
                     'name' => 'required',
-                    "email" => 'required',
-                    "phone" => 'required',            
+                    'email' => 'required',
+                    'phone' => 'required',
+                    'password' => 'required',            
                 ]); 
                 //$busId = $this->request->input('bus_id'); 
                 $name = $this->request->input('name');
@@ -452,13 +453,14 @@ class BookingController extends Controller
     ***/
     public function test1()
     {
+
         $password = bin2hex(random_bytes(4));
         //return $password;
                   $user =  User::create([
                         'name' => 'mas',
                         'phone' => '5554',
                         'email' => 'a@aa.com',
-                        'password' => bcrypt($password),
+                        'password' => $password,
                     ]);
            return $user;         
     }
