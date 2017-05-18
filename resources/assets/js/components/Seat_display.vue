@@ -150,10 +150,11 @@
                 return seat.seat_no == seatNo;
               });
 
-              this.seatList[indx].status = "booked";
-              this.seatNo = seatNo;
-              this.seatStatus = evnt.seat.status;
-              this.showAlert();
+             // this.seatList[indx].status = "booked"; //prev
+            this.seatList[indx].status = evnt.seat.status;
+            this.seatNo = seatNo;
+            this.seatStatus = evnt.seat.status;
+            this.showAlert();
 
 
             
