@@ -52,6 +52,7 @@ Artisan::command('cancel:buying', function ()
             if ($booking->total_seats == $count) {  
               $booking->delete();
             }
+            //response()->json([]); // could be used
             $updateSeatInfo = [
                           'seat_no' => $seat->seat_no,
                           'status' => 'available',
