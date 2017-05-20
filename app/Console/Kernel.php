@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('cancel:buying')->cron('*/3 * * * * *'); //everyThreeMinutes();
     }
 
     /**

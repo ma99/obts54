@@ -462,16 +462,24 @@ class BookingController extends Controller
     ***/
     public function test1()
     {
-
-        $password = bin2hex(random_bytes(4));
-        //return $password;
-                  $user =  User::create([
-                        'name' => 'mas',
-                        'phone' => '5554',
-                        'email' => 'a@aa.com',
-                        'password' => $password,
-                    ]);
-           return $user;         
+        $now = Carbon::now(3);
+        echo "$now->tzName"; 
+        $seats = Seat::where('status','buying')->get();
+        if ($seats){
+          //$this->info("Now: {$now} ");
+          echo "Now: $now";
+          foreach ($seats as $seat) {
+            $before = $seat->updated_at;
+            echo "Before: $before";
+            //$this->info("Before: {$before} ");
+            //$diff = $now->diffInMinutes($before);
+            $diff = $now->diffInSeconds($before);
+            //$this->info("Difference {$diff} ");
+            echo "Diff= $diff";
+          }
+          return;
+        }
+       return;
     }
     public function test()
     {

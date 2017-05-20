@@ -31,24 +31,16 @@ class PaymentController extends Controller
     public function payNow(Booking $booking)
     {
     	$bookingId = $booking->id;
-        $scheduleId = $booking->schedule_id; 
-        $travelDate = $booking->date;
+        $scheduleId = $booking->schedule_id;        
+        //$travelDate = $booking->date;
+        $travelDate = date("d-m-Y", strtotime($booking->date)) ;
     	$userId = $booking->user_id;
-        //$amount = 0
-    	//$bk = Booking::find($bookingId);
+        
     	$user = User::find($userId);
-    	// if ($user) {
-    	// 	//return $user;   		
-    	// } else 
-    	// {
-    	// 	$user = GuestUser::find($userId);
-    	// 	//return $user; 
-    	// }
-    	
     	$amount = 2.23;
     	//$this->payment->chargeCreditCard(2.23);
-    	/*$trxData = $this->payment->chargeCreditCard($bookingId, $user, $amount);
-
+    	$trxData = $this->payment->chargeCreditCard($bookingId, $user, $amount);
+       
         if ($trxData) {
             $payment = Payment::create([
                     'booking_id' => $bookingId,
@@ -61,31 +53,43 @@ class PaymentController extends Controller
             
             $payment = json_decode(json_encode($payment), FALSE); //array to object
 
-            $seats = Seat::where('booking_id', $bookingId)->get();
-            
+            $this->updateSeatStatus($bookingId, $scheduleId, $travelDate);
+
+            return view('payment.success', compact('payment')); 
+        }         
+        
+        $this->removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate);
+        return view('payment.failed');          
+    }
+
+    public function removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate){
+        // by Deleting from bookings, seats table
+
+        Booking::destroy($bookingId); // deleting by pk
+
+        $seats = Seat::where('booking_id', $bookingId)->get();            
+            foreach ($seats as $seat) {
+                $updateSeatInfo = [
+                        'seat_no' => $seat->seat_no,
+                        'status' => 'available',
+                    ];
+                $seat->delete();
+                $updateSeatInfo = json_decode(json_encode($updateSeatInfo), FALSE); //array to object
+                broadcast(new SeatStatusUpdatedEvent($updateSeatInfo, $scheduleId, $travelDate))->toOthers();
+            }
+        return;
+    }
+
+    public function updateSeatStatus($bookingId, $scheduleId, $travelDate)
+    {
+        $seats = Seat::where('booking_id', $bookingId)->get();            
             foreach ($seats as $seat) {
                 $seat->update([
                         'status' => 'confirmed',
                     ]);
-                //return $seat;
                 broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $travelDate))->toOthers();
             }
-
-            //return view('payment.success', compact('payment')); 
-        }*/
-        $seats = Seat::where('booking_id', $bookingId)->get();
-        //dd($seats);
-            
-            foreach ($seats as $seat) {
-                $seat->update([
-                        'status' => 'confirmed',
-                    ]);
-                //return $seat;
-            broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $travelDate))->toOthers();
-            return 'updated';
-            }
-        //$payment = 'Payment Failed'; //array to object
-        //return view('payment.failed');          
+        return;
     }
 
 }
