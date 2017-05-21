@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Role;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -26,6 +28,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isNormalUser()
+    {
+        
+        $user = auth()->user(); // authenticated user's object
+        //$userId = $user->id;
+        //role: admin/staff
+        //m-1
+        /*if ( $user->roles()->role == 'normal') {  
+            $userId = $user->id;
+        }*/
+        //m-2 collect info from roles tble for this user. if no info found means he is normal user.  
+        // if ($user->roles->count() < 1) {  
+        //     $userId = $user->id;
+        // }
+        return ( $user->roles->count() == 0 ) ? true : false;
+    }
 
     public function bookings()
     {

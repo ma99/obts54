@@ -103,21 +103,25 @@ class BookingController extends Controller
         extract($inputsInfo);
 
         if (auth()->check()) {
-            $user = auth()->user(); // authenticated user's object
-            $userIsd = $user->id;
+            /*$user = auth()->user(); // authenticated user's object
+            $userId = $user->id;*/
+            if ( auth()->user()->isNormalUser() ) {
+                $userId = auth()->id();    // Auth::id() , Auth::user()            
+            }
             //role: admin/staff
             //m-1
             /*if ( $user->roles()->role == 'normal') {  
-                $userIsd = $user->id;
+                $userId = $user->id;
             }*/
             //m-2 collect info from roles tble for this user. if no info found means he is normal user.  
             /*if (!$user->roles->count()) {  
-                $userIsd = $user->id;
+                $userId = $user->id;
             }*/
 
 
         } else {
 
+            //$user = GuestUser::where('phone', $this->phone)->first();
             $user = User::where('phone', $this->phone)->first();
             $userId = $user->id;
         }
