@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone',
+        'name', 'email', 'password', 'phone',
     ];
 
     /**
@@ -43,6 +43,7 @@ class User extends Authenticatable
         // if ($user->roles->count() < 1) {  
         //     $userId = $user->id;
         // }
+        
         return ( $user->roles->count() == 0 ) ? true : false;
     }
 
@@ -57,10 +58,10 @@ class User extends Authenticatable
         return $this->hasMany(Role::class);
     }
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 
 
 }

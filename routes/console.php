@@ -24,6 +24,7 @@ Artisan::command('cancel:buying', function ()
 {
     $now = Carbon::now(3); // UTC+0.3:00 
     $this->comment("Now: {$now} ");
+    //$seats = Seat::where('status','buying')->with('bookings')->get();  // eager
     $seats = Seat::where('status','buying')->get();
     //if ($seats)
     if ($seats->count() > 0)
@@ -72,10 +73,14 @@ Artisan::command('cancel:buying', function ()
     //return;
     $this->error("Woops! Not Found");
 })->describe('Cancel All Buying');
+
+
 //
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+
 
 // php artisan user 1
 Artisan::command('user {userId}', function () {

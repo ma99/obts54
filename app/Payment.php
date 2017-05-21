@@ -12,6 +12,7 @@ class Payment extends Model
         'transaction_id', 
         'auth_code', 
         'status', 
-        'description', 
+        'description',
+        'payment_method', 
     ];
 }

@@ -55,35 +55,46 @@ class BookingController extends Controller
                 }
                 else {
                     $password = bin2hex(random_bytes(4));
-                    /* 
-                    Create will through ERROR as password is not included in $fillable array. To avoid we will make instance of User.
                     User::create([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
                         'password' => bcrypt($password),
                     ]);
-                    */
+                    
                     // mail2user $password about account & password
-                    $user = new User;
+                    /*$user = new User;
                     $user->name = $name;
                     $user->email = $email;
                     $user->phone = $phone;
                     $user->password = bcrypt($password);
-                    $user->save();
+                    $user->save();*/
+
+                    //updating roles table with guest role. Later on we can based on this we can delete guest user.
+                    $user->roles()->create([
+                                    'role' => 'guest',
+                        ]);
                 }
     }
 
+    public function checkUserRole()
+    {
+        return auth()->user()->isNormalUser() ? '':  $this->createOrUpdateGuest();    
+    }
     public function getInputsInfo()
     {
         # code...$scheduleId = $this->request->input('schedule_id');
           $travelDate = $this->request->input('date');
 
-          //user
-          if ( ! auth()->check() ) 
-            { 
-                $this->createOrUpdateGuest();
-            }
+          // //user
+          // if ( auth()->check() ) {
+          //    if (!auth()->user()->isNormalUser()) {
+          //       $this->createOrUpdateGuest();    
+          //    }
+          // } else {
+          //   $this->createOrUpdateGuest();
+          // }
+        auth()->check() ? $this->checkUserRole() : $this->createOrUpdateGuest();
 
            return $infos = [ 
                     "scheduleId" => $this->request->input('schedule_id'), 
@@ -468,7 +479,25 @@ class BookingController extends Controller
     {
         $now = Carbon::now(3);
         echo "$now->tzName"; 
-        $seats = Seat::where('status','buying')->get();
+        
+        //get() ---> collection (multiple objects)
+        $bookings = Booking::where('id', 'C9A310BD')->with('seats')->get(); 
+        foreach ($bookings as $booking) {
+            echo $booking->seats;
+            foreach ($booking->seats as $seat) {
+                echo $seat->seat_no;
+            }
+        return;
+        }
+
+        // first() -----> Single Object
+        $booking = Booking::where('id', 'C9A310BD')->with('seats')->first(); //Single Object
+        echo $booking->seats;        
+        foreach ($booking->seats as $seat) {
+            echo $seat->seat_no;
+        }
+        return;
+
         if ($seats){
           //$this->info("Now: {$now} ");
           echo "Now: $now";
@@ -517,6 +546,26 @@ class BookingController extends Controller
         ]);
 
         return 'success';
-
+    }
+    public function getVsfirst()
+    {
+        //collection explained
+        
+        //get() ---> collection (multiple objects)
+        $bookings = Booking::where('id', 'C9A310BD')->with('seats')->get(); 
+        foreach ($bookings as $booking) {
+            echo $booking->seats;
+            foreach ($booking->seats as $seat) {
+                echo $seat->seat_no;
+            }
+        return;
+        }
+        // first() -----> Single Object
+        $booking = Booking::where('id', 'C9A310BD')->with('seats')->first(); //Single Object
+        echo $booking->seats;        
+        foreach ($booking->seats as $seat) {
+            echo $seat->seat_no;
+        }
+        return;
     }    
 }

@@ -251,12 +251,22 @@
                                 @include('includes.guest')
                               @endif  
                               --}}
+                              {{-- @if (auth()->check())
+                                @include('includes.user')                              
+                              @else
+                                @include('includes.guest')
+                              @endif   --}}
+
                               @if (auth()->check())
-                                @include('includes.user')
-                               {{--  <div v-show="false">  @{{ guestUser = false }} --}}
+                                @if (auth()->user()->isNormalUser())
+                                  @include('includes.user')
+                                @else
+                                  @include('includes.guest')
+                                @endif                          
                               @else
                                 @include('includes.guest')
                               @endif  
+
                           </div>
                           {{-- <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue
                           </button> --}}
