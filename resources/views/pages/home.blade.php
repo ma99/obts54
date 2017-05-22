@@ -266,6 +266,7 @@
                               @else
                                 @include('includes.guest')
                               @endif  
+                               
 
                           </div>
                           {{-- <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue

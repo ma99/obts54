@@ -175,11 +175,12 @@ class SearchTicketController extends Controller
 				//return $schedule->bookings->count();
 
 				if ( $schedule->bookings->count() ) {
+					
 					$totalSeatsBooked = 0;
 					$availableSeats = 0;
 					
 					foreach ($schedule->bookings as $booking) {
-			     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats; 
+			     		$totalSeatsBooked = $totalSeatsBooked + $booking->total_seats; 
 		     		}	
 		     		$availableSeats = $bus->total_seats - $totalSeatsBooked;
 		     		//print_r($availableSeats);

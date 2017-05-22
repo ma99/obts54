@@ -12,7 +12,7 @@ class Booking extends Model
     public $incrementing = false; 
 
     protected $fillable = [
-        'id', 'user_id', 'schedule_id', 'seats', 'amount', 'date', 'pickup_point', 'dropping_point',
+        'id', 'user_id', 'schedule_id', 'total_seats', 'amount', 'date', 'pickup_point', 'dropping_point',
     ];
 
     public function schedule()

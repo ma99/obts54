@@ -72,7 +72,7 @@ class BookingController extends Controller
 
                     //updating roles table with guest role. Later on we can based on this we can delete guest user.
                     $user->roles()->create([
-                                    'role' => 'guest',
+                                    'name' => 'guest',
                         ]);
                 }
     }
@@ -142,7 +142,7 @@ class BookingController extends Controller
                 'id' => $bookingId,
                 'user_id' => $userId,
                 'schedule_id' => $scheduleId,
-                'seats' => $totalSeats,
+                'total_seats' => $totalSeats,
                 'amount' => $totalFare,
                 'date' => $date,
                 'pickup_point' => 'AAA',
@@ -170,7 +170,7 @@ class BookingController extends Controller
             return response()->json([
                 'booking_id' => $bookingId,
                 //'schedule_id' => $scheduleId,
-                'seats' => $totalSeats,
+                'total_seats' => $totalSeats,
                 'seat_no' => $seats,
                 'amount' => $totalFare,
                 'date' => $date,
@@ -475,44 +475,17 @@ class BookingController extends Controller
         
     }  
     ***/
-    public function test1()
+    public function test1(Request $request)
     {
-        $now = Carbon::now(3);
-        echo "$now->tzName"; 
+       //dd($request->user());
+        //$roles = auth()->user()->roles()->get();
         
-        //get() ---> collection (multiple objects)
-        $bookings = Booking::where('id', 'C9A310BD')->with('seats')->get(); 
-        foreach ($bookings as $booking) {
-            echo $booking->seats;
-            foreach ($booking->seats as $seat) {
-                echo $seat->seat_no;
-            }
-        return;
-        }
-
-        // first() -----> Single Object
-        $booking = Booking::where('id', 'C9A310BD')->with('seats')->first(); //Single Object
-        echo $booking->seats;        
-        foreach ($booking->seats as $seat) {
-            echo $seat->seat_no;
-        }
-        return;
-
-        if ($seats){
-          //$this->info("Now: {$now} ");
-          echo "Now: $now";
-          foreach ($seats as $seat) {
-            $before = $seat->updated_at;
-            echo "Before: $before";
-            //$this->info("Before: {$before} ");
-            //$diff = $now->diffInMinutes($before);
-            $diff = $now->diffInSeconds($before);
-            //$this->info("Difference {$diff} ");
-            echo "Diff= $diff";
-          }
-          return;
-        }
-       return;
+        //$role = $request->user()->roles->contains('role', 'admin');
+      //  $role = auth()->user()->roles->contains('name', 'user');
+        
+        //dd($roles->contains('role','admin'));
+        dd(auth()->user()->isNormalUser());
+        
     }
     public function test()
     {

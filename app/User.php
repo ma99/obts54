@@ -32,19 +32,11 @@ class User extends Authenticatable
     public function isNormalUser()
     {
         
-        $user = auth()->user(); // authenticated user's object
-        //$userId = $user->id;
-        //role: admin/staff
-        //m-1
-        /*if ( $user->roles()->role == 'normal') {  
-            $userId = $user->id;
-        }*/
-        //m-2 collect info from roles tble for this user. if no info found means he is normal user.  
-        // if ($user->roles->count() < 1) {  
-        //     $userId = $user->id;
-        // }
-        
+        $user = auth()->user(); // authenticated user's object        
         return ( $user->roles->count() == 0 ) ? true : false;
+        
+        // return !(auth()->user()->roles->contains('name', 'admin') || auth()->user()->roles->contains('name', 'staff') || auth()->user()->roles->contains('name', 'guest')) ? true : false;
+        
     }
 
     public function bookings()
