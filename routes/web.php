@@ -21,6 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'SearchTicketController@index');
 
+Route::get('/forbidden', 'HomeController@forbidden');
+
+Route::get('/admin/dashboard', 'Admin\DashboardController@index');
+
 Route::get('/search', 'SearchTicketController@searchTicket');
 
 Route::get('/viewseats', 'SearchTicketController@viewSeats');

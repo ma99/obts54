@@ -39,6 +39,11 @@ class User extends Authenticatable
         
     }
 
+    public function isAdministrator()
+    {         
+        return auth()->user()->roles->contains('name', 'admin');
+    }
+
     public function bookings()
     {
         //return $this->hasMany('Booking');

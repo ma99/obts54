@@ -25,4 +25,10 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function forbidden()
+    {
+        $user = auth()->user();
+        return view('common.forbidden', compact('user') );
+    }
 }
