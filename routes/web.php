@@ -18,10 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index');
+Route::get('/{vue?}', function () {
+    return view('pages.admin');
+})->where('vue', '[\/\w\.-]*');
 
 Route::get('/home', 'SearchTicketController@index');
 
 Route::get('/forbidden', 'HomeController@forbidden');
+
 
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 
@@ -37,6 +41,8 @@ Route::get('/test1', 'BookingController@test1');
 
 Route::get('/pay/{booking}', 'PaymentController@payNow')->name('payment');
 
+
+
 /* Explicit route model binding see RouteServiceProvider.php
 
 Route::get('users/{user}', function(\App\User $user) {
@@ -44,10 +50,6 @@ Route::get('users/{user}', function(\App\User $user) {
 });
 
 */
-
-
-
-
 
 //Route::post('/home', 'SearchTicketController@search');
 //Route::get('/test', 'SearchTicketController@test1');
