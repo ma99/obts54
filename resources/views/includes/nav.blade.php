@@ -1,11 +1,11 @@
 <nav class="tabs is-boxed">
     <div class="container">
         <ul>
-            <router-link tag="li" to="/" exact>
+            <router-link tag="li" to="/dashboard" exact>
                 <a>Home</a>
             </router-link>
 
-            <router-link tag="li" to="admin/about">
+            <router-link tag="li" to="/about">
                 <a>About</a>
             </router-link>
 

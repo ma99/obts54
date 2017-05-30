@@ -2,24 +2,31 @@ import VueRouter from 'vue-router';
 
 let routes = [
     {
-        path: '/',
+        path: '/dashboard',
         component: require('./views/Home')
     },
 
     {
         //path: '/about',
-        path: '/admin/about',
+        path: '/about',
         component: require('./views/About')
     },
 
     {
         path: '/contact',
         component: require('./views/Contact')
-    }
+    },
+
+    {   
+        path: '*',
+        //component: fourohfour
+        component: require('./views/Fourohfour')
+    },
 ];
 
 export default new VueRouter({
     routes,
     linkActiveClass: 'is-active',
-    mode: 'history'
+    mode: 'history',
+    base: '/admin/'
 });
