@@ -35,8 +35,8 @@
 <body>
     <div id="app" v-cloak>
         <!-- <nav class="navbar navbar-default navbar-static-top"> -->
-        <nav class="navbar navbar-inverse navbar-static-top">        
-            <!-- <div class="container"> -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">        
+          <div class="container">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -56,7 +56,7 @@
                  
 
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul id="topbar" class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('login') }}">Login</a></li>
@@ -100,12 +100,13 @@
             <!-- ============================================================== -->
             <!-- Left Side Of Navbar -->
             <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse">
+                {{-- <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse"> --}}
+                <div class="sidebar-nav navbar-collapse" id="app-navbar-collapse">
                     <!-- <div class="sidebar-head">
                         <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
                     </div> -->
                     <ul class="nav" id="side-menu">
-                        <li style="padding: 70px 0 0;">
+                        <li>
                             <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
                         </li>
                         <li>
@@ -126,12 +127,21 @@
                         <li>
                             <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
                         </li>
+                        <li>
+                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+                        </li>
+                        <li>
+                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+                        </li>
+                        <li>
+                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+                        </li>
                     </ul>                    
                 </div>
             </div>
             <!-- ============================================================== -->
             <!-- End Left Sidebar -->    
-            <!-- </div> -->
+          </div>
         </nav>
         <!-- ============================================================== -->
         <!-- Page Content -->
@@ -141,8 +151,7 @@
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title">Profile page</h4> </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <a href="https://wrappixel.com/templates/ampleadmin/" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Upgrade to Pro</a>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">                        
                         <ol class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li class="active">Profile Page</li>
