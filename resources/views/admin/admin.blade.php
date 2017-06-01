@@ -100,8 +100,8 @@
             <!-- ============================================================== -->
             <!-- Left Side Of Navbar -->
             <div class="navbar-default sidebar" role="navigation">
-                {{-- <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse"> --}}
-                <div class="sidebar-nav navbar-collapse" id="app-navbar-collapse">
+                <!-- {{-- <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse"> --}} -->
+                <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- <div class="sidebar-head">
                         <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
                     </div> -->
@@ -128,13 +128,13 @@
                             <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
                         </li>
                         <li>
-                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+                            <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
                         </li>
                         <li>
                             <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
                         </li>
                         <li>
-                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
+                            <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
                         </li>
                     </ul>                    
                 </div>
@@ -237,11 +237,12 @@
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
+            <!-- <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer> -->
         </div>
-        <!-- /#page-wrapper -->   
+        <!-- /#page-wrapper -->           
     </div> 
     <!-- /#app -->
+    <!-- <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer> -->
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
