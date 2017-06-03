@@ -16,7 +16,8 @@
    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     
     
     <style>
@@ -25,29 +26,29 @@
       }
     </style>
 
-    <!-- Scripts -->
-    <script>
+    {{-- <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
-    </script>
+    </script> --}}
+    
 </head>
-<body>
+<body class="skin-blue">
     <div id="app" v-cloak>
         <!-- <nav class="navbar navbar-default navbar-static-top"> -->
-        <nav class="navbar navbar-inverse navbar-fixed-top">        
-          <div class="container">
+        {{-- <nav class="navbar navbar-inverse navbar-fixed-top">         --}}
+        <nav class="navbar navbar-default navbar-fixed-top">        
+          <div class="container-fluid">
             <div class="navbar-header">
-
                 <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                <button type="button" id="btn-menu" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
 
-                <!-- Branding Image -->
+                <!-- Branding Image/Logo -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -99,7 +100,7 @@
                 
             <!-- ============================================================== -->
             <!-- Left Side Of Navbar -->
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar" role="navigation">
                 <!-- {{-- <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse"> --}} -->
                 <div class="sidebar-nav collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- <div class="sidebar-head">
@@ -123,19 +124,7 @@
                         </li>
                         <li>
                             <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
-                        </li>
-                        <li>
-                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
-                        </li>
-                        <li>
-                            <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
-                        </li>
-                        <li>
-                            <a href="404.html" class="waves-effect"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Error 404</a>
-                        </li>
-                        <li>
-                            <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
-                        </li>
+                        </li>                        
                     </ul>                    
                 </div>
             </div>
@@ -246,6 +235,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $("button#btn-menu").click(function(){            
+                $("#page-wrapper").toggleClass("add-top-margin");
+            });            
+        });
+    </script>
     @yield('scripts')    
 </body>
 </html>

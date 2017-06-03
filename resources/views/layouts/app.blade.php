@@ -25,11 +25,11 @@
     </style>
 
     <!-- Scripts -->
-    <script>
+    {{-- <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
-    </script>
+    </script> --}}
 </head>
 <body>
     <div id="app" v-cloak>
