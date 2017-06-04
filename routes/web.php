@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-//Route::get('/admin', 'HomeController@admin');
+Route::get('/admin', 'HomeController@admin');
 
 /*Route::get('/{vue?}', function () {
     return view('pages.admin');

@@ -176,33 +176,95 @@ body {
 //     width: 20px;
 // }
 
+%anchor {
+      color: rgba(184, 199, 206, 0.88);
+      border-left: 5px solid transparent;
+      &:hover, &:focus {
+        /*background: rgba(0, 0, 0, 0.07);*/
+        background: rgba(0, 136, 204, 0.72);
+        color: #fff;
+      }
+      &.active {
+       /* background: transperant;*/
+        /*color: #54667a;*/
+        color: #333;
+        border-left: 5px solid #41b3f9;
+        /*background-color: #d3e0e9;*/
+        background-color: rgba(253, 245, 154, 0.85);
+        font-weight: 600;
+      }
+}
 #side-menu > li {
+  border-bottom: 1px dashed;
   &:first-child {
     padding: 10px 0 0;
-  }  
+  }
+    
   > a {
     /*color: #54667a;*/
-    color: rgba(184, 199, 206, 0.88);
-    border-left: 5px solid transparent;
-    &:hover, &:focus {
-      /*background: rgba(0, 0, 0, 0.07);*/
-      background: rgba(0, 136, 204, 0.72);
-      color: #fff;
+    // color: rgba(184, 199, 206, 0.88);
+    // border-left: 5px solid transparent;
+    // &:hover, &:focus {
+    //   /*background: rgba(0, 0, 0, 0.07);*/
+    //   background: rgba(0, 136, 204, 0.72);
+    //   color: #fff;
+      @extend %anchor;
     }
-    &.active {
-     /* background: transperant;*/
-      /*color: #54667a;*/
-      color: #333;
-      border-left: 5px solid #41b3f9;
-      /*background-color: #d3e0e9;*/
-      background-color: rgba(253, 245, 154, 0.85);
-      font-weight: 600;
+    // &.active {
+    //  /* background: transperant;*/
+    //   /*color: #54667a;*/
+    //   color: #333;
+    //   border-left: 5px solid #41b3f9;
+    //   /*background-color: #d3e0e9;*/
+    //   background-color: rgba(253, 245, 154, 0.85);
+    //   font-weight: 600;
 
-    }
-  }
+    // }
+  
   &.devider {
     margin: 7px 0;
     border-top: 1px solid rgba(120, 130, 140, .13)
+  }
+
+  > h2 {
+    @extend %anchor;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    // padding: 0.75rem 0.75rem 0.75rem 0;
+    padding: 10px 15px;
+    transition: color 0.1s linear 0s;
+  }
+  > h2::after {
+    border-color: transparent transparent transparent #dee0df;
+    border-style: solid;
+    border-width: 5px;
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 3px; 
+    top: 1.15rem;
+    width: 0;
+  }
+  > h2.active::after {
+    transform: rotate(90deg);
+    margin-right: 3px;
+    // background: rgba(255, 255, 255, 0.03);     
+    //background: none;
+    color: #41b3f9;
+    border-left: 5px solid #41b3f9;
+    //@extend a.active;
+  }
+
+  > ul > li {
+    list-style-type: none;
+    margin-left: -15px;
+    > a {
+      @extend %anchor;
+      text-decoration: none;
+    }
   }
 
 }

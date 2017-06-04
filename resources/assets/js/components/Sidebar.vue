@@ -11,8 +11,10 @@
                     <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
                 </li>
                 <li>
-                    <h2>User</h2>
-                    <ul>
+                    <h2 @click="toggle()" v-bind:class="{'active': showChildren}">
+                        <i class="fa fa-user fa-fw" aria-hidden="true"></i>User
+                    </h2>
+                    <ul v-show="showChildren">
                         <li> <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a> </li>
                         <li>Set Roles</li>
                         <li>View List</li>
@@ -38,6 +40,17 @@
 
 <script>
     export default {
+        data() {
+            return {
+                showChildren: false,
+            }
+        },
+        methods: {
+            toggle() {
+                this.showChildren = ! this.showChildren;
+            }
+
+        },
         mounted() {
             console.log('Component mounted.')
         }
@@ -45,16 +58,18 @@
 </script>
 
 <style>
+    /*
     .sidebar h2.is-active::after {
      transform: rotate(90deg);
+     margin-right: 3px;
     }
     .sidebar h2::after {
         border-color: transparent transparent transparent #dee0df;
         border-style: solid;
-        border-width: 4px;
+        border-width: 5px;
         height: 0;
         position: absolute;
-        right: 0;
+        right: 3px; 
         top: 1.15rem;
         width: 0;
     }
@@ -62,12 +77,12 @@
         content: "";
     }
     .sidebar h2 {
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    padding: 0.75rem 0.75rem 0.75rem 0;
-    transition: color 0.1s linear 0s;
-    }
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+        padding: 0.75rem 0.75rem 0.75rem 0;
+        transition: color 0.1s linear 0s;
+    }*/
 </style>
