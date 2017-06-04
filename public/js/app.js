@@ -15166,6 +15166,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -15248,7 +15280,7 @@ var routes = [{
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: routes,
-    linkActiveClass: 'is-active',
+    linkActiveClass: 'active',
     mode: 'history',
     base: '/admin/'
 }));
@@ -42083,7 +42115,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -42116,7 +42148,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] About.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42150,7 +42182,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Contact.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42184,7 +42216,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Fourohfour.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42218,7 +42250,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42301,11 +42333,30 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
+  return _c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "row bg-title"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-9 col-sm-8 col-md-8 col-xs-12"
+  }, [_c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_vm._v("\n                        Dashboard\n                    ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Home")])])])]), _vm._v(" "), _vm._m(1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
+    staticClass: "col-lg-3 col-md-4 col-sm-4 col-xs-12"
+  }, [_c('h4', {
+    staticClass: "page-title"
+  }, [_vm._v("Home page")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-8 col-md-offset-2"
@@ -42313,9 +42364,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Home Page")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Dashboard Home Page")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n                    I'm an Home component!\n                ")])])])])])
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-1")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-2")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

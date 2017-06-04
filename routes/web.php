@@ -18,14 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/admin', 'HomeController@admin');
+//Route::get('/admin', 'HomeController@admin');
 
 /*Route::get('/{vue?}', function () {
     return view('pages.admin');
 })->where('vue', '[\/\w\.-]*');*/
 
 Route::get('admin/{vue?}', function () {
-    return view('pages.admin');
+    return view('admin.admin');
 })->where('vue', '[\/\w\.-]*')->middleware('auth', 'admin');
 
 // Route::get('admin/{subs?}', ['middleware' => 'auth', function () {
