@@ -16,6 +16,18 @@ let routes = [
         path: '/contact',
         component: require('./views/Contact')
     },
+     {
+        path: '/profile',
+        component: require('./views/Profile')
+    },
+     {
+        path: '/roles',
+        component: require('./views/Roles')
+    },
+     {
+        path: '/staff-list',
+        component: require('./views/Staff-list')
+    },
 
     {   
         path: '*',

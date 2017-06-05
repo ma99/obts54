@@ -7,30 +7,42 @@
                 <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
             </div> -->
             <ul class="nav" id="side-menu">
-                <li>
-                    <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
+               <li @click="showChildren=false">                
+                    <router-link class="waves-effect" to="/dashboard" exact><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</router-link>
                 </li>
                 <li>
-                    <h2 @click="toggle()" v-bind:class="{'active': showChildren}">
+                    <h2 @click="toggle()" v-bind:class="{'is-active': showChildren}">
                         <i class="fa fa-user fa-fw" aria-hidden="true"></i>User
                     </h2>
                     <ul v-show="showChildren">
-                        <li> <a href="profile.html" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Profile</a> </li>
-                        <li>Set Roles</li>
-                        <li>View List</li>
-                    </ul>
-                    
+                        <li>
+                            <router-link class="waves-effect" to="/profile">
+                                <i class="fa fa-address-card fa-fw" aria-hidden="true"></i>
+                                Profile
+                            </router-link> </li>
+                        <li> 
+                            <router-link class="waves-effect" to="/roles">
+                                <i class="fa fa-plus fa-fw" aria-hidden="true"></i>                    
+                                Set Roles
+                            </router-link> </li>
+                        <li>
+                            <router-link class="waves-effect" to="/staff-list">
+                                <i class="fa fa-address-book-o fa-fw" aria-hidden="true"></i>
+                                Admin Staff
+                            </router-link>
+                        </li>                        
+                    </ul>                    
                 </li>
-                <li>
+                <li @click="showChildren=false">
                     <a href="basic-table.html" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Basic Table</a>
                 </li>
-                <li>
+                <li @click="showChildren=false">
                     <a href="fontawesome.html" class="waves-effect"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Icons</a>
                 </li>
-                <li>
+                <li @click="showChildren=false">
                     <a href="map-google.html" class="waves-effect"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Google Map</a>
                 </li>
-                <li>
+                <li @click="showChildren=false">
                     <a href="blank.html" class="waves-effect"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Blank Page</a>
                 </li>                        
             </ul>                    
@@ -58,6 +70,7 @@
 </script>
 
 <style>
+
     /*
     .sidebar h2.is-active::after {
      transform: rotate(90deg);

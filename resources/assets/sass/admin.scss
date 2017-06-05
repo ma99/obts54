@@ -22,7 +22,8 @@ body {
 }
 #page-wrapper { 
   background: #edf1f5 ;
-  /*min-height: 568px;*/
+  // min-height: 568px;
+  min-height: 800px;
   /*min-height: 100%;*/
   padding: 0 0 60px;
 }
@@ -101,32 +102,8 @@ body {
        background: #08364b;   
       }
     }
-
 }
-// .skin-blue .navbar-default .navbar-brand {
-//   color: #fff;
-//   font-weight: 500;
-// }
-// .skin-blue .navbar-default .navbar-toggle {
-//   border-color: #3c8dbc;
-// }
-// .skin-blue .navbar-default .navbar-toggle .icon-bar {
-//     background-color: #fff; 
-// }
-// .skin-blue .navbar-default .navbar-toggle:hover, 
-// .navbar-default .navbar-toggle:focus {
-//   background-color: #357ca5;;
-// }
 
-// .skin-blue .navbar-default .navbar-nav > li > a {
-//   color: #fff;
-// }
-// .skin-blue .navbar-default .navbar-nav > li > a:hover, 
-// .skin-blue .navbar-default .navbar-nav > li > a:focus {
-//     color: rgba(253, 245, 154, 0.85);;
-//     /*background-color: #3097d1;*/
-//     background: #08364b;    
-// }
 .sidebar {
   /*background: #fff;*/
   background: #08364b;
@@ -138,7 +115,7 @@ body {
     font-weight: 500;
     margin-right: 7px;
     text-align: center;
-    vertical-align: middle;
+    // vertical-align: middle;
     width: 20px;
   }
   .sidebar-nav.navbar-collapse {
@@ -147,11 +124,6 @@ body {
   }
 
 }
-
-// .sidebar .sidebar-nav.navbar-collapse {
-//   padding-left: 0;
-//   padding-right: 0;
-// }
 
 .waves-effect {
     position: relative;
@@ -165,16 +137,6 @@ body {
     -webkit-tap-highlight-color: transparent
 }
 
-// .sidebar .fa-fw {
-//     display: inline-block;
-//     font-size: 16px;
-//     font-style: normal;
-//     font-weight: 500;
-//     margin-right: 7px;
-//     text-align: center;
-//     vertical-align: middle;
-//     width: 20px;
-// }
 
 %anchor {
       color: rgba(184, 199, 206, 0.88);
@@ -184,48 +146,41 @@ body {
         background: rgba(0, 136, 204, 0.72);
         color: #fff;
       }
-      &.active {
-       /* background: transperant;*/
-        /*color: #54667a;*/
+      // &.active {
+      //  /* background: transperant;*/
+      //   /*color: #54667a;*/
+      //   color: #333;
+      //   border-left: 5px solid #41b3f9;
+      //   /*background-color: #d3e0e9;*/
+      //   background-color: rgba(253, 245, 154, 0.85);
+      //   font-weight: 600;
+      // }
+}
+%anchor-active {       
         color: #333;
         border-left: 5px solid #41b3f9;
         /*background-color: #d3e0e9;*/
         background-color: rgba(253, 245, 154, 0.85);
         font-weight: 600;
       }
-}
+
 #side-menu > li {
   border-bottom: 1px dashed;
   &:first-child {
     padding: 10px 0 0;
-  }
-    
-  > a {
-    /*color: #54667a;*/
-    // color: rgba(184, 199, 206, 0.88);
-    // border-left: 5px solid transparent;
-    // &:hover, &:focus {
-    //   /*background: rgba(0, 0, 0, 0.07);*/
-    //   background: rgba(0, 136, 204, 0.72);
-    //   color: #fff;
-      @extend %anchor;
-    }
-    // &.active {
-    //  /* background: transperant;*/
-    //   /*color: #54667a;*/
-    //   color: #333;
-    //   border-left: 5px solid #41b3f9;
-    //   /*background-color: #d3e0e9;*/
-    //   background-color: rgba(253, 245, 154, 0.85);
-    //   font-weight: 600;
-
-    // }
-  
+  }    
   &.devider {
     margin: 7px 0;
     border-top: 1px solid rgba(120, 130, 140, .13)
   }
-
+  // #side-menu > li > a
+  > a {    
+      @extend %anchor;
+      &.active {
+        @extend %anchor-active;
+      }
+  } 
+// #side-menu > li > h2
   > h2 {
     @extend %anchor;
     border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
@@ -236,7 +191,17 @@ body {
     // padding: 0.75rem 0.75rem 0.75rem 0;
     padding: 10px 15px;
     transition: color 0.1s linear 0s;
+    &.is-active {
+       /* background: transperant;*/
+        /*color: #54667a;*/
+        color: #333;
+        border-left: 5px solid #41b3f9;
+        background-color: #d3e0e9;
+        // background-color: rgba(253, 245, 154, 0.85);
+        font-weight: 600;
+      }
   }
+  // #side-menu > li > h2::after
   > h2::after {
     border-color: transparent transparent transparent #dee0df;
     border-style: solid;
@@ -248,7 +213,17 @@ body {
     top: 1.15rem;
     width: 0;
   }
-  > h2.active::after {
+  // > h2.active::after {
+  //   transform: rotate(90deg);
+  //   margin-right: 3px;
+  //   // background: rgba(255, 255, 255, 0.03);     
+  //   //background: none;
+  //   color: #41b3f9;
+  //   border-left: 5px solid #41b3f9;
+  //   //@extend a.active;
+  // }
+
+  > h2.is-active::after {
     transform: rotate(90deg);
     margin-right: 3px;
     // background: rgba(255, 255, 255, 0.03);     
@@ -257,69 +232,24 @@ body {
     border-left: 5px solid #41b3f9;
     //@extend a.active;
   }
-
+// #side-menu > li > ul > li
   > ul > li {
     list-style-type: none;
     margin-left: -15px;
+    padding: 2px 0;
     > a {
       @extend %anchor;
+      padding-left: 5px;
+      padding-right: 15px;
       text-decoration: none;
+      &.active {
+        @extend %anchor-active;
+      }
     }
   }
 
 }
 
-// #side-menu>li:first-child {
-//   padding: 10px 0 0;
-// }
-/*** Side menu ***/
-// #side-menu li a {
-//   /*color: #54667a;*/
-//   color: rgba(184, 199, 206, 0.88);
-//   border-left: 5px solid transparent;
-// }
-/*#side-menu li a {
-  color: #54667a;
-  border-left: 0px solid #fff;
-}*/
-/*#side-menu > li > a {
-  border-left: 3px solid transperant;
-}*/
-// #side-menu > li > a:hover,
-// #side-menu > li > a:focus {
-//   background: rgba(0, 0, 0, 0.07);
-//   background: rgba(0, 136, 204, 0.72);
-//   color: #fff;
-// }
-// #side-menu > li > a.active {
-//  /* background: transperant;*/
-//   /*color: #54667a;*/
-//   color: #333;
-//   border-left: 5px solid #41b3f9;
-//   /*background-color: #d3e0e9;*/
-//   background-color: rgba(253, 245, 154, 0.85);
-//   font-weight: 600;
-
-// }
-
-/*#side-menu ul > li > a.active {
-  color: #54667a;
-  font-weight: 700;
-}*/
-/***/
-
-
-/*#side-menu li.active>a {
-    background: rgba(0, 0, 0, 0)
-}
-/*
-
-#side-menu li.devider {
-    margin: 7px 0;
-    border-top: 1px solid rgba(120, 130, 140, .13)
-}
-
-*/
 .bg-title {
     background: #fff;
     /*overflow: hidden;*/
@@ -332,6 +262,7 @@ body {
       font-size: 14px;
       font-weight: 500;
       margin-top: 6px;
+      margin-left: 20px;
     }
 
     .breadcrumb {
@@ -346,23 +277,3 @@ body {
       }
     }
 }
-// .bg-title h4 {
-//     text-transform: uppercase;
-//     font-size: 14px;
-//     font-weight: 500;
-//     margin-top: 6px;
-// }
-// .breadcrumb .active {
-//   background: none;
-// }
-// .bg-title .breadcrumb {
-//     background: 0 0;
-//     margin-bottom: 0;
-//     float: right;
-//     padding: 0;
-//     margin-top: 0px;
-    
-//     .active {
-//       background: none;
-//     }
-// }

@@ -55,7 +55,7 @@
                 
             <!-- ============================================================== -->
             <!-- Left Side Of Navbar -->
-            @include ('admin.sidebar')            
+            <sidebar></sidebar>
             <!-- End Left Sidebar -->    
           </div>
         </nav>

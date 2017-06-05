@@ -15381,6 +15381,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -15614,6 +15626,15 @@ var routes = [{
 }, {
     path: '/contact',
     component: __webpack_require__(55)
+}, {
+    path: '/profile',
+    component: __webpack_require__(78)
+}, {
+    path: '/roles',
+    component: __webpack_require__(81)
+}, {
+    path: '/staff-list',
+    component: __webpack_require__(84)
 }, {
     path: '*',
     //component: fourohfour
@@ -20378,7 +20399,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n.sidebar h2.is-active::after {\n transform: rotate(90deg);\n margin-right: 3px;\n}\n.sidebar h2::after {\n    border-color: transparent transparent transparent #dee0df;\n    border-style: solid;\n    border-width: 5px;\n    height: 0;\n    position: absolute;\n    right: 3px; \n    top: 1.15rem;\n    width: 0;\n}\n.sidebar h2::after {\n    content: \"\";\n}\n.sidebar h2 {\n    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);\n    cursor: pointer;\n    font-size: 14px;\n    font-weight: 600;\n    margin: 0;\n    padding: 0.75rem 0.75rem 0.75rem 0;\n    transition: color 0.1s linear 0s;\n}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n.sidebar h2.is-active::after {\n transform: rotate(90deg);\n margin-right: 3px;\n}\n.sidebar h2::after {\n    border-color: transparent transparent transparent #dee0df;\n    border-style: solid;\n    border-width: 5px;\n    height: 0;\n    position: absolute;\n    right: 3px; \n    top: 1.15rem;\n    width: 0;\n}\n.sidebar h2::after {\n    content: \"\";\n}\n.sidebar h2 {\n    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);\n    cursor: pointer;\n    font-size: 14px;\n    font-weight: 600;\n    margin: 0;\n    padding: 0.75rem 0.75rem 0.75rem 0;\n    transition: color 0.1s linear 0s;\n}*/\n", ""]);
 
 /***/ }),
 /* 48 */
@@ -42408,7 +42429,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -42445,7 +42466,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Sidebar.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Sidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Sidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42479,7 +42500,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] About.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42513,7 +42534,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Contact.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42547,7 +42568,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Fourohfour.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42581,7 +42602,7 @@ var Component = __webpack_require__(1)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -42679,9 +42700,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "side-menu"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('li', [_c('h2', {
+  }, [_c('li', {
+    on: {
+      "click": function($event) {
+        _vm.showChildren = false
+      }
+    }
+  }, [_c('router-link', {
+    staticClass: "waves-effect",
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-clock-o fa-fw",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("Dashboard")])], 1), _vm._v(" "), _c('li', [_c('h2', {
     class: {
-      'active': _vm.showChildren
+      'is-active': _vm.showChildren
     },
     on: {
       "click": function($event) {
@@ -42700,33 +42738,63 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.showChildren),
       expression: "showChildren"
     }]
-  }, [_vm._m(1), _vm._v(" "), _c('li', [_vm._v("Set Roles")]), _vm._v(" "), _c('li', [_vm._v("View List")])])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5)])])])
+  }, [_c('li', [_c('router-link', {
+    staticClass: "waves-effect",
+    attrs: {
+      "to": "/profile"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-address-card fa-fw",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                            Profile\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "waves-effect",
+    attrs: {
+      "to": "/roles"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus fa-fw",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("                    \n                            Set Roles\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "waves-effect",
+    attrs: {
+      "to": "/staff-list"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-address-book-o fa-fw",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                            Admin Staff\n                        ")])], 1)])]), _vm._v(" "), _c('li', {
+    on: {
+      "click": function($event) {
+        _vm.showChildren = false
+      }
+    }
+  }, [_vm._m(0)]), _vm._v(" "), _c('li', {
+    on: {
+      "click": function($event) {
+        _vm.showChildren = false
+      }
+    }
+  }, [_vm._m(1)]), _vm._v(" "), _c('li', {
+    on: {
+      "click": function($event) {
+        _vm.showChildren = false
+      }
+    }
+  }, [_vm._m(2)]), _vm._v(" "), _c('li', {
+    on: {
+      "click": function($event) {
+        _vm.showChildren = false
+      }
+    }
+  }, [_vm._m(3)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
-    staticClass: "waves-effect",
-    attrs: {
-      "href": "index.html"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o fa-fw",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v("Dashboard")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
-    staticClass: "waves-effect",
-    attrs: {
-      "href": "profile.html"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-user fa-fw",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v("Profile")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
+  return _c('a', {
     staticClass: "waves-effect",
     attrs: {
       "href": "basic-table.html"
@@ -42736,9 +42804,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v("Basic Table")])])
+  }), _vm._v("Basic Table")])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
+  return _c('a', {
     staticClass: "waves-effect",
     attrs: {
       "href": "fontawesome.html"
@@ -42748,9 +42816,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v("Icons")])])
+  }), _vm._v("Icons")])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
+  return _c('a', {
     staticClass: "waves-effect",
     attrs: {
       "href": "map-google.html"
@@ -42760,9 +42828,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v("Google Map")])])
+  }), _vm._v("Google Map")])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('a', {
+  return _c('a', {
     staticClass: "waves-effect",
     attrs: {
       "href": "blank.html"
@@ -42772,7 +42840,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v("Blank Page")])])
+  }), _vm._v("Blank Page")])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -52324,6 +52392,487 @@ __webpack_require__(14);
 __webpack_require__(15);
 module.exports = __webpack_require__(16);
 
+
+/***/ }),
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // mounted() {
+    //     console.log('Component mounted.')
+    // }
+});
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(77),
+  /* template */
+  __webpack_require__(79),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Profile.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cc688518", Component.options)
+  } else {
+    hotAPI.reload("data-v-cc688518", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "row bg-title"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-9 col-sm-8 col-md-8 col-xs-12"
+  }, [_c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_vm._v("\n                        Dashboard\n                    ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Profile")])])])]), _vm._v(" "), _vm._m(1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-lg-3 col-md-4 col-sm-4 col-xs-12"
+  }, [_c('h4', {
+    staticClass: "page-title"
+  }, [_vm._v("Profile")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Profile Page")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-1")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-2")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-cc688518", module.exports)
+  }
+}
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(80),
+  /* template */
+  __webpack_require__(82),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Roles.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Roles.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c23e2d70", Component.options)
+  } else {
+    hotAPI.reload("data-v-c23e2d70", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "row bg-title"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-9 col-sm-8 col-md-8 col-xs-12"
+  }, [_c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_vm._v("\n                        Dashboard\n                    ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Roles")])])])]), _vm._v(" "), _vm._m(1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-lg-3 col-md-4 col-sm-4 col-xs-12"
+  }, [_c('h4', {
+    staticClass: "page-title"
+  }, [_vm._v("Roles")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Add Roles to User")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-1")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-2")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c23e2d70", module.exports)
+  }
+}
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(83),
+  /* template */
+  __webpack_require__(85),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Staff-list.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Staff-list.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-249ca1f0", Component.options)
+  } else {
+    hotAPI.reload("data-v-249ca1f0", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container-fluid"
+  }, [_c('div', {
+    staticClass: "row bg-title"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-9 col-sm-8 col-md-8 col-xs-12"
+  }, [_c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_vm._v("\n                        Dashboard\n                    ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Staff List")])])])]), _vm._v(" "), _vm._m(1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-lg-3 col-md-4 col-sm-4 col-xs-12"
+  }, [_c('h4', {
+    staticClass: "page-title"
+  }, [_vm._v("Admin Staff")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Staff List")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-1")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Something-2")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-249ca1f0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
