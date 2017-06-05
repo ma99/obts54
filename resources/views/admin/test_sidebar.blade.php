@@ -14,11 +14,11 @@
    
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet">
     <link href="{{ asset('css/skins/skin-blue.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
     
     <style>

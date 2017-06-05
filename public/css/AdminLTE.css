@@ -1248,8 +1248,13 @@ a:focus {
     right: 5%;
     left: auto;
     border: 1px solid #ddd;
-    background: #3c8dbc; /*#fff;*/
-    color: #fff;
+    background: #fff;   
+  }
+}
+@media (max-width: 767px) {  
+  .navbar-custom-menu > .navbar-nav > li > .dropdown-menu {    
+    background: #3c8dbc; 
+    /*color: #636b6f;*/
   }
 }
 /*
