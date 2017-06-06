@@ -16,9 +16,9 @@
    
     <link href="{{ asset('css/bootstrap-datepicker.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet"> --}}
-    <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/skins/skin-blue.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/AdminLTE.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/skins/skin-blue.css') }}" rel="stylesheet">
     
     
     <style>
@@ -195,19 +195,7 @@
       <aside class="main-sidebar">
 
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-
-          <!-- Sidebar user panel (optional) -->
-          <div class="user-panel">
-            <div class="pull-left image">
-              <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-              <p>Alexander Pierce</p>
-              <!-- Status -->
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-          </div>
+        <section class="sidebar">          
 
           <!-- search form (Optional) -->
           <form action="#" method="get" class="sidebar-form">
