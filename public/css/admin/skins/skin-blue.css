@@ -97,7 +97,11 @@
 .skin-blue .treeview-menu > li > a {
   color: #8aa4af;
 }
-.skin-blue .treeview-menu > li.active > a,
+/*.skin-blue .treeview-menu > li.active > a,
+.skin-blue .treeview-menu > li > a:hover {
+  color: #ffffff;
+}*/
+.skin-blue .treeview-menu > li > a.active,
 .skin-blue .treeview-menu > li > a:hover {
   color: #ffffff;
 }

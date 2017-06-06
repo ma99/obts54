@@ -550,7 +550,7 @@
       cursor: pointer;
   }
   /* seat display */
-  .active {
+  .is-active {
     background-color: green;
   }     
   .booked {

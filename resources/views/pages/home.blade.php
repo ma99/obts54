@@ -163,7 +163,7 @@
                                 <button
                                   class="col-xs-2"
                                   v-bind:class="{ 
-                                    active: seat.checked, 
+                                    'is-active': seat.checked, 
                                     booked: seat.status=='booked'? true : false,
                                     buying: isSeatBuying(seat.status),
                                     {{-- 'fa fa-refresh fa-spin': seat.status=='buying'? true : false,  --}}
