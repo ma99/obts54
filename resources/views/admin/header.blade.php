@@ -9,7 +9,7 @@
     <span class="logo-lg"><b>Admin</b>LTE</span>
   </a>
 
-  <!-- Header Navbar -->
+  <!-- Header Navbar -->  
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

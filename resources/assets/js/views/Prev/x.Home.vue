@@ -1,6 +1,6 @@
 <template>
 <!-- Content Wrapper. Contains page content -->
-  <div>
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -8,11 +8,7 @@
         <small>Optional description</small>
       </h1>
       <ol class="breadcrumb">
-        <li>
-          <router-link to="/dashboard" exact>
-            <i class="fa fa-dashboard"></i>Dashboard
-          </router-link>
-        </li>                           
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
       </ol>
     </section>

@@ -1,51 +1,34 @@
 <template>
-    <div class="container-fluid">
-        <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Admin Staff</h4> </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">                        
-                <ol class="breadcrumb">
-                    <li>
-                        <router-link to="/dashboard" exact>
-                            Dashboard
-                        </router-link>
-                    </li>                    
-                    <li class="active">Staff List</li>
-                </ol>
+  <div>    
+    <section class="content-header">
+      <h1>
+        Admin Staff
+        <!-- <small>Optional description</small> -->
+      </h1>
+      <ol class="breadcrumb">        
+        <li>
+          <router-link to="/dashboard" exact>
+            <i class="fa fa-dashboard"></i>Dashboard
+          </router-link>
+        </li> 
+        <li class="active">Admin Staff</li>
+      </ol>
+    </section>
+
+    <section class="content">      
+      <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">The Admin Staff Page</div>
+            <div class="panel-body">
+                I'm an Admin Staff component!
             </div>
-        </div>               
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Staff List</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div>    
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Something-1</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div> 
-
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Something-2</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div>     
-
-        </div>                
-    </div>           
+          </div>
+        </div>
+      </div>      
+    </section>        
+  </div>      
 </template>
-
 <script>
     export default {
         mounted() {

@@ -1,52 +1,39 @@
 <template>
-    <div class="container-fluid">
-        <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Roles</h4> </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">                        
-                <ol class="breadcrumb">
-                    <li>
-                        <router-link to="/dashboard" exact>
-                            Dashboard
-                        </router-link>
-                    </li>                    
-                    <li class="active">Roles</li>
-                </ol>
+  <div>    
+    <section class="content-header">
+      <h1>
+        Roles Page
+        <!-- <small>Optional description</small> -->
+      </h1>
+      <ol class="breadcrumb">        
+        <li>
+          <router-link to="/dashboard" exact>
+            <i class="fa fa-dashboard"></i>Dashboard
+          </router-link>
+        </li> 
+        <li class="active">Roles</li>
+      </ol>
+    </section>
+
+    <section class="content">      
+      <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Add Roles to User</div>
+            <div class="panel-body">
+                User Roles Settings Here
             </div>
-        </div>               
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Add Roles to User</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div>    
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Something-1</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div> 
-
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Something-2</div>
-                    <div class="panel-body">
-                        Welcome to Dashboard home page
-                    </div>
-                </div>
-            </div>     
-
-        </div>                
-    </div>           
+          </div>
+        </div>
+      </div>      
+    </section>        
+  </div>      
 </template>
 
 <script>
-    export default {        
+    export default {
+        mounted() {
+            console.log('Component mounted.')
+        }
     }
 </script>
