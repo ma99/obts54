@@ -34,7 +34,10 @@
       </script> --}} -->
       
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <!-- Static Top -->
+  {{-- <body class="hold-transition skin-blue sidebar-mini"> --}}
+  <!-- Fixed Top -->
+  <body class="hold-transition skin-blue sidebar-mini fixed">
       <div class="wrapper" id="app" v-cloak>
         <!-- Main Header -->
         @include('admin.header')
