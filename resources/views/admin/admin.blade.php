@@ -58,6 +58,7 @@
       
       <!-- Scripts -->
       <script src="{{ asset('js/app.js') }}"></script>     
+      <script src="{{ asset('js/slimscroll/jquery.slimscroll.min.js') }}"></script>     
       <script src="{{ asset('js/admin/app.min.js') }}"></script>
      
       @yield('scripts')    
