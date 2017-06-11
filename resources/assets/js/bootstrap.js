@@ -6,6 +6,7 @@ window.$ = window.jQuery = require('jquery');
 require('bootstrap-sass');
 require('bootstrap-datepicker');
 
+require('jquery-slimscroll');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router';

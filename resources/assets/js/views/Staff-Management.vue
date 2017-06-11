@@ -30,6 +30,54 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="home"> Home Tab
+            <!-- {{-- SCHEDULE --}}     -->
+              <div class="panel panel-info">
+                  <div class="panel-heading">User Details</div>
+                  <div id="scrollMe">
+                    <table class="table table-striped table-hover task-table">
+                       <!-- Table Headings -->
+                        <thead>
+                            <th>SL No.</th>                                
+                            <th>ID</th>                                
+                            <th>Name</th>                                
+                            <th>Phone</th>                                
+                            <th>Email</th>                                
+                            <th>Role</th>                                      
+                            <th>&nbsp;</th>
+                        </thead>                      
+                        
+                        <tbody>
+                          <tr v-for="(staff, index) in staffs">
+                              <td class="table-text">
+                                <div> {{ index + 1 }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> {{ staff.id }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> {{ staff.name }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> {{ staff.phone }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> {{ staff.email }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> {{ staff.role }} </div>
+                              </td>
+                              <td class="table-text">
+                                <div> 
+                                  <button v-on:click.prevent="removeUser()" class="btn btn-danger">Remove</button> 
+                                </div>
+                              </td>
+                          </tr>                                                           
+                        </tbody>                        
+                    </table>                  
+                  </div>
+              </div>
+             
+              <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
 
           </div>
           <div role="tabpanel" class="tab-pane" id="profile">Profile Tab</div>
@@ -47,26 +95,43 @@
     export default {
         data() {
             return {
-                staffInfo: [],
-                error:false
-                
+                error: false,
+                loading: false, 
+                staffs: []                
             }
         },
         methods: {
             fetchStaffInfo() {
                 var vm = this;
-                axios.get('admin/staff')          
+                this.loading = true;
+                axios.get('/staff')          
                     .then(function (response) {                      
-                      // console.log(response.data);
-                       response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-                       // vm.loading = false;                      
+
+                      console.log(response.data);
+                      response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                        vm.loading = false;                      
                     });
-            }
-            
+            },
+            enableSlimScroll() {
+              $('#scrollMe').slimScroll({
+                  color: '#00f',
+                  size: '8px',
+                  height: '180px',
+                  // height: auto,
+                  wheelStep: 10,
+                  alwaysVisible: true
+              });
+            }            
         },
         mounted() {
             console.log('Staff Component mounted.');
             this.fetchStaffInfo();
+            this.enableSlimScroll();
         }
     }
 </script>
+<style>
+  .table-hover > tbody > tr:hover {
+    background-color: #d6edd7;
+  }
+</style>

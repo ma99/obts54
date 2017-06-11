@@ -36,7 +36,7 @@ Route::get('/forbidden', 'HomeController@forbidden');
 
 //admin
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
-Route::get('/admin/staff', 'Admin\DashboardController@staffInfo');
+Route::get('/staff', 'Admin\DashboardController@staffInfo');
 
 
 Route::get('/home', 'SearchTicketController@index');
