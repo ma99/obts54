@@ -16,6 +16,10 @@ let routes = [
         path: '/contact',
         component: require('./views/Contact')
     },
+    {
+        path: '/staff-management',
+        component: require('./views/Staff-Management')
+    },
      {
         path: '/profile',
         component: require('./views/Profile')

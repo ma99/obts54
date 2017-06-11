@@ -32,19 +32,20 @@ Route::get('admin/{vue?}', function () {
 //     return view('pages.admin');
 // }])->where(['subs' => '.*']);
 
-Route::get('/home', 'SearchTicketController@index');
-
 Route::get('/forbidden', 'HomeController@forbidden');
 
-
+//admin
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
+Route::get('/admin/staff', 'Admin\DashboardController@staffInfo');
 
+
+Route::get('/home', 'SearchTicketController@index');
 Route::get('/search', 'SearchTicketController@searchTicket');
-
 Route::get('/viewseats', 'SearchTicketController@viewSeats');
 
 Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BookingController@store');
+
 //Route::post('seatbuying', 'BuyingController@store');
 Route::get('/test', 'BookingController@test');
 Route::get('/test1', 'BookingController@test1');

@@ -489,36 +489,15 @@ class BookingController extends Controller
     }
     public function test()
     {
+        //$books = App\Book::with('author')->get();       
+         
+         $staffs = User::with(['roles' => function($qry) {
+            $qry->where('name', 'admin')
+                ->orWhere('name', 'staff');
+         }])->get();
+         dd($staffs);
+         return $staffs;
         
-        // $date=date_create("2013-03-15");
-        // $dt= date_format($date,"d"); // using php 
-      
-        // //$str = $dt . strtoupper(
-        //  // $str1 = bin2hex(random_bytes(4)); 
-        // $bookingId = strtoupper(bin2hex(random_bytes(4)));
-        // var_dump($bookingId);
-
-        $busId = '123' ;
-        $scheduleId = '2' ;
-        $date = "2017-04-27" ;
-        $totalSeats = 2; 
-        $totalFare = 4000; 
-        //$selectedSeats[] = $this->request->input('selected_seats');
-        $dt = date_format(date_create($date),"Ymd");
-        
-        $bookingId = strtoupper(bin2hex(random_bytes(4)));
-
-        $this->request->user()->bookings()->create([            
-            'id' => $bookingId,
-            'schedule_id' => $scheduleId,
-            'seats' => $totalSeats,
-            'amount' => $totalFare,
-            'date' => $date,
-            'pickup_point' => 'AAA',
-            'dropping_point' => 'BBB',
-        ]);
-
-        return 'success';
     }
     public function getVsfirst()
     {

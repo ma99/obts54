@@ -27,7 +27,10 @@
       </li>            
       <li>
           <router-link to="/contact"><i class="fa fa-link" aria-hidden="true"></i>Contact</router-link>
-      </li>            
+      </li>
+      <li>
+          <router-link to="/staff-management"><i class="fa fa-cog" aria-hidden="true"></i>Staff Management</router-link>
+      </li>                        
       <li class="treeview">
         <a href="#">
           <i class="fa fa-user"></i> <span>User</span>

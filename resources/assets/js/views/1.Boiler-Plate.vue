@@ -8,9 +8,11 @@
         <!-- <small>Optional description</small> -->
       </h1>
       <ol class="breadcrumb">        
-        <router-link to="/dashboard">
-          <i class="fa fa-dashboard"></i>Dashboard
-        </router-link>
+        <li>          
+          <router-link to="/dashboard">
+            <i class="fa fa-dashboard"></i>Dashboard
+          </router-link>
+        </li>   
         <li class="active">Here</li>
       </ol>
     </section>
