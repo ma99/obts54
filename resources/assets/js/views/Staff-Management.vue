@@ -37,17 +37,22 @@
                     <table class="table table-striped table-hover task-table">
                        <!-- Table Headings -->
                         <thead>
+                            <th>&nbsp;</th>
                             <th>SL No.</th>                                
                             <th>ID</th>                                
                             <th>Name</th>                                
                             <th>Phone</th>                                
                             <th>Email</th>                                
-                            <th>Role</th>                                      
+                            <th>Role</th>
+                            <th>Actions</th>                                                         
                             <th>&nbsp;</th>
                         </thead>                      
                         
                         <tbody>
                           <tr v-for="(staff, index) in staffs">
+                              <td class="table-text">
+                                <div> </div>
+                              </td>
                               <td class="table-text">
                                 <div> {{ index + 1 }} </div>
                               </td>
@@ -68,12 +73,29 @@
                               </td>
                               <td class="table-text">
                                 <div> 
-                                  <button v-on:click.prevent="removeUser()" class="btn btn-danger">Remove</button> 
+                                  <button v-on:click.prevent="editStaff(staff.role_id)" class="btn btn-primary">
+                                    <i class="fa fa-pencil-square-o"></i>Edit
+                                  </button> 
+                                  <button v-on:click.prevent="removeStaff(staff)" class="btn btn-danger">
+                                    <i class="fa fa-btn fa-trash"></i>Remove
+                                  </button> 
                                 </div>
                               </td>
                           </tr>                                                           
                         </tbody>                        
                     </table>                  
+                  </div>
+                  <!-- {{-- panel-footer --}} -->
+                  <div v-show="false" class="panel-footer"                   
+                     v-bind:class="{                        
+                        'alert-info': true
+                     }" 
+                     id="status-alert"
+                  >
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>{{ staffName }} </strong> has been <strong> {{ actionStatus }} </strong>
                   </div>
               </div>
              
@@ -95,8 +117,10 @@
     export default {
         data() {
             return {
+                actionStatus: '',
                 error: false,
-                loading: false, 
+                loading: false,
+                staffName: '' ,
                 staffs: []                
             }
         },
@@ -104,7 +128,7 @@
             fetchStaffInfo() {
                 var vm = this;
                 this.loading = true;
-                axios.get('/staff')          
+                axios.get('/staffs')          
                     .then(function (response) {                      
 
                       console.log(response.data);
@@ -113,15 +137,43 @@
                     });
             },
             enableSlimScroll() {
-              $('#scrollMe').slimScroll({
+                $('#scrollMe').slimScroll({
                   color: '#00f',
                   size: '8px',
-                  height: '180px',
+                  //height: '180px',
                   // height: auto,
-                  wheelStep: 10,
-                  alwaysVisible: true
-              });
-            }            
+                  wheelStep: 10                  
+                });
+            },
+            removeStaff(staff) {  // role id of user/staff in roles table
+                var vm = this;
+                this.staffName = staff.name;
+                this.loading = true;
+                axios.post('/delete', {
+                      id: staff.role_id 
+                    })          
+                    .then(function (response) {                                           
+                      response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                      vm.loading = false;
+                      vm.actionStatus = 'Removed!';
+                      vm.showAlert();
+                    });
+            },
+
+            editStaff(staffId) {  // role id of user/staff in roles table
+                var vm = this;
+                axios.post('/staffs/staff'+ staffId)          
+                    .then(function (response) {                                           
+                      response.data.error ? vm.error = response.data.error : vm.actionStatus = response.data;
+                    });
+            },
+            showAlert() {
+                $("#status-alert").alert();
+                $("#status-alert").fadeTo(2000, 500)
+                .slideUp(500, function(){
+                    $("#status-alert").slideUp(500);
+                });   
+            } 
         },
         mounted() {
             console.log('Staff Component mounted.');

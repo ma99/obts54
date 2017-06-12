@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 Use App\User;
+Use App\Role;
 
 class DashboardController extends Controller
 {
@@ -37,6 +38,7 @@ class DashboardController extends Controller
                     'name' => $user->name,
                     'phone' => $user->phone,
                     'email' => $user->email,
+                    'role_id' => $role->id,
                     'role' => $role->name
                 ];                
             }
@@ -51,5 +53,16 @@ class DashboardController extends Controller
          //return response()->json($staffs);
          //return json_decode(json_encode($staffs), FALSE);
         // return $error;
+    }
+
+    public function destroy(Request $request)
+    {
+        if ($request->user()->isAdministrator()) {
+            $id = $request->input('id');
+            Role::destroy($id); // Deleting Models                    
+            return $this->staffInfo();            
+        }
+        $actionStatus = ['status' => 'Not Allowed'];
+        return $actionStatus;
     }
 }
