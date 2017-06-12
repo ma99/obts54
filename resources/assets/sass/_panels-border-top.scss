@@ -1,0 +1,15 @@
+%bt {
+	border-top-width: 5px;
+	border-top-style: solid;
+}
+.panel {  	
+	&-default {
+		@extend %bt;
+		border-top-color: #d3e0e9;
+	}
+	&-info { 
+		@extend %bt;
+		border-top-color: #bce8f1;
+	}
+
+}

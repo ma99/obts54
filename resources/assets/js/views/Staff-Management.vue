@@ -1,6 +1,6 @@
 <template>
 <!-- Content Wrapper. Contains page content -->
-  <div>
+  <div  @keyup.esc="close">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -15,7 +15,7 @@
         <li class="active">Here</li>
       </ol>
     </section>
-
+ 
     <!-- Main content -->
     <section class="content">       
      <div>
@@ -74,10 +74,10 @@
                               <td class="table-text">
                                 <div> 
                                   <button v-on:click.prevent="editStaff(staff.role_id)" class="btn btn-primary">
-                                    <i class="fa fa-pencil-square-o"></i>Edit
+                                    <i class="fa fa-pencil-square-o fa-fw"></i>Edit
                                   </button> 
                                   <button v-on:click.prevent="removeStaff(staff)" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Remove
+                                    <i class="fa fa-trash fa-fw"></i>Remove
                                   </button> 
                                 </div>
                               </td>
@@ -100,7 +100,31 @@
               </div>
              
               <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
-
+              
+              <!-- Modal -->
+              <div id="modal" class="modal" v-if="modal">
+                <div class="modal-content">
+                  <div class="circle">
+                      <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
+                  </div>                          
+                 
+                  <div class="row">
+                    <div id="edit-staff" class="col-sm-8 col-sm-offset-2">                        
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Edit Staff Role</div>
+                        <div class="row panel-body">                                
+                          Hello
+                        </div>
+                        <div class="panel-footer" >
+                                <button>Save</button>
+                                <button>Cancel</button>
+                        </div>                     
+                      </div>
+                    </div>               
+                  </div>                           
+                </div>          
+              </div> 
+              <!-- /Modal -->
           </div>
           <div role="tabpanel" class="tab-pane" id="profile">Profile Tab</div>
           <div role="tabpanel" class="tab-pane" id="messages">Something</div>
@@ -120,11 +144,32 @@
                 actionStatus: '',
                 error: false,
                 loading: false,
+                modal: false,
                 staffName: '' ,
                 staffs: []                
             }
         },
         methods: {
+            close() {
+                this.modal = false;
+            },
+            editStaff(staffId) {  // role id of user/staff in roles table
+                var vm = this;
+                this.modal = true;
+                /*axios.post('/staffs/staff'+ staffId)          
+                    .then(function (response) {                                           
+                      response.data.error ? vm.error = response.data.error : vm.actionStatus = response.data;
+                    });*/
+            },
+            enableSlimScroll() {
+                $('#scrollMe').slimScroll({
+                  color: '#00f',
+                  size: '8px',
+                  height: '300px',
+                  //height: auto,
+                  wheelStep: 10                  
+                });
+            },
             fetchStaffInfo() {
                 var vm = this;
                 this.loading = true;
@@ -136,14 +181,12 @@
                         vm.loading = false;                      
                     });
             },
-            enableSlimScroll() {
-                $('#scrollMe').slimScroll({
-                  color: '#00f',
-                  size: '8px',
-                  //height: '180px',
-                  // height: auto,
-                  wheelStep: 10                  
-                });
+            showAlert() {
+                $("#status-alert").alert();
+                $("#status-alert").fadeTo(2000, 500)
+                .slideUp(500, function(){
+                    $("#status-alert").slideUp(500);
+                });   
             },
             removeStaff(staff) {  // role id of user/staff in roles table
                 var vm = this;
@@ -158,22 +201,7 @@
                       vm.actionStatus = 'Removed!';
                       vm.showAlert();
                     });
-            },
-
-            editStaff(staffId) {  // role id of user/staff in roles table
-                var vm = this;
-                axios.post('/staffs/staff'+ staffId)          
-                    .then(function (response) {                                           
-                      response.data.error ? vm.error = response.data.error : vm.actionStatus = response.data;
-                    });
-            },
-            showAlert() {
-                $("#status-alert").alert();
-                $("#status-alert").fadeTo(2000, 500)
-                .slideUp(500, function(){
-                    $("#status-alert").slideUp(500);
-                });   
-            } 
+            }
         },
         mounted() {
             console.log('Staff Component mounted.');
@@ -185,5 +213,14 @@
 <style>
   .table-hover > tbody > tr:hover {
     background-color: #d6edd7;
+  }
+  .fa-fw {
+    width: 1.4em;
+  }
+  th {
+    line-height: 2.5;
+  }
+  .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    vertical-align: middle;
   }
 </style>

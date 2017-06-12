@@ -499,7 +499,7 @@
   .modal {
       display: block; 
       position: fixed; /* Stay in place */
-      z-index: 111; /* Sit on top */
+      z-index: 11111; /* Sit on top */
       left: 0;
       top: 0;
       width: 100%; /* Full width */
@@ -526,7 +526,7 @@
       position: relative;
       width: 24px; 
       height: 24px; 
-      background: #ebccd1; 
+      background: #3c8dbc; 
       border-radius: 12px; 
       -moz-border-radius: 15px; 
       -webkit-border-radius: 15px; 
@@ -534,7 +534,7 @@
   }
   /* The Close Button */
   .close {
-      color: #aaa;
+      color: #fff;
       /*float: right;*/
       margin-left: 7px;
       font-size: 20px;
@@ -602,7 +602,7 @@
   }
   .seat-plan-body {
     padding-left: 20px;
-  }
+  }  
   /*#modal .row  {
     background-color: #e5ecff;
   }*/  
