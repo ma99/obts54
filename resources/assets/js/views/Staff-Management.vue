@@ -1,6 +1,6 @@
 <template>
 <!-- Content Wrapper. Contains page content -->
-  <div  @keyup.esc="close">
+  <div >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -102,13 +102,9 @@
               <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
               
               <!-- Modal -->
-              <div id="modal" class="modal" v-if="modal">
-                <div class="modal-content">
-                  <div class="circle">
-                      <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
-                  </div>                          
-                 
-                  <div class="row">
+              
+              <modal :show="modal" @close="modal=false">
+                <div class="row">
                     <div id="edit-staff" class="col-sm-8 col-sm-offset-2">                        
                       <div class="panel panel-default">
                         <div class="panel-heading">Edit Staff Role</div>
@@ -121,9 +117,9 @@
                         </div>                     
                       </div>
                     </div>               
-                  </div>                           
-                </div>          
-              </div> 
+                  </div>                 
+              </modal>
+
               <!-- /Modal -->
           </div>
           <div role="tabpanel" class="tab-pane" id="profile">Profile Tab</div>
@@ -137,7 +133,7 @@
   </div>      
 </template>
 
-<script>
+<script>    
     export default {
         data() {
             return {
@@ -148,11 +144,8 @@
                 staffName: '' ,
                 staffs: []                
             }
-        },
-        methods: {
-            close() {
-                this.modal = false;
-            },
+        },        
+        methods: {            
             editStaff(staffId) {  // role id of user/staff in roles table
                 var vm = this;
                 this.modal = true;
