@@ -1,19 +1,35 @@
 <template>
-  <div id="modal" class="modal">
+<!-- Modal -->
+  <div id="modal" class="modal" v-if="modal">
     <div class="modal-content">
       <div class="circle">
           <span class="close" data-toggle="tooltip" data-placement="top" title="Press esc to close" @click="close">x</span>                  
-      </div>         
-      <slot></slot>      
+      </div>     
+      
+      <slot></slot>
+
     </div>          
-  </div>   
+  </div> 
+  <!-- /Modal -->
 </template>
 
 <script>
-    export default {            
+/* Note: To use this model as a child of another component, use following in parent component :
+<modal :show="modal" @close="modal=false">
+  some elements
+</modal>
+
+*/
+    export default {
+      props: ['show'],
+      data() {
+        return {
+          modal: false
+        }
+      },
       created() {
           document.addEventListener("keydown", (e) => {
-            if (e.keyCode == 27) {
+            if (this.modal && e.keyCode == 27) {
               this.close();
             }
           });
@@ -22,10 +38,16 @@
           console.log('model component mounted.')
       },
       methods: {
-        close() {                
+        close() {
+                this.modal = false;
                 this.$emit('close');
             },
-      }      
+      },
+      watch: {
+        show() {            
+            this.modal = this.show;
+        }
+      }
     }
 </script>
 <style lang="scss" scoped>

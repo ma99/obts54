@@ -103,7 +103,8 @@
               
               <!-- Modal -->
               
-              <modal :show="modal" @close="modal=false">
+              <!-- <modal :show="modal" @close="modal=false"> -->
+              <modal v-show="modal" @close="modal=false">
                 <div class="row">
                     <div id="edit-staff" class="col-sm-8 col-sm-offset-2">                        
                       <div class="panel panel-default">

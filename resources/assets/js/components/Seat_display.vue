@@ -508,47 +508,7 @@
       background-color: rgb(0,0,0); /* Fallback color */
       background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-
-  /* Modal Content/Box */
-  .modal-content {
-      background-color: #fefefe;
-      margin: 160px auto; /* 15% from the top and centered */
-      /*padding: 20px;*/
-      padding: 35px 20px 30px;
-      border: 1px solid #888;
-      width: 89%; /* Could be more or less, depending on screen size */
-  }
-
-    /* circle*/
-   .circle {
-      float: right;
-      margin-top: -28px;
-      position: relative;
-      width: 24px; 
-      height: 24px; 
-      background: #3c8dbc; 
-      border-radius: 12px; 
-      -moz-border-radius: 15px; 
-      -webkit-border-radius: 15px; 
-      
-  }
-  /* The Close Button */
-  .close {
-      color: #fff;
-      /*float: right;*/
-      margin-left: 7px;
-      font-size: 20px;
-      font-weight: bold;
-      position: absolute;
-      /*margin-top: -18px;*/
-  }    
-
-  .close:hover,
-  .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-  }
+  
   /* seat display */
   .is-active {
     background-color: green;
