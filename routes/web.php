@@ -39,6 +39,7 @@ Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 Route::get('/staffs', 'Admin\DashboardController@staffInfo');
 //Route::delete('/staffs/{staff}', 'Admin\DashboardController@destroy');
 Route::post('/delete', 'Admin\DashboardController@destroy');
+Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 //Route::get('/staffs/{staff}/edit', 'Admin\DashboardController@destroy');
 
 

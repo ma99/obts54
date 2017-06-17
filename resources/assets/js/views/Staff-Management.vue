@@ -73,12 +73,13 @@
                               </td>
                               <td class="table-text">
                                 <div> 
-                                  <button v-on:click.prevent="editStaff(staff.role_id)" class="btn btn-primary">
+                                  <button v-on:click.prevent="editStaff(staff)" class="btn btn-primary">
                                     <i class="fa fa-pencil-square-o fa-fw"></i>Edit
                                   </button> 
                                   <button v-on:click.prevent="removeStaff(staff)" class="btn btn-danger">
+                                  <!-- <button @click="clickEvnt" class="btn btn-danger"> -->
                                     <i class="fa fa-trash fa-fw"></i>Remove
-                                  </button> 
+                                  </button>  
                                 </div>
                               </td>
                           </tr>                                                           
@@ -86,7 +87,14 @@
                     </table>                  
                   </div>
                   <!-- {{-- panel-footer --}} -->
-                  <div v-show="false" class="panel-footer"                   
+                  <div class="panel-footer">                    
+                    <show-alert :show="showAlert" :type="alertType" @cancel="showAlert=false"> 
+                      <!-- altert type can be info/warning/danger -->
+                      <strong>{{ staffName }} </strong> has been 
+                      <strong> {{ actionStatus }} </strong> successfully!
+                    </show-alert>
+                  </div>
+                  <!-- <div v-show="false" class="panel-footer"                   
                      v-bind:class="{                        
                         'alert-info': true
                      }" 
@@ -96,29 +104,52 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <strong>{{ staffName }} </strong> has been <strong> {{ actionStatus }} </strong>
-                  </div>
+                  </div> -->
               </div>
              
               <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
               
-              <!-- Modal -->
-              
+              <!-- Modal -->              
               <!-- <modal :show="modal" @close="modal=false"> -->
               <modal v-show="modal" @close="modal=false">
                 <div class="row">
-                    <div id="edit-staff" class="col-sm-8 col-sm-offset-2">                        
+                    <div id="edit-staff" class="col-sm-8 col-sm-offset-2">
                       <div class="panel panel-default">
-                        <div class="panel-heading">Edit Staff Role</div>
-                        <div class="row panel-body">                                
-                          Hello
+                        <div class="panel-heading">
+                          <h4>Edit Staff Role</h4>
                         </div>
-                        <div class="panel-footer" >
-                                <button>Save</button>
-                                <button>Cancel</button>
-                        </div>                     
+                        <div class="row panel-body">
+                            <div class="saff-info">
+                              Name: <span> {{ staffName }} </span>
+                              <br/>                                   
+                              Present Role: <high-light :color="colorName" value="5"> {{ staffRole }} </high-light> 
+                              <br/>
+                              <strong>Change to</strong>
+                            </div>
+                            <div class="role-selection">
+                              <form>
+                                <div class="radio">
+                                  <label class="radio-inline">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="admin" v-model="rolePicked" :disabled="staffRole=='admin'">
+                                    Administrator
+                                  </label>    
+                                </div>
+                                <div class="radio">
+                                  <label class="radio-inline">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="staff" v-model="rolePicked" :disabled="staffRole=='staff'">
+                                    Staff
+                                  </label>
+                                </div>
+                              </form>  
+                            </div>                             
+                        </div>
+                        <div class="panel-footer">
+                                <button class="btn btn-primary" v-on:click.prevent="updateStaffRole()">Save</button>
+                                <button class="btn btn-primary" @click.prevent="modal=false">Cancel</button>
+                        </div>                        
                       </div>
                     </div>               
-                  </div>                 
+                </div>                 
               </modal>
 
               <!-- /Modal -->
@@ -139,16 +170,31 @@
         data() {
             return {
                 actionStatus: '',
+                alertType: '',
+                colorName: '',
                 error: false,
                 loading: false,
                 modal: false,
+                rolePicked:'',
+                showAlert: false,                
                 staffName: '' ,
+                staffRole: '',
+                staffRoleId: '',
                 staffs: []                
             }
         },        
-        methods: {            
-            editStaff(staffId) {  // role id of user/staff in roles table
+        methods: {
+            // clickEvnt() {
+            //   this.showAlert = true;
+            // },
+            editStaff(staff) {  // role id of user/staff in roles table
                 var vm = this;
+                this.staffName = staff.name;
+                this.staffRole = staff.role;
+                this.staffRoleId = staff.role_id;
+                this.rolePicked = (this.staffRole=='admin') ? 'staff': 'admin';
+                this.colorName = (this.staffRole=='admin') ? '#de1575': '#75e';
+
                 this.modal = true;
                 /*axios.post('/staffs/staff'+ staffId)          
                     .then(function (response) {                                           
@@ -168,43 +214,61 @@
                 var vm = this;
                 this.loading = true;
                 axios.get('/staffs')          
-                    .then(function (response) {                      
-
+                    .then(function (response) {                    
                       console.log(response.data);
                       response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
                         vm.loading = false;                      
                     });
             },
-            showAlert() {
-                $("#status-alert").alert();
-                $("#status-alert").fadeTo(2000, 500)
-                .slideUp(500, function(){
-                    $("#status-alert").slideUp(500);
-                });   
-            },
+            // showAlert() {
+            //     $("#status-alert").alert();
+            //     $("#status-alert").fadeTo(2000, 500)
+            //     .slideUp(500, function(){
+            //         $("#status-alert").slideUp(500);
+            //     });   
+            // },
             removeStaff(staff) {  // role id of user/staff in roles table
                 var vm = this;
-                this.staffName = staff.name;
+                this.staffName = staff.name;                
                 this.loading = true;
                 axios.post('/delete', {
                       id: staff.role_id 
                     })          
                     .then(function (response) {                                           
                       response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                      vm.loading = false;                      
+                      vm.actionStatus = 'Removed';
+                      vm.alertType = 'danger';
+                      vm.showAlert= true;                      
+                    });
+            },
+            updateStaffRole() {
+                var vm = this;
+                //this.staffName = staff.name;                
+                this.loading = true;
+                axios.post('/update', {
+                      id: this.staffRoleId,
+                      role: this.rolePicked 
+                    })          
+                    .then(function (response) {                                           
+                      response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
                       vm.loading = false;
-                      vm.actionStatus = 'Removed!';
-                      vm.showAlert();
+                      vm.modal = false;
+                      vm.actionStatus = 'Udated';
+                      vm.alertType = 'info';
+                      vm.showAlert= true;                      
                     });
             }
         },
         mounted() {
-            console.log('Staff Component mounted.');
+            console.log('Staff Component mounted.');            
             this.fetchStaffInfo();
             this.enableSlimScroll();
         }
     }
 </script>
-<style>
+<style lang="scss" scoped>
+
   .table-hover > tbody > tr:hover {
     background-color: #d6edd7;
   }
@@ -216,5 +280,8 @@
   }
   .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
     vertical-align: middle;
+  }
+  .role-selection {
+    margin-left: 1.5em;
   }
 </style>

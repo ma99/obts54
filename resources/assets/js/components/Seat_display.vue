@@ -4,6 +4,7 @@
       
       data() {
           return {
+              alertType: '',
               bookedSeatInfo: { },
               busId:'',
               busError: false,
@@ -14,6 +15,7 @@
               loading: false,
               message: '',
               modal: false,
+              showAlert: false, // for alert Component
               showSearch: true,              
               scheduleId:'',
               startDate: '',               
@@ -58,6 +60,25 @@
               .listen('SeatStatusUpdatedEvent', this.updateSeatStatus); 
       },
       watch: {
+       seatStatus() {        
+        var type = this.seatStatus;
+        switch (type) {
+          case 'available':
+            this.alertType = 'success';           
+            break;
+          case 'booked':
+           this.alertType = 'warning';
+            break;          
+          case 'confirmed':
+            this.alertType = 'danger';           
+            break;  
+          case 'cancelled':
+            this.alertType = 'info';
+            break;
+          default:
+            console.log('Sorry, we are out of ' + type + '.');
+        }
+       }, 
        selectedCityFrom() {
           //console.log();
           this.fetchCityToList(this.selectedCityFrom);          
@@ -154,7 +175,8 @@
             this.seatList[indx].status = evnt.seat.status;
             this.seatNo = seatNo;
             this.seatStatus = evnt.seat.status;
-            this.showAlert();
+            //this.showAlert();
+            this.showAlert = true;
 
 
             
@@ -165,13 +187,13 @@
           }
           console.log(evnt.seat.seat_no, evnt.scheduleId, evnt.date);
         },
-        showAlert() {
-                $("#status-alert").alert();
-                $("#status-alert").fadeTo(2000, 500)
-                .slideUp(500, function(){
-                    $("#status-alert").slideUp(500);
-                });   
-        },        
+        // showAlert() {
+        //         $("#status-alert").alert();
+        //         $("#status-alert").fadeTo(2000, 500)
+        //         .slideUp(500, function(){
+        //             $("#status-alert").slideUp(500);
+        //         });   
+        // },        
         searchBus() {         
           console.log(this.startDate);
 
@@ -474,7 +496,7 @@
     }              
 </script>
 
-<style>
+<style lang="scss" scoped>
   @media (min-width: 992px) { 
     .btn-search {
       margin-top: 25px;
@@ -545,7 +567,10 @@
       border-width: 0;
       color: #0a0a0a;
   }*/
-  #seat-layout button {       
+
+  // seat-layout
+
+  /* #seat-layout .seat-plan-body button {       
     height: 50px;
     margin: 10px 10px 0 0;
   }
@@ -562,6 +587,27 @@
   }
   .seat-plan-body {
     padding-left: 20px;
+  } */
+
+  #seat-layout {
+    .seat-plan-body {
+      padding-left: 20px;
+       button {       
+          height: 50px;
+          margin: 10px 10px 0 0;
+           &.col-xs-2 {
+                width: 16.76666667%;          
+            }
+          &.col-xs-offset-2 {
+              margin-left: 17.666667%;
+          }
+          &.is-white {
+              background-color: #fff; 
+              border-width: 0;
+              color: #0a0a0a;
+          }
+        }   
+    }
   }  
   /*#modal .row  {
     background-color: #e5ecff;

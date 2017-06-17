@@ -10,10 +10,12 @@ Use App\Role;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
+    protected $request;
+    public function __construct(Request $request)
+    {   
         /*$this->middleware('auth');
         $this->middleware('admin');*/
+        $this->request = $request;
         $this->middleware(['auth', 'admin']);
     }
 
@@ -55,12 +57,30 @@ class DashboardController extends Controller
         // return $error;
     }
 
-    public function destroy(Request $request)
+    public function destroy()
     {
-        if ($request->user()->isAdministrator()) {
-            $id = $request->input('id');
+        if ($this->request->user()->isAdministrator()) {
+            $id = $this->request->input('id');
             Role::destroy($id); // Deleting Models                    
             return $this->staffInfo();            
+        }
+        $actionStatus = ['status' => 'Not Allowed'];
+        return $actionStatus;
+    }
+
+    public function updateStuffRole()
+    {
+        if ($this->request->user()->isAdministrator()) {
+            $id = $this->request->input('id');
+            $role = $this->request->input('role');
+            $staff = Role::where('id', $id)->first(); // Deleting Models                    
+            if($staff) {
+                $staff->update([
+                    'name' => $role,
+                ]);
+
+            return $this->staffInfo();            
+            }
         }
         $actionStatus = ['status' => 'Not Allowed'];
         return $actionStatus;

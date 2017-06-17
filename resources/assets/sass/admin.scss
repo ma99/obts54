@@ -8,18 +8,19 @@ $page-wrapper-b-l: #e7e7e7;
 
 
 body {        
-    font-weight: 300;    
-    padding-top: 70px;
+  font-weight: 300;    
+  padding-top: 70px;
 }
 
 #app {
   width: 100%;  
-  background: #08364b;
-  
+  background: #08364b;  
 }
+
 .navbar-fixed-top .navbar-collapse {
   max-height: 100%;
 }
+
 #page-wrapper { 
   background: #edf1f5 ;
   // min-height: 568px;

@@ -1,0 +1,19 @@
+//alert: Alert.vue
+#status-alert {
+	padding: 10px;
+	color: #fff;	
+	&.alert {
+		&-danger {
+			background-color: #dd4b39;
+		}
+		&-info {		
+			background-color: #00c0ef;
+		}
+		&-success {		
+			background-color: #00a65a;
+		}
+		&-warning {	
+			background-color: #f39c12;
+		}
+	}
+}

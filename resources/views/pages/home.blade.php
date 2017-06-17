@@ -172,7 +172,15 @@
                         </div>
                       </div>
                       {{-- panel-footer --}}
-                      <div v-show="false" class="panel-footer" 
+                      {{-- <div class="panel-footer">                     --}}
+                      <div class="panel-footer">
+                        <show-alert :show="showAlert" :type="alertType" @cancel="showAlert=false"> 
+                        <!-- altert type can be info/warning/danger -->
+                          <strong>@{{ seatNo }} </strong> has been <strong>@{{ seatStatus }} </strong>
+                        </show-alert>
+                      </div>  
+                      
+                     {{--  <div v-show="false" class="panel-footer" 
                          v-bind:class="{ 
                             'alert-info': seatStatus=='available'? true : false, 
                             'alert-warning': seatStatus=='booked'? true : false, 
@@ -184,7 +192,7 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                         <strong>@{{ seatNo }} </strong> has been <strong>@{{ seatStatus }} </strong>
-                      </div>                            
+                      </div>   --}}                          
                     </div> 
                   </div>
 
