@@ -61,7 +61,8 @@ class DashboardController extends Controller
     {
         if ($this->request->user()->isAdministrator()) {
             $id = $this->request->input('id');
-            Role::destroy($id); // Deleting Models                    
+            Role::destroy($id); // Deleting Models               
+            $this->addToRoleLogs($id, 'Deleted');                 
             return $this->staffInfo();            
         }
         $actionStatus = ['status' => 'Not Allowed'];
@@ -78,7 +79,8 @@ class DashboardController extends Controller
                 $staff->update([
                     'name' => $role,
                 ]);
-
+            $this->addToRoleLogs($id, '
+                Updated');    
             return $this->staffInfo();            
             }
         }
