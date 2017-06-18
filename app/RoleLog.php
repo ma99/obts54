@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RoleLog extends Model
 {
 	protected $fillable = [
-        'name', 'action', 'by'
+        'name', 'role_id', 'user_id', 'action', 'by'
     ];
     
     public function role()

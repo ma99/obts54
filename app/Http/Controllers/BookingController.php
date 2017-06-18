@@ -488,41 +488,9 @@ class BookingController extends Controller
         
     }
     public function test()
-    {
-        //$books = App\Book::with('author')->get();       
-         //users with roles
-         $users = User::with(['roles' => function($qry) {
-            $qry->where('name', 'admin')
-                ->orWhere('name', 'staff');
-         }])->get();
-         
-         //$i = 0;
-         foreach ($users as $user) {
-             //dd ($user);
-            // $i = $i + 1;
-            // echo $i; 
-            //echo $user->name;
-            foreach ($user->roles as $role) {
-                //echo $role->name;
-                $staffs[] = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'role' => $role->name
-                    ];                
-            }
-         }         
-         //$staffs = response()->json($staffs); // work only for return
-         $staffs =json_decode(json_encode($staffs), FALSE); // works
-         //return $staffs;
-         foreach ($staffs as $staff) {
-            //echo $staff['name'];
-            echo $staff->name;
-         }
-         
-         //return $staffs;
-         //return response()->json($staffs);
-         //return json_decode(json_encode($staffs), FALSE);
-
+    {        
+        $user = $this->request->user();
+        dd($user->isAdministrator());
         
     }
     public function getVsfirst()

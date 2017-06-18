@@ -177,6 +177,7 @@
                 modal: false,
                 rolePicked:'',
                 showAlert: false,                
+                staffId: '' ,
                 staffName: '' ,
                 staffRole: '',
                 staffRoleId: '',
@@ -189,6 +190,7 @@
             // },
             editStaff(staff) {  // role id of user/staff in roles table
                 var vm = this;
+                this.staffId = staff.id;
                 this.staffName = staff.name;
                 this.staffRole = staff.role;
                 this.staffRoleId = staff.role_id;
@@ -232,7 +234,8 @@
                 this.staffName = staff.name;                
                 this.loading = true;
                 axios.post('/delete', {
-                      id: staff.role_id 
+                      id: staff.role_id, 
+                      user_id: staff.id 
                     })          
                     .then(function (response) {                                           
                       response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
@@ -248,6 +251,7 @@
                 this.loading = true;
                 axios.post('/update', {
                       id: this.staffRoleId,
+                      user_id: this.staffId,
                       role: this.rolePicked 
                     })          
                     .then(function (response) {                                           
