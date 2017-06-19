@@ -45,7 +45,8 @@
       watch: {
         show() {            
             this.showAlert();
-            this.$emit('cancel');
+            //this.$emit('cancel');
+            this.$emit('update.show', false);
         },
         type() {
           this.alertType = this.type;

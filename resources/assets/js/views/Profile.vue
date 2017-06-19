@@ -22,6 +22,7 @@
               <div class="panel-heading">The Profile Page</div>
               <div class="panel-body">
                   I'm an Profile component!
+                  <button @click.preven="showAler()"> click me</button>
               </div>
             </div>
           </div>
@@ -30,10 +31,17 @@
   </div>      
 </template>
 
-<script>
+<script>    
     export default {
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+          showAler() {
+            console.log('sweet');
+            swal("Good job!", "You clicked the button!", "success");
+            console.log('......sweet');
+          }
         }
     }
 </script>

@@ -10,7 +10,7 @@ class RoleLog extends Model
        'user_id', 'action', 'by'
     ];
     
-    public function role()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
