@@ -15,9 +15,5 @@ class Role extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function role_logs()
-    {
-        return $this->hasMany(RoleLog::class);
-    }
+    
 }

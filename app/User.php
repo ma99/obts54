@@ -59,6 +59,9 @@ class User extends Authenticatable
     // {
     //     $this->attributes['password'] = bcrypt($value);
     // }
-
+    public function role_logs()
+    {
+        return $this->hasMany(RoleLog::class);
+    }
 
 }

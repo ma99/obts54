@@ -15,7 +15,7 @@ class CreateRoleLogsTable extends Migration
     {
         Schema::create('role_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('role_id');
+            //$table->string('role_id');
             $table->string('user_id');
             $table->string('action');
             $table->string('by');
