@@ -78,7 +78,9 @@
         </div> -->
     </div>
    
-    <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
+    <loader :show="loading">      
+    <!-- <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div> -->
+    </loader>
     
     <!-- Modal -->              
     <!-- <modal :show="modal" @close="modal=false"> -->
@@ -203,8 +205,7 @@
                       //closeOnConfirm: false,
                       //closeOnCancel: false                       
                     },
-                    function(isConfirm) {
-                        if (isConfirm) {
+                    function() {                       
                             vm.loading = true;
                             axios.post('/delete', {
                                 id: staff.role_id, 
@@ -218,10 +219,7 @@
                                 vm.showAlert= true;                      
                             });    
                             //swal("Deleted!", "Staff has been Removed.", "success");                      
-                        } else {
-                            vm.loading = false;
-                            //swal("Cancelled", "Your imaginary file is safe :)", "error");
-                        }
+                        
                     });
             },
             updateStaffRole() {
