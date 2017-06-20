@@ -15,9 +15,10 @@ use App\User;
 class BookingController extends Controller
 {
     protected $request;   
-    //protected $name;
+    protected $name;
     protected $phone;
     protected $email;
+    protected $userId;
 	//protected $travelDate;
 
 
@@ -25,7 +26,11 @@ class BookingController extends Controller
     public function __construct(Request $request)
     {
         //$this->middleware('auth');
-        $this->request = $request;        
+        $this->request = $request;                
+        
+        // $this->name = $this->request->input('name');
+        // $this->email = $this->request->input('email');
+        // $this->phone = $this->request->input('phone');         
 
     }
 
@@ -39,7 +44,8 @@ class BookingController extends Controller
                 //$busId = $this->request->input('bus_id'); 
                 $name = $this->request->input('name');
                 $this->email = $email = $this->request->input('email');
-                $this->phone = $phone= $this->request->input('phone'); 
+                $this->phone = $phone= $this->request->input('phone');              
+                
 
                 // Save/ Upadte Guest User Info             
                 $guestUserIsAvailable = User::where('phone', $phone)
@@ -55,7 +61,7 @@ class BookingController extends Controller
                 }
                 else {
                     $password = bin2hex(random_bytes(4));
-                    User::create([
+                    $user = User::create([
                         'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
@@ -108,39 +114,37 @@ class BookingController extends Controller
 
 
     }
+    
+    public function findUserIdOfGuest()
+    {
+        // $phone = $this->phone;
+        // $email = $this->email;
+        //$user = User::where('phone', $phone)->first();
+        $user = User::where('phone', $this->phone)->orWhere('email', $this->email)->first();        
+        $this->userId = $user->id;  
+    }
 
     public function createBooking($inputsInfo)
     {
         extract($inputsInfo);
 
+
         if (auth()->check()) {
             /*$user = auth()->user(); // authenticated user's object
             $userId = $user->id;*/
             if ( auth()->user()->isNormalUser() ) {
-                $userId = auth()->id();    // Auth::id() , Auth::user()            
-            }
-            //role: admin/staff
-            //m-1
-            /*if ( $user->roles()->role == 'normal') {  
-                $userId = $user->id;
-            }*/
-            //m-2 collect info from roles tble for this user. if no info found means he is normal user.  
-            /*if (!$user->roles->count()) {  
-                $userId = $user->id;
-            }*/
-
-
+                $this->userId = auth()->id();    // Auth::id() , Auth::user()            
+            } else {                
+                $this->findUserIdOfGuest();
+            }           
         } else {
-
-            //$user = GuestUser::where('phone', $this->phone)->first();
-            $user = User::where('phone', $this->phone)->first();
-            $userId = $user->id;
+            $this->findUserIdOfGuest();
         }
 
-        //$this->request->user()->bookings()->create([ 
+        //$this->request->user()->bookings()->create([                         
             Booking::create([                       
                 'id' => $bookingId,
-                'user_id' => $userId,
+                'user_id' => $this->userId,
                 'schedule_id' => $scheduleId,
                 'total_seats' => $totalSeats,
                 'amount' => $totalFare,
@@ -475,7 +479,7 @@ class BookingController extends Controller
         
     }  
     ***/
-    public function test1(Request $request)
+    public function test1()
     {
        //dd($request->user());
         //$roles = auth()->user()->roles()->get();
@@ -484,7 +488,11 @@ class BookingController extends Controller
       //  $role = auth()->user()->roles->contains('name', 'user');
         
         //dd($roles->contains('role','admin'));
-        dd(auth()->user()->isNormalUser());
+            $user = User::where('phone', $this->phone)->first();
+            //dd($user);
+            $this->userId = $user->id;
+            return $this->userId;
+        
         
     }
     public function test()
