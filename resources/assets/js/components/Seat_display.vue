@@ -155,7 +155,10 @@
         close() {
                 this.modal = false;
                 this.loading = false;                
-                this.selectedSeat = [];                
+                this.selectedSeat = [];
+                if(this.form.errors) {
+                  this.form.errors.clear();                
+                }
         },
         isSeatBuying(seatStatus){
           return seatStatus=='buying' ? true : false;
