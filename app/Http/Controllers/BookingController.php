@@ -133,7 +133,9 @@ class BookingController extends Controller
         } else {
 
             //$user = GuestUser::where('phone', $this->phone)->first();
-            $user = User::where('phone', $this->phone)->first();
+            $user = User::where('phone', $this->phone)
+                        ->orWhere('email', $this->email)
+                        ->first();
             $userId = $user->id;
         }
 
