@@ -47,6 +47,7 @@ Route::get('/home', 'SearchTicketController@index');
 Route::get('/search', 'SearchTicketController@searchTicket');
 Route::get('/viewseats', 'SearchTicketController@viewSeats');
 
+//Route::get('seatbooking', 'BookingController@store');
 Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BookingController@store');
 
