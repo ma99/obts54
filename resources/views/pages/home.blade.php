@@ -113,7 +113,9 @@
                       @{{ busError }}
                   </div>
               </div>
-              <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div>
+              <loader :show="loading">
+                {{-- <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div> --}}
+              </loader>
               <div class="col-sm-6 col-sm-offset-2">
                   <div v-show="isSeatBooked" class="panel panel-info row">
                       <div class="panel-heading">Booking Information</div>
