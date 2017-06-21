@@ -39,12 +39,14 @@ class PaymentController extends Controller
     	$user = User::find($userId);
     	$amount = 2.23;
     	//$this->payment->chargeCreditCard(2.23);
-    	$trxData = $this->payment->chargeCreditCard($bookingId, $user, $amount);
+    	$trxData = $this->payment->chargeCreditCard($bookingId, $user, $amount);        
        
         if ($trxData) {
+            $paymentMethod = 'card';
             $payment = Payment::create([
                     'booking_id' => $bookingId,
                     'amount' => $booking->amount, //$amount = $booking->amount
+                    'payment_method' => $paymentMethod, 
                     'transaction_id' => $trxData->transaction_id,
                     'auth_code' => $trxData->auth_code,
                     'status' => $trxData->status,

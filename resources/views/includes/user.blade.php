@@ -28,6 +28,7 @@
 			</div>
 			<span class="help is-danger" v-if="form.errors.has('phone')" v-text="form.errors.get('phone')"></span>
 			</div> --}}
+			@include('includes.options')
 			<button v-show="isSeatSelected" class="btn btn-primary">Continue</button>                                      
 		</form>
     </div>

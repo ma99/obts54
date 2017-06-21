@@ -15718,27 +15718,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       */
     },
     seatBookingByUser: function seatBookingByUser() {
-      this.loading = true;
-      this.buses = []; // hide table
+      //this.loading = true;
+      //this.buses = []; // hide table
       var vm = this;
-      this.changeStatusOfSelectedSeat(this.selectedSeat);
+      //this.changeStatusOfSelectedSeat(this.selectedSeat);         
+      swal({
+        title: "Are you sure?",
+        text: "This will register a BOOKING for you",
+        type: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, Book!"
+      }, function () {
+        vm.loading = true;
+        vm.buses = []; // hide table
+        vm.changeStatusOfSelectedSeat(vm.selectedSeat);
 
-      //axios.post('/seatbooking', {
-      axios.post(this.url, {
-        bus_id: this.busId,
-        date: this.startDate,
-        schedule_id: this.scheduleId,
-        selected_seats: this.selectedSeat,
-        total_seats: this.totalSeats,
-        total_fare: this.totalFare
-      }).then(function (response) {
-        console.log(response);
-        vm.selectedSeat = [];
-        vm.bookedSeatInfo = response.data;
-        vm.loading = false;
-        vm.modal = false;
-        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+        axios.post(vm.url, {
+          bus_id: vm.busId,
+          date: vm.startDate,
+          schedule_id: vm.scheduleId,
+          selected_seats: vm.selectedSeat,
+          total_seats: vm.totalSeats,
+          total_fare: vm.totalFare
+        }).then(function (response) {
+          //console.log(response.data)
+          vm.selectedSeat = [];
+          vm.bookedSeatInfo = response.data;
+          vm.loading = false;
+          vm.modal = false;
+          // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+        }).catch(function (error) {
+          console.log(error);
+          vm.loading = false;
+        });
       });
+
+      /*axios.post(this.url, {
+          bus_id: this.busId,
+          date: this.startDate,
+          schedule_id: this.scheduleId,
+          selected_seats:this.selectedSeat,
+          total_seats: this.totalSeats,
+          total_fare: this.totalFare
+      })          
+      .then(function (response) {
+           console.log(response)
+           vm.selectedSeat= [];
+           vm.bookedSeatInfo = response.data;
+           vm.loading = false;
+           vm.modal = false;
+           // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+      });*/
     },
     changeStatusOfSelectedSeat: function changeStatusOfSelectedSeat(selectedSeat) {
       var vm = this;

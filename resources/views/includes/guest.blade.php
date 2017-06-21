@@ -28,7 +28,8 @@
 			</div>
 			<span class="help text-danger" v-if="form.errors.has('phone')" v-text="form.errors.get('phone')"></span>
 			</div>
-			<div class="radio">
+			{{-- options --}}
+			{{-- <div class="radio">
 			  <label class="radio-inline">
 			    <input type="radio" name="optionsRadios" id="optionsRadios1" value="seatbooking" v-model="url">
 			    Book 
@@ -40,7 +41,9 @@
 			    Buy
 			  </label>
 			</div>
-			<span> Picked @{{ url }}</span>
+			<span> Picked @{{ url }}</span> --}}
+			@include('includes.options')
+
 			<button v-show="isSeatSelected" class="btn btn-primary" :disabled="form.errors.any()">Continue</button>
 		</form>
 	</div>
