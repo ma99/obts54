@@ -10,7 +10,7 @@
               {{-- @if (auth()->check())
               <div v-show="false">  @{{ guestUser = false }} </div>
               @endif --}}
-              <div class="panel panel-default">
+              <div v-show="!isSeatBooked" class="panel panel-default">
                 {{-- <div class="panel-heading">Search Schedule</div> --}}
                 <div class="panel-body">
                   <form>

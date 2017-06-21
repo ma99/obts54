@@ -259,30 +259,93 @@
         },
 
         seatBookingByGuest() {
-          this.loading = true;
-          this.buses = []; // hide table
+          //this.loading = true;
+          //this.buses = []; // hide table
           var vm = this; 
-          this.changeStatusOfSelectedSeat(this.selectedSeat); 
+          //this.changeStatusOfSelectedSeat(this.selectedSeat); 
           console.log('modified selected seat'); 
           console.log(this.selectedSeat); 
-          // non form data  
-          this.form.bus_id = this.busId;
-          this.form.date = this.startDate;
-          this.form.schedule_id = this.scheduleId;
-          this.form.selected_seats = this.selectedSeat;
-          this.form.total_seats = this.totalSeats;
-          this.form.total_fare = this.totalFare;       
 
-          this.form.post(this.url)
-                //.then(response => alert('Wahoo!'));
-                .then(function (response) {
-                 //console.log(response.data)
-                 vm.selectedSeat= [];                                  
-                 vm.bookedSeatInfo = response;
-                 vm.modal = false;
-                 vm.loading = false;
-                 //console.log('res=', response);
+          swal({
+              title: "Are you sure?",
+              text: "This will register a BOOKING for you",
+              type: "info",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Yes, Book!",
+              //closeOnConfirm: false,
+              //closeOnCancel: false                        
+            },
+            function() {  
+              vm.loading = true;
+              vm.buses = []; // hide table
+              vm.changeStatusOfSelectedSeat(vm.selectedSeat); 
+              // // non form data  
+              vm.form.bus_id = vm.busId;
+              vm.form.date = vm.startDate;
+              vm.form.schedule_id = vm.scheduleId;
+              vm.form.selected_seats = vm.selectedSeat;
+              vm.form.total_seats = vm.totalSeats;
+              vm.form.total_fare = vm.totalFare; 
+
+
+            vm.form.post(vm.url)
+                  //.then(response => alert('Wahoo!'));
+            .then(function (response) {
+               //console.log(response.data)
+               vm.selectedSeat= [];                                  
+               vm.bookedSeatInfo = response;
+               vm.modal = false;
+               vm.loading = false;
+               //console.log('res=', response);
+            })
+            .catch(function (error) {
+              console.log(error);
+              vm.loading = false;
+            });
+          // end of non form data
           });
+
+            // // non form data  
+            // this.form.bus_id = this.busId;
+            // this.form.date = this.startDate;
+            // this.form.schedule_id = this.scheduleId;
+            // this.form.selected_seats = this.selectedSeat;
+            // this.form.total_seats = this.totalSeats;
+            // this.form.total_fare = this.totalFare; 
+
+
+            // this.form.post(this.url)
+            //       //.then(response => alert('Wahoo!'));
+            // .then(function (response) {
+            //    //console.log(response.data)
+            //    vm.selectedSeat= [];                                  
+            //    vm.bookedSeatInfo = response;
+            //    vm.modal = false;
+            //    vm.loading = false;
+            //    //console.log('res=', response);
+            // })
+            // .catch(function (error) {
+            //   console.log(error);
+            //   vm.loading = false;
+            // });
+          // end of non form data
+          // swal({
+          //   title: "Are you sure?",
+          //   text: "This will register a BOOKING for you",
+          //   type: "info",
+          //   showCancelButton: true,
+          //   confirmButtonColor: "#DD6B55",
+          //   confirmButtonText: "Yes, Book!",
+          //   //closeOnConfirm: false,
+          //   //closeOnCancel: false                       
+          // },
+          // function() {                       
+           
+          //         //swal("Deleted!", "Staff has been Removed.", "success");                      
+              
+          // });
+          
           
           /*
           axios.post('/seatbooking', {

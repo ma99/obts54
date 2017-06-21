@@ -39,7 +39,7 @@
       &.modal {
           display: block; 
           position: absolute; //* Stay in place */
-          z-index: 11111; //* Sit on top */
+          z-index: 99999; //* Sit on top */
           //left: 0;
           top: 0;
           width: 100%; //* Full width */
