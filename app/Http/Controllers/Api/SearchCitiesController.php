@@ -64,5 +64,5 @@ class SearchCitiesController extends Controller
 
    }
 
-
+  
 }
