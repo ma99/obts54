@@ -55,7 +55,13 @@ Route::post('seatbuying', 'BookingController@store');
 Route::get('/test', 'BookingController@test');
 Route::get('/test1', 'BookingController@test1');
 
-Route::get('/pay/{booking}', 'PaymentController@payNow')->name('payment');
+//Route::get('/pay/{booking}', 'Payment\PaymentController@payNow')->name('payment');
+Route::get('/pay/{booking}', 'Payment\PaymentController@payNow')->name('payment');
+// Route::post('/sslcommerz/payment/success/{booking}', 'Payment\PaymentController@success')->name('success');
+// Route::post('/sslcommerz/payment/fail/{booking}', 'Payment\PaymentController@fail')->name('fail');
+Route::post('/sslcommerz/payment/success', 'Payment\PaymentController@success')->name('success');
+Route::post('/sslcommerz/payment/fail', 'Payment\PaymentController@fail')->name('fail');
+Route::post('/sslcommerz/payment/cancel', 'Payment\PaymentController@cancel')->name('cancel');
 
 
 

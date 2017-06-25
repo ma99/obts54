@@ -26,3 +26,7 @@ Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/test', 'Api\SearchCitiesController@index');
 Route::get('/testapi', 'Api\SearchCitiesController@testApi');
 Route::get('/zipcode', 'Api\SearchCitiesController@cityName');
+//Route::get('/pay/{booking}', 'Api\SearchCitiesController@makeMyPayment');
+//Route::get('/pay', 'Payment\PaymentController@payNow')->name('payment');
+// Route::post('/payment/success', 'Payment\PaymentController@success');
+// Route::post('/payment/fail}', 'Payment\PaymentController@fail');

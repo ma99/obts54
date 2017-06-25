@@ -18,7 +18,7 @@ class BookingController extends Controller
     protected $name;
     protected $phone;
     protected $email;
-    protected $userId;
+    //protected $userId;
     //protected $travelDate;
 
 
@@ -121,30 +121,30 @@ class BookingController extends Controller
         // $email = $this->email;
         //$user = User::where('phone', $phone)->first();
         $user = User::where('phone', $this->phone)->orWhere('email', $this->email)->first();        
-        $this->userId = $user->id;  
+        return $user->id;  
     }
 
     public function createBooking($inputsInfo)
     {
         extract($inputsInfo);
 
-
+        $userId;
         if (auth()->check()) {
             /*$user = auth()->user(); // authenticated user's object
             $userId = $user->id;*/
             if ( auth()->user()->isNormalUser() ) {
-                $this->userId = auth()->id();    // Auth::id() , Auth::user()            
+                $userId = auth()->id();    // Auth::id() , Auth::user()            
             } else {                
-                $this->findUserIdOfGuest();
+                $userId = $this->findUserIdOfGuest();
             }           
         } else {
-            $this->findUserIdOfGuest();
+            $userId = $this->findUserIdOfGuest();
         }
 
         //$this->request->user()->bookings()->create([                         
             Booking::create([                       
                 'id' => $bookingId,
-                'user_id' => $this->userId,
+                'user_id' => $userId,
                 'schedule_id' => $scheduleId,
                 'total_seats' => $totalSeats,
                 'amount' => $totalFare,
