@@ -16,7 +16,7 @@ class SslcommerzRepository
     }
 	
 	//public function makeMyPayment($bookingId, $user, $amount)
-	public function makeMyPayment()
+	public function makeMyPayment($bookingId)
 	{
 		// // Common setup for API credentials
 		// <form id="payment_gw" name="payment_gw" method="POST" action="https://sandbox.sslcommerz.com/gwprocess/v3/process.php">
@@ -38,14 +38,15 @@ class SslcommerzRepository
 		// https://sandbox.sslcommerz.com/gwprocess/v3/gw.php?Q=PAY&SESSIONKEY=51DCEFD13E008BD86D99DCD95A3EA7C9
 		// https://sandbox.sslcommerz.com/gwprocess/v3/gw.php?Q=PAY&SESSIONKEY=95BAB58C2D023012AE7BA5B18F55487F
 		$client = new Client();
-		$response = $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
+		//$response = $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
+		$response = $client->request('POST', 'https://requestb.in/1j7we5l1', [
 		    'form_params' => [
 		        'total_amount' => '1150.00',
 		        'store_id' => 'testbox',
-		        'tran_id' => 'F9997499',
-		        'success_url' => route('success', ['id' => 'F9997499']),
+		        'tran_id' => $bookingId,
+		        'success_url' => route('success'),
             	//'fail_url' => route('fail', ['id' => 'F9997499']),//'http://localhosthttp://localhost/api/payment/fail',
-            	'fail_url' => 'http://localhost/sslcommerz/payment/fail/F9997499', //http://localhost/api/payment/fail',
+            	'fail_url' => route('fail'), //http://localhost/api/payment/fail',
             	'cancel_url' => 'http://localhost/payment/cancel/F9997499',
 		        'cus_name' => 'ABC XYZ',		       
 		        'cus_email' => 'abc.xyz@mail.com',		       
@@ -53,6 +54,7 @@ class SslcommerzRepository
 		    ]
 		]);
 		//return $response->getBody();		
+		dd($response);		
 
 	}
 

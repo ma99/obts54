@@ -47,6 +47,7 @@ class PaymentController extends Controller
         return view('payment.payment', compact('gwUrl', 'bookingId'));
     }
 
+
     public function removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate){
         // by Deleting from bookings, seats table
 
@@ -93,6 +94,25 @@ class PaymentController extends Controller
     {
         return 'CANCELLED';
         //return view('payment.failed');
+    }
+
+    public function payNow2(Booking $booking)
+    {
+        /*$bookingId = $booking->id;
+        $scheduleId = $booking->schedule_id;        
+        //$travelDate = $booking->date;
+        $travelDate = date("d-m-Y", strtotime($booking->date)) ;
+        $userId = $booking->user_id;
+        
+        $user = User::find($userId);
+        $amount = 2.23;*/
+        //$this->payment->chargeCreditCard(2.23);        
+        //$this->payment->makeMyPayment();
+        $bookingId = $booking->id;
+        $txr = $this->payment->makeMyPayment($bookingId);
+        //dd($txr);
+        //$gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php';               
+        //return view('payment.payment', compact('gwUrl', 'bookingId'));
     }
 
 
