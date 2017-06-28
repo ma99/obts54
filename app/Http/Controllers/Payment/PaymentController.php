@@ -11,7 +11,7 @@ use App\User;
 use App\GuestUser;
 use App\Payment;
 use App\Seat;
-// use GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
 use App\Repositories\SslcommerzRepository;
 
@@ -109,10 +109,27 @@ class PaymentController extends Controller
         //$this->payment->chargeCreditCard(2.23);        
         //$this->payment->makeMyPayment();
         $bookingId = $booking->id;
-        $txr = $this->payment->makeMyPayment($bookingId);
+        //$txr = $this->payment->makeMyPayment($bookingId);
         //dd($txr);
         //$gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php';               
         //return view('payment.payment', compact('gwUrl', 'bookingId'));
+        $client = new Client();
+        //$response = $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
+        $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
+            'form_params' => [
+                'total_amount' => '1150.00',
+                'store_id' => 'testbox',
+                'tran_id' => $bookingId,
+                'success_url' => route('success'),
+                //'fail_url' => route('fail', ['id' => 'F9997499']),//'http://localhosthttp://localhost/api/payment/fail',
+                'fail_url' => route('fail'), //http://localhost/api/payment/fail',
+                'cancel_url' => 'http://localhost/payment/cancel/F9997499',
+                'cus_name' => 'ABC XYZ',               
+                'cus_email' => 'abc.xyz@mail.com',             
+                'version' => '3.0.0',
+                'submit' => 'Pay+Now'              
+            ]
+        ]);
     }
 
 

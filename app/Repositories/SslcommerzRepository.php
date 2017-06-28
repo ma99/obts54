@@ -38,8 +38,8 @@ class SslcommerzRepository
 		// https://sandbox.sslcommerz.com/gwprocess/v3/gw.php?Q=PAY&SESSIONKEY=51DCEFD13E008BD86D99DCD95A3EA7C9
 		// https://sandbox.sslcommerz.com/gwprocess/v3/gw.php?Q=PAY&SESSIONKEY=95BAB58C2D023012AE7BA5B18F55487F
 		$client = new Client();
-		//$response = $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
-		$response = $client->request('POST', 'https://requestb.in/1j7we5l1', [
+		$response = $client->request('POST', 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php', [
+		//$response = $client->request('POST', 'https://requestb.in/1j7we5l1', [
 		    'form_params' => [
 		        'total_amount' => '1150.00',
 		        'store_id' => 'testbox',
@@ -50,11 +50,12 @@ class SslcommerzRepository
             	'cancel_url' => 'http://localhost/payment/cancel/F9997499',
 		        'cus_name' => 'ABC XYZ',		       
 		        'cus_email' => 'abc.xyz@mail.com',		       
-		        'version' => '3.0.0',		       
+		        'version' => '3.0.0',
+		        'submit' => 'Pay+Now'		       
 		    ]
 		]);
 		//return $response->getBody();		
-		dd($response);		
+		//dd($response);		
 
 	}
 
