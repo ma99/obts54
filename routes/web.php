@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/session', 'HomeController@showSession');
 // Route::get('/admin', 'HomeController@admin');
 
 /*Route::get('/{vue?}', function () {

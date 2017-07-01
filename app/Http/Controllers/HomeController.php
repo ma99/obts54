@@ -26,6 +26,15 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function showSession(Request $request)
+    {
+        // var_dump($_SESSION);
+        print_r(session('total_amount'));        
+        $data = $request->session()->all();
+        print_r($data['booking_id']);        
+        dd($data);
+    }
+
     public function admin()
     {
         return view('admin.test_sidebar');
