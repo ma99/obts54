@@ -11,15 +11,17 @@
 			</ul>
 		@endif	 --}}
 
-		<h1> SUCCESS </h1>
-		@if (isset($request))
+		@if ($payment_status == 'success')
+			<h1> {{ $payment_status }}  </h1>
 			<ul>
-				<li> Status: {{ $request->status }} </li>
-				<li> Transaction Ref: {{ $request->tran_id }} </li>
-				<li>  Validation ID: {{ $request->val_id }}</li>				
-				<li> Amount: {{ $request->store_amount }}</li>
-				<li> Amount Including Charge: {{ $request->amount }}</li>
+				<li> Status: {{ $status }} </li>
+				<li> Transaction Ref: {{ $tran_id }} </li>
+				<li>  Validation ID: {{ $val_id }}</li>				
+				<li> Amount: {{ $store_amount }}</li>
+				<li> Amount Including Charge: {{ $amount }}</li>
 			</ul>
+		@else
+			<p> {{ $validation_message }}  </p>			
 		@endif	
 	</div>
 @endsection
