@@ -18,15 +18,19 @@ use App\Repositories\SslcommerzRepository;
 
 class PaymentController extends Controller
 {
-	//protected $amount;
-    protected $payment;
 	protected $request;
+    protected $payment;
+ //    protected $bookingId;
+ //    protected $scheduleId;
+ //    protected $travelDate;
+	// protected $totalAmount;
+
 
 
 	public function __construct(SslcommerzRepository $payment, Request $request)
     {
         $this->payment = $payment;
-	    $this->request = $request;
+	   $this->request = $request;
     }
 
     /*
@@ -46,10 +50,11 @@ class PaymentController extends Controller
     	$amount = 2.23;*/
     	//$this->payment->chargeCreditCard(2.23);        
         //$this->payment->makeMyPayment();
-        $bookingId = $booking->id;
+        $bookingId = $booking->id;                
         $amount = $booking->amount;
         $onlineCharge = 0.035*$amount; //3.5%
         $totalAmount = $amount + $onlineCharge;
+        
         $user = User::find($booking->user_id);
         $name = $user->name;
         $email = $user->email;
@@ -118,24 +123,26 @@ class PaymentController extends Controller
 
             // GW 
             $payment_status = 'unknown';
-            $tran_id = isset($request->tran_id) ? $request->tran_id : null;
+            $tran_id = isset($request->tran_id) ? $request->tran_id : null;                      
 
             if ($tran_id !== null && strlen($tran_id) > 0) {
                 
-                $payment_data = json_decode($request, true);
+                $payment_data = $request->all(); // all of the input data as an array
                 $val_id = $request->val_id;
                 $amount = $request->amount;
                 $store_amount = $request->store_amount;
                 $card_type = $request->card_type;
-                $card_no = $request->card_no;
+                $card_no = $request->card_no;                
 
                 if ($totalAmount == $amount) {
-                    $username = 'demotest';
+                    //$username = 'demotest';
+                    $storeId = 'testbox';
                     $password = 'qwerty';
 
                     $val_id = urlencode($val_id);
-                    $store_id = urlencode($username);
+                    $store_id = urlencode($storeId);
                     $store_passwd=urlencode($password);
+                    
                     $sandbox = true;
 
                     $url = ($sandbox) ? 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php' 
@@ -151,10 +158,13 @@ class PaymentController extends Controller
                     curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
                     
                     $response = curl_exec($handle);
+
+                    //dd($response);
                     
                     $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     if( $code == 200 && !(curl_errno($handle))) {
                         $result = json_decode($response); // json TO CONVERT AS OBJECT
+                        //dd($result);
 
                         # TRANSACTION INFO
                         $status = $result->status;
@@ -173,16 +183,16 @@ class PaymentController extends Controller
                         $card_issuer_country = $result->card_issuer_country;
                         $card_issuer_country_code = $result->card_issuer_country_code;
 
-                        # API AUTHENTICATION
-                        $apiconnect = $result->APIConnect;
+                        # API AUTHENTICATION 
+                        $apiconnect = $result->APIConnect; 
                         $validated_on = $result->validated_on;
                         $gw_version = $result->gw_version;
 
-                        if( in_array( strtoupper( $apiconnect ), ['INVALID_REQUEST', 'FAILED', 'INACTIVE'] ) ) {
+                        if (in_array(strtoupper($apiconnect), ['INVALID_REQUEST', 'FAILED', 'INACTIVE'] ) ) {
                             $payment_status = 'failed';
-                        } elseif( in_array( strtoupper( $status ), ['INVALID_TRANSACTION'] ) ) {
+                        } elseif (in_array(strtoupper($status), ['INVALID_TRANSACTION'] ) ) {
                             $payment_status = 'failed';
-                        } elseif( in_array( strtoupper( $status ), ['VALIDATED', 'VALID'] ) ) {
+                        } elseif (in_array(strtoupper($status), ['VALIDATED', 'VALID'] ) ) {
                             $payment_status = 'success';
                         } else {
                             $payment_status = 'unknown';
@@ -202,7 +212,7 @@ class PaymentController extends Controller
                         'payment_data' => $payment_data,
                         'validation_data' => $validation_data,
                         'validation_date' => date('Y-m-d H:i:s'),
-                        'payment_status' => $payment_status
+                        'payment_status' => $payment_status,
                     ]);
 
                 }
@@ -230,7 +240,7 @@ class PaymentController extends Controller
        //$this->request->session()->forget('total_amount');
 
 
-        return view('payment.success', compact('payment_status', 'validation_message', 'status', 'trand_id', 'val_id', 'store_amount', 'amount'));
+        return view('payment.success', compact('payment_status', 'validation_message', 'status', 'tran_id', 'val_id', 'store_amount', 'amount'));
         //return $request;
     }
     
