@@ -16,6 +16,7 @@ class CreateSslcommerzPaymentsTable extends Migration
         Schema::create('sslcommerz_payments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('booking_id');
+            $table->string('payment_method', ['cash', 'card'])->default('card');
             $table->float('total_amount', 8, 2);
             //$table->text('submitted_data');
             $table->text('payment_data');
