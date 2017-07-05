@@ -29,7 +29,7 @@ class PaymentController extends Controller
 
 	public function __construct(SslcommerzRepository $payment, Request $request)
     {
-        $this->payment = $payment;
+       $this->payment = $payment;
 	   $this->request = $request;
     }
 
@@ -61,6 +61,8 @@ class PaymentController extends Controller
 
         //create Session for $bookingId, $amount, $totalAmount
         $this->request->session()->put('booking_id', $bookingId);
+        $this->request->session()->put('schedule_id', $booking->schedule_id);
+        $this->request->session()->put('travel_date', date("d-m-Y", strtotime($booking->date)));
         //$this->request->session()->put('amount', $amount);
         $this->request->session()->put('total_amount', $totalAmount);
 
@@ -119,6 +121,8 @@ class PaymentController extends Controller
                     $totalAmount = $this->request->session()->get('total_amount');
                 */
             $bookingId = session('booking_id');
+            $scheduleId = session('schedule_id');
+            $travelDate = session('travel_date');            
             $totalAmount = session('total_amount');
 
             // GW 
@@ -219,12 +223,16 @@ class PaymentController extends Controller
                 
                 // validatio message
                 $validation_message = '';
-                if( isset( $validation_data['error'] ) ) {
+                if (isset($validation_data['error'])) {
                     $validation_message = $validation_data['error'];
                 } else {
-                    if( $payment_status != 'success' ) {
+                    if ($payment_status != 'success') {
                         $validation_message = 'Some error validating the payment! Please contact the administrator to validate the payment manually.';
                     }
+                    else {
+                        $this->updateSeatStatus($bookingId, $scheduleId, $travelDate);
+                    }
+
                 }
             }
 
