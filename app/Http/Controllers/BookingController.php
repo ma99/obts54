@@ -479,6 +479,35 @@ class BookingController extends Controller
         
     }  
     ***/
+    public function removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate)
+    {
+        // by Deleting from bookings, seats table
+
+        Booking::destroy($bookingId); // deleting by pk
+
+        $seats = Seat::where('booking_id', $bookingId)->get();            
+            foreach ($seats as $seat) {
+                $updateSeatInfo = [
+                        'seat_no' => $seat->seat_no,
+                        'status' => 'available',
+                    ];
+                $seat->delete();
+                $updateSeatInfo = json_decode(json_encode($updateSeatInfo), FALSE); //array to object
+                broadcast(new SeatStatusUpdatedEvent($updateSeatInfo, $scheduleId, $travelDate))->toOthers();
+            }
+        return;
+    }
+
+    public function cancelBooking(Booking $booking)
+    {
+       $bookingId = $booking->id;
+       $scheduleId = $booking->schedule_id;        
+       //$travelDate = $booking->date;
+       $travelDate = date("d-m-Y", strtotime($booking->date)) ;
+       $this->removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate);
+        return redirect('/');
+    }
+
     public function test1()
     {
        //dd($request->user());
