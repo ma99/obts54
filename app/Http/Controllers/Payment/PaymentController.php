@@ -79,7 +79,7 @@ class PaymentController extends Controller
     }
 
 
-    public function removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate){
+    /*public function removeSeatBookedOrBuyingStatus($bookingId, $scheduleId, $travelDate){
         // by Deleting from bookings, seats table
 
         Booking::destroy($bookingId); // deleting by pk
@@ -95,7 +95,7 @@ class PaymentController extends Controller
                 broadcast(new SeatStatusUpdatedEvent($updateSeatInfo, $scheduleId, $travelDate))->toOthers();
             }
         return;
-    }
+    }*/
 
     public function updateSeatStatus($bookingId, $scheduleId, $travelDate)
     {
@@ -210,14 +210,31 @@ class PaymentController extends Controller
                     }
                     curl_close($handle);
 
-                    SslcommerzPayment::create([
-                        'booking_id' => $bookingId,
-                        'total_amount' => $totalAmount,
+                    // If there's a flight from Oakland to San Diego, set the price to $99.
+                    // If no matching model exists, create one.
+                    // $flight = App\Flight::updateOrCreate(
+                    //     ['departure' => 'Oakland', 'destination' => 'San Diego'],
+                    //     ['price' => 99]
+                    // );
+
+                    // SslcommerzPayment::create([
+                    //     'booking_id' => $bookingId,
+                    //     'total_amount' => $totalAmount,
+                    //     'payment_data' => $payment_data,
+                    //     'validation_data' => $validation_data,
+                    //     'validation_date' => date('Y-m-d H:i:s'),
+                    //     'payment_status' => $payment_status,
+                    // ]);
+
+                    SslcommerzPayment::updateOrCreate(
+                        ['booking_id' => $bookingId],
+                        ['total_amount' => $totalAmount,
                         'payment_data' => $payment_data,
                         'validation_data' => $validation_data,
                         'validation_date' => date('Y-m-d H:i:s'),
-                        'payment_status' => $payment_status,
-                    ]);
+                        'payment_status' => $payment_status
+                        ]
+                    );
 
                 }
                 
@@ -252,20 +269,79 @@ class PaymentController extends Controller
         //return $request;
     }
     
-    public function fail()
+    public function fail(Request $request)
     {
+        $bookingId = session('booking_id');
+        $totalAmount = session('total_amount');
        // return 'FAILED';
-        
+        $payment_status = 'failed';
+        $tran_id = isset($request->tran_id) ? $request->tran_id : null; 
+        if ($tran_id !== null && strlen($tran_id) > 0) {
+            $payment_data = $request->all(); // all of the input data as an array
+
+            $validation_data = array(
+                'error' => ( isset($request->error) ? $request->error : 'Payment returned to fail page' )
+            );
+
+            SslcommerzPayment::create([
+                'booking_id' => $bookingId,
+                'total_amount' => $totalAmount,
+                'payment_data' => $payment_data,
+                'validation_data' => $validation_data,
+                'validation_date' => date('Y-m-d H:i:s'),
+                'payment_status' => $payment_status,
+            ]);
+        }
+        // validatio message
+        $validation_message = '';
+        if (isset($validation_data['error'])) {
+            $validation_message = $validation_data['error'];
+        } else {
+            if ($payment_status != 'success') {
+                $validation_message = 'Could not complete the payment.';
+            }
+        }
         //1. store to data base 
         // 2. removeSeatBookedOrBuyingStatus
 
-       return view('payment.failed');
+       return view('payment.failed', compact('validation_message', 'bookingId'));
     }
 
-    public function cancel()
+    public function cancel(Request $request)
     {
-        return 'CANCELLED';
-        //return view('payment.failed');
+        $bookingId = session('booking_id');
+        $totalAmount = session('total_amount');
+
+        $payment_status = 'cancelled';
+        $tran_id = isset($request->tran_id) ? $request->tran_id : null; 
+        
+        if ($tran_id !== null && strlen($tran_id) > 0) {
+            $payment_data = $request->all(); // all of the input data as an array
+
+            $validation_data = array(
+                'error' => (isset($request->error) ? $request->error : 'User cancelled payment')
+            );
+
+            SslcommerzPayment::create([
+                'booking_id' => $bookingId,
+                'total_amount' => $totalAmount,
+                'payment_data' => $payment_data,
+                'validation_data' => $validation_data,
+                'validation_date' => date('Y-m-d H:i:s'),
+                'payment_status' => $payment_status,
+            ]);
+        }
+        // validatio message
+        $validation_message = '';
+        if (isset($validation_data['error'])) {
+            $validation_message = $validation_data['error'];
+        } else {
+            if ($payment_status != 'success') {
+                $validation_message = 'Payment cancelled';
+            }
+        }
+
+        return view('payment.cancelled', compact('validation_message', 'bookingId'));
     }
 
     public function payNow2(Booking $booking)
