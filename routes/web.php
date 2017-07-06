@@ -51,6 +51,7 @@ Route::get('/viewseats', 'SearchTicketController@viewSeats');
 //Route::get('seatbooking', 'BookingController@store');
 Route::post('seatbooking', 'BookingController@store');
 Route::post('seatbuying', 'BookingController@store');
+Route::get('/cancel/{booking}', 'BookingController@cancelBooking');
 
 //Route::post('seatbuying', 'BuyingController@store');
 Route::get('/test', 'BookingController@test');
