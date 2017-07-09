@@ -52,8 +52,8 @@
 					<input type="hidden" name="version" value="3.00" />	
 
 					<!-- Customer Information !-->
-					<input type="hidden" name="cus_name" value="{{ $name }}">
-					<input type="hidden" name="cus_email" value="{{ $email }}">	
+					<input type="hidden" name="cus_name" value="{{ $user->name }}">
+					<input type="hidden" name="cus_email" value="{{ $user->email }}">	
 					
 					<!-- SUBMIT REQUEST  !-->
 					<input type="submit" name="submit" value="Checkout" class="btn btn-primary" />

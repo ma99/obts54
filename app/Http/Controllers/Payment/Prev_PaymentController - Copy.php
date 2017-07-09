@@ -14,7 +14,7 @@ use App\Seat;
 use App\SslcommerzPayment;
 use GuzzleHttp\Client;
 
-use App\Repositories\Payment\PaymentRepository;
+use App\Repositories\SslcommerzRepository;
 
 class PaymentController extends Controller
 {
@@ -27,7 +27,7 @@ class PaymentController extends Controller
 
 
 
-	public function __construct(PaymentRepository $payment, Request $request)
+	public function __construct(SslcommerzRepository $payment, Request $request)
     {
        $this->payment = $payment;
 	   $this->request = $request;
@@ -40,33 +40,31 @@ class PaymentController extends Controller
     */
     public function payNow(Booking $booking)
     {
-    	
+    	/*$bookingId = $booking->id;
+        $scheduleId = $booking->schedule_id;        
+        //$travelDate = $booking->date;
+        $travelDate = date("d-m-Y", strtotime($booking->date)) ;
+    	$userId = $booking->user_id;
+        
+    	$user = User::find($userId);
+    	$amount = 2.23;*/
+    	//$this->payment->chargeCreditCard(2.23);        
+        //$this->payment->makeMyPayment();
         $bookingId = $booking->id;                
-        $amount = $booking->amount;        
-        $onlineCharge = $this->payment->getOnlineCharge(); //3.5%
+        $amount = $booking->amount;
+        $onlineCharge = 0.035*$amount; //3.5%
         $totalAmount = $amount + $onlineCharge;
         
-
-        $user = $this->payment->findUserInfo($booking->user_id);        
-        //$user = User::find($booking->user_id);
-        //$name = $user->name;
-        //$email = $user->email;
-
-        $booking = [
-            'booking_id' => $bookingId,
-            'schedule_id' => $booking->schedule_id,
-            'travel_date' => date("d-m-Y", strtotime($booking->date)),
-            'total_amount' => $totalAmount
-        ];
-
-        $this->payment->setSessionForBookingInfo($booking, $this->request); 
+        $user = User::find($booking->user_id);
+        $name = $user->name;
+        $email = $user->email;
 
         //create Session for $bookingId, $amount, $totalAmount
-        /*$this->request->session()->put('booking_id', $bookingId);
+        $this->request->session()->put('booking_id', $bookingId);
         $this->request->session()->put('schedule_id', $booking->schedule_id);
         $this->request->session()->put('travel_date', date("d-m-Y", strtotime($booking->date)));
         //$this->request->session()->put('amount', $amount);
-        $this->request->session()->put('total_amount', $totalAmount);*/
+        $this->request->session()->put('total_amount', $totalAmount);
 
         $gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php';               
         return view('payment.payment', compact(
@@ -75,8 +73,8 @@ class PaymentController extends Controller
                         'amount',
                         'onlineCharge',
                         'totalAmount', 
-                        'user'
-                        
+                        'name', 
+                        'email'
                 ));
     }
 
