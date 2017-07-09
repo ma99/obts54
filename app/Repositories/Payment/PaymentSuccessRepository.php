@@ -2,19 +2,21 @@
 
 namespace App\Repositories\Payment;
 
-use App\Repositories\Payment\PaymentRepository;
+use App\SslcommerzPayment;
+use Illuminate\Http\Request;
+//use App\Repositories\Payment\PaymentRepository;
 
 
 class PaymentSuccessRepository implements PaymentRepositoryInterface
 {
     
-    protected $request;
+    //protected $request;
     protected $payment;
 
-    public function __construct(PaymentRepository $payment, Request $request)
+    public function __construct(PaymentRepository $payment )
     {
        $this->payment = $payment;
-	   $this->request = $request;
+	   //$this->request = $request;
 	   //$this->getCredentials();
     }
     
@@ -23,7 +25,7 @@ class PaymentSuccessRepository implements PaymentRepositoryInterface
     	# collect info like storeid, password from settings table or env file
     }
 
-    public function action()
+    public function action(Request $request)
     {
          // 1. validate the transaction
                
@@ -157,7 +159,7 @@ class PaymentSuccessRepository implements PaymentRepositoryInterface
                         $validation_message = 'Some error validating the payment! Please contact the administrator to validate the payment manually.';
                     }
                     else {
-                        $this->updateSeatStatus($bookingId, $scheduleId, $travelDate);
+                        $this->payment->updateSeatStatus($bookingId, $scheduleId, $travelDate);
                     }
 
                 }

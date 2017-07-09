@@ -3,8 +3,11 @@
 namespace App\Repositories\Payment;
 
 use Illuminate\Http\Request;
-use App\Booking;
+
+use App\Seat;
 use App\User;
+use App\Booking;
+use App\Events\SeatStatusUpdatedEvent;
 
 class PaymentRepository
 {
@@ -50,7 +53,7 @@ class PaymentRepository
      //    $travelDate = session('travel_date');            
      //    $totalAmount = session('total_amount');
 
-        return $sessionBookingInfo = [
+        return [
         	'bookingId' => session('booking_id'),
 	        'scheduleId' => session('schedule_id'),
 	        'travelDate' => session('travel_date'),           
@@ -68,5 +71,17 @@ class PaymentRepository
     public function getOnlineCharge()
     {
     	return ($this->onlineCharge/100);
+    }
+
+    public function updateSeatStatus($bookingId, $scheduleId, $travelDate)
+    {
+        $seats = Seat::where('booking_id', $bookingId)->get();            
+            foreach ($seats as $seat) {
+                $seat->update([
+                        'status' => 'confirmed',
+                    ]);
+                broadcast(new SeatStatusUpdatedEvent($seat, $scheduleId, $travelDate))->toOthers();
+            }
+        return;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payment;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Payment\PaymentRepositoryInterface;
 
 class PaymentSuccessController extends Controller
 {

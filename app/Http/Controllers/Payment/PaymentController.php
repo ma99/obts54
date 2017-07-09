@@ -18,7 +18,7 @@ use App\Repositories\Payment\PaymentRepository;
 
 class PaymentController extends Controller
 {
-	protected $request;
+	//protected $request;
     protected $payment;
  //    protected $bookingId;
  //    protected $scheduleId;
@@ -27,10 +27,11 @@ class PaymentController extends Controller
 
 
 
-	public function __construct(PaymentRepository $payment, Request $request)
+    //public function __construct(PaymentRepository $payment, Request $request)
+	public function __construct(PaymentRepository $payment)
     {
        $this->payment = $payment;
-	   $this->request = $request;
+	   //$this->request = $request;
     }
 
     /*
@@ -43,7 +44,8 @@ class PaymentController extends Controller
     	
         $bookingId = $booking->id;                
         $amount = $booking->amount;        
-        $onlineCharge = $this->payment->getOnlineCharge(); //3.5%
+        //$onlineCharge = ($this->payment->getOnlineCharge()*$amount); //3.5%
+        $onlineCharge = number_format(($this->payment->getOnlineCharge()*$amount), 2, '.', '');
         $totalAmount = $amount + $onlineCharge;
         
 
