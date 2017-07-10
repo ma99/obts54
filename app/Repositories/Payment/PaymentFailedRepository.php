@@ -3,6 +3,7 @@
 namespace App\Repositories\Payment;
 
 use App\SslcommerzPayment;
+use Illuminate\Http\Request;
 //use App\Repositories\Payment\PaymentRepository;
 
 
@@ -56,8 +57,7 @@ class PaymentFailedRepository implements PaymentRepositoryInterface
 
         return [
         	'payment_status' => $payment_status, 
-        	'validation_message' => $validation_message, 
-        	'status' => $status,         	
+        	'validation_message' => $validation_message,         	
             'bookingId' => $bookingId,
         ];
         

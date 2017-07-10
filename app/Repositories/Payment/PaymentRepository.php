@@ -22,7 +22,8 @@ class PaymentRepository
 
     public function findUserInfo($userId)
     {
-    	return User::find($userId);
+        //return User::findOrFail($userId);  // throw an exeception if not found (better for production as it will show page not found)
+    	return User::find($userId);  // return null if not found 
     }
 
     public function setSessionForBookingInfo(array $booking, Request $request)

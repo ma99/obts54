@@ -39,7 +39,7 @@ class PaymentController extends Controller
     user_id as customerId
     amount as amount
     */
-    public function payNow(Booking $booking)
+    public function payNow(Booking $booking, Request $request)
     {
     	
         $bookingId = $booking->id;                
@@ -61,7 +61,8 @@ class PaymentController extends Controller
             'total_amount' => $totalAmount
         ];
 
-        $this->payment->setSessionForBookingInfo($booking, $this->request); 
+        //$this->payment->setSessionForBookingInfo($booking, $this->request); 
+        $this->payment->setSessionForBookingInfo($booking, $request); 
 
         //create Session for $bookingId, $amount, $totalAmount
         /*$this->request->session()->put('booking_id', $bookingId);

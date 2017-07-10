@@ -121,14 +121,7 @@ class PaymentSuccessRepository implements PaymentRepositoryInterface
                         ];
                     }
                     curl_close($handle);
-
-                    // If there's a flight from Oakland to San Diego, set the price to $99.
-                    // If no matching model exists, create one.
-                    // $flight = App\Flight::updateOrCreate(
-                    //     ['departure' => 'Oakland', 'destination' => 'San Diego'],
-                    //     ['price' => 99]
-                    // );
-
+                    
                     // SslcommerzPayment::create([
                     //     'booking_id' => $bookingId,
                     //     'total_amount' => $totalAmount,

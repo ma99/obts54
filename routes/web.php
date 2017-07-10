@@ -67,7 +67,9 @@ Route::post('/sslcommerz/payment/fail', 'Payment\PaymentFailedController@payment
 Route::post('/sslcommerz/payment/cancel', 'Payment\PaymentCancelledController@payment')->name('cancel');
 
 
-
+Route::get('/test2', function(){
+	return view('payment.cancelled');
+});
 /* Explicit route model binding see RouteServiceProvider.php
 
 Route::get('users/{user}', function(\App\User $user) {
