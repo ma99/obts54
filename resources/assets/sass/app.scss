@@ -5,9 +5,13 @@
 // Variables
 @import "variables";
 
+
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/sweetalert/dev/sweetalert";
+
+// additionl styles for app
+@import "extra";
 
 //panels border top
 //@import "panels-border-top";

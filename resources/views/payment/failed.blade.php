@@ -1,15 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="panel body">
-	<h3>Payment failed</h3>
-	<h2> {{ $validation_message }} </h2>
-	<form action="{{ url('/pay/'.$bookingId) }}">
-		 {{ csrf_field() }}
-		 <button type="submit" class="btn btn-info">
-                <i class="fa fa-btn btn-info"></i>Try Again
-         </button>
-		<a href= "{{ url('/cancel/'.$bookingId) }}" type="button" value="Cancel" class="btn btn-warning">Cancel</a>
-	</form>
-</div>
+	<div class="row">
+	    <div class="col-md-8 col-md-offset-2">
+		    <div class="panel panel-danger">
+		      <div class="panel-heading">Payment failed</div>
+		      
+		      <div class="panel body">					
+						<h2> {{ $validation_message }} </h2>			
+						<div id="payment">				
+							<form action="{{ url('/pay/'.$bookingId) }}">
+								 {{ csrf_field() }}
+								 <button type="submit" class="btn btn-info">Try Again</button>						
+							</form>
+						
+							<form action="{{ url('/cancel/'.$bookingId) }}">					
+								 {{ csrf_field() }}
+								 <button type="submit" class="btn btn-warning">Cancel</button>		
+							</form>
+						</div>			
+			  	</div>
+		    </div>
+	  	</div>
+	</div>   
 @endsection
