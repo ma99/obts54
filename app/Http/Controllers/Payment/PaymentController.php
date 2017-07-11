@@ -71,7 +71,11 @@ class PaymentController extends Controller
         //$this->request->session()->put('amount', $amount);
         $this->request->session()->put('total_amount', $totalAmount);*/
 
-        $gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php';               
+        //$gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php'; 
+        
+        $sandbox = config('payment.sslcommerz.sandbox');
+        $gwUrl = ($sandbox) ? config('payment.sslcommerz.sandbox_url') : config('payment.sslcommerz.live_url');             
+
         return view('payment.payment', compact(
                         'gwUrl', 
                         'bookingId', 

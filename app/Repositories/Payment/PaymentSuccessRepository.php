@@ -52,17 +52,20 @@ class PaymentSuccessRepository implements PaymentRepositoryInterface
 
                 if ($totalAmount == $amount) {
                     //$username = 'demotest';
-                    $storeId = 'testbox';
-                    $password = 'qwerty';
+                    // $storeId = 'testbox';
+                    // $password = 'qwerty';
+                    $storeId = config('payment.sslcommerz.store_id');
+                    $password = config('payment.sslcommerz.store_password');
+                    
 
-                    $val_id = urlencode($val_id);
+                    $val_id = urlencode($val_id);                                        
                     $store_id = urlencode($storeId);
                     $store_passwd=urlencode($password);
                     
                     $sandbox = true;
 
-                    $url = ($sandbox) ? 'https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php' 
-                                        : 'https://securepay.sslcommerz.com/validator/api/validationserverAPI.php';
+                    $url = ($sandbox) ? config('payment.sslcommerz.sandbox_validation_url') :
+                                        config('payment.sslcommerz.live_validation_url');
 
                     $requested_url = ($url . "?val_id=".$val_id."&Store_Id=".$store_id."&Store_Passwd=".$store_passwd."&v=1&format=json");
                     
