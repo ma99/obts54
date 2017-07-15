@@ -74,7 +74,9 @@ class PaymentController extends Controller
         //$gwUrl = 'https://sandbox.sslcommerz.com/gwprocess/v3/process.php'; 
         
         $sandbox = config('payment.sslcommerz.sandbox');
-        $gwUrl = ($sandbox) ? config('payment.sslcommerz.sandbox_url') : config('payment.sslcommerz.live_url');             
+        $gwUrl = ($sandbox) ? config('payment.sslcommerz.sandbox_url') : config('payment.sslcommerz.live_url');
+
+        $storeId = config('payment.sslcommerz.store_id');             
 
         return view('payment.payment', compact(
                         'gwUrl', 
@@ -82,7 +84,8 @@ class PaymentController extends Controller
                         'amount',
                         'onlineCharge',
                         'totalAmount', 
-                        'user'
+                        'user',
+                        'storeId'
                         
                 ));
     }
