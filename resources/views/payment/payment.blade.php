@@ -42,7 +42,7 @@
 				{{-- <form id="payment_gw" name="payment_gw" method="POST" action="https://sandbox.sslcommerz.com/gwprocess/v3/process.php"> --}}
 	          	<form id="payment_gw" name="payment_gw" method="POST" action="{{ $gwUrl }}">
 					<input type="hidden" name="total_amount" value="{{ $totalAmount}}" />
-					<input type="hidden" name="store_id" value="testbox" />
+					<input type="hidden" name="store_id" value="{{ $storeId }}" />
 					{{-- <input type="hidden" name="tran_id" value="594e9719c2e59" /> --}}
 					<input type="hidden" name="tran_id" value="{{ $bookingId }}" />
 					{{-- <input type="hidden" name="success_url" value="{{ route('success', ['booking' => $bookingId]) }}" /> --}}
