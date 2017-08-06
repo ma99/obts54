@@ -42,6 +42,7 @@
 			  </label>
 			</div>
 			<span> Picked @{{ url }}</span> --}}
+			{{-- @include('includes.stops') --}}
 			@include('includes.options')
 
 			<button v-show="isSeatSelected" class="btn btn-primary" :disabled="form.errors.any()">Continue</button>

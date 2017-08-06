@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Rout;
+use App\Stop;
 
 class SearchCitiesController extends Controller
 {
@@ -29,6 +30,23 @@ class SearchCitiesController extends Controller
 	       // dd($cities);
 	        return $cities->count() ? $cities : $error;
 	        //return $cities;
+       
+   }
+
+   public function pickupPoints(Request $request)
+   {
+        //$city_name = $request->input('name');
+        //$city_name= 'dhaka';
+        $error = ['error' => 'No results found'];
+        
+          $city_name = $request->input('q');
+          $city = City::where('name', $city_name)->first();
+          $cityId = $city->id;
+
+          $stops = Stop::where('city_id', $cityId)->get();
+         // dd($cities);
+          return $stops->count() ? $stops : $error;
+          //return $cities;
        
    }
 

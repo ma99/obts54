@@ -29,6 +29,7 @@
               seatError: false,                                 
               selectedSeat: [],
               seatList: [],
+              stopList: [],
               totalFare: 0,
               totalSeats: 0,              
               // end seat display
@@ -82,7 +83,7 @@
        selectedCityFrom() {
           //console.log();
           this.fetchCityToList(this.selectedCityFrom);          
-          //this.fetchPickupPointList(val);   // Pickup Area List based On From City       
+          this.fetchPickupPointList(this.selectedCityFrom);   // Pickup Area List based On From City       
          //this.arr.push(val);
        },       
        /*selectedTo(val) {
@@ -468,6 +469,26 @@
                //vm.message= response.data
             });
         },
+
+        fetchPickupPointList(cityName) {
+
+          // this.error = false;
+          // this.loading = true;
+          this.stopList = [];
+          var vm = this;
+          axios.get('api/city?q=' + cityName)          
+            .then(function (response) {
+              //vm.answer = _.capitalize(response.data.answer)
+              // console.log(response.data);
+               response.data.error ? vm.error = response.data.error : vm.stopList = response.data;
+               vm.loading = false;
+              // console.log(vm.error);
+               //vm.cityToList = response.data;
+               //vm.message= response.data
+            });
+
+        },
+
         showDate() {
           var vm = this;
           $('#sandbox-container .input-group.date').datepicker({
