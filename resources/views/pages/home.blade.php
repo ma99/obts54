@@ -175,7 +175,15 @@
                         </button>
                         <strong>@{{ seatNo }} </strong> has been <strong>@{{ seatStatus }} </strong>
                       </div>   --}}                          
-                    </div> 
+                    </div>
+                    
+                    <div class="panel panel-success">
+                      <div class="panel-heading">Pickup & Dropping</div>
+                      <div class="panel-body">
+                        @include('includes.stops')
+                      </div>
+                    </div>  
+
                   </div>
 
                   <div class="col-sm-6">                              
