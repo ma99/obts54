@@ -24,8 +24,8 @@ class CreateBookingsTable extends Migration
             $table->tinyInteger('total_seats');
             $table->float('amount', 8, 2); 
             $table->date('date');
-            $table->string('pickup_point');
-            $table->string('dropping_point');
+            $table->string('pickup_point')->nullable();
+            $table->string('dropping_point')->nullable();
             $table->timestamps();
         });
     }
