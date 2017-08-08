@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Rout;
 use App\Stop;
+use App\City;
 
 class SearchCitiesController extends Controller
 {
@@ -39,15 +40,40 @@ class SearchCitiesController extends Controller
         //$city_name= 'dhaka';
         $error = ['error' => 'No results found'];
         
-          $city_name = $request->input('q');
-          $city = City::where('name', $city_name)->first();
-          $cityId = $city->id;
+          $cityName = $request->input('q');
+          // $city = City::where('name', $city_name)->first();
+          // $cityId = $city->id;
+          $cityId = $this->findCityIdByCityName($cityName);
 
           $stops = Stop::where('city_id', $cityId)->get();
          // dd($cities);
           return $stops->count() ? $stops : $error;
           //return $cities;
        
+   }
+
+   public function droppingPoints(Request $request)
+   {
+        //$city_name = $request->input('name');
+        //$city_name= 'dhaka';
+        $error = ['error' => 'No results found'];
+        
+          $cityName = $request->input('q');
+          // $city = City::where('name', $city_name)->first();
+          // $cityId = $city->id;
+          $cityId = $this->findCityIdByCityName($cityName);
+
+          $stops = Stop::where('city_id', $cityId)->get();
+         // dd($cities);
+          return $stops->count() ? $stops : $error;
+          //return $cities;
+       
+   }
+
+   public function findCityIdByCityName($cityName)
+   {
+      $city = City::where('name', $cityName)->first();
+      return $city->id;
    }
 
    public function cityName(Request $request)
