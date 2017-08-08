@@ -21,6 +21,8 @@
               startDate: '',               
               selectedCityFrom: '',
               selectedTo: '',
+              selectedPickupPoint: '',
+              selectedDroppingPoint: '',
               url: 'seatbooking',             
               // seat display
               seatChar:["A","B", "C" , "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],                             
@@ -45,7 +47,9 @@
                 schedule_id: '',
                 selected_seats: '',
                 total_seats: '',
-                total_fare: ''
+                total_fare: '',
+                pickup_point: '',
+                dropping_point:'',
               })
           }
       },
@@ -296,6 +300,8 @@
               vm.form.selected_seats = vm.selectedSeat;
               vm.form.total_seats = vm.totalSeats;
               vm.form.total_fare = vm.totalFare; 
+              vm.form.pickup_point = vm.selectedPickupPoint; 
+              vm.form.dropping_point = vm.selectedDroppingPoint; 
 
 
             vm.form.post(vm.url)
@@ -400,7 +406,9 @@
                 schedule_id: vm.scheduleId,
                 selected_seats:vm.selectedSeat,
                 total_seats: vm.totalSeats,
-                total_fare: vm.totalFare
+                total_fare: vm.totalFare,
+                pickup_point:  vm.selectedPickupPoint,
+                dropping_point: vm.selectedDroppingPoint 
               })                           
               .then(function (response) {
                  //console.log(response.data)

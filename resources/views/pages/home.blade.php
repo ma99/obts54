@@ -177,17 +177,19 @@
                       </div>   --}}                          
                     </div>
                     
-                    <div class="panel panel-success">
+                    {{-- <div class="panel panel-success">
                       <div class="panel-heading">Pickup & Dropping</div>
                       <div class="panel-body">
                         @include('includes.stops')
                       </div>
-                    </div>  
+                    </div>   --}}
 
                   </div>
 
-                  <div class="col-sm-6">                              
-                    <div v-show="isSeatSelected" class="panel panel-primary row">
+                  <div class="col-sm-6">
+                    <!-- Selected Seat with Price  -->
+                    {{-- <div v-show="isSeatSelected" class="panel panel-primary row"> --}}
+                    <div v-show="isSeatSelected" class="panel panel-primary">
                       <div class="panel-heading">Selected Seat Info</div>
                       <table class="table table-striped">
                         <thead>
@@ -216,15 +218,23 @@
                                 </div>
                               </td>                                          
                           </tr>                                      
-                          @{{ totalFareForSelectedSeats }}                                       
+                          @{{ totalFareForSelectedSeats }}      
                         </tbody>
                       </table> 
                       {{-- <span class="total"> Total Amount @{{ totalFare }} </span> --}}
                       <div class="panel-footer total"><strong>Total Amount:</strong> @{{ totalFare }} </div>
                     </div>
                     
-                    <div class="row">
-                        
+                    <!-- Pickup & Dropping Selection -->
+                    <div class="panel panel-success">
+                      <div class="panel-heading">Pickup & Dropping</div>
+                      <div class="panel-body">
+                        @include('includes.stops')
+                      </div>
+                    </div>  
+
+                    <!-- User/ Guest Info Entry -->
+                    {{-- <div class="row"> --}}                        
                         @if (auth()->check())
                           @if (auth()->user()->isNormalUser())
                             @include('includes.user')
@@ -233,11 +243,11 @@
                           @endif                          
                         @else
                           @include('includes.guest')
-                        @endif                           
-
-                    </div>
+                        @endif       
+                    {{-- </div> --}}
                     {{-- <button v-on:click.prevent="seatBooking()" class="btn btn-primary">Continue
                     </button> --}}
+
                   </div>
                 </div>    
               </modal> 

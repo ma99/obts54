@@ -108,6 +108,8 @@ class BookingController extends Controller
                     "totalFare" => (float) $this->request->input('total_fare'), 
                     "travelDate" => $this->request->input('date'),
                     "selectedSeats" => $this->request->input('selected_seats'),             
+                    "pickupPoint" => $this->request->input('pickup_point'),             
+                    "droppingPoint" => $this->request->input('dropping_point'),             
                     "bookingId" => strtoupper(bin2hex(random_bytes(4))),
                     "date" => date("Y-m-d", strtotime($travelDate))
               ]; 
@@ -149,8 +151,8 @@ class BookingController extends Controller
                 'total_seats' => $totalSeats,
                 'amount' => $totalFare,
                 'date' => $date,
-                'pickup_point' => 'AAA',
-                'dropping_point' => 'BBB',
+                'pickup_point' => $pickupPoint,
+                'dropping_point' => $droppingPoint,
             ]);
     }
 
@@ -178,8 +180,8 @@ class BookingController extends Controller
                 'seat_no' => $seats,
                 'amount' => $totalFare,
                 'date' => $date,
-                'pickup_point' => 'AAA',
-                'dropping_point' => 'BBB',
+                'pickup_point' => $pickupPoint,
+                'dropping_point' => $droppingPoint,
             ]);
     }
 

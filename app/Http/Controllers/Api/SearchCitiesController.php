@@ -12,6 +12,13 @@ use App\City;
 
 class SearchCitiesController extends Controller
 {
+   
+   protected $request;
+
+   public function __construct(Request $request)
+   {
+        $this->request = $request;  
+   } 
    public function index(Request $request)
    {
         $city_name = 'sylhet';
@@ -20,13 +27,13 @@ class SearchCitiesController extends Controller
         dd($cities);
    }
 
-   public function cityTo(Request $request)
+   public function cityTo()
    {
         //$city_name = $request->input('name');
         //$city_name= 'dhaka';
         $error = ['error' => 'No results found'];
         
-	        $city_name = $request->input('q');
+	        $city_name = $this->request->input('q');
 	        $cities = Rout::where('departure_city', $city_name)->get();
 	       // dd($cities);
 	        return $cities->count() ? $cities : $error;
@@ -34,13 +41,13 @@ class SearchCitiesController extends Controller
        
    }
 
-   public function pickupPoints(Request $request)
+   public function pickupPoints()
    {
         //$city_name = $request->input('name');
         //$city_name= 'dhaka';
         $error = ['error' => 'No results found'];
         
-          $cityName = $request->input('q');
+          $cityName = $this->request->input('q');
           // $city = City::where('name', $city_name)->first();
           // $cityId = $city->id;
           $cityId = $this->findCityIdByCityName($cityName);
@@ -52,13 +59,13 @@ class SearchCitiesController extends Controller
        
    }
 
-   public function droppingPoints(Request $request)
+   public function droppingPoints()
    {
         //$city_name = $request->input('name');
         //$city_name= 'dhaka';
         $error = ['error' => 'No results found'];
         
-          $cityName = $request->input('q');
+          $cityName = $this->request->input('q');
           // $city = City::where('name', $city_name)->first();
           // $cityId = $city->id;
           $cityId = $this->findCityIdByCityName($cityName);
