@@ -16,8 +16,9 @@ class CreateSeatPlansTable extends Migration
         Schema::create('seat_plans', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('bus_id');
-            $table->string('seat_no');
-            $table->string('status')->default('available');            
+            $table->text('seat_list');
+            // $table->string('seat_no');
+            // $table->string('status')->default('available');            
             $table->timestamps();
         });
     }
