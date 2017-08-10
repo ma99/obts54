@@ -61,6 +61,30 @@
           <li><a href="#">Link in level 2</a></li>
         </ul>
       </li>
+
+      {{-- Bus Management --}}      
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-user"></i> <span>Bus</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+           <li>
+              <router-link to="/add-bus">
+                  <i class="fa fa-address-card fa-fw" aria-hidden="true"></i>
+                  Add Bus
+              </router-link> 
+          </li>
+          <li> 
+              <router-link to="/bus-list">
+                  <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                  Bus List
+              </router-link>
+         </li>          
+        </ul>
+      </li>
     </ul>
     <!-- /.sidebar-menu -->
   </section>

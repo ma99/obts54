@@ -30,14 +30,14 @@
         <!-- Tab panes -->
         <div class="tab-content">
         <!-- Tab Staff List -->
-        <tab-staff-list></tab-staff-list>
+          <tab-staff-list></tab-staff-list>
           
           <div role="tabpanel" class="tab-pane" id="profile">Profile Tab</div>
           <div role="tabpanel" class="tab-pane" id="messages">Something</div>
           <div role="tabpanel" class="tab-pane" id="settings">something else</div>
         </div>
 
-      </div>
+     </div>
     </section>
 
   </div>      

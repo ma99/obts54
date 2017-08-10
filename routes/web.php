@@ -38,6 +38,8 @@ Route::get('/forbidden', 'HomeController@forbidden');
 //admin
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 Route::get('/staffs', 'Admin\DashboardController@staffInfo');
+//bus
+Route::get('/bus/ids', 'Admin\BusController@busIds');
 //Route::delete('/staffs/{staff}', 'Admin\DashboardController@destroy');
 Route::post('/delete', 'Admin\DashboardController@destroy');
 Route::post('/update', 'Admin\DashboardController@updateStuffRole');

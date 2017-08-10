@@ -20,19 +20,29 @@ let routes = [
         path: '/staff-management',
         component: require('./views/Staff-Management')
     },
-     {
+    //User
+    {
         path: '/profile',
         component: require('./views/Profile')
     },
-     {
+    {
         path: '/roles',
         component: require('./views/Roles')
     },
-     {
+    {
         path: '/staff-list',
         component: require('./views/Staff-list')
     },
-
+    //Bus 
+    {
+        path: '/add-bus',
+        component: require('./views/bus/Add-bus')
+    },
+    {
+        path: '/bus-list',
+        component: require('./views/bus/Bus-list')
+    },
+    //404
     {   
         path: '*',
         //component: fourohfour

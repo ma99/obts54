@@ -22,7 +22,7 @@
               <div class="panel-heading">The Profile Page</div>
               <div class="panel-body">
                   I'm an Profile component!
-                  <button @click.preven="showAler()"> click me</button>
+                  <button @click.prevent="showAler()"> click me</button>
               </div>
             </div>
           </div>
