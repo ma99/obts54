@@ -23,6 +23,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">Add New Bus</div>
               <div class="panel-body">
+                <form> 
                  <div class="form-group">
                     <label for="busId"> Bus Ids </label>
                     <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
@@ -33,6 +34,20 @@
                       </option>                           
                     </select>
                   </div>
+
+                  <div class="form-group">
+                    <label for="numberOfCol">Number of Column</label>
+                    <input v-model="numberOfCol" type="number" min="1" max="4" value="4" class="form-control" id="numberOfCol" placeholder="Column Number" disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="numberOfRow">Number of Row</label>
+                    <input v-model="numberOfRow" type="number" min="1" max="25" value="9" class="form-control" id="numberOfRow" placeholder="Row Number" :disabled="isDisabled">
+                  </div>
+                  <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                  <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
+                  <button v-on:click.prevent="updateSeatList()" class="btn btn-primary">Update</button>
+                </form>  
               </div>
             </div>
           <!-- </div> -->
@@ -48,15 +63,16 @@
                     class="col-xs-2"            
                     v-bind:class="{ active : seat.checked, 
                             inactive : !seat.checked, 
-                            'col-xs-offset-2': emptySpace(seat.no)
+                            'col-xs-offset-2': emptySpace(index, seat.no)
                             }"
-                    v-for="seat in seatList"          
+                    v-for="(seat, index) in seatList"          
                     @click="toggle(seat)"                               
                 >                       
                     <i class="fa fa-check fa-lg tickmark" v-show="seat.checked"></i>
                     <i class="fa fa-times fa-lg crossmark" aria-hidden="true" v-show="!seat.checked"></i>
 
-                    {{ seat.no }} - {{ seat.sts }}
+                    <!-- {{ seat.no }} - {{ seat.sts }} : {{index}}  -->
+                    {{ seat.no }} - {{ seat.sts }} : {{index}} 
                     
                 </button> 
               </div>
@@ -75,24 +91,60 @@
         // }
         data() {
                 return {
+                    disableShowButton: false,
                     busIds: [],
                     selectedBusId:'',
                     error: '',
-                    numberOfRow: 8,                            
                     numberOfCol: 4,                            
+                    numberOfRow: 4,                            
                     seatChar:["A","B", "C" , "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
-                    seatNo: '',                                                 
+                    //seatNo: '',                                                 
                     seatList: [],
+                    //seatList2: [],
+                    //finalSeatList: [],
+                    //seatStatus: '',
+                    isDisabled: false,
+                    index: 2, // empty space strating for this index then index+4
+                    indexList: [],
                    // lastRowSeatList:[]                            
                 }
 
                 },
                 mounted() {
                     this.fetchBusIds();
-                    this.createList();                  
+                    this.createIndexList();                  
+                },
+                watch: {
+                    // seatStatus() {                        
+                    //     //this.seatList.find();                        
+                    //     console.log('sadmmmmmmm');
+                    //     this.updateSeatList();
+                        
+                    // },
+                    numberOfRow() {
+                        this.createIndexList();
+                        this.isShowButtonDisable();
+                    }
                 },      
                 methods: {
-                    emptySpace(seatNo) {
+                    createIndexList() {
+                        this.indexList=[];
+                        var r;
+                        var numberOfRow = this.numberOfRow;
+                        var index = this.index;
+                        for ( r=1; r<numberOfRow; r++ ) { 
+                            this.indexList.push(index);
+                            index = index+4; 
+                            //console.log('index', index);
+                        }
+                    },
+
+                    isShowButtonDisable() {
+                        this.disableShowButton = ( this.numberOfRow == '' || this.numberOfRow == 0) ? 
+                                                true : false;
+                    },
+
+                    /*emptySpace(seatNo) {
 
                         if ( this.isFiveCol(seatNo) ) {
                             return false; // no need empty space between columns
@@ -100,12 +152,29 @@
                         var seatNumber = parseInt(seatNo.match(/\d+/),10);                      
                         return ( (seatNumber % 3) == 0 ) ? true : false;
 
-                    },                  
+                    }, */                 
+
+                    emptySpace(index, seatNo) {  //2, 6, 10
+
+                        if ( this.isFiveCol(seatNo) ) {
+                            return false; // no need empty space between columns
+                        }
+                        return this.isEmptySpaceAvailable(index);
+                    }, 
+
+                    isEmptySpaceAvailable(index) {
+
+                        var val = this.indexList.find( function(indx) {                            
+                            return indx == index;
+                        });
+                        return (index == val) ? true : false;
+                    },
                     
                     isFiveCol(seatNo) {
                         
-                        var seatListLength =  this.seatList.length;
-                        var numberOfRow = (seatListLength-1) /4; //2
+                        // var seatListLength =  this.seatList.length;
+                        // var numberOfRow = (seatListLength-1) /4; //2
+                        var numberOfRow = this.numberOfRow;
                         var lastRowChar = this.seatChar[numberOfRow-1]; //B
                         lastRowChar = lastRowChar.trim();
                         
@@ -156,14 +225,41 @@
                                     sts: 'available', 
                                     checked: true
                         }); 
-                    },  
-                    toggle(seat) {                     
+
+                        //this.finalSeatList = this.seatList.concat();
+                        this.isDisabled = true;
+                        this.disableShowButton = true;
+                        
+                    },
+                    
+                    reset() {
+                        this.seatList=[];
+                        //this.numberOfRow = '';
+                        this.isDisabled = false;
+                        this.disableShowButton = false;
+                    },
+
+                    updateSeatList(seat) {
+                        // if (seat.sts == 'n/a') {
+                            var index = this.seatList.indexOf(seat);
+                            this.seatList[index+1].no = seat.no;
+                        //}
+                    },                    
+                    toggle(seat) {
+                       // var index = this.seatList.indexOf(seat);
+                        // console.log('indexxxxx',index);                     
+                        // console.log(this.seatList[index]);                     
                         seat.checked = !seat.checked;                                   
                         if (seat.checked) {
                             seat.sts = 'available';
+                            //this.seatStatus= '';                            
                             return ;
                         }                                                       
                         seat.sts = 'n/a';
+                       // this.seatStatus= 'n/a';
+                       //this.seatList2 = this.seatList.concat();
+                        //this.seatList[index+1].no = seat.no;
+                       this.updateSeatList(seat);                       
                     }
                 }
     }
