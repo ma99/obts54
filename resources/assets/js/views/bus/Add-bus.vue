@@ -113,6 +113,7 @@
                     index: 2, // empty space strating for this index then index+4
                     indexList: [],
                     loading: false,
+                    fiveColValue: '',
                    // lastRowSeatList:[]                            
                 }
 
@@ -188,19 +189,10 @@
                         }
                         return this.isEmptySpaceAvailable(index);
                     }, 
-
-                    isEmptySpaceAvailable(index) {
-
-                        var val = this.indexList.find( function(indx) {                            
-                            return indx == index;
-                        });
-                        return (index == val) ? true : false;
-                    },
                     
-                    isFiveCol(seatNo) {
-                        
-                        // var seatListLength =  this.seatList.length;
-                        // var numberOfRow = (seatListLength-1) /4; //2
+                    isFiveCol(seatNo) {                        
+                       // var seatListLength =  this.seatList.length;
+                        //var numberOfRow = (seatListLength-1) /4; //2
                         var numberOfRow = this.numberOfRow;
                         var lastRowChar = this.seatChar[numberOfRow-1]; //B
                         lastRowChar = lastRowChar.trim();
@@ -209,6 +201,14 @@
                         return ( lastRowChar == seatChar ) ? true : false ;
                     },
                     
+                    isEmptySpaceAvailable(index) {
+
+                        var val = this.indexList.find( function(indx) {                            
+                            return indx == index;
+                        });
+                        return (index == val) ? true : false;
+                    },
+
                     fetchBusIds() {
                         //this.error = false;
                         this.loading = true;
@@ -246,7 +246,10 @@
                                 });
                             }
                         }
-                        seatNo = String.fromCharCode(code+numberOfRow)+ c ; //64+6 + 5 E5
+
+                        // for 5th column                         
+                        this.fiveColValue = code+numberOfRow;
+                        seatNo = String.fromCharCode(code+parseInt(numberOfRow))+ c ; //64+6 + 5 E5
                         this.seatList.push({
                                     no: seatNo,
                                     sts: 'available', 
@@ -256,6 +259,7 @@
                         //this.finalSeatList = this.seatList.concat();
                         this.isDisabled = true;
                         this.disableShowButton = true;
+                        this.disableSaveButton = false;
                         this.seatListLength = this.seatList.length;
                         
                     },
@@ -265,6 +269,7 @@
                         //this.numberOfRow = '';
                         this.isDisabled = false;
                         this.disableShowButton = false;
+                        this.disableSaveButton= true;                        
                         this.seatListLength= '';
                     },
 
@@ -279,6 +284,7 @@
                                console.log(response.data);
                                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
                                vm.loading = false;
+                               this.disableSaveButton = true;
                         });
                     },
 
@@ -325,7 +331,11 @@
         /*padding: 5px;*/
         color: red;
     }
-    #app button {               
+    /*#app button {               
+        height: 50px;
+        margin: 10px 10px 0 0;
+    }*/
+    .seat-layout button {               
         height: 50px;
         margin: 10px 10px 0 0;
     }

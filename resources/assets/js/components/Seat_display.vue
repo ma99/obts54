@@ -31,6 +31,9 @@
               seatError: false,                                 
               selectedSeat: [],
               seatList: [],
+              indexList: [],
+              index: 2, // space starting from this index then 2+4, 6+4
+              numberOfRow: '',
               pickupList: [],
               droppingList: [],
               totalFare: 0,
@@ -55,7 +58,8 @@
       },
       
       mounted() {
-           console.log('Seat search Component ready.');           
+           console.log('Seat search Component ready.');
+           //this.createIndexList();            
            this.cityList = JSON.parse(this.cities);         
            this.showDate();           
            // Echo.channel('mychannel.1')
@@ -115,6 +119,9 @@
       //     return 0;
       //   });
       // }
+        seatList() {
+            this.createIndexList();
+        }
       },
       computed: {
         totalFareForSelectedSeats() {          
@@ -536,26 +543,56 @@
         },
         
         /*** seat display methods ******/
+        createIndexList() {
+            this.indexList=[];
+            var index = this.index;
+            //var numberOfRow = this.numberOfRow;            
+            var seatListLength =  this.seatList.length;
+            // if (seatListLength < 5 ) {
+            //     this.indexList.push(index);
+            //     return;
+            // } 
+            
+            var numberOfRow = (seatListLength-1) /4; //2
+            this.numberOfRow = numberOfRow;
+            var r;
+            for ( r=1; r<numberOfRow; r++ ) { 
+                this.indexList.push(index);
+                index = index+4; 
+                //console.log('index', index);
+            }
+        },
 
-        emptySpace(seatNo) {           
+        emptySpace(index, seatNo) {           
             
             if ( this.isFiveCol(seatNo) ) {
               return false; // no need empty space between columns
             }
-            var seatNumber = parseInt(seatNo.match(/\d+/),10);            
-            return ( (seatNumber % 3) == 0 ) ? true : false;
+            /*var seatNumber = parseInt(seatNo.match(/\d+/),10);            
+            return ( (seatNumber % 3) == 0 ) ? true : false;*/
+            return this.isEmptySpaceAvailable(index);
 
         },
-        isFiveCol(seatNo) {
-          
-          var seatListLength =  this.seatList.length;
-          var numberOfRow = (seatListLength-1) /4; //2
+        
+        isFiveCol(seatNo) {          
+          /*var seatListLength =  this.seatList.length;
+          var numberOfRow = (seatListLength-1) /4; //2*/
           var lastRowChar = this.seatChar[numberOfRow-1] || ''; //B
+          var numberOfRow = parseInt(this.numberOfRow);
+          //var lastRowChar = this.seatChar[numberOfRow-1]; //B
           lastRowChar = lastRowChar.trim();
           
           var seatChar = seatNo.substr(0, 1); //extract char from seat no
           return ( lastRowChar == seatChar ) ? true : false ;
         },
+
+        isEmptySpaceAvailable(index) {
+            var val = this.indexList.find( function(indx) {                            
+                return indx == index;
+            });
+            return (index == val) ? true : false;
+        },
+
         toggle(seat) {
           // console.log('clicked');
           // console.log(seat.no);

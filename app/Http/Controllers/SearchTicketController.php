@@ -303,7 +303,7 @@ class SearchTicketController extends Controller
 			 
     }
 
-    public function seatPlanByBusId($schedule, $busId, $busFare) {
+    /*public function seatPlanByBusId($schedule, $busId, $busFare) {
     		
 			$seats = SeatPlan::where('bus_id', $busId)->get(); //collection
 			//dd($seats);
@@ -315,6 +315,25 @@ class SearchTicketController extends Controller
 					'status'  => $seat->status,
 					'checked' => false,
 					'fare'	  => $busFare 	 
+				];
+
+			}						
+			return $arr_seats; 
+			
+    }*/
+
+    public function seatPlanByBusId($schedule, $busId, $busFare) {
+    		
+		$seats = SeatPlan::where('bus_id', $busId)->first(); //collection
+        //dd($seats->seat_list);
+        $seats = $seats->seat_list;
+
+			foreach ($seats as $seat) {
+				$arr_seats[] = [								
+					'seat_no' => $seat['no'],
+					'status'  => $seat['sts'],
+					'checked' => false,
+					'fare'	  => $busFare, 	 
 				];
 
 			}						

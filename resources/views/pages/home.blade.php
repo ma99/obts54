@@ -141,8 +141,8 @@
                               {{-- 'fa fa-refresh fa-spin': seat.status=='buying'? true : false,  --}}
                               confirmed: seat.status=='confirmed'? true : false, 
                               empty: seat.status=='n/a'? true : false,             
-                              'col-xs-offset-2': emptySpace(seat.seat_no) }"
-                            v-for="seat in seatList"          
+                              'col-xs-offset-2': emptySpace(index, seat.seat_no) }"
+                            v-for="(seat, index) in seatList"          
                             @click="toggle(seat)"           
                             :disabled="isDisabledSeatSelection(seat.status)"                   
                           >               

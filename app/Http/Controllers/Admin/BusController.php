@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 Use App\User;
 Use App\Bus;
+Use App\SeatPlan;
 
 class BusController extends Controller
 {
@@ -60,9 +61,31 @@ class BusController extends Controller
 
         $busId = $this->request->input('bus_id');
         $seatList = $this->request->input('seat_list');
+        // SeatPlan::create([
+        //     //'role_id' => $this->id,
+        //     'bus_id' => $busId,
+        //     'seat_list' => $seatList            
+        // ]);        
+        SeatPlan::updateOrCreate(
+            ['bus_id' => $busId],
+            ['seat_list' => $seatList]
+        );
 
         return 'Success';
 
+    }
+
+    public function showSeat($busId)
+    {
+        $seats = SeatPlan::where('bus_id', $busId)->first(); //collection
+        //dd($seats->seat_list);
+        $seats = $seats->seat_list;
+        foreach ($seats as $seat) {
+            # code...
+            echo $seat['no'];
+            echo $seat['sts'];
+        }
+        //return $seatList;
     }
 
     public function destroy()
