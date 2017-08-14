@@ -46,13 +46,17 @@
                   </div>
                   <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
                   <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                  <button v-on:click.prevent="updateSeatList()" class="btn btn-primary">Update</button>
+                  <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                 </form>  
               </div>
             </div>
           <!-- </div> -->
 
       </div>
+      <loader :show="loading">
+               <!--  {{-- <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div> --}} -->
+    </loader>
+
       <div class="row">
             <div class="panel panel-default">
               <div class="panel-heading">Seat Planning</div>
@@ -91,21 +95,24 @@
         // }
         data() {
                 return {
-                    disableShowButton: false,
                     busIds: [],
-                    selectedBusId:'',
+                    disableShowButton: false,
+                    disableSaveButton: true,
                     error: '',
                     numberOfCol: 4,                            
                     numberOfRow: 4,                            
+                    response: '',
                     seatChar:["A","B", "C" , "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
-                    //seatNo: '',                                                 
                     seatList: [],
+                    selectedBusId: '',
+                    seatListLength: '',
                     //seatList2: [],
                     //finalSeatList: [],
                     //seatStatus: '',
                     isDisabled: false,
                     index: 2, // empty space strating for this index then index+4
                     indexList: [],
+                    loading: false,
                    // lastRowSeatList:[]                            
                 }
 
@@ -115,16 +122,20 @@
                     this.createIndexList();                  
                 },
                 watch: {
-                    // seatStatus() {                        
-                    //     //this.seatList.find();                        
-                    //     console.log('sadmmmmmmm');
-                    //     this.updateSeatList();
-                        
-                    // },
+                    
                     numberOfRow() {
                         this.createIndexList();
-                        this.isShowButtonDisable();
-                    }
+                        this.isShowButtonDisable();                        
+                    },
+
+                    selectedBusId() {
+                        this.isSaveButtonDisable();
+                    },
+                    seatListLength() {
+                        this.isSaveButtonDisable();
+                    },
+
+
                 },      
                 methods: {
                     createIndexList() {
@@ -142,6 +153,22 @@
                     isShowButtonDisable() {
                         this.disableShowButton = ( this.numberOfRow == '' || this.numberOfRow == 0) ? 
                                                 true : false;
+                    },
+
+                     isSaveButtonDisable() { 
+                        
+                        this.disableSaveButton = ( this.selectedBusId == '' || this.seatListLength == '') ? 
+                                                true : false;
+                      /* if ( this.selectedBusId == '' || this.seatListLength == '') {
+                       
+                            console.log( 'DISABLE SAVE BUTTION = TRUE');
+                            this.disableSaveButton = true;
+                            return;
+                        }
+                         console.log( 'DISABLE SAVE BUTTION = FALSE');
+                         this.disableSaveButton = false;
+                         return;*/
+
                     },
 
                     /*emptySpace(seatNo) {
@@ -184,7 +211,7 @@
                     
                     fetchBusIds() {
                         //this.error = false;
-                        //this.loading = true;
+                        this.loading = true;
                         //this.cityToList = [];
                         var vm = this;
                         axios.get('/bus/ids')          
@@ -192,7 +219,7 @@
                               //vm.answer = _.capitalize(response.data.answer)
                               // console.log(response.data);
                                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
-                               //vm.loading = false;
+                               vm.loading = false;
                               // console.log(vm.error);
                                //vm.cityToList = response.data;
                                //vm.message= response.data
@@ -229,6 +256,7 @@
                         //this.finalSeatList = this.seatList.concat();
                         this.isDisabled = true;
                         this.disableShowButton = true;
+                        this.seatListLength = this.seatList.length;
                         
                     },
                     
@@ -237,6 +265,21 @@
                         //this.numberOfRow = '';
                         this.isDisabled = false;
                         this.disableShowButton = false;
+                        this.seatListLength= '';
+                    },
+
+                    saveSeatList() {
+                        var vm = this;
+                        this.loading = true;
+                        axios.post('/bus/seatplan', {
+                            bus_id: this.selectedBusId,
+                            seat_list: this.seatList
+                        })          
+                        .then(function (response) {
+                               console.log(response.data);
+                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                               vm.loading = false;
+                        });
                     },
 
                     updateSeatList(seat) {

@@ -54,6 +54,17 @@ class BusController extends Controller
         // return $error;
     }
 
+    public function storeSeatPlan()
+    {
+        $error = ['error' => 'Something wrong'];
+
+        $busId = $this->request->input('bus_id');
+        $seatList = $this->request->input('seat_list');
+
+        return 'Success';
+
+    }
+
     public function destroy()
     {
         $user = $this->request->user();
