@@ -286,6 +286,7 @@
                                vm.loading = false;
                                vm.disableSaveButton = true;
                         });
+                        //this.disableSaveButton = true;
                     },
 
                     updateSeatList(seat) {

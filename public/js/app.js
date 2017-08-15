@@ -16749,6 +16749,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vm.loading = false;
                 vm.disableSaveButton = true;
             });
+            //this.disableSaveButton = true;
         },
         updateSeatList: function updateSeatList(seat) {
             // if (seat.sts == 'n/a') {
