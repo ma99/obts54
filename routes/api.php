@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     'uses' => 'Api\SearchController@search'
 // ]);
 
+Route::get('/bus', 'Api\SearchBusController@busInfo');
 Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/pickup', 'Api\SearchCitiesController@pickupPoints');
 Route::get('/dropping', 'Api\SearchCitiesController@droppingPoints');

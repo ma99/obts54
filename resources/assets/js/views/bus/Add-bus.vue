@@ -35,6 +35,34 @@
                     </select>
                   </div>
 
+                  <!-- BusInfo -->
+                  <div class="panel panel-info" v-show="Object.keys(busInfo).length > 0">
+                    <div class="panel-heading">Bus Info</div>
+                    <div class="panel-body">
+                      <table class="table .table-striped">
+                          <thead>
+                            <tr>
+                              <th>Reg. No</th>
+                              <th>Bus Type</th>
+                              <th>Total Seat</th>
+                              <th>&nbsp;</th>              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>                              
+                              <td>{{ busInfo.reg_no}}</td>                              
+                              <td>{{ busInfo.type}}</td>                              
+                              <td>{{ busInfo.total_seats}}</td>
+                            </tr>                            
+                          </tbody>
+                      </table>
+                      <hr>
+                      <strong>Description:</strong>
+                      <p> {{ busInfo.description}} </p>
+
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="numberOfCol">Number of Column</label>
                     <input v-model="numberOfCol" type="number" min="1" max="4" value="4" class="form-control" id="numberOfCol" placeholder="Column Number" disabled>
@@ -96,6 +124,7 @@
         data() {
                 return {
                     busIds: [],
+                    busInfo: {},
                     disableShowButton: false,
                     disableSaveButton: true,
                     error: '',
@@ -131,6 +160,7 @@
 
                     selectedBusId() {
                         this.isSaveButtonDisable();
+                        this.fetchBusInfoById(this.selectedBusId);
                     },
                     seatListLength() {
                         this.isSaveButtonDisable();
@@ -219,6 +249,24 @@
                               //vm.answer = _.capitalize(response.data.answer)
                               // console.log(response.data);
                                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
+                               vm.loading = false;
+                              // console.log(vm.error);
+                               //vm.cityToList = response.data;
+                               //vm.message= response.data
+                        });
+                    },
+
+                    fetchBusInfoById(busId) {
+                        this.loading = true;
+                        this.busInfo = [];
+                        var vm = this;
+                        //axios.get('/bus/ids')          
+                        //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz 
+                        axios.get('/api/bus?q=' + busId)  //--> api/bus?q=xyz
+                            .then(function (response) {
+                              //vm.answer = _.capitalize(response.data.answer)
+                              // console.log(response.data);
+                               response.data.error ? vm.error = response.data.error : vm.busInfo = response.data;
                                vm.loading = false;
                               // console.log(vm.error);
                                //vm.cityToList = response.data;

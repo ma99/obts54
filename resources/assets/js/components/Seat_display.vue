@@ -253,7 +253,8 @@
         viewSeats(scheduleId, busId, busFare) {
           console.log('schId=', scheduleId);
           console.log('busId=', busId);
-         
+          
+          this.seatError = false;
           this.scheduleId = scheduleId;
           this.busId = busId;
          
