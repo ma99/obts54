@@ -284,7 +284,7 @@
                                console.log(response.data);
                                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
                                vm.loading = false;
-                               this.disableSaveButton = true;
+                               vm.disableSaveButton = true;
                         });
                     },
 

@@ -124,7 +124,7 @@
               <!-- Modal -->
               <modal v-show="modal" @close="close()">                  
                 <div class="row">
-                  <div id="seat-layout" class="col-sm-6">
+                  <div id="seat-layout" class="col-sm-6" v-show="!seatError">
                     <div class="panel panel-default">
                       <div class="panel-heading">Seat Plan</div>
                       <div class="row panel-body">
@@ -184,6 +184,12 @@
                       </div>
                     </div>   --}}
 
+                  </div>
+
+                  <div class="col-sm-6" v-show="seatError">
+                    <div class="alert alert-warning" role="alert">                      
+                      <h3> @{{ seatError }}</h3>
+                    </div>
                   </div>
 
                   <div class="col-sm-6">

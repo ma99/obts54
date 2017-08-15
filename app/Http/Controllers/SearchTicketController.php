@@ -267,7 +267,8 @@ class SearchTicketController extends Controller
 			sort($details);
 			dd($details);
 			**************************************/
-			if ( count($seatsByBooking) >0 ) {
+			//if ( count($seatsByBooking) >0 ) {
+			if ( count($seatsByBooking) >0 && count($seatPlanByBusId) >0) {
 				$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
 				$viewseats = $this->unique_multidim_array($result,'seat_no'); // can be any key
 				sort($viewseats);
@@ -275,8 +276,11 @@ class SearchTicketController extends Controller
 				return $viewseats;
 				//return $seatPlanByBusId;			
 			}
-			return $seatPlanByBusId; 
 			
+			if (count($seatPlanByBusId) >0) {
+				return $seatPlanByBusId; 	
+			} 
+			return $error = ['error' => 'Seat Plan Not Available'];			
 			
 		}
 		return $error;	
@@ -326,6 +330,9 @@ class SearchTicketController extends Controller
     		
 		$seats = SeatPlan::where('bus_id', $busId)->first(); //collection
         //dd($seats->seat_list);
+        if (count($seats) < 1) {
+        	return;
+        }
         $seats = $seats->seat_list;
 
 			foreach ($seats as $seat) {
