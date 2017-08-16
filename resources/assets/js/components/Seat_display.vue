@@ -91,8 +91,8 @@
        }, 
        selectedCityFrom() {
           //console.log();
-          this.fetchCityToList(this.selectedCityFrom);          
-          this.fetchPickupPointList(this.selectedCityFrom);   // Pickup Area List based On From City       
+          this.fetchCityToList(this.selectedCityFrom);                        
+          //this.fetchPickupPointList(this.selectedCityFrom);   // Pickup Area List based On From City       
           
          //this.arr.push(val);
        },
@@ -139,7 +139,7 @@
 
         isBusAvailable() {
           let len = this.buses.length;
-          return ( len >0 ) ? true : false;  //true show table
+          return ( len >0 && this.error==false ) ? true : false;  //true show table
         },
 
         isDisabled(){
@@ -233,6 +233,10 @@
                console.log(response.data);
                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
                vm.loading = false;
+               if (vm.busError) {
+                  vm.seatNotAvailableAlert('SCHEDULE');
+                  return;
+               }
             });
          
           /* for POST
@@ -274,9 +278,26 @@
                 console.log(response.data);
                 response.data.error ? vm.seatError = response.data.error : vm.seatList = response.data;
                 vm.loading = false;
+                if (vm.seatError) {
+                  vm.seatNotAvailableAlert('BUS');
+                  return;
+                }
                 vm.modal = true;
 
             });
+        },
+
+        seatNotAvailableAlert(val) {
+          swal({
+            title: "Sorry! Not Available",
+            //text: "Sorry! <span style="color:#F8BB86"><strong>"+ val +"</strong></span> Not Available",
+            text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
+            html: true,
+            type: "warning",
+            timer: 1800,
+            showConfirmButton: false,
+            allowOutsideClick: true,
+          });
         },
 
         seatBookingByGuest() {
@@ -483,8 +504,14 @@
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
-               response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-               vm.loading = false;
+              response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
+               vm.loading = false;               
+               if (vm.error){
+                vm.selectedTo='';
+                vm.buses= [];
+                return;
+               } 
+                vm.fetchPickupPointList(cityName);                
               // console.log(vm.error);
                //vm.cityToList = response.data;
                //vm.message= response.data
@@ -492,7 +519,7 @@
         },
 
         fetchPickupPointList(cityName) {
-
+          
           this.error = false;
           this.loading = true;
           this.pickupList = [];
@@ -512,6 +539,9 @@
 
         fetchDroppingPointList(cityName) {
 
+          if (cityName == undefined || cityName =='') {
+            return;
+          }
           this.error = false;
           this.loading = true;
           this.droppingList = [];
@@ -694,14 +724,21 @@
     .btn-search {
       margin-top: 25px;
     }
-    #app .alert {
-      margin-top: 65px;
-    }
+    // #app .alert {
+    //   margin-top: 65px;
+    // }
   }
-  @media (max-width: 991px) { 
+  
+  @media (max-width: 767px) { 
     #app .alert {
       margin-top: 15px;
     }
+  }
+
+  @media (max-width: 991px) { 
+    // #app .alert {
+    //   margin-top: 15px;
+    // }
   }
 
   /*[v-cloak] { display:none; }*/
@@ -709,6 +746,10 @@
   .loading {
     text-align: center;
     z-index: 11111;
+  }
+
+ .seat-error {
+    text-align: center;
   }
   /* The Modal (background) */
   .modal {
@@ -800,7 +841,7 @@
               color: #0a0a0a;
           }
         }   
-    }
+    }   
   }  
   /*#modal .row  {
     background-color: #e5ecff;
