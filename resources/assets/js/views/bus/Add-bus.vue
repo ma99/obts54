@@ -72,9 +72,11 @@
                     <label for="numberOfRow">Number of Row</label>
                     <input v-model="numberOfRow" type="number" min="1" max="25" value="9" class="form-control" id="numberOfRow" placeholder="Row Number" :disabled="isDisabled">
                   </div>
-                  <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
-                  <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                  <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+
+                    <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                    <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
+                    <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                    
                 </form>  
               </div>
             </div>

@@ -97,6 +97,7 @@
          //this.arr.push(val);
        },
        selectedTo() {
+          this.buses=[];
           this.fetchDroppingPointList(this.selectedTo);   // Pickup Area List based On From City       
        },      
        /*selectedTo(val) {
@@ -139,7 +140,7 @@
 
         isBusAvailable() {
           let len = this.buses.length;
-          return ( len >0 && this.error==false ) ? true : false;  //true show table
+          return ( len >0 && this.error==false && this.selectedTo !=="" ) ? true : false;  //true show table
         },
 
         isDisabled(){
@@ -234,7 +235,7 @@
                response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
                vm.loading = false;
                if (vm.busError) {
-                  vm.seatNotAvailableAlert('SCHEDULE');
+                  vm.seatNotAvailableAlert('SCHEDULE', 'warning');
                   return;
                }
             });
@@ -279,7 +280,7 @@
                 response.data.error ? vm.seatError = response.data.error : vm.seatList = response.data;
                 vm.loading = false;
                 if (vm.seatError) {
-                  vm.seatNotAvailableAlert('BUS');
+                  vm.seatNotAvailableAlert('BUS', 'error');
                   return;
                 }
                 vm.modal = true;
@@ -287,13 +288,14 @@
             });
         },
 
-        seatNotAvailableAlert(val) {
+        seatNotAvailableAlert(val, type) {
           swal({
-            title: "Sorry! Not Available",
-            //text: "Sorry! <span style="color:#F8BB86"><strong>"+ val +"</strong></span> Not Available",
-            text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
+            //title: "Sorry! Not Available",
+            title: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span></br>Not Available. Sorry!',
+            //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
             html: true,
-            type: "warning",
+            //type: "info",
+            type: type,
             timer: 1800,
             showConfirmButton: false,
             allowOutsideClick: true,
@@ -505,13 +507,15 @@
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
               response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
-               vm.loading = false;               
+              vm.loading = false;               
                if (vm.error){
                 vm.selectedTo='';
                 vm.buses= [];
                 return;
-               } 
-                vm.fetchPickupPointList(cityName);                
+              } 
+              vm.selectedTo='';
+              vm.buses= [];
+              vm.fetchPickupPointList(cityName);                
               // console.log(vm.error);
                //vm.cityToList = response.data;
                //vm.message= response.data
@@ -751,6 +755,11 @@
  .seat-error {
     text-align: center;
   }
+
+  .form-control[disabled] {
+    background-color: #3097D1;
+  }
+
   /* The Modal (background) */
   .modal {
       display: block; 

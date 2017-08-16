@@ -188,7 +188,7 @@
                   
                   <!-- Seat Plan Not Available -->
                   <div class="col-sm-6" v-show="seatError">
-                    <div class="alert alert-warning seat-error" role="alert">                      
+                    <div class="alert alert-warning seat-error" role="alert">
                       <h3> @{{ seatError }}</h3>
                     </div>
                   </div>
