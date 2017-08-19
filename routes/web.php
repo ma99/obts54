@@ -46,6 +46,7 @@ Route::get('/bus/{id}', 'Admin\BusController@showSeat');
 Route::post('/delete', 'Admin\DashboardController@destroy');
 Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 //Route::get('/staffs/{staff}/edit', 'Admin\DashboardController@destroy');
+Route::post('/cities', 'Admin\CityController@store');
 
 
 Route::get('/home', 'SearchTicketController@index');

@@ -56,8 +56,10 @@ class BusController extends Controller
     }
 
     public function storeSeatPlan()
-    {
-        $error = ['error' => 'Something wrong'];
+    {        
+        $this->validate($this->request, [
+            'bus_id' => 'required|max:25',
+        ]);
 
         $busId = $this->request->input('bus_id');
         $seatList = $this->request->input('seat_list');

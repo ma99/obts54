@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Rout;
 use App\Stop;
 use App\City;
+use App\Division;
+use App\District;
 
 class SearchCitiesController extends Controller
 {
@@ -61,26 +63,46 @@ class SearchCitiesController extends Controller
 
    public function droppingPoints()
    {
-        //$city_name = $request->input('name');
-        //$city_name= 'dhaka';
         $error = ['error' => 'No results found'];
-        
-          $cityName = $this->request->input('q');
-          // $city = City::where('name', $city_name)->first();
-          // $cityId = $city->id;
-          $cityId = $this->findCityIdByCityName($cityName);
 
-          $stops = Stop::where('city_id', $cityId)->get();
-         // dd($cities);
-          return $stops->count() ? $stops : $error;
-          //return $cities;
-       
+        $cityName = $this->request->input('q');        
+        $cityId = $this->findCityIdByCityName($cityName);
+
+        $stops = Stop::where('city_id', $cityId)->get();
+        // dd($cities);
+        return $stops->count() ? $stops : $error;
+        //return $cities;
    }
 
    public function findCityIdByCityName($cityName)
    {
       $city = City::where('name', $cityName)->first();
       return $city->id;
+   }
+
+   public function cityList()
+   {
+    $error = ['error' => 'City Not Found for Bus Service']; 
+
+    //$divisionId = $this->request->input('q');
+    $cities = City::all();
+    return $cities->count() ? $cities : $error;
+   }
+
+   public function districtList()
+   {
+    $error = ['error' => 'City Not Found']; 
+
+    $divisionId = $this->request->input('q');
+    $districts = District::where('division_id', $divisionId)->get();
+    return $districts->count() ? $districts : $error;
+   }
+
+   public function divisionList()
+   {
+    $error = ['error' => 'No results found']; 
+    $divisions = Division::all();
+    return $divisions->count() ? $divisions : $error;
    }
 
    public function cityName(Request $request)
@@ -91,8 +113,8 @@ class SearchCitiesController extends Controller
       // Send a request to https://foo.com/api/test
       $response = $client->request('GET', $city_code );
       return $response->getBody();
-
    }
+
 
    public function testApi(Request $request)
    {

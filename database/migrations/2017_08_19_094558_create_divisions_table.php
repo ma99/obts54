@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCitiesTable extends Migration
+class CreateDivisionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {            
-            $table->increments('id');
-            $table->string('name', 30);            
-            $table->smallInteger('code')->unsigned();            
-            $table->string('division', 30);
+        Schema::create('divisions', function (Blueprint $table) {
+            $table->increments('id');            
+            $table->string('name', 30);
+            $table->string('bn_name', 50);            
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('divisions');
     }
 }

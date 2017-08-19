@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rout extends Model
+class Division extends Model
 {
-    //public $incrementing = false; 
+    //
 }

@@ -24,68 +24,77 @@
               <div class="panel-heading">Add New Bus</div>
               <div class="panel-body">
                 <form> 
-                 <div class="form-group">
-                    <label for="busId"> Bus Ids </label>
-                    <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
-                    <select v-model="selectedBusId" class="form-control" id="busId">
-                      <option disabled value="">Please select one</option>
-                      <option v-for="busId in busIds">
-                        {{ busId }}
-                      </option>                           
-                    </select>
-                  </div>
-
-                  <!-- BusInfo -->
-                  <div class="panel panel-info" v-show="Object.keys(busInfo).length > 0">
-                    <div class="panel-heading">Bus Info</div>
-                    <div class="panel-body">
-                      <table class="table .table-striped">
-                          <thead>
-                            <tr>
-                              <th>Reg. No</th>
-                              <th>Bus Type</th>
-                              <th>Total Seat</th>
-                              <th>&nbsp;</th>              
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>                              
-                              <td>{{ busInfo.reg_no}}</td>                              
-                              <td>{{ busInfo.type}}</td>                              
-                              <td>{{ busInfo.total_seats}}</td>
-                            </tr>                            
-                          </tbody>
-                      </table>
-                      <hr>
-                      <strong>Description:</strong>
-                      <p> {{ busInfo.description}} </p>
-
+                 <div class="col-sm-4"> 
+                   <div class="form-group">
+                      <label for="busId"> Bus Ids </label>
+                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
+                      <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
+                        <option disabled value="">Please select one</option>
+                        <option v-for="busId in busIds">
+                          {{ busId }}
+                        </option>                           
+                      </select>
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="numberOfCol">Number of Column</label>
-                    <input v-model="numberOfCol" type="number" min="1" max="4" value="4" class="form-control" id="numberOfCol" placeholder="Column Number" disabled>
+
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="numberOfCol">Column #</label>
+                      <input v-model="numberOfCol" type="number" min="1" max="4" value="4" class="form-control" id="numberOfCol" placeholder="Column Number" disabled>
+                    </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="numberOfRow">Number of Row</label>
-                    <input v-model="numberOfRow" type="number" min="1" max="25" value="9" class="form-control" id="numberOfRow" placeholder="Row Number" :disabled="isDisabled">
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="numberOfRow">Row #</label>
+                      <input v-model="numberOfRow" type="number" min="1" max="25" value="9" class="form-control" id="numberOfRow" placeholder="Row Number" :disabled="isDisabled">
+                    </div>
                   </div>
 
-                    <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
-                    <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                    <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
-                    
+                  <div class="col-sm-4">
+                    <div class="button-group">
+                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                      <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
+                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                    </div>
+                  </div>
                 </form>  
+                
+                <!-- BusInfo -->
+                <div class="col-sm-12">
+                    <div class="panel panel-info" v-show="Object.keys(busInfo).length > 0">
+                      <div class="panel-heading">Bus Info</div>
+                      <div class="panel-body">
+                        <table class="table .table-striped">
+                            <thead>
+                              <tr>
+                                <th>Reg. No</th>
+                                <th>Bus Type</th>
+                                <th>Total Seat</th>
+                                <th>&nbsp;</th>              
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>                              
+                                <td>{{ busInfo.reg_no}}</td>                              
+                                <td>{{ busInfo.type}}</td>                              
+                                <td>{{ busInfo.total_seats}}</td>
+                              </tr>                            
+                            </tbody>
+                        </table>                
+                        <strong>Description:</strong>
+                        <p> {{ busInfo.description}} </p>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           <!-- </div> -->
 
       </div>
-      <loader :show="loading">
-               <!--  {{-- <div class="loading"><i v-show="loading" class="fa fa-spinner fa-pulse fa-3x text-primary"></i></div> --}} -->
-    </loader>
+      
+      <loader :show="loading"></loader>
 
       <div class="row">
             <div class="panel panel-default">
@@ -404,5 +413,8 @@
 
     #app .seat-layout {
         padding-left: 50px;
+    }
+    #app .button-group {
+      margin: 2.5rem auto; /*25px*/
     }
 </style>

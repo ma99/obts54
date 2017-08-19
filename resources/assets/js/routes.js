@@ -42,6 +42,10 @@ let routes = [
         path: '/bus-list',
         component: require('./views/bus/Bus-list')
     },
+    {
+        path: '/add-city',
+        component: require('./views/city/Add-city')
+    },
     //404
     {   
         path: '*',

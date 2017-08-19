@@ -71,18 +71,24 @@
           </span>
         </a>
         <ul class="treeview-menu">
-           <li>
+          <li>
               <router-link to="/add-bus">
-                  <i class="fa fa-address-card fa-fw" aria-hidden="true"></i>
+                  <i class="fa fa-bus" aria-hidden="true"></i>
                   Add Bus
               </router-link> 
-          </li>
+          </li>          
           <li> 
               <router-link to="/bus-list">
                   <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                  Bus List
+                  View Bus List
               </router-link>
-         </li>          
+         </li> 
+         <li>
+              <router-link to="/add-city">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  Add City
+              </router-link> 
+          </li>         
         </ul>
       </li>
     </ul>
