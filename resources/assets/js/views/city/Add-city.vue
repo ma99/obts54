@@ -26,7 +26,7 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="divisionName">Division Name</label>
-                        <select v-model="selectedDivision" class="form-control" id="divisionName">
+                        <select v-model="selectedDivision" class="form-control" name="division_name" id="divisionName">
                             <option disabled value="">Please select one</option>
                             <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
                               {{ division.name }}
@@ -38,7 +38,7 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="cityName"> City Name </label>                       
-                        <select v-model="selectedCity" class="form-control" name="name" id="cityName">
+                        <select v-model="selectedCity" class="form-control" name="city_name" id="cityName">
                             <option disabled value="">Please select one</option>                          
                             <option v-for="city in cityList" v-bind:value="{ id: city.id, name: city.name }">
                               {{ city.name }}
@@ -170,7 +170,7 @@
             axios.post('/cities', {
                 city_id: this.selectedCity.id,
                 city_name: this.selectedCity.name,
-                division: this.selectedDivision.name,
+                division_name: this.selectedDivision.name,
             })          
             .then(function (response) {
                    console.log(response.data);

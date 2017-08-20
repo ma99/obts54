@@ -11,10 +11,20 @@ class CityController extends Controller
 {
     public function store(Request $request)
     {
-    	// $this->validate($request, [
-     //        'name' => 'required|max:25',
-     //        //'code' => 'required|max:25',
-     //    ]);
+    	$this->validate($request, [
+            'city_name' => 'required|max:30',
+            'division_name' => 'required|max:30'
+            //'code' => 'required|max:25',
+        ]);
+
+    	$cityCode = $request->input('city_id');
+    	$cityName = $request->input('city_name');
+        $divisionName = $request->input('division_name');
+
+        City::updateOrCreate(
+            ['code' => $cityCode],
+            ['name' => $cityName, 'division' => $divisionName]            
+        );
     	return 'success';
     }
 }
