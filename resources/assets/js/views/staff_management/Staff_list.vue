@@ -3,8 +3,8 @@
   <!-- {{-- SCHEDULE --}}     -->
     <div class="panel panel-info">
         <div class="panel-heading">User Details</div>
-        <div id="scrollMe">
-          <table class="table table-striped table-hover task-table">
+        <div id="scroll-me">
+          <table class="table table-striped table-hover">
              <!-- Table Headings -->
               <thead>
                   <th>&nbsp;</th>
@@ -167,7 +167,7 @@
                     });*/
             },
             enableSlimScroll() {
-                $('#scrollMe').slimScroll({
+                $('#scroll-me').slimScroll({
                   color: '#00f',
                   size: '8px',
                   height: '300px',
