@@ -17,16 +17,25 @@
 
     <section class="content">      
       <div class="row">
-          
           <div class="panel panel-default">
-              <div class="panel-heading">Add New City</div>
-              <div class="panel-body">
+              <div class="panel-heading">
+                <!-- Add New City -->
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" @click="expanAddCityPanel" v-show="!show">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-warning" type="button" @click="expanAddCityPanel" v-show="show">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                </span>
+                
+              </div>
+              <div class="panel-body" v-show="show">
                 <form>
-                    
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="divisionName">Division Name</label>
-                        <select v-model="selectedDivision" class="form-control" name="division_name" id="divisionName">
+                        <select v-model="selectedDivision" class="form-control" id="divisionName">
                             <option disabled value="">Please select one</option>
                             <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
                               {{ division.name }}
@@ -38,7 +47,7 @@
                     <div class="col-sm-3">
                       <div class="form-group">
                         <label for="cityName"> City Name </label>                       
-                        <select v-model="selectedCity" class="form-control" name="city_name" id="cityName">
+                        <select v-model="selectedCity" class="form-control" id="cityName">
                             <option disabled value="">Please select one</option>                          
                             <option v-for="city in cityList" v-bind:value="{ id: city.id, name: city.name }">
                               {{ city.name }}
@@ -59,7 +68,7 @@
                         <button v-on:click.prevent="saveCities()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                         <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
                       </div>
-                    </div>  
+                    </div>                      
                 </form>
               </div>
           </div>
@@ -69,27 +78,30 @@
 
       <div class="row">
         <div class="panel panel-info">
-          <div class="panel-heading">City Info</div>
+          <div class="panel-heading">Service Available City Info</div>
           <div class="panel-body">
-            <table class="table .table-striped">
-                <thead>
-                  <tr>
-                    <th>Sl. No.</th>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Division</th>
-                    <th>&nbsp;</th>              
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr  v-for="(city, index) in busAvailableToCityList" >                              
-                    <td>{{ index+1 }}</td>                              
-                    <td>{{ city.name }}</td>                              
-                    <td>{{ city.id }}</td>                              
-                    <td>{{ city.division }}</td>
-                  </tr>                            
-                </tbody>
-            </table>                                        
+              <div id="scroll-cities">
+                <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sl. No.</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Division</th>
+                       <!--  <th>&nbsp;</th>       -->        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  v-for="(city, index) in busAvailableToCityList" >                              
+                        <td>{{ index+1 }}</td>                              
+                        <td>{{ city.name }}</td>                              
+                        <td>{{ city.code }}</td>                              
+                        <td>{{ city.division }}</td>
+                        <!-- <td>&nbsp;</td> -->
+                      </tr>                            
+                    </tbody>
+                </table>      
+              </div>
           </div>
         </div>
       </div>
@@ -113,13 +125,13 @@
             selectedCity: '',
             //selectedDivisionId: '',
             selectedDivision: '',
-            
-
+            show: false
           }
         },
         mounted() {           
            this.fetchDivisions();
            this.fetchBusAvailableToCities();
+           this.enableSlimScroll();
         },
         watch: {
             selectedDivision() {
@@ -130,6 +142,18 @@
             }            
         },
         methods: {
+          enableSlimScroll() {
+                $('#scroll-cities').slimScroll({
+                  color: '#00f',
+                  size: '8px',
+                  height: '250px',
+                  //height: auto,
+                  wheelStep: 10                  
+                });
+          },
+          expanAddCityPanel() {
+            this.show = !this.show;
+          },
           fetchCitiesByDivision(divisionId) {
             this.loading = true;
             //this.cityList= [];            
@@ -173,13 +197,34 @@
                 division_name: this.selectedDivision.name,
             })          
             .then(function (response) {
-                   console.log(response.data);
-                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                   //console.log(response.data);
+                   response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                   if (vm.response) {
+                       //console.log(vm.response);
+                       vm.fetchBusAvailableToCities();
+                       vm.loading = false;
+                       vm.disableSaveButton = true;
+                       vm.cityAddedAlert(vm.selectedCity.name); 
+                       return;                   
+                   }
                    vm.loading = false;
                    vm.disableSaveButton = true;
             });
 
           },
+          cityAddedAlert(cityName) {
+              swal({
+                //title: "Sorry! Not Available",
+                title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+                //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
+                html: true,
+                //type: "info",
+                type: "success",
+                timer: 1800,
+                showConfirmButton: false,
+                allowOutsideClick: true,
+              });
+          }
         }
     }
 </script>

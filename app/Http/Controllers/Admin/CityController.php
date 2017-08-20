@@ -25,6 +25,6 @@ class CityController extends Controller
             ['code' => $cityCode],
             ['name' => $cityName, 'division' => $divisionName]            
         );
-    	return 'success';
+    	return 'successfully added';
     }
 }
