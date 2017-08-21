@@ -58,7 +58,7 @@ class BusController extends Controller
     public function storeSeatPlan()
     {        
         $this->validate($this->request, [
-            'bus_id' => 'required|max:25',
+            'bus_id' => 'required|max:30',
         ]);
 
         $busId = $this->request->input('bus_id');

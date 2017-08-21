@@ -85,9 +85,24 @@
                     <thead>
                       <tr>
                         <th>Sl. No.</th>
-                        <th>Name</th>
+                        <th>Name
+                           <!--  <span type="button" @click="SortByCityNameBusAvailableToCityList(busAvailableToCityList)" :disabled="disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span> -->
+                             <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span>
+
+                        </th>
                         <th>Code</th>
-                        <th>Division</th>
+                        <th>Division
+                            <!-- <span type="button" @click="SortByDivisionBusAvailableToCityList(busAvailableToCityList)" :disabled="!disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span> -->
+                             <span type="button" @click="isSortingAvailableBy('division')" :disabled="!disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span>
+                        </th>
                        <!--  <th>&nbsp;</th>       -->        
                       </tr>
                     </thead>
@@ -118,6 +133,7 @@
             divisionList: [],
             disableSaveButton: true,
             disableResetButton: true,
+            disableSorting: true,
             error: '',
             loading: false,
             response: '',
@@ -130,7 +146,7 @@
         },
         mounted() {           
            this.fetchDivisions();
-           this.fetchBusAvailableToCities();
+           this.fetchBusAvailableToCities();           
            this.enableSlimScroll();
         },
         watch: {
@@ -139,14 +155,14 @@
             },
             cityList() {                
                 this.disableSaveButton = (this.cityList.length < 1) ? true : false; 
-            }            
+            },
         },
         methods: {
           enableSlimScroll() {
                 $('#scroll-cities').slimScroll({
                   color: '#00f',
                   size: '8px',
-                  height: '250px',
+                  height: '300px',
                   //height: auto,
                   wheelStep: 10                  
                 });
@@ -183,8 +199,18 @@
             axios.get('/api/cities')  //--> api/bus?q=xyz        (right)
                 .then(function (response) {                  
                    response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
-                   vm.loading = false;                  
+                   vm.loading = false;
+                   vm.SortByCityNameBusAvailableToCityList(vm.busAvailableToCityList);                  
             });
+          },
+          isSortingAvailableBy(val) {
+            if (val== 'name') {
+                this.SortByCityNameBusAvailableToCityList(this.busAvailableToCityList);
+                this.disableSorting = true;
+                return;
+            }
+            this.SortByDivisionBusAvailableToCityList(this.busAvailableToCityList);
+            this.disableSorting = false;
           },
           saveCities() {
             var vm = this;
@@ -197,20 +223,53 @@
                 division_name: this.selectedDivision.name,
             })          
             .then(function (response) {
-                   //console.log(response.data);
-                   response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                   if (vm.response) {
-                       //console.log(vm.response);
-                       vm.fetchBusAvailableToCities();
-                       vm.loading = false;
-                       vm.disableSaveButton = true;
-                       vm.cityAddedAlert(vm.selectedCity.name); 
-                       return;                   
-                   }
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                   //console.log(vm.response);
+                   vm.fetchBusAvailableToCities();
+                   vm.SortByCityNameBusAvailableToCityList(vm.busAvailableToCityList);
                    vm.loading = false;
                    vm.disableSaveButton = true;
+                   vm.cityAddedAlert(vm.selectedCity.name); 
+                   return;                   
+                }
+                vm.loading = false;
+                vm.disableSaveButton = true;
             });
 
+          },
+          SortByCityNameBusAvailableToCityList(arr) {
+            // sort by name            
+                arr.sort(function(a, b) {
+                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+
+                  // names must be equal
+                  return 0;
+                });
+          },
+          SortByDivisionBusAvailableToCityList(arr) {
+            // sort by name            
+                arr.sort(function(a, b) {
+                  var nameA = a.division.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.division.toUpperCase(); // ignore upper and lowercase
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+
+                  // names must be equal
+                  return 0;
+                });
           },
           cityAddedAlert(cityName) {
               swal({
@@ -228,3 +287,17 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    #scroll-cities {
+        span {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        span[disabled] {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+    } 
+
+</style>
