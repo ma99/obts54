@@ -208,6 +208,7 @@
                     function() {                       
                             vm.loading = true;
                             vm.response = '';
+                            vm.showAlert = false;
                             axios.post('/delete', {
                                 id: staff.role_id, 
                                 user_id: staff.id 
@@ -240,6 +241,7 @@
             updateStaffRole() {
                 var vm = this;
                 this.response = '';
+                this.showAlert = false;
                 //this.staffName = staff.name;                
                 this.loading = true;
                 axios.post('/update', {
@@ -250,7 +252,7 @@
                     .then(function (response) {                                           
                       //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
                       response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                      if(vm.response) {
+                      if (vm.response) {
                           vm.updateStaffRoleAtStaffs(vm.staffId, vm.rolePicked);
                           vm.loading = false;
                           vm.modal = false;
