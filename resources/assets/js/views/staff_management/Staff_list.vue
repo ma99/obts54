@@ -207,23 +207,39 @@
                     },
                     function() {                       
                             vm.loading = true;
+                            vm.response = '';
                             axios.post('/delete', {
                                 id: staff.role_id, 
                                 user_id: staff.id 
                             })          
                             .then(function (response) {                                           
-                                response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
-                                vm.loading = false;
-                                vm.actionStatus = 'Removed';
-                                vm.alertType = 'danger';
-                                vm.showAlert= true;                      
+                                //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                                if (vm.response) {
+                                  vm.removeStaffFromStaffs(staff.id);
+                                  vm.loading = false;
+                                  vm.actionStatus = 'Removed';
+                                  vm.alertType = 'danger';
+                                  vm.showAlert= true;                                                        
+                                }
                             });    
                             //swal("Deleted!", "Staff has been Removed.", "success");                      
                         
                     });
             },
+            
+            removeStaffFromStaffs(staffId) {
+
+                var indx = this.staffs.findIndex(function(staff){ 
+                    // here 'staff' is array object 
+                    return staff.id == staffId;
+                });        
+                this.staffs.splice(indx, 1);
+            },
+
             updateStaffRole() {
                 var vm = this;
+                this.response = '';
                 //this.staffName = staff.name;                
                 this.loading = true;
                 axios.post('/update', {
@@ -232,14 +248,27 @@
                       role: this.rolePicked 
                     })          
                     .then(function (response) {                                           
-                      response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
-                      vm.loading = false;
-                      vm.modal = false;
-                      vm.actionStatus = 'Udated';
-                      vm.alertType = 'info';
-                      vm.showAlert= true;                      
+                      //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                      response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                      if(vm.response) {
+                          vm.updateStaffRoleAtStaffs(vm.staffId, vm.rolePicked);
+                          vm.loading = false;
+                          vm.modal = false;
+                          vm.actionStatus = 'Udated';
+                          vm.alertType = 'info';
+                          vm.showAlert= true;                                              
+                      }
                     });
-            }
+            },
+
+            updateStaffRoleAtStaffs(staffId, rolePicked) {
+                 var indx = this.staffs.findIndex(function(staff){ 
+                    // here 'staff' is array object                     
+                    return staff.id == staffId;
+                });                        
+                this.staffs[indx].role = rolePicked;
+            },
+
         },
         mounted() {
             console.log('Staff Component mounted.');            
