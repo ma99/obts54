@@ -86,24 +86,18 @@
                       <tr>
                         <th>Sl. No.</th>
                         <th>Name
-                           <!--  <span type="button" @click="SortByCityNameBusAvailableToCityList(busAvailableToCityList)" :disabled="disableSorting">
-                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                            </span> -->
                              <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                             </span>
-
                         </th>
                         <th>Code</th>
-                        <th>Division
-                            <!-- <span type="button" @click="SortByDivisionBusAvailableToCityList(busAvailableToCityList)" :disabled="!disableSorting">
-                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                            </span> -->
+                        <th>Division                            
                              <span type="button" @click="isSortingAvailableBy('division')" :disabled="!disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                             </span>
                         </th>
-                       <!--  <th>&nbsp;</th>       -->        
+                        <th>Action</th>                                                         
+                        <!-- <th>&nbsp;</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -112,11 +106,24 @@
                         <td>{{ city.name }}</td>                              
                         <td>{{ city.code }}</td>                              
                         <td>{{ city.division }}</td>
-                        <!-- <td>&nbsp;</td> -->
+                        <td> 
+                            <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">                        
+                              <i class="fa fa-trash fa-fw"></i>Remove
+                            </button>  
+                        </td>                        
                       </tr>                            
                     </tbody>
                 </table>      
               </div>
+          </div>
+          <!-- {{-- panel-footer --}} -->
+          <div class="panel-footer">                    
+            <!-- <show-alert :show="showAlert" :type="alertType" @cancel="showAlert=false">  -->
+            <show-alert :show.sync="showAlert" :type="alertType"> 
+              <!-- altert type can be info/warning/danger -->
+              <strong>{{ cityName }} </strong> has been 
+              <strong> {{ actionStatus }} </strong> successfully!
+            </show-alert>
           </div>
         </div>
       </div>
@@ -128,7 +135,10 @@
     export default {
         data() {
           return {
+            actionStatus: '',
+            alertType: '',
             cityList: [],
+            cityName: '',
             busAvailableToCityList: [], //bus service availble to the cities
             divisionList: [],
             disableSaveButton: true,
@@ -141,7 +151,8 @@
             selectedCity: '',
             //selectedDivisionId: '',
             selectedDivision: '',
-            show: false
+            show: false,
+            showAlert: false,  
           }
         },
         mounted() {           
@@ -212,6 +223,54 @@
             this.SortByDivisionBusAvailableToCityList(this.busAvailableToCityList);
             this.disableSorting = false;
           },
+
+          removeCity(city) {  // role id of user/staff in roles table
+            var vm = this;
+            this.cityName = city.name; 
+            swal({
+                  title: "Are you sure?",
+                  text: "This city will be Removed from Bus Service available City List!",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, Remove!",
+                  //closeOnConfirm: false,
+                  //closeOnCancel: false                       
+                },
+                function() {                       
+                        vm.loading = true;
+                        vm.response = '';
+                        axios.post('/delete/city', {                            
+                            city_code: city.code, 
+                        })          
+                        .then(function (response) {                                           
+                            // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                            if (vm.response) {                                
+                                vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+                                vm.loading = false;
+                                vm.actionStatus = 'Removed';
+                                vm.alertType = 'danger';
+                                vm.showAlert= true;
+                                return;                                                      
+                            }                            
+                            vm.loading = false;
+
+                        });    
+                        //swal("Deleted!", "Staff has been Removed.", "success");                      
+                    
+                });
+          },
+         
+          removeCityFromBusAvailableToCityList(cityCode) {
+            var indx = this.busAvailableToCityList.findIndex(function(city){ 
+                // here 'city' is array object 
+                 return city.code == cityCode;
+            });        
+            this.busAvailableToCityList.splice(indx, 1);
+            //return;
+          },
           saveCities() {
             var vm = this;
             //this.loading = true;
@@ -231,13 +290,17 @@
                    vm.SortByCityNameBusAvailableToCityList(vm.busAvailableToCityList);
                    vm.loading = false;
                    vm.disableSaveButton = true;
-                   vm.cityAddedAlert(vm.selectedCity.name); 
+                   vm.cityAddedAlert(vm.selectedCity.name);
+                   vm.reset();
                    return;                   
                 }
                 vm.loading = false;
                 vm.disableSaveButton = true;
             });
-
+          },
+          reset() {
+            this.selectedCity = '';
+            this.selectedDivision = '';
           },
           SortByCityNameBusAvailableToCityList(arr) {
             // sort by name            
