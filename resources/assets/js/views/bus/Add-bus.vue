@@ -374,7 +374,7 @@
     }
 </script>
 <style>
-    .active {
+    .seat-layout .active {
         background-color: #f4e542;
         position: relative;
     }                   
