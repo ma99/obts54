@@ -35,6 +35,7 @@ class DashboardController extends Controller
     	return view('pages.admin');
     }
 
+    /** Not Using; Updating info from vue  **/
     public function staffInfo()
     {
        $error = ['error' => 'No results found'];
@@ -77,7 +78,8 @@ class DashboardController extends Controller
             $id = $this->id;
             Role::destroy($id); // Deleting Models               
             $this->addToRoleLogs($user, 'Deleted');                 
-            return $this->staffInfo();            
+            //return $this->staffInfo();            
+            return 'success';
         }
         $actionStatus = ['status' => 'Not Allowed'];
         return $actionStatus;
@@ -99,7 +101,8 @@ class DashboardController extends Controller
                 ]);
             $action = 'Changed to '. $role;            
             $this->addToRoleLogs($user, $action);    
-            return $this->staffInfo();            
+            //return $this->staffInfo();            
+            return 'success';
             }
         }
         $actionStatus = ['status' => 'Not Allowed'];
