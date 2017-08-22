@@ -27,4 +27,16 @@ class CityController extends Controller
         );
     	return 'successfully added';
     }
+
+    public function destroy(Request $request)
+    {
+        $error = ['error' => 'No results found'];
+        $cityCode = $request->input('city_code');
+        $city = City::where('code', $cityCode)->first();
+        if($city) {
+            $city->delete();
+            return 'success';            
+        }
+        return $error;
+    }
 }
