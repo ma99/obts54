@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 Use App\User;
 Use App\Bus;
+//Use App\City;
 Use App\SeatPlan;
 
 class BusController extends Controller
@@ -55,6 +56,18 @@ class BusController extends Controller
         // return $error;
     }
 
+    /*public function destroy()
+    {
+        $error = ['error' => 'No results found'];
+        $cityCode = $this->request->input('city_code');
+        $city = City::where('code', $cityCode)->first();
+        if($city) {
+            $city->delete();
+            return 'success';            
+        }
+        return $error;
+    }*/
+
     public function storeSeatPlan()
     {        
         $this->validate($this->request, [
@@ -89,23 +102,24 @@ class BusController extends Controller
         }
         //return $seatList;
     }
+    
+    /*** Moved to DashboardController **/
+    // public function destroy()
+    // {
+    //     $user = $this->request->user();
+    //     //if ($this->request->user()->isAdministrator()) {
+    //     if ($user->isAdministrator()) {
+    //         //$id = $this->request->input('id');
+    //         $id = $this->id;
+    //         Role::destroy($id); // Deleting Models               
+    //         $this->addToRoleLogs($user, 'Deleted');                 
+    //         return $this->staffInfo();            
+    //     }
+    //     $actionStatus = ['status' => 'Not Allowed'];
+    //     return $actionStatus;
+    // }
 
-    public function destroy()
-    {
-        $user = $this->request->user();
-        //if ($this->request->user()->isAdministrator()) {
-        if ($user->isAdministrator()) {
-            //$id = $this->request->input('id');
-            $id = $this->id;
-            Role::destroy($id); // Deleting Models               
-            $this->addToRoleLogs($user, 'Deleted');                 
-            return $this->staffInfo();            
-        }
-        $actionStatus = ['status' => 'Not Allowed'];
-        return $actionStatus;
-    }
-
-    public function updateStuffRole()
+   /* public function updateStuffRole()
     {
         $user = $this->request->user();
         //if ($this->request->user()->isAdministrator()) {
@@ -126,8 +140,8 @@ class BusController extends Controller
         }
         $actionStatus = ['status' => 'Not Allowed'];
         return $actionStatus;
-    }
-    public function addToRoleLogs($adminUser, $action)    
+    }*/
+    /*public function addToRoleLogs($adminUser, $action)    
     {
         $user = User::find($this->user_id);
         RoleLog::create([
@@ -138,5 +152,5 @@ class BusController extends Controller
             'action' => $action,
             'by' => $adminUser->name
         ]);
-    }
+    }*/    
 }
