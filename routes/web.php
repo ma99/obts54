@@ -35,18 +35,21 @@ Route::get('admin/{vue?}', function () {
 
 Route::get('/forbidden', 'HomeController@forbidden');
 
-//admin
+//admin staff
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 Route::get('/staffs', 'Admin\DashboardController@staffInfo');
+Route::post('/delete', 'Admin\DashboardController@destroy');
+Route::post('/update', 'Admin\DashboardController@updateStuffRole');
+
 //bus
 Route::get('/bus/ids', 'Admin\BusController@busIds');
 Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
 Route::get('/bus/{id}', 'Admin\BusController@showSeat');
+//Route::post('/delete/city', 'Admin\BusController@destroy');
 //Route::delete('/staffs/{staff}', 'Admin\DashboardController@destroy');
-Route::post('/delete', 'Admin\DashboardController@destroy');
-Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 //Route::get('/staffs/{staff}/edit', 'Admin\DashboardController@destroy');
 Route::post('/cities', 'Admin\CityController@store');
+Route::post('/delete/city', 'Admin\CityController@destroy');
 
 
 Route::get('/home', 'SearchTicketController@index');
