@@ -14,8 +14,8 @@ class CreateRoutsTable extends Migration
     public function up()
     {
         Schema::create('routs', function (Blueprint $table) {
-            //$table->increments('id');
-            $table->string('id')->primary();
+            $table->increments('id');
+            //$table->string('id')->primary();
             $table->string('departure_city');
             $table->string('arrival_city');
             $table->smallInteger('distance')->unsigned();           

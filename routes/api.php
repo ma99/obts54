@@ -27,6 +27,7 @@ Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/divisions', 'Api\SearchCitiesController@divisionList');
 Route::get('/districts', 'Api\SearchCitiesController@districtList');
 Route::get('/cities', 'Api\SearchCitiesController@cityList');
+Route::get('/routes', 'Api\SearchCitiesController@routeList');
 Route::get('/pickup', 'Api\SearchCitiesController@pickupPoints');
 Route::get('/dropping', 'Api\SearchCitiesController@droppingPoints');
 Route::get('/test', 'Api\SearchCitiesController@index');

@@ -115,6 +115,15 @@ class SearchCitiesController extends Controller
       return $response->getBody();
    }
 
+   public function routeList()
+   {
+    $error = ['error' => 'Route Not Found']; 
+
+    //$divisionId = $this->request->input('q');
+    $routes = Rout::all();
+    return $routes->count() ? $routes : $error;
+   }
+
 
    public function testApi(Request $request)
    {

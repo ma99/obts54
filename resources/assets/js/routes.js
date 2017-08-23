@@ -43,6 +43,10 @@ let routes = [
         component: require('./views/bus/Bus-list')
     },
     {
+        path: '/add-route',
+        component: require('./views/bus/Add-route')
+    },
+    {
         path: '/add-city',
         component: require('./views/city/Add-city')
     },

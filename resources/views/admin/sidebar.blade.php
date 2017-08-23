@@ -65,7 +65,8 @@
       {{-- Bus Management --}}      
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-user"></i> <span>Bus</span>
+          <i class="fa fa-bus" aria-hidden="true"></i>
+          <span>Bus</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -88,7 +89,13 @@
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                   Add City
               </router-link> 
-          </li>         
+          </li>
+          <li>
+              <router-link to="/add-route">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                  Add Route
+              </router-link> 
+          </li>          
         </ul>
       </li>
     </ul>

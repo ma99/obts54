@@ -2,7 +2,7 @@
   <div>    
      <section class="content-header">
       <h1>
-       Add new city
+       Add new route
         <!-- <small>Optional description</small> -->
       </h1>
       <ol class="breadcrumb">
@@ -11,7 +11,7 @@
             <i class="fa fa-dashboard"></i>Dashboard
           </router-link>
         </li>
-        <li class="active">city</li>
+        <li class="active">route</li>
       </ol>
     </section>
 
@@ -21,10 +21,10 @@
               <div class="panel-heading">
                 <!-- Add New City -->
                 <span class="input-group-btn">
-                    <button class="btn btn-success" type="button" @click="expandAddCityPanel" v-show="!show">
+                    <button class="btn btn-success" type="button" @click="expandAddRoutePanel" v-show="!show">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-warning" type="button" @click="expandAddCityPanel" v-show="show">
+                    <button class="btn btn-warning" type="button" @click="expandAddRoutePanel" v-show="show">
                         <i class="fa fa-minus" aria-hidden="true"></i>
                     </button>
                 </span>
@@ -34,8 +34,8 @@
                 <form>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <label for="divisionName">Division Name</label>
-                        <select v-model="selectedDivision" class="form-control" id="divisionName">
+                        <label for="divisionName">Departure: Division </label>
+                        <select v-model="selectedDivisionForDeparture" class="form-control" id="divisionName">
                             <option disabled value="">Please select one</option>
                             <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
                               {{ division.name }}
@@ -46,22 +46,54 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <label for="cityName">City Name </label>                       
-                        <select v-model="selectedCity" class="form-control" id="cityName">
+                        <label for="departureCity">Departure: City</label>
+                        <select v-model="selectedDepartureCity" class="form-control" id="departureCity">
+                            <option disabled value="">Please select one</option>
+                            <!-- <option v-for="city in departureCityList" v-bind:valaue="{ id: division.id, name: division.name }"> -->
+                            <option v-for="city in departureCityList">
+                              {{ city.name }}
+                            </option>                             
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="divisionName">Arrival: Division</label>
+                        <select v-model="selectedDivisionForArrival" class="form-control" id="divisionName">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
+                              {{ division.name }}
+                            </option>                             
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="arrivalCity">Arrival: City</label>                       
+                        <select v-model="selectedArrivalCity" class="form-control" id="arrivalCity">
                             <option disabled value="">Please select one</option>                          
-                            <option v-for="city in cityList" v-bind:value="{ id: city.id, name: city.name }">
+                            <option v-for="city in arrivalCityList">
                               {{ city.name }}
                             </option> 
                         </select>
                       </div>
                     </div>
 
-                    <div class="col-sm-2">
+                   <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="routeDistance">Distance</label>
+                        <input v-model="routeDistance" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Distance">
+                      </div>
+                    </div>
+
+                   <!--  <div class="col-sm-2">
                       <div class="form-group">
                         <label for="cityCode">City Code</label>
                         <input v-model="selectedCity.id" type="text" class="form-control" name="code" id="cityCode" placeholder="City Code" disabled>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-sm-4">
                       <div class="button-group">
@@ -78,34 +110,38 @@
 
       <div class="row">
         <div class="panel panel-info">
-          <div class="panel-heading">Service Available City Info</div>
+          <div class="panel-heading">Route Info</div>
           <div class="panel-body">
-              <div id="scroll-cities">
+              <div id="scroll-routes">
                 <table class="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th>Sl. No.</th>
-                        <th>Name
-                             <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
+                        <th>From
+                              <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                            </span>
+                              </span>
                         </th>
-                        <th>Code</th>
-                        <th>Division                            
-                             <span type="button" @click="isSortingAvailableBy('division')" :disabled="!disableSorting">
+                        <th>To                      
+                             <!-- <span type="button" @click="isSortingAvailableBy('division')" :disabled="!disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                            </span>
+                            </span> -->
+                        </th>
+                        <th>Distance
+                          <span type="button" @click="isSortingAvailableBy('distance')" :disabled="!disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                              </span>
                         </th>
                         <th>Action</th>                                                         
                         <!-- <th>&nbsp;</th> -->
                       </tr>
                     </thead>
                     <tbody>
-                      <tr  v-for="(city, index) in busAvailableToCityList" >                              
+                      <tr  v-for="(city, index) in availableRouteList" >                              
                         <td>{{ index+1 }}</td>                              
-                        <td>{{ city.name }}</td>                              
-                        <td>{{ city.code }}</td>                              
-                        <td>{{ city.division }}</td>
+                        <td>{{ city.departure_city }}</td>
+                        <td>{{ city.arrival_city }}</td>                              
+                        <td>{{ city.distance }}</td>                              
                         <td> 
                             <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">                        
                               <i class="fa fa-trash fa-fw"></i>Remove
@@ -137,32 +173,40 @@
           return {
             actionStatus: '',
             alertType: '',
-            cityList: [],
+            arrivalCityList: [],
             cityName: '',
-            busAvailableToCityList: [], //bus service availble to the cities
-            divisionList: [],
+            tempCityList: [],
+            availableRouteList: [], 
+            departureCityList: [],
             disableSaveButton: true,
             disableResetButton: true,
             disableSorting: true,
+            divisionList: [],
             error: '',
             loading: false,
             response: '',
+            routeDistance: '',
             //selectedCityId: '',
-            selectedCity: '',
-            //selectedDivisionId: '',
-            selectedDivision: '',
+            selectedArrivalCity: '',
+            //selectedDivisionForDepartureId: '',
+            selectedDepartureCity: '',
+            selectedDivisionForArrival: '',
+            selectedDivisionForDeparture: '',
             show: false,
             showAlert: false,  
           }
         },
         mounted() {           
            this.fetchDivisions();
-           this.fetchBusAvailableToCities();           
+           this.fetchAvailableRoutes();           
            this.enableSlimScroll();
         },
         watch: {
-            selectedDivision() {
-                this.fetchCitiesByDivision(this.selectedDivision.id); // this.selectedDivisionId
+            selectedDivisionForDeparture() {
+                this.fetchCitiesByDivision(this.selectedDivisionForDeparture.id, 'departure'); // this.selectedDivisionForDepartureId
+            },
+            selectedDivisionForArrival() {
+                this.fetchCitiesByDivision(this.selectedDivisionForArrival.id, 'arrival'); // this.selectedDivisionForDepartureId
             },
             cityList() {                
                 this.disableSaveButton = (this.cityList.length < 1) ? true : false; 
@@ -178,18 +222,28 @@
                   wheelStep: 10                  
                 });
           },
-          expandAddCityPanel() {
+          expandAddRoutePanel() {
             this.show = !this.show;
           },
-          fetchCitiesByDivision(divisionId) {
+          fetchCitiesByDivision(divisionId, status) {
             this.loading = true;
-            //this.cityList= [];            
+            this.tempCityList= [];     
+            //this.departureCityList = [] ;
             var vm = this;                      
             //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz  (wrong)
             axios.get('/api/districts?q=' + divisionId)  //--> api/bus?q=xyz        (right)
                 .then(function (response) {                  
-                   response.data.error ? vm.error = response.data.error : vm.cityList = response.data;
-                   vm.loading = false;                  
+                  //response.data.error ? vm.error = response.data.error : vm.departureCityList = response.data;
+                  response.data.error ? vm.error = response.data.error : vm.tempCityList = response.data;
+
+                  if (status == 'arrival') {
+                    vm.arrivalCityList = vm.tempCityList;
+                    vm.loading = false;
+                    return;                  
+                  }
+                  vm.departureCityList = vm.tempCityList;
+                  vm.loading = false;
+
             });
           },
           fetchDivisions() {
@@ -203,24 +257,24 @@
                    vm.loading = false;                  
             });
           },
-          fetchBusAvailableToCities() {
+          fetchAvailableRoutes() {
             this.loading = true;
-            this.busAvailableToCityList= [];            
+            this.availableRouteList= [];            
             var vm = this;                
-            axios.get('/api/cities')  //--> api/bus?q=xyz        (right)
+            axios.get('/api/routes')  //--> api/bus?q=xyz        (right)
                 .then(function (response) {                  
-                   response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+                   response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
                    vm.loading = false;
-                   vm.SortByCityNameBusAvailableToCityList(vm.busAvailableToCityList);                  
+                   vm.SortByCityNameAvailableRouteList(vm.availableRouteList);                  
             });
           },
           isSortingAvailableBy(val) {
             if (val== 'name') {
-                this.SortByCityNameBusAvailableToCityList(this.busAvailableToCityList);
+                this.SortByCityNameAvailableRouteList(this.availableRouteList);
                 this.disableSorting = true;
                 return;
             }
-            this.SortByDivisionBusAvailableToCityList(this.busAvailableToCityList);
+            this.SortByDistanceAvailableRouteList(this.availableRouteList);
             this.disableSorting = false;
           },
 
@@ -274,23 +328,23 @@
           saveCities() {
             var vm = this;
             //this.loading = true;
-            console.log('cityId',this.selectedCity.id);
-            console.log('cityName',this.selectedCity.name);
-            axios.post('/cities', {
-                city_id: this.selectedCity.id,
-                city_name: this.selectedCity.name,
-                division_name: this.selectedDivision.name,
+            // console.log('cityId',this.selectedCity.id);
+            // console.log('cityName',this.selectedCity.name);
+            axios.post('/routes', {
+                departure_city: this.selectedDepartureCity,
+                arrival_city: this.selectedArrivalCity,
+                distance: this.routeDistance,
             })          
             .then(function (response) {
                 //console.log(response.data);
                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
                 if (vm.response) {
                    //console.log(vm.response);
-                   vm.fetchBusAvailableToCities();
-                   vm.SortByCityNameBusAvailableToCityList(vm.busAvailableToCityList);
+                   vm.fetchAvailableRoutes();
+                   //vm.SortByCityNameAvailableRouteList(vm.busAvailableToCityList);
                    vm.loading = false;
                    vm.disableSaveButton = true;
-                   vm.cityAddedAlert(vm.selectedCity.name);
+                   vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
                    vm.reset();
                    return;                   
                 }
@@ -299,14 +353,16 @@
             });
           },
           reset() {
-            this.selectedCity = '';
-            this.selectedDivision = '';
+            this.selectedArrivalCity = '';
+            this.selectedDepartureCity = '';
+            this.selectedDivisionForArrival = '';
+            this.selectedDivisionForDeparture = '';
           },
-          SortByCityNameBusAvailableToCityList(arr) {
+          SortByCityNameAvailableRouteList(arr) {
             // sort by name            
                 arr.sort(function(a, b) {
-                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                  var nameA = a.departure_city.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.departure_city.toUpperCase(); // ignore upper and lowercase
                   if (nameA < nameB) {
                     return -1;
                   }
@@ -318,26 +374,16 @@
                   return 0;
                 });
           },
-          SortByDivisionBusAvailableToCityList(arr) {
-            // sort by name            
+          SortByDistanceAvailableRouteList(arr) {
+            // sort by distance 
                 arr.sort(function(a, b) {
-                  var nameA = a.division.toUpperCase(); // ignore upper and lowercase
-                  var nameB = b.division.toUpperCase(); // ignore upper and lowercase
-                  if (nameA < nameB) {
-                    return -1;
-                  }
-                  if (nameA > nameB) {
-                    return 1;
-                  }
-
-                  // names must be equal
-                  return 0;
+                  return a.distance - b.distance;
                 });
           },
-          cityAddedAlert(cityName) {
+          routeAddedAlert(depatureCity, arrivalCity) {
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+                title: '<span style="color:#A5DC86"> <strong>'+ depatureCity +'to'+ arrivalCity +'</strong></span></br> Route Added successfully!',
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
                 html: true,
                 //type: "info",
@@ -352,7 +398,7 @@
 </script>
 
 <style lang="scss" scoped>
-    #scroll-cities {
+    #scroll-routes {
         span {
             cursor: pointer;
             margin-left: 5px;

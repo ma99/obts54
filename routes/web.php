@@ -45,9 +45,8 @@ Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 Route::get('/bus/ids', 'Admin\BusController@busIds');
 Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
 Route::get('/bus/{id}', 'Admin\BusController@showSeat');
-//Route::post('/delete/city', 'Admin\BusController@destroy');
-//Route::delete('/staffs/{staff}', 'Admin\DashboardController@destroy');
-//Route::get('/staffs/{staff}/edit', 'Admin\DashboardController@destroy');
+
+//city
 Route::post('/cities', 'Admin\CityController@store');
 Route::post('/delete/city', 'Admin\CityController@destroy');
 
@@ -65,6 +64,7 @@ Route::get('/cancel/{booking}', 'BookingController@cancelBooking');
 Route::get('/test', 'BookingController@test');
 Route::get('/test1', 'BookingController@test1');
 
+//payment
 //Route::get('/pay/{booking}', 'Payment\PaymentController@payNow')->name('payment');
 Route::get('/pay/{booking}', 'Payment\PaymentController@payNow')->name('payment');
 // Route::post('/sslcommerz/payment/success', 'Payment\PaymentController@success')->name('success');
