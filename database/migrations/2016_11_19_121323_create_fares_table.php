@@ -16,8 +16,9 @@ class CreateFaresTable extends Migration
         Schema::create('fares', function (Blueprint $table) {
             $table->increments('id');
             $table->string('rout_id');
-            $table->string('type');
-            $table->smallInteger('amount')->unsigned();        
+            $table->text('details');
+            // $table->string('type');
+            // $table->smallInteger('amount')->unsigned();        
             $table->timestamps();
         });
     }

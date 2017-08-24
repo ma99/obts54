@@ -46,6 +46,9 @@ Route::get('/bus/ids', 'Admin\BusController@busIds');
 Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
 Route::get('/bus/{id}', 'Admin\BusController@showSeat');
 
+//route
+Route::post('/route', 'Admin\RouteController@store');
+Route::post('/delete/route', 'Admin\RouteController@destroy');
 //city
 Route::post('/cities', 'Admin\CityController@store');
 Route::post('/delete/city', 'Admin\CityController@destroy');

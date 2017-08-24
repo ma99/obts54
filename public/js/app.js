@@ -17043,6 +17043,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -17050,16 +17088,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       actionStatus: '',
       alertType: '',
       arrivalCityList: [],
-      cityName: '',
-      tempCityList: [],
       availableRouteList: [],
       departureCityList: [],
       disableSaveButton: true,
       disableResetButton: true,
       disableSorting: true,
       divisionList: [],
+      routeName: '',
       error: '',
+      fare: {},
       loading: false,
+      tempCityList: [],
       response: '',
       routeDistance: '',
       //selectedCityId: '',
@@ -17085,13 +17124,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selectedDivisionForArrival: function selectedDivisionForArrival() {
       this.fetchCitiesByDivision(this.selectedDivisionForArrival.id, 'arrival'); // this.selectedDivisionForDepartureId
     },
-    cityList: function cityList() {
-      this.disableSaveButton = this.cityList.length < 1 ? true : false;
+    arrivalCityList: function arrivalCityList() {
+      this.isSaveButtonEnable();
+    },
+    departureCityList: function departureCityList() {
+      this.isSaveButtonEnable();
     }
   },
   methods: {
     enableSlimScroll: function enableSlimScroll() {
-      $('#scroll-cities').slimScroll({
+      $('#scroll-routes').slimScroll({
         color: '#00f',
         size: '8px',
         height: '300px',
@@ -17144,6 +17186,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
       });
     },
+    isSaveButtonEnable: function isSaveButtonEnable() {
+
+      this.disableSaveButton = this.departureCityList.length < 1 || this.arrivalCityList.length < 1 ? true : false;
+    },
     isSortingAvailableBy: function isSortingAvailableBy(val) {
       if (val == 'name') {
         this.SortByCityNameAvailableRouteList(this.availableRouteList);
@@ -17153,13 +17199,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.SortByDistanceAvailableRouteList(this.availableRouteList);
       this.disableSorting = false;
     },
-    removeCity: function removeCity(city) {
+    removeRoute: function removeRoute(route) {
       // role id of user/staff in roles table
       var vm = this;
-      this.cityName = city.name;
+      this.routeName = route.departure_city + '&nbsp;' + ' to ' + '&nbsp;' + route.arrival_city;
       swal({
         title: "Are you sure?",
-        text: "This city will be Removed from Bus Service available City List!",
+        text: "This Route will be Removed from Route List!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
@@ -17169,14 +17215,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }, function () {
         vm.loading = true;
         vm.response = '';
-        axios.post('/delete/city', {
-          city_code: city.code
+        axios.post('/delete/route', {
+          route_id: route.id
         }).then(function (response) {
-          // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+          // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
           response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
           if (vm.response) {
-            vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+            vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
             vm.loading = false;
             vm.actionStatus = 'Removed';
             vm.alertType = 'danger';
@@ -17188,12 +17234,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //swal("Deleted!", "Staff has been Removed.", "success");                      
       });
     },
-    removeCityFromBusAvailableToCityList: function removeCityFromBusAvailableToCityList(cityCode) {
-      var indx = this.busAvailableToCityList.findIndex(function (city) {
-        // here 'city' is array object 
-        return city.code == cityCode;
+    removeRouteFromAvailableRouteList: function removeRouteFromAvailableRouteList(routeId) {
+      var indx = this.availableRouteList.findIndex(function (route) {
+        return route.id == routeId;
       });
-      this.busAvailableToCityList.splice(indx, 1);
+      this.availableRouteList.splice(indx, 1);
       //return;
     },
     saveCities: function saveCities() {
@@ -17201,7 +17246,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       //this.loading = true;
       // console.log('cityId',this.selectedCity.id);
       // console.log('cityName',this.selectedCity.name);
-      axios.post('/routes', {
+      axios.post('/route', {
         departure_city: this.selectedDepartureCity,
         arrival_city: this.selectedArrivalCity,
         distance: this.routeDistance
@@ -17211,7 +17256,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (vm.response) {
           //console.log(vm.response);
           vm.fetchAvailableRoutes();
-          //vm.SortByCityNameAvailableRouteList(vm.busAvailableToCityList);
+          //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
           vm.loading = false;
           vm.disableSaveButton = true;
           vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
@@ -17253,7 +17298,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     routeAddedAlert: function routeAddedAlert(depatureCity, arrivalCity) {
       swal({
         //title: "Sorry! Not Available",
-        title: '<span style="color:#A5DC86"> <strong>' + depatureCity + 'to' + arrivalCity + '</strong></span></br> Route Added successfully!',
+        title: '<span style="color:#A5DC86"> <strong>' + depatureCity + '&nbsp;' + ' to ' + '&nbsp;' + arrivalCity + '</strong></span></br> Route Added successfully!',
         //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
         html: true,
         //type: "info",
@@ -47948,7 +47993,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "panel-body"
   }, [_c('form', [_c('div', {
-    staticClass: "col-sm-3"
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    staticClass: "panel panel-warning"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Enter Route Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-2"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
@@ -47990,7 +48045,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           name: division.name
         }
       }
-    }, [_vm._v("\n                            " + _vm._s(division.name) + "\n                          ")])
+    }, [_vm._v("\n                                    " + _vm._s(division.name) + "\n                                  ")])
   })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-3"
   }, [_c('div', {
@@ -48027,9 +48082,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.departureCityList), function(city) {
-    return _c('option', [_vm._v("\n                            " + _vm._s(city.name) + "\n                          ")])
+    return _c('option', [_vm._v("\n                                    " + _vm._s(city.name) + "\n                                  ")])
   })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-3"
+    staticClass: "col-sm-2"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
@@ -48071,7 +48126,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           name: division.name
         }
       }
-    }, [_vm._v("\n                            " + _vm._s(division.name) + "\n                          ")])
+    }, [_vm._v("\n                                    " + _vm._s(division.name) + "\n                                  ")])
   })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-3"
   }, [_c('div', {
@@ -48108,9 +48163,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": ""
     }
   }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.arrivalCityList), function(city) {
-    return _c('option', [_vm._v("\n                            " + _vm._s(city.name) + "\n                          ")])
+    return _c('option', [_vm._v("\n                                    " + _vm._s(city.name) + "\n                                  ")])
   })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-3"
+    staticClass: "col-sm-2"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
@@ -48140,7 +48195,107 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.routeDistance = $event.target.value
       }
     }
+  })])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    staticClass: "panel panel-success"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Enter Fare Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareAC"
+    }
+  }, [_vm._v("AC")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.ac),
+      expression: "fare.ac"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareAC",
+      "placeholder": "AC"
+    },
+    domProps: {
+      "value": (_vm.fare.ac)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.ac = $event.target.value
+      }
+    }
   })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareAC"
+    }
+  }, [_vm._v("Non AC")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.non_ac),
+      expression: "fare.non_ac"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareAC",
+      "placeholder": "Non AC"
+    },
+    domProps: {
+      "value": (_vm.fare.non_ac)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.non_ac = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareDelux"
+    }
+  }, [_vm._v("Non AC")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.delux),
+      expression: "fare.delux"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareDelux",
+      "placeholder": "Delux"
+    },
+    domProps: {
+      "value": (_vm.fare.delux)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.delux = $event.target.value
+      }
+    }
+  })])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4"
   }, [_c('div', {
     staticClass: "button-group"
@@ -48220,7 +48375,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "click": function($event) {
           $event.preventDefault();
-          _vm.removeCity(city)
+          _vm.removeRoute(city)
         }
       }
     }, [_c('i', {
@@ -48238,7 +48393,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.showAlert = $event
       }
     }
-  }, [_c('strong', [_vm._v(_vm._s(_vm.cityName) + " ")]), _vm._v(" has been \n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])])], 1)])
+  }, [_c('strong', [_vm._v(_vm._s(_vm.routeName) + " ")]), _vm._v(" has been \n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

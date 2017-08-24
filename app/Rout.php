@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rout extends Model
 {
-    //public $incrementing = false; 
+    protected $fillable = [
+        'departure_city', 'arrival_city', 'distance'
+    ];
 }

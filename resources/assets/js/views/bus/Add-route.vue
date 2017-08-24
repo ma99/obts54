@@ -32,68 +32,106 @@
               </div>
               <div class="panel-body" v-show="show">
                 <form>
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="divisionName">Departure: Division </label>
-                        <select v-model="selectedDivisionForDeparture" class="form-control" id="divisionName">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
-                              {{ division.name }}
-                            </option>                             
-                        </select>
+                    <!-- Route -->
+                    <div class="col-sm-12">
+                      <div class="panel panel-warning">
+                        <div class="panel-heading">Enter Route Info</div>
+                        <div class="panel-body">
+                          <div class="row">
+
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="divisionName">Departure: Division </label>
+                                <select v-model="selectedDivisionForDeparture" class="form-control" id="divisionName">
+                                    <option disabled value="">Please select one</option>
+                                    <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
+                                      {{ division.name }}
+                                    </option>                             
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="departureCity">Departure: City</label>
+                                <select v-model="selectedDepartureCity" class="form-control" id="departureCity">
+                                    <option disabled value="">Please select one</option>
+                                    <!-- <option v-for="city in departureCityList" v-bind:valaue="{ id: division.id, name: division.name }"> -->
+                                    <option v-for="city in departureCityList">
+                                      {{ city.name }}
+                                    </option>                             
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="divisionName">Arrival: Division</label>
+                                <select v-model="selectedDivisionForArrival" class="form-control" id="divisionName">
+                                    <option disabled value="">Please select one</option>
+                                    <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
+                                      {{ division.name }}
+                                    </option>                             
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="arrivalCity">Arrival: City</label>                       
+                                <select v-model="selectedArrivalCity" class="form-control" id="arrivalCity">
+                                    <option disabled value="">Please select one</option>                          
+                                    <option v-for="city in arrivalCityList">
+                                      {{ city.name }}
+                                    </option> 
+                                </select>
+                              </div>
+                            </div>
+
+                           <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="routeDistance">Distance</label>
+                                <input v-model="routeDistance" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Distance">
+                              </div>
+                           </div>
+                            
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="departureCity">Departure: City</label>
-                        <select v-model="selectedDepartureCity" class="form-control" id="departureCity">
-                            <option disabled value="">Please select one</option>
-                            <!-- <option v-for="city in departureCityList" v-bind:valaue="{ id: division.id, name: division.name }"> -->
-                            <option v-for="city in departureCityList">
-                              {{ city.name }}
-                            </option>                             
-                        </select>
+
+                    <!-- Fare Info -->
+                    <div class="col-sm-12">
+                      <div class="panel panel-success">
+                        <div class="panel-heading">Enter Fare Info</div>
+                        <div class="panel-body">
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="fareAC">AC</label>
+                                <input v-model="fare.ac" type="text" class="form-control" id="fareAC" placeholder="AC">
+                              </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="fareAC">Non AC</label>
+                                <input v-model="fare.non_ac" type="text" class="form-control" id="fareAC" placeholder="Non AC">
+                              </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="fareDelux">Non AC</label>
+                                <input v-model="fare.delux" type="text" class="form-control" id="fareDelux" placeholder="Delux">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="divisionName">Arrival: Division</label>
-                        <select v-model="selectedDivisionForArrival" class="form-control" id="divisionName">
-                            <option disabled value="">Please select one</option>
-                            <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
-                              {{ division.name }}
-                            </option>                             
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="arrivalCity">Arrival: City</label>                       
-                        <select v-model="selectedArrivalCity" class="form-control" id="arrivalCity">
-                            <option disabled value="">Please select one</option>                          
-                            <option v-for="city in arrivalCityList">
-                              {{ city.name }}
-                            </option> 
-                        </select>
-                      </div>
-                    </div>
-
-                   <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="routeDistance">Distance</label>
-                        <input v-model="routeDistance" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Distance">
-                      </div>
-                    </div>
-
-                   <!--  <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="cityCode">City Code</label>
-                        <input v-model="selectedCity.id" type="text" class="form-control" name="code" id="cityCode" placeholder="City Code" disabled>
-                      </div>
-                    </div> -->
+                   
 
                     <div class="col-sm-4">
                       <div class="button-group">
@@ -143,7 +181,7 @@
                         <td>{{ city.arrival_city }}</td>                              
                         <td>{{ city.distance }}</td>                              
                         <td> 
-                            <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">                        
+                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-danger">                        
                               <i class="fa fa-trash fa-fw"></i>Remove
                             </button>  
                         </td>                        
@@ -157,7 +195,7 @@
             <!-- <show-alert :show="showAlert" :type="alertType" @cancel="showAlert=false">  -->
             <show-alert :show.sync="showAlert" :type="alertType"> 
               <!-- altert type can be info/warning/danger -->
-              <strong>{{ cityName }} </strong> has been 
+              <strong>{{ routeName }} </strong> has been 
               <strong> {{ actionStatus }} </strong> successfully!
             </show-alert>
           </div>
@@ -174,16 +212,17 @@
             actionStatus: '',
             alertType: '',
             arrivalCityList: [],
-            cityName: '',
-            tempCityList: [],
             availableRouteList: [], 
             departureCityList: [],
             disableSaveButton: true,
             disableResetButton: true,
             disableSorting: true,
             divisionList: [],
+            routeName: '',
             error: '',
+            fare: {},
             loading: false,
+            tempCityList: [],
             response: '',
             routeDistance: '',
             //selectedCityId: '',
@@ -208,13 +247,16 @@
             selectedDivisionForArrival() {
                 this.fetchCitiesByDivision(this.selectedDivisionForArrival.id, 'arrival'); // this.selectedDivisionForDepartureId
             },
-            cityList() {                
-                this.disableSaveButton = (this.cityList.length < 1) ? true : false; 
+            arrivalCityList() {
+              this.isSaveButtonEnable();
+            },
+            departureCityList() {    
+              this.isSaveButtonEnable();                            
             },
         },
         methods: {
           enableSlimScroll() {
-                $('#scroll-cities').slimScroll({
+                $('#scroll-routes').slimScroll({
                   color: '#00f',
                   size: '8px',
                   height: '300px',
@@ -268,6 +310,11 @@
                    vm.SortByCityNameAvailableRouteList(vm.availableRouteList);                  
             });
           },
+
+          isSaveButtonEnable() {
+
+            this.disableSaveButton = ( (this.departureCityList.length < 1) || (this.arrivalCityList.length < 1) ) ? true : false; 
+          },
           isSortingAvailableBy(val) {
             if (val== 'name') {
                 this.SortByCityNameAvailableRouteList(this.availableRouteList);
@@ -278,12 +325,12 @@
             this.disableSorting = false;
           },
 
-          removeCity(city) {  // role id of user/staff in roles table
-            var vm = this;
-            this.cityName = city.name; 
+          removeRoute(route) {  // role id of user/staff in roles table
+            var vm = this;            
+            this.routeName = route.departure_city + '&nbsp;' +' to '+ '&nbsp;' + route.arrival_city; 
             swal({
                   title: "Are you sure?",
-                  text: "This city will be Removed from Bus Service available City List!",
+                  text: "This Route will be Removed from Route List!",
                   type: "warning",
                   showCancelButton: true,
                   confirmButtonColor: "#DD6B55",
@@ -294,15 +341,15 @@
                 function() {                       
                         vm.loading = true;
                         vm.response = '';
-                        axios.post('/delete/city', {                            
-                            city_code: city.code, 
+                        axios.post('/delete/route', {                            
+                            route_id: route.id, 
                         })          
                         .then(function (response) {                                           
-                            // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+                            // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
                             response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
                             if (vm.response) {                                
-                                vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+                                vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
                                 vm.loading = false;
                                 vm.actionStatus = 'Removed';
                                 vm.alertType = 'danger';
@@ -317,12 +364,11 @@
                 });
           },
          
-          removeCityFromBusAvailableToCityList(cityCode) {
-            var indx = this.busAvailableToCityList.findIndex(function(city){ 
-                // here 'city' is array object 
-                 return city.code == cityCode;
+          removeRouteFromAvailableRouteList(routeId) {
+            var indx = this.availableRouteList.findIndex(function(route){                 
+                 return route.id == routeId;
             });        
-            this.busAvailableToCityList.splice(indx, 1);
+            this.availableRouteList.splice(indx, 1);
             //return;
           },
           saveCities() {
@@ -330,7 +376,7 @@
             //this.loading = true;
             // console.log('cityId',this.selectedCity.id);
             // console.log('cityName',this.selectedCity.name);
-            axios.post('/routes', {
+            axios.post('/route', {
                 departure_city: this.selectedDepartureCity,
                 arrival_city: this.selectedArrivalCity,
                 distance: this.routeDistance,
@@ -341,7 +387,7 @@
                 if (vm.response) {
                    //console.log(vm.response);
                    vm.fetchAvailableRoutes();
-                   //vm.SortByCityNameAvailableRouteList(vm.busAvailableToCityList);
+                   //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
                    vm.loading = false;
                    vm.disableSaveButton = true;
                    vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
@@ -383,7 +429,7 @@
           routeAddedAlert(depatureCity, arrivalCity) {
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+ depatureCity +'to'+ arrivalCity +'</strong></span></br> Route Added successfully!',
+                title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
                 html: true,
                 //type: "info",

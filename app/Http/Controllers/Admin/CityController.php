@@ -12,8 +12,8 @@ class CityController extends Controller
     public function store(Request $request)
     {
     	$this->validate($request, [
-            'city_name' => 'required|max:30',
-            'division_name' => 'required|max:30'
+            'city_name' => 'required|max:50',
+            'division_name' => 'required|max:50'
             //'code' => 'required|max:25',
         ]);
 
