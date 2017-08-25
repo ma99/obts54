@@ -63,7 +63,7 @@
                 </div>
               </div>
               {{-- SCHEDULE --}}    
-              <div v-show="isBusAvailable" class="panel panel-info">
+              <div v-show="showSchedule" class="panel panel-info">
                   <div class="panel-heading">Schedule Details</div>
                   <table class="table table-striped task-table">
                      <!-- Table Headings -->

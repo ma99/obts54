@@ -107,7 +107,7 @@
                         <td>{{ city.code }}</td>                              
                         <td>{{ city.division }}</td>
                         <td> 
-                            <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">                        
+                            <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">
                               <i class="fa fa-trash fa-fw"></i>Remove
                             </button>  
                         </td>                        
@@ -240,6 +240,7 @@
                 function() {                       
                         vm.loading = true;
                         vm.response = '';
+                        vm.showAlert = false;
                         axios.post('/delete/city', {                            
                             city_code: city.code, 
                         })          

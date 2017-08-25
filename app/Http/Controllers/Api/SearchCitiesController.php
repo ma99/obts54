@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Rout;
+use App\Fare;
 use App\Stop;
 use App\City;
 use App\Division;
@@ -120,7 +121,9 @@ class SearchCitiesController extends Controller
     $error = ['error' => 'Route Not Found']; 
 
     //$divisionId = $this->request->input('q');
-    $routes = Rout::all();
+    //$routes = Rout::all();
+    //$routes = Rout::all();
+    $routes = Rout::with('fare')->get();
     return $routes->count() ? $routes : $error;
    }
 

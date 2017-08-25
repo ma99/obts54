@@ -59,14 +59,30 @@ class RouteController extends Controller
         $arraivalCity = $this->request->input('arrival_city');
         $departureCity = $this->request->input('departure_city');
         $distance = $this->request->input('distance');
+        
+        $fare_ac = $this->request->input('fare.ac');
+        $fare_non_ac = $this->request->input('fare.non_ac');
+        $fare_delux = $this->request->input('fare.delux');
+        
+        $fareDetails = [
+            'ac' => $this->request->input('fare.ac'),
+            'non_ac' => $this->request->input('fare.non_ac'),
+            'deluxe' => $this->request->input('fare.deluxe')
+        ];
+
         // SeatPlan::create([
         //     //'role_id' => $this->id,
         //     'bus_id' => $busId,
         //     'seat_list' => $seatList            
         // ]);        
-        Rout::updateOrCreate(
+       $route = Rout::updateOrCreate(
             ['departure_city' => $departureCity, 'arrival_city' => $arraivalCity ],
             ['distance' => $distance]
+        );
+
+        $fare = $route->fare()->updateOrCreate(
+            ['rout_id' => $route->id],
+            ['details' => $fareDetails]
         );
 
         return 'Success';

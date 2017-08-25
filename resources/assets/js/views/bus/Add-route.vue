@@ -31,70 +31,74 @@
                 
               </div>
               <div class="panel-body" v-show="show">
-                <form>
+                <!-- <form> -->
                     <!-- Route -->
                     <div class="col-sm-12">
                       <div class="panel panel-warning">
                         <div class="panel-heading">Enter Route Info</div>
                         <div class="panel-body">
                           <div class="row">
+                            <div class="route-info">
+                              <span class="departure">Departure</span>                                                          
+                              <form class="form-inline">                            
+                               <!--  <div class="col-sm-2"> -->
+                                  <div class="form-group">
+                                    <label for="divisionName">Division </label>
+                                    <select v-model="selectedDivisionForDeparture" class="form-control" id="divisionName">
+                                        <option disabled value="">Please select one</option>
+                                        <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
+                                          {{ division.name }}
+                                        </option>                             
+                                    </select>
+                                  </div>
+                                <!-- </div> -->
 
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="divisionName">Departure: Division </label>
-                                <select v-model="selectedDivisionForDeparture" class="form-control" id="divisionName">
-                                    <option disabled value="">Please select one</option>
-                                    <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
-                                      {{ division.name }}
-                                    </option>                             
-                                </select>
-                              </div>
+                                <!-- <div class="col-sm-3"> -->
+                                  <div class="form-group">
+                                    <label for="departureCity">City</label>
+                                    <select v-model="selectedDepartureCity" class="form-control" id="departureCity">
+                                        <option disabled value="">Please select one</option>
+                                        <!-- <option v-for="city in departureCityList" v-bind:valaue="{ id: division.id, name: division.name }"> -->
+                                        <option v-for="city in departureCityList">
+                                          {{ city.name }}
+                                        </option>                             
+                                    </select>
+                                  </div>
+                                <!-- </div> -->
+                              </form>
                             </div>
-
-                            <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="departureCity">Departure: City</label>
-                                <select v-model="selectedDepartureCity" class="form-control" id="departureCity">
-                                    <option disabled value="">Please select one</option>
-                                    <!-- <option v-for="city in departureCityList" v-bind:valaue="{ id: division.id, name: division.name }"> -->
-                                    <option v-for="city in departureCityList">
-                                      {{ city.name }}
-                                    </option>                             
-                                </select>
-                              </div>
+                            <div class="route-info">
+                              <span class="arrival">Arrival</span>                     
+                              <form class="form-inline">   
+                                <div class="form-group">
+                                  <label for="divisionName">Division</label>
+                                  <select v-model="selectedDivisionForArrival" class="form-control" id="divisionName">
+                                      <option disabled value="">Please select one</option>
+                                      <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
+                                        {{ division.name }}
+                                      </option>                             
+                                  </select>
+                                </div>        
+                                <!-- City-->
+                                <div class="form-group">
+                                <label for="arrivalCity">City</label>                       
+                                  <select v-model="selectedArrivalCity" class="form-control" id="arrivalCity">
+                                      <option disabled value="">Please select one</option>
+                                      <option v-for="city in arrivalCityList">
+                                        {{ city.name }}
+                                      </option> 
+                                  </select>
+                                </div>
+                              </form>
+                            </div>     
+                            <div class="route-distance">
+                              <form class="form-inline">
+                                <div class="form-group">
+                                  <label for="routeDistance">Route Distance</label>
+                                  <input v-model="routeDistance" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Distance">
+                                </div>
+                              </form>
                             </div>
-
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="divisionName">Arrival: Division</label>
-                                <select v-model="selectedDivisionForArrival" class="form-control" id="divisionName">
-                                    <option disabled value="">Please select one</option>
-                                    <option v-for="division in divisionList" v-bind:value="{ id: division.id, name: division.name }">
-                                      {{ division.name }}
-                                    </option>                             
-                                </select>
-                              </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="arrivalCity">Arrival: City</label>                       
-                                <select v-model="selectedArrivalCity" class="form-control" id="arrivalCity">
-                                    <option disabled value="">Please select one</option>                          
-                                    <option v-for="city in arrivalCityList">
-                                      {{ city.name }}
-                                    </option> 
-                                </select>
-                              </div>
-                            </div>
-
-                           <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="routeDistance">Distance</label>
-                                <input v-model="routeDistance" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Distance">
-                              </div>
-                           </div>
-                            
                           </div>
                         </div>
                       </div>
@@ -123,15 +127,14 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <label for="fareDelux">Non AC</label>
-                                <input v-model="fare.delux" type="text" class="form-control" id="fareDelux" placeholder="Delux">
+                                <label for="fareDeluxe">Deluxe</label>
+                                <input v-model="fare.deluxe" type="text" class="form-control" id="fareDeluxe" placeholder="Deluxe">
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                   
 
                     <div class="col-sm-4">
                       <div class="button-group">
@@ -139,7 +142,7 @@
                         <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
                       </div>
                     </div>                      
-                </form>
+                <!-- </form> -->
               </div>
           </div>
       </div>
@@ -170,6 +173,9 @@
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                               </span>
                         </th>
+                        <th>
+                          Fare
+                        </th>
                         <th>Action</th>                                                         
                         <!-- <th>&nbsp;</th> -->
                       </tr>
@@ -179,11 +185,20 @@
                         <td>{{ index+1 }}</td>                              
                         <td>{{ city.departure_city }}</td>
                         <td>{{ city.arrival_city }}</td>                              
-                        <td>{{ city.distance }}</td>                              
+                        <td>{{ city.distance }}</td>
+                        <td v-if="city.fare == null">N/A</td>                        
+                        <td v-else> 
+                          AC: {{ city.fare.details.ac }} </br>
+                          Non-AC: {{ city.fare.details.non_ac }} </br> 
+                          Deluxe: {{ city.fare.details.deluxe }} </br> 
+                        </td>                              
                         <td> 
-                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-danger">                        
-                              <i class="fa fa-trash fa-fw"></i>Remove
+                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-primary">
+                              <i class="fa fa-edit fa-fw"></i>Edit
                             </button>  
+                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-danger">
+                              <i class="fa fa-trash fa-fw"></i>Remove
+                            </button> 
                         </td>                        
                       </tr>                            
                     </tbody>
@@ -327,7 +342,7 @@
 
           removeRoute(route) {  // role id of user/staff in roles table
             var vm = this;            
-            this.routeName = route.departure_city + '&nbsp;' +' to '+ '&nbsp;' + route.arrival_city; 
+            this.routeName = route.departure_city + ' to ' + route.arrival_city;
             swal({
                   title: "Are you sure?",
                   text: "This Route will be Removed from Route List!",
@@ -341,6 +356,7 @@
                 function() {                       
                         vm.loading = true;
                         vm.response = '';
+                        vm.showAlert = false;
                         axios.post('/delete/route', {                            
                             route_id: route.id, 
                         })          
@@ -379,7 +395,8 @@
             axios.post('/route', {
                 departure_city: this.selectedDepartureCity,
                 arrival_city: this.selectedArrivalCity,
-                distance: this.routeDistance,
+                distance: this.routeDistance,                
+                fare: this.fare
             })          
             .then(function (response) {
                 //console.log(response.data);
@@ -403,6 +420,7 @@
             this.selectedDepartureCity = '';
             this.selectedDivisionForArrival = '';
             this.selectedDivisionForDeparture = '';
+            this.routeDistance = '';
           },
           SortByCityNameAvailableRouteList(arr) {
             // sort by name            
@@ -444,6 +462,43 @@
 </script>
 
 <style lang="scss" scoped>
+    .route-info {
+      border: 1px dashed lightblue;
+      padding: 25px 10px;
+      margin: 25px 25px 50px 25px;
+      position: relative;
+      text-align: center;      
+
+      span {
+        /* background-color: lightblue; */
+        display: block;
+        font-weight: 600;
+        letter-spacing: 1px;        
+        left: 14px;
+        top: -16px;
+        position: absolute;
+        padding: 5px 10px;
+        width: 90px;
+      }
+      .arrival {
+        @extend span;
+        background-color: lightblue;
+      }
+      .departure {
+        @extend span;
+        background-color: lightgreen;
+      }
+    }
+
+    form {
+         label {
+          padding: 0 5px 0 15px;
+         }
+    }
+
+    .route-distance {
+      margin: -15px 10px 10px 15px;
+    }     
     #scroll-routes {
         span {
             cursor: pointer;

@@ -50,15 +50,51 @@ class SearchTicketController extends Controller
 
   //   	return $from . $to ;
   //   }
-    public function test1($routeId)
+    public function test1()
     {
-		// $fareDetails = Fare::where('rout_id', $routeId)->first();			
-		// $fare = $fareDetails->details;
-		// dd($fare['ac']);
-		// return $fareDetails->details['ac'];
-		$bus_type = 'non-ac';
-		$fare = $this->busFareByBusType($bus_type, $routeId);
-		dd($fare);
+ 
+		// $from  = 'dhaka';
+		// $to = 'sylhet';
+		// $date = '2017-11-30';
+		$from  = 'dhaka';
+		$to = 'sylhet';
+		$date = '07/12/2010';
+        $date = date("Y-m-d", strtotime($date));
+  
+		
+		return $date;
+
+		$route = Rout::where('departure_city', $from)->
+						where( 'arrival_city', $to)->first();
+		
+		$this->routeId = $routeId = $route->id;
+	
+		// return $schedules = Schedule::where('rout_id', $routeId)->
+		// 							with(['bookings' => function($query) use ($date) {
+		// 								$query->where('date', $date);
+		// 							}])->get();	
+		// $schedules = Schedule::where('rout_id', $routeId)->with('bookings')->get();
+		// return $schedules;
+		
+
+		$schedules = Schedule::where('rout_id', $routeId)->
+									with(['bookings' => function($query) use ($date) {
+										$query->where('date', $date);
+									}])->get();	
+
+		// $schedules = Schedule::with(['bookings' => function($query) use ($date) {
+		// 								$query->where('date' , $date);
+		// 							}])->get();	
+
+		
+		foreach ($schedules as $schedule) {
+			//print_r(count($schedule->bookings));
+			print_r($schedule->bookings->count());
+		}
+									
+		return $schedules;	
+
+		
     }
 
 
@@ -156,9 +192,7 @@ class SearchTicketController extends Controller
 			
 		        $bus_type = $bus->type;
 		        //fare
-		        $fare = $this->busFareByBusType($bus_type, $routeId);
-
-		        /*if ($bus_type  == 'ac-deluxe') { 
+		        if ($bus_type  == 'ac-deluxe') { 
 
 				    $fare_ac = Fare::where('rout_id', $routeId)->
 								 	 where('type', 'ac')->value('amount');
@@ -170,7 +204,7 @@ class SearchTicketController extends Controller
 				}
 				else 
 					$fare = Fare::where('rout_id', $routeId)->
-							  	  where('type', $bus_type)->value('amount');*/
+							  	  where('type', $bus_type)->value('amount');
 
 				//echo '5. fare = '. $fare;
 				$buses[] = [
@@ -190,33 +224,6 @@ class SearchTicketController extends Controller
 		}
 		return $error;		
 
-    }
-
-    public function busFareByBusType($busType, $routeId)
-    {
-		$fareDetails = Fare::where('rout_id', $routeId)->first();
-		if ($fareDetails) {
-
-		$fare = $fareDetails->details;
-		//dd($fare['ac']);		
-
-		switch ($busType) {
-		    case "ac":
-		        $fare = $fare['ac'];
-		        break;
-		    case "non-ac":
-		        $fare = $fare['non_ac'];
-		        break;
-		    case "delux":
-		        $fare = $fare['deluxe'];
-		        break;
-		    case "ac-delux":
-		        $fare = $fare['ac'] .'/'. $fare['deluxe'];
-		        break;
-		}
-		return $fare;
-		}
-		return 'N/A';
     }
 
     public function viewSeats()

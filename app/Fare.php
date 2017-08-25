@@ -20,4 +20,9 @@ class Fare extends Model
     {   
         return unserialize($value);
     }
+
+    public function rout()
+    {
+        return $this->hasOne(Rout::class);
+    }
 }

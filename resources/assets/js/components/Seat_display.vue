@@ -16,7 +16,8 @@
               message: '',
               modal: false,
               showAlert: false, // for alert Component
-              showSearch: true,              
+              showSearch: true,
+              showSchedule: false,              
               scheduleId:'',
               startDate: '',               
               selectedCityFrom: '',
@@ -30,7 +31,7 @@
               seatStatus: '',              
               seatError: false,                                 
               selectedSeat: [],
-              seatList: [],
+              seatList: [],              
               indexList: [],
               index: 2, // space starting from this index then 2+4, 6+4
               numberOfRow: '',
@@ -88,6 +89,9 @@
           default:
             console.log('Sorry, we are out of ' + type + '.');
         }
+       },
+       buses() {
+        this.isBusAvailable(); 
        }, 
        selectedCityFrom() {
           //console.log();
@@ -138,10 +142,10 @@
         },        
         
 
-        isBusAvailable() {
-          let len = this.buses.length;
-          return ( len >0 && this.error==false && this.selectedTo !=="" ) ? true : false;  //true show table
-        },
+        // isBusAvailable() {
+        //   let len = this.buses.length;
+        //   return ( len >0 && this.error==false && this.selectedTo !=="" ) ? true : false;  //true show table
+        // },
 
         isDisabled(){
           //return ( this.selected=='' || this.selectedTo=='' || this.startDate='' ) ? true : false;
@@ -177,6 +181,11 @@
                 if(this.form.errors) {
                   this.form.errors.clear();                
                 }
+        },
+        isBusAvailable() {
+          let len = this.buses.length;
+          //this.showSchedule = ( len >0 && this.error==false && this.selectedTo !=="" ) ? true : false;  //true show table
+          this.showSchedule = ( len >0 ) ? true : false;  //true show table
         },
         isSeatBuying(seatStatus){
           return seatStatus=='buying' ? true : false;
