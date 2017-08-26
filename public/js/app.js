@@ -17062,6 +17062,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -17075,13 +17124,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       disableResetButton: true,
       disableSorting: true,
       divisionList: [],
-      routeName: '',
       error: '',
       fare: {},
       loading: false,
+      lastUpdatedAt: '',
+      modal: false,
       tempCityList: [],
       response: '',
       routeDistance: '',
+      routeId: '',
+      routeName: '',
       //selectedCityId: '',
       selectedArrivalCity: '',
       //selectedDivisionForDepartureId: '',
@@ -17113,6 +17165,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
+    cancelEdit: function cancelEdit() {
+      this.fare = '';
+      this.modal = false;
+    },
+    editRoute: function editRoute(route) {
+      // role id of user/staff in roles table
+      console.log('route fare=', route.fare.details);
+      //this.fare = route.fare.details;
+      this.routeId = route.id;
+      this.lastUpdatedAt = route.fare.updated_at;
+      this.fare = _.clone(route.fare.details); //cloning or coppy                
+      this.modal = true;
+    },
     enableSlimScroll: function enableSlimScroll() {
       $('#scroll-routes').slimScroll({
         color: '#00f',
@@ -17163,6 +17228,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.get('/api/routes') //--> api/bus?q=xyz        (right)
       .then(function (response) {
         response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+        //vm.tempAvailableRouteList = response.data;
         vm.loading = false;
         vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
       });
@@ -17289,6 +17355,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         showConfirmButton: false,
         allowOutsideClick: true
       });
+    },
+    updateRouteFare: function updateRouteFare() {
+      var vm = this;
+      this.response = '';
+      this.showAlert = false;
+      //this.staffName = staff.name;                
+      this.loading = true;
+      axios.post('/update/fare', {
+        route_id: this.routeId,
+        fare: this.fare
+      }).then(function (response) {
+        //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+        if (vm.response) {
+          vm.updateFareAtAvailableRouteList(vm.routeId, vm.fare);
+          vm.loading = false;
+          vm.modal = false;
+          vm.actionStatus = 'Udated';
+          vm.alertType = 'info';
+          vm.showAlert = true;
+        }
+      });
+    },
+    updateFareAtAvailableRouteList: function updateFareAtAvailableRouteList(routeId, fare) {
+      var indx = this.availableRouteList.findIndex(function (route) {
+        return route.id == routeId;
+      });
+      this.availableRouteList[indx].fare.details = fare;
+      this.routeName = this.availableRouteList[indx].departure_city + ' to ' + this.availableRouteList[indx].arrival_city;
+      this.fare = '';
     }
   }
 });
@@ -22862,7 +22958,7 @@ exports.push([module.i, "/* The Modal (background) */\n#loader.modal[data-v-3f03
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.route-info[data-v-477a1c59] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-477a1c59], .route-info .arrival[data-v-477a1c59], .route-info .departure[data-v-477a1c59] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-477a1c59] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-477a1c59] {\n    background-color: lightgreen;\n}\nform label[data-v-477a1c59] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-477a1c59] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-477a1c59], #scroll-routes .route-info .arrival[data-v-477a1c59], .route-info #scroll-routes .arrival[data-v-477a1c59], #scroll-routes .route-info .departure[data-v-477a1c59], .route-info #scroll-routes .departure[data-v-477a1c59] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-477a1c59], #scroll-routes .route-info [disabled].arrival[data-v-477a1c59], .route-info #scroll-routes [disabled].arrival[data-v-477a1c59], #scroll-routes .route-info [disabled].departure[data-v-477a1c59], .route-info #scroll-routes [disabled].departure[data-v-477a1c59] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n.panel-heading span[data-v-477a1c59], .panel-heading .route-info .arrival[data-v-477a1c59], .route-info .panel-heading .arrival[data-v-477a1c59], .panel-heading .route-info .departure[data-v-477a1c59], .route-info .panel-heading .departure[data-v-477a1c59] {\n  background-color: azure;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-477a1c59] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-477a1c59], .route-info .arrival[data-v-477a1c59], .route-info .departure[data-v-477a1c59] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-477a1c59] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-477a1c59] {\n    background-color: lightgreen;\n}\nform label[data-v-477a1c59] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-477a1c59] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-477a1c59], #scroll-routes .route-info .arrival[data-v-477a1c59], .route-info #scroll-routes .arrival[data-v-477a1c59], #scroll-routes .route-info .departure[data-v-477a1c59], .route-info #scroll-routes .departure[data-v-477a1c59] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-477a1c59], #scroll-routes .route-info [disabled].arrival[data-v-477a1c59], .route-info #scroll-routes [disabled].arrival[data-v-477a1c59], #scroll-routes .route-info [disabled].departure[data-v-477a1c59], .route-info #scroll-routes [disabled].departure[data-v-477a1c59] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 67 */
@@ -48248,6 +48344,229 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Enter Fare Info")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_c('div', {
+    staticClass: "row col-sm-offset-2"
+  }, [_c('form', [_c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareAC"
+    }
+  }, [_vm._v("AC")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.ac),
+      expression: "fare.ac"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareAC",
+      "placeholder": "AC"
+    },
+    domProps: {
+      "value": (_vm.fare.ac)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.ac = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareAC"
+    }
+  }, [_vm._v("Non AC")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.non_ac),
+      expression: "fare.non_ac"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareAC",
+      "placeholder": "Non AC"
+    },
+    domProps: {
+      "value": (_vm.fare.non_ac)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.non_ac = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "fareDeluxe"
+    }
+  }, [_vm._v("Deluxe")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fare.deluxe),
+      expression: "fare.deluxe"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "fareDeluxe",
+      "placeholder": "Deluxe"
+    },
+    domProps: {
+      "value": (_vm.fare.deluxe)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fare.deluxe = $event.target.value
+      }
+    }
+  })])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "button-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.disableSaveButton
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveCities()
+      }
+    }
+  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.disableResetButton
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.reset()
+      }
+    }
+  }, [_vm._v("Reset")])])])])])]), _vm._v(" "), _c('loader', {
+    attrs: {
+      "show": _vm.loading
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Route Info "), _c('span', [_vm._v(" " + _vm._s(_vm.availableRouteList.length) + " ")])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    attrs: {
+      "id": "scroll-routes"
+    }
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("From\n                            "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": _vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.isSortingAvailableBy('name')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("To                      \n                           ")]), _vm._v(" "), _c('th', [_vm._v("Distance\n                        "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": !_vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.isSortingAvailableBy('distance')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(route, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.distance))]), _vm._v(" "), (route.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(route.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(route.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(route.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.editRoute(route)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-edit fa-fw"
+    }), _vm._v("Edit\n                          ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.removeRoute(route)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash fa-fw"
+    }), _vm._v("Remove\n                          ")])])])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('show-alert', {
+    attrs: {
+      "show": _vm.showAlert,
+      "type": _vm.alertType
+    },
+    on: {
+      "update:show": function($event) {
+        _vm.showAlert = $event
+      }
+    }
+  }, [_c('strong', [_vm._v(_vm._s(_vm.routeName) + " ")]), _vm._v(" has been \n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])]), _vm._v(" "), _c('modal', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modal),
+      expression: "modal"
+    }],
+    on: {
+      "close": _vm.cancelEdit
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-8 col-sm-offset-2",
+    attrs: {
+      "id": "edit-route"
+    }
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Edit Fare Info.")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('span', [_vm._v(" Last Updated: "), _c('strong', [_vm._v(_vm._s(_vm.lastUpdatedAt) + " ")])]), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-3"
@@ -48339,115 +48658,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.fare.deluxe = $event.target.value
       }
     }
-  })])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4"
-  }, [_c('div', {
-    staticClass: "button-group"
+  })])])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
   }, [_c('button', {
     staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": _vm.disableSaveButton
-    },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.saveCities()
+        _vm.updateRouteFare()
       }
     }
   }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": _vm.disableResetButton
-    },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.reset()
+        _vm.cancelEdit()
       }
     }
-  }, [_vm._v("Reset")])])])])])]), _vm._v(" "), _c('loader', {
-    attrs: {
-      "show": _vm.loading
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "panel panel-info"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Route Info")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('div', {
-    attrs: {
-      "id": "scroll-routes"
-    }
-  }, [_c('table', {
-    staticClass: "table table-striped table-hover"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("From\n                            "), _c('span', {
-    attrs: {
-      "type": "button",
-      "disabled": _vm.disableSorting
-    },
-    on: {
-      "click": function($event) {
-        _vm.isSortingAvailableBy('name')
-      }
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-sort-amount-asc",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), _c('th', [_vm._v("To                      \n                           ")]), _vm._v(" "), _c('th', [_vm._v("Distance\n                        "), _c('span', {
-    attrs: {
-      "type": "button",
-      "disabled": !_vm.disableSorting
-    },
-    on: {
-      "click": function($event) {
-        _vm.isSortingAvailableBy('distance')
-      }
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-sort-amount-asc",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(city, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(city.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(city.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(city.distance))]), _vm._v(" "), (city.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(city.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(city.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(city.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-primary",
-      on: {
-        "click": function($event) {
-          $event.preventDefault();
-          _vm.removeRoute(city)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-edit fa-fw"
-    }), _vm._v("Edit\n                          ")]), _vm._v(" "), _c('button', {
-      staticClass: "btn btn-danger",
-      on: {
-        "click": function($event) {
-          $event.preventDefault();
-          _vm.removeRoute(city)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-trash fa-fw"
-    }), _vm._v("Remove\n                          ")])])])
-  }))])])]), _vm._v(" "), _c('div', {
-    staticClass: "panel-footer"
-  }, [_c('show-alert', {
-    attrs: {
-      "show": _vm.showAlert,
-      "type": _vm.alertType
-    },
-    on: {
-      "update:show": function($event) {
-        _vm.showAlert = $event
-      }
-    }
-  }, [_c('strong', [_vm._v(_vm._s(_vm.routeName) + " ")]), _vm._v(" has been \n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])])], 1)])
+  }, [_vm._v("Cancel")])])])])])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

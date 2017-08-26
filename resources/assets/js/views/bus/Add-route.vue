@@ -104,34 +104,37 @@
                       </div>
                     </div>
 
-
                     <!-- Fare Info -->
                     <div class="col-sm-12">
                       <div class="panel panel-success">
                         <div class="panel-heading">Enter Fare Info</div>
                         <div class="panel-body">
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="fareAC">AC</label>
-                                <input v-model="fare.ac" type="text" class="form-control" id="fareAC" placeholder="AC">
-                              </div>
-                            </div>
+                          <div class="row col-sm-offset-2">
+                            <!-- <div class="fare-info"> -->
+                              <form>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <label for="fareAC">AC</label>
+                                    <input v-model="fare.ac" type="text" class="form-control" id="fareAC" placeholder="AC">
+                                  </div>
+                                </div>
 
-                            <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="fareAC">Non AC</label>
-                                <input v-model="fare.non_ac" type="text" class="form-control" id="fareAC" placeholder="Non AC">
-                              </div>
-                            </div>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <label for="fareAC">Non AC</label>
+                                    <input v-model="fare.non_ac" type="text" class="form-control" id="fareAC" placeholder="Non AC">
+                                  </div>
+                                </div>
 
-                            <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="fareDeluxe">Deluxe</label>
-                                <input v-model="fare.deluxe" type="text" class="form-control" id="fareDeluxe" placeholder="Deluxe">
-                              </div>
-                            </div>
-                          </div>
+                                <div class="col-sm-3">
+                                  <div class="form-group">
+                                    <label for="fareDeluxe">Deluxe</label>
+                                    <input v-model="fare.deluxe" type="text" class="form-control" id="fareDeluxe" placeholder="Deluxe">
+                                  </div>
+                                </div>                                                            
+                              </form>
+                            <!-- </div> -->
+                          </div> <!-- row -->
                         </div>
                       </div>
                     </div>
@@ -151,7 +154,7 @@
 
       <div class="row">
         <div class="panel panel-info">
-          <div class="panel-heading">Route Info</div>
+          <div class="panel-heading">Route Info <span> {{ availableRouteList.length }} </span></div>
           <div class="panel-body">
               <div id="scroll-routes">
                 <table class="table table-striped table-hover">
@@ -181,22 +184,22 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr  v-for="(city, index) in availableRouteList" >                              
+                      <tr  v-for="(route, index) in availableRouteList" >                              
                         <td>{{ index+1 }}</td>                              
-                        <td>{{ city.departure_city }}</td>
-                        <td>{{ city.arrival_city }}</td>                              
-                        <td>{{ city.distance }}</td>
-                        <td v-if="city.fare == null">N/A</td>                        
+                        <td>{{ route.departure_city }}</td>
+                        <td>{{ route.arrival_city }}</td>                              
+                        <td>{{ route.distance }}</td>
+                        <td v-if="route.fare == null">N/A</td>                        
                         <td v-else> 
-                          AC: {{ city.fare.details.ac }} </br>
-                          Non-AC: {{ city.fare.details.non_ac }} </br> 
-                          Deluxe: {{ city.fare.details.deluxe }} </br> 
+                          AC: {{ route.fare.details.ac }} </br>
+                          Non-AC: {{ route.fare.details.non_ac }} </br> 
+                          Deluxe: {{ route.fare.details.deluxe }} </br> 
                         </td>                              
                         <td> 
-                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-primary">
+                            <button v-on:click.prevent="editRoute(route)" class="btn btn-primary">
                               <i class="fa fa-edit fa-fw"></i>Edit
                             </button>  
-                            <button v-on:click.prevent="removeRoute(city)" class="btn btn-danger">
+                            <button v-on:click.prevent="removeRoute(route)" class="btn btn-danger">
                               <i class="fa fa-trash fa-fw"></i>Remove
                             </button> 
                         </td>                        
@@ -216,6 +219,52 @@
           </div>
         </div>
       </div>
+      <!-- Modal -->              
+      <!-- <modal :show="modal" @close="modal=false"> -->
+      <modal v-show="modal" @close="cancelEdit">
+        <div class="row">
+            <div id="edit-route" class="col-sm-8 col-sm-offset-2">
+              <div class="panel panel-default">
+                <div class="panel-heading">Edit Fare Info.</div>                
+                <div class="panel-body">
+                  <span> Last Updated: <strong>{{ lastUpdatedAt }} </strong> </span>
+                  </br></br>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="fareAC">AC</label>
+                        <input v-model="fare.ac" type="text" class="form-control" id="fareAC" placeholder="AC">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="fareAC">Non AC</label>
+                        <input v-model="fare.non_ac" type="text" class="form-control" id="fareAC" placeholder="Non AC">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="fareDeluxe">Deluxe</label>
+                        <input v-model="fare.deluxe" type="text" class="form-control" id="fareDeluxe" placeholder="Deluxe">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel-footer">
+                      <button class="btn btn-primary" v-on:click.prevent="updateRouteFare()">Save</button>
+                      <!-- <button class="btn btn-primary" @click.prevent="modal=false">Cancel</button> -->
+                      <button class="btn btn-primary" @click.prevent="cancelEdit()">Cancel</button>
+                </div>    
+
+              </div>
+
+            </div>               
+        </div>                 
+      </modal>
+        <!-- /Modal -->
        
     </section>        
   </div>      
@@ -233,13 +282,16 @@
             disableResetButton: true,
             disableSorting: true,
             divisionList: [],
-            routeName: '',
             error: '',
-            fare: {},
+            fare: {},            
             loading: false,
-            tempCityList: [],
+            lastUpdatedAt: '',
+            modal: false,
+            tempCityList: [],            
             response: '',
             routeDistance: '',
+            routeId: '',
+            routeName: '',
             //selectedCityId: '',
             selectedArrivalCity: '',
             //selectedDivisionForDepartureId: '',
@@ -270,6 +322,18 @@
             },
         },
         methods: {
+          cancelEdit() {
+            this.fare = '';            
+            this.modal = false;
+          },
+          editRoute(route) {  // role id of user/staff in roles table
+                console.log('route fare=', route.fare.details);
+                //this.fare = route.fare.details;
+                this.routeId = route.id;
+                this.lastUpdatedAt = route.fare.updated_at;
+                this.fare = _.clone(route.fare.details); //cloning or coppy                
+                this.modal = true;                
+          },
           enableSlimScroll() {
                 $('#scroll-routes').slimScroll({
                   color: '#00f',
@@ -321,6 +385,7 @@
             axios.get('/api/routes')  //--> api/bus?q=xyz        (right)
                 .then(function (response) {                  
                    response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+                   //vm.tempAvailableRouteList = response.data;
                    vm.loading = false;
                    vm.SortByCityNameAvailableRouteList(vm.availableRouteList);                  
             });
@@ -456,12 +521,51 @@
                 showConfirmButton: false,
                 allowOutsideClick: true,
               });
+          },
+          updateRouteFare() {
+            var vm = this;
+                this.response = '';
+                this.showAlert = false;
+                //this.staffName = staff.name;                
+                this.loading = true;
+                axios.post('/update/fare', {
+                      route_id: this.routeId,
+                      fare: this.fare                      
+                    })          
+                    .then(function (response) {                                           
+                      //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                      response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                      if (vm.response) {
+                          vm.updateFareAtAvailableRouteList(vm.routeId, vm.fare);
+                          vm.loading = false;
+                          vm.modal = false;
+                          vm.actionStatus = 'Udated';
+                          vm.alertType = 'info';                          
+                          vm.showAlert= true;                                                                        
+                      }
+                    });
+          },
+
+          updateFareAtAvailableRouteList(routeId, fare) {
+             var indx = this.availableRouteList.findIndex(function(route){                                        
+                    return route.id == routeId;
+             });                                     
+             this.availableRouteList[indx].fare.details = fare;
+             this.routeName = this.availableRouteList[indx].departure_city + ' to ' + this.availableRouteList[indx].arrival_city;
+             this.fare = '';
           }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .panel-heading span {
+      background-color: azure;
+      font-weight: 600;
+      float: right;
+      padding: 2px 6px;
+      color: royalblue;
+    }
     .route-info {
       border: 1px dashed lightblue;
       padding: 25px 10px;

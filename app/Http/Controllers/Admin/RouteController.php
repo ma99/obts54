@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 //Use App\User;
 //Use App\Bus;
 Use App\Rout;
+Use App\Fare;
 //Use App\SeatPlan;
 
 class RouteController extends Controller
@@ -60,21 +61,17 @@ class RouteController extends Controller
         $departureCity = $this->request->input('departure_city');
         $distance = $this->request->input('distance');
         
-        $fare_ac = $this->request->input('fare.ac');
-        $fare_non_ac = $this->request->input('fare.non_ac');
-        $fare_delux = $this->request->input('fare.delux');
+        // $fare_ac = $this->request->input('fare.ac');
+        // $fare_non_ac = $this->request->input('fare.non_ac');
+        // $fare_delux = $this->request->input('fare.delux');
         
-        $fareDetails = [
-            'ac' => $this->request->input('fare.ac'),
-            'non_ac' => $this->request->input('fare.non_ac'),
-            'deluxe' => $this->request->input('fare.deluxe')
-        ];
-
-        // SeatPlan::create([
-        //     //'role_id' => $this->id,
-        //     'bus_id' => $busId,
-        //     'seat_list' => $seatList            
-        // ]);        
+        // $fareDetails = [
+        //     'ac' => $this->request->input('fare.ac'),
+        //     'non_ac' => $this->request->input('fare.non_ac'),
+        //     'deluxe' => $this->request->input('fare.deluxe')
+        // ];
+        $fareDetails = $this->request->input('fare');
+        
        $route = Rout::updateOrCreate(
             ['departure_city' => $departureCity, 'arrival_city' => $arraivalCity ],
             ['distance' => $distance]
@@ -99,6 +96,19 @@ class RouteController extends Controller
             return 'success';            
         }
         return $error;
+    }
+    public function updateFare()
+    {
+        $error = ['error' => 'No results found'];
+        $routeId = $this->request->input('route_id');
+        $fareDetails = $this->request->input('fare');
+
+        Fare::updateOrCreate(
+            ['rout_id' => $routeId],
+            ['details' => $fareDetails]
+        );
+
+        return 'Success';
     }
    
 }
