@@ -152,7 +152,7 @@
       
       <loader :show="loading"></loader>
 
-      <div class="row">
+      <div class="row view-route-info">
         <div class="panel panel-info">
           <div class="panel-heading">Route Info <span> {{ availableRouteList.length }} </span></div>
           <div class="panel-body">
@@ -559,8 +559,8 @@
 </script>
 
 <style lang="scss" scoped>
-    .panel-heading span {
-      background-color: azure;
+    .view-route-info .panel-heading span {
+      background-color: yellow;
       font-weight: 600;
       float: right;
       padding: 2px 6px;
