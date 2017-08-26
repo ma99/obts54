@@ -50,6 +50,10 @@ let routes = [
         path: '/add-city',
         component: require('./views/city/Add-city')
     },
+    {
+        path: '/add-stop',
+        component: require('./views/city/Add-stop')
+    },
     //404
     {   
         path: '*',

@@ -91,6 +91,12 @@
               </router-link> 
           </li>
           <li>
+              <router-link to="/add-stop">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                  Add Stop
+              </router-link> 
+          </li>  
+          <li>
               <router-link to="/add-route">
                   <i class="fa fa-link" aria-hidden="true"></i>
                   Add Route

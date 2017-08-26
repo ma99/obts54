@@ -127,6 +127,14 @@ class SearchCitiesController extends Controller
     return $routes->count() ? $routes : $error;
    }
 
+   public function stopList()
+   {
+    $error = ['error' => 'Stop Not Found']; 
+    
+    $stops = Stop::all();
+    return $stops->count() ? $stops : $error;
+   }
+
 
    public function testApi(Request $request)
    {
