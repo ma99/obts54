@@ -69,10 +69,15 @@
                         <input v-model="stopName" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Stop Name">
                       </div>                      
                     </div>
+                    <div class="col-sm-1">
+                      <button v-on:click.prevent="addStop()" class="btn btn-primary" :disabled="disableSaveButton">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                      </button>                   
+                    </div>
                   </form>  
                   <div class="col-sm-4">
                     <div class="button-group">
-                      <button v-on:click.prevent="saveCities()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                      <button v-on:click.prevent="saveStops()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
                     </div>
                   </div>                      
@@ -146,7 +151,7 @@
             availableStopList: [],
             cityList: [],
             cityName: '',
-            busAvailableToCityList: [], //bus service availble to the cities
+            //busAvailableToCityList: [], //bus service availble to the cities
             divisionList: [],
             disableSaveButton: true,
             disableResetButton: true,
@@ -160,6 +165,7 @@
             selectedDivision: '',
             show: false,
             showAlert: false,
+            stopList: [],
             stopName: '',  
           }
         },
@@ -178,6 +184,15 @@
             },
         },
         methods: {
+          addStop() {
+            var vm = this;
+            this.stopList.push({
+              city_id: vm.selectedCity.id,
+              name: vm.stopName
+            });
+            this.stopName = '';
+            //console.log('added', this.selectedCity.id);
+          },
           enableSlimScroll() {
                 $('#scroll-cities').slimScroll({
                   color: '#00f',
@@ -281,7 +296,7 @@
             this.busAvailableToCityList.splice(indx, 1);
             //return;
           },
-          saveCities() {
+          saveStops() {
             var vm = this;
             //this.loading = true;
             console.log('cityId',this.selectedCity.id);

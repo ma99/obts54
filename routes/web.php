@@ -55,6 +55,8 @@ Route::post('/update/fare', 'Admin\RouteController@updateFare');
 Route::post('/cities', 'Admin\CityController@store');
 Route::post('/delete/city', 'Admin\CityController@destroy');
 
+//stop
+Route::post('/stops', 'Admin\StopController@store');
 
 Route::get('/home', 'SearchTicketController@index');
 Route::get('/search', 'SearchTicketController@searchTicket');
