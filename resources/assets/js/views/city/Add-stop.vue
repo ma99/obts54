@@ -70,21 +70,70 @@
                       </div>                      
                     </div>
                     <div class="col-sm-1">
-                      <button v-on:click.prevent="addStop()" class="btn btn-primary" :disabled="disableSaveButton">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                      <button v-on:click.prevent="addStop()" class="btn btn-primary" :disabled="isButtonDisable('add')">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
                       </button>                   
                     </div>
-                  </form>  
+                  </form>
+                  <div v-show="stopList.length > 0" class="col-sm-12">
+                     <!-- stops list -->
+                      <div class="panel panel-primary">
+                      <div class="panel-heading">Stop's List</div>
+                      <div class="panel-body">
+                          <div id="scroll-stops">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Name
+                                         <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
+                                            <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                                        </span>
+                                    </th>
+                                    <th>City Id
+                                      <span type="button" @click="isSortingAvailableBy('city_id')" :disabled="!disableSorting">
+                                            <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                                        </span>
+                                    </th>                        
+                                    <th>Action</th>                                                         
+                                    <!-- <th>&nbsp;</th> -->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr  v-for="(stop, index) in stopList" >                              
+                                    <td>{{ index+1 }}</td>                              
+                                    <td>{{ stop.name }}</td>                              
+                                    <td>{{ stop.city_id }}</td>                              
+                                    <!-- <td>{{ city.division }}</td> -->
+                                    <td> 
+                                        <button v-on:click.prevent="removeStopFromStopLis(index)" class="btn btn-danger">
+                                          <i class="fa fa-times fa-fw"></i>
+                                        </button>  
+                                    </td>                        
+                                  </tr>                            
+                                </tbody>
+                            </table>      
+                          </div>
+                      </div>
+                      <!-- {{-- panel-footer --}} -->
+                      <!-- <div class="panel-footer">                                            
+                        <show-alert :show.sync="showAlert" :type="alertType">                           
+                          <strong>{{ cityName }} </strong> has been 
+                          <strong> {{ actionStatus }} </strong> successfully!
+                        </show-alert>
+                      </div> -->
+                    </div>
+                  </div>  
                   <div class="col-sm-4">
                     <div class="button-group">
-                      <button v-on:click.prevent="saveStops()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
-                      <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
+                      <button v-on:click.prevent="saveStops()" class="btn btn-primary" :disabled="isButtonDisable('save')">Save</button>
+                      <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="isButtonDisable('reset')">Reset</button>
                     </div>
                   </div>                      
                 <!-- </form> -->
               </div>
-          </div>
-      </div>
+          </div>         
+      </div> <!-- row -->
       
       <loader :show="loading"></loader>
 
@@ -118,7 +167,7 @@
                         <td>{{ stop.city_id }}</td>                              
                         <!-- <td>{{ city.division }}</td> -->
                         <td> 
-                            <button v-on:click.prevent="removeCity(city)" class="btn btn-danger">
+                            <button v-on:click.prevent="removeStop(stop, index)" class="btn btn-danger">
                               <i class="fa fa-trash fa-fw"></i>Remove
                             </button>  
                         </td>                        
@@ -128,17 +177,14 @@
               </div>
           </div>
           <!-- {{-- panel-footer --}} -->
-          <div class="panel-footer">                    
-            <!-- <show-alert :show="showAlert" :type="alertType" @cancel="showAlert=false">  -->
-            <show-alert :show.sync="showAlert" :type="alertType"> 
-              <!-- altert type can be info/warning/danger -->
-              <strong>{{ cityName }} </strong> has been 
+          <div class="panel-footer">                                
+            <show-alert :show.sync="showAlert" :type="alertType">               
+              <strong>{{ deletedStopName }} </strong> has been 
               <strong> {{ actionStatus }} </strong> successfully!
             </show-alert>
-          </div>
+          </div>          
         </div>
       </div>
-       
     </section>        
   </div>      
 </template>
@@ -152,21 +198,21 @@
             cityList: [],
             cityName: '',
             //busAvailableToCityList: [], //bus service availble to the cities
+            deletedStopName: '',
             divisionList: [],
-            disableSaveButton: true,
-            disableResetButton: true,
+            // disableSaveButton: true,
+            // disableResetButton: true,
+            // disableAddButton: true,
             disableSorting: true,
             error: '',
             loading: false,
-            response: '',
-            //selectedCityId: '',
-            selectedCity: '',
-            //selectedDivisionId: '',
+            response: '',            
+            selectedCity: '',            
             selectedDivision: '',
             show: false,
             showAlert: false,
             stopList: [],
-            stopName: '',  
+            stopName: '',
           }
         },
         mounted() {           
@@ -182,6 +228,9 @@
             cityList() {                
                 this.disableSaveButton = (this.cityList.length < 1) ? true : false; 
             },
+            // stopName() {
+            //   this.disableAddButton = (this.stopName == '' || ||) ? true : false;
+            // }
         },
         methods: {
           addStop() {
@@ -194,20 +243,27 @@
             //console.log('added', this.selectedCity.id);
           },
           enableSlimScroll() {
-                $('#scroll-cities').slimScroll({
+                $('#scroll-cities',).slimScroll({
                   color: '#00f',
                   size: '8px',
                   height: '300px',
                   //height: auto,
                   wheelStep: 10                  
                 });
+
+                // $('#scroll-stops',).slimScroll({
+                //   color: '#00f',
+                //   size: '8px',
+                //   height: '200px',
+                //   //height: auto,
+                //   wheelStep: 10                  
+                // });
           },
           expandAddCityPanel() {
             this.show = !this.show;
           },
           fetchCitiesByDivision(divisionId) {
-            this.loading = true;
-            //this.cityList= [];            
+            this.loading = true;                     
             var vm = this;                      
             //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz  (wrong)
             axios.get('/api/districts?q=' + divisionId)  //--> api/bus?q=xyz        (right)
@@ -238,6 +294,26 @@
                    vm.SortByStopNameAvailableStopList(vm.availableStopList);                  
             });
           },
+          isButtonDisable(btnType) { 
+            switch (btnType) {
+                case 'add':
+                    return ( this.stopName == '' || this.selectedCity == '' || this.selectedDivision == '') ? true : false;           
+                    break;
+                case 'reset':
+                    return ( this.stopName == '' && this.selectedCity == '' && this.selectedDivision == '') ? true : false; 
+                    break;          
+                case 'save':
+                    return (this.stopList.length < 1) ? true : false;         
+                    break;                  
+                default:
+                    return true;
+            }
+
+            // if ( btn == 'reset') {
+            //   return ( this.stopName == '' && this.selectedCity == '' && this.selectedDivision == '') ? true : false;  
+            // }             
+            // return ( this.stopName == '' || this.selectedCity == '' || this.selectedDivision == '') ? true : false;
+          },
           isSortingAvailableBy(val) {
             if (val== 'name') {
                 this.SortByStopNameAvailableStopList(this.availableStopList);
@@ -248,12 +324,12 @@
             this.disableSorting = false;
           },
 
-          removeCity(city) {  // role id of user/staff in roles table
+          removeStop(stop, index) {  // role id of user/staff in roles table
             var vm = this;
-            this.cityName = city.name; 
+            this.deletedStopName = stop.name; 
             swal({
                   title: "Are you sure?",
-                  text: "This city will be Removed from Bus Service available City List!",
+                  text: "This Stop will be Removed from available Stop List!",
                   type: "warning",
                   showCancelButton: true,
                   confirmButtonColor: "#DD6B55",
@@ -265,15 +341,15 @@
                         vm.loading = true;
                         vm.response = '';
                         vm.showAlert = false;
-                        axios.post('/delete/city', {                            
-                            city_code: city.code, 
+                        axios.post('/delete/stop', {                            
+                            stop_id: stop.id, 
                         })          
                         .then(function (response) {                                           
                             // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
                             response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
                             if (vm.response) {                                
-                                vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+                                vm.removeStopFromAvailableStopList(index); // update the array after removing                                
                                 vm.loading = false;
                                 vm.actionStatus = 'Removed';
                                 vm.alertType = 'danger';
@@ -288,30 +364,32 @@
                 });
           },
          
-          removeCityFromBusAvailableToCityList(cityCode) {
-            var indx = this.busAvailableToCityList.findIndex(function(city){ 
-                // here 'city' is array object 
-                 return city.code == cityCode;
-            });        
-            this.busAvailableToCityList.splice(indx, 1);
+          removeStopFromAvailableStopList(index) {
+            // var indx = this.busAvailableToCityList.findIndex(function(city){ 
+            //     // here 'city' is array object 
+            //      return city.code == cityCode;
+            // });        
+            this.availableStopList.splice(index, 1);            
             //return;
+          },
+          removeStopFromStopLis(index) {
+            this.stopList.splice(index, 1);
           },
           saveStops() {
             var vm = this;
-            //this.loading = true;
-            console.log('cityId',this.selectedCity.id);
-            console.log('cityName',this.selectedCity.name);
+            //this.loading = true;            
             axios.post('/cities', {
                 city_id: this.selectedCity.id,
-                city_name: this.selectedCity.name,
-                division_name: this.selectedDivision.name,
+                //city_name: this.selectedCity.name,
+                //division_name: this.selectedDivision.name,
+                stop_name: this.stopName
             })          
             .then(function (response) {
                 //console.log(response.data);
                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
                 if (vm.response) {
                    //console.log(vm.response);
-                   vm.fetchBusAvailableToCities();
+                   vm.fetchAvailableStopList();
                    vm.SortByStopNameAvailableStopList(vm.busAvailableToCityList);
                    vm.loading = false;
                    vm.disableSaveButton = true;

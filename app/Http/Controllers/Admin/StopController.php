@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Stop;
 
-class CityController extends Controller
+class StopController extends Controller
 {
     public function store(Request $request)
     {
@@ -31,13 +31,9 @@ class CityController extends Controller
 
     public function destroy(Request $request)
     {
-        $error = ['error' => 'No results found'];
-        $cityCode = $request->input('city_code');
-        $city = City::where('code', $cityCode)->first();
-        if($city) {
-            $city->delete();
-            return 'success';            
-        }
-        return $error;
+        //$error = ['error' => 'No results found'];
+        $stopId = $request->input('stop_id');                
+        Stop::destroy($stopId);
+        return 'success';
     }
 }

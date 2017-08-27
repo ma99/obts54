@@ -57,6 +57,7 @@ Route::post('/delete/city', 'Admin\CityController@destroy');
 
 //stop
 Route::post('/stops', 'Admin\StopController@store');
+Route::post('/delete/stop', 'Admin\StopController@destroy');
 
 Route::get('/home', 'SearchTicketController@index');
 Route::get('/search', 'SearchTicketController@searchTicket');
