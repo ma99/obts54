@@ -6,12 +6,12 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-//use App\Stop;
 use App\City;
 use App\Division;
 use App\District;
 use App\Fare;
 use App\Rout;
+use App\Stop;
 
 class SearchCitiesController extends Controller
 {
