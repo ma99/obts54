@@ -47,6 +47,10 @@ let routes = [
         component: require('./views/bus/Route')
     },
     {
+        path: '/schedule',
+        component: require('./views/bus/Schedule')
+    },
+    {
         path: '/city',
         component: require('./views/city/City')
     },

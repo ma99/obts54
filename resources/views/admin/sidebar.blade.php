@@ -74,34 +74,34 @@
         <ul class="treeview-menu">
           <li>
               <router-link to="/bus">
-                  <i class="fa fa-bus" aria-hidden="true"></i>
-                  Bus
+                  <i class="fa fa-bus" aria-hidden="true"></i>Bus
               </router-link> 
           </li>          
           <li> 
               <router-link to="/bus-list">
-                  <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                  Bus List
+                  <i class="fa fa-plus" aria-hidden="true"></i>Bus List
               </router-link>
          </li> 
          <li>
               <router-link to="/city">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  City
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>City
               </router-link> 
           </li>
           <li>
+              <router-link to="/route">
+                  <i class="fa fa-exchange" aria-hidden="true"></i>Route
+              </router-link> 
+          </li>
+          <li>
+              <router-link to="/schedule">
+                  <i class="fa fa-list-alt" aria-hidden="true"></i>Schedule
+              </router-link> 
+          </li>           
+          <li>
               <router-link to="/stop">
-                  <i class="fa fa-link" aria-hidden="true"></i>
-                  Stop
+                  <i class="fa fa-link" aria-hidden="true"></i>Stop
               </router-link> 
           </li>  
-          <li>
-              <router-link to="/route">
-                  <i class="fa fa-link" aria-hidden="true"></i>
-                  Route
-              </router-link> 
-          </li>          
         </ul>
       </li>
     </ul>
