@@ -173,7 +173,7 @@
                 $('#scroll-cities').slimScroll({
                   color: '#00f',
                   size: '8px',
-                  height: '300px',
+                  height: '500px', //300px
                   //height: auto,
                   wheelStep: 10                  
                 });

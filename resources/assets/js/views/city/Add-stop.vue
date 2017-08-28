@@ -69,12 +69,15 @@
                         <input v-model="stopName" type="text" class="form-control" name="route_distance" id="routeDistance" placeholder="Stop Name">
                       </div>                      
                     </div>
+
                     <div class="col-sm-1">
                       <button v-on:click.prevent="addStop()" class="btn btn-primary" :disabled="isButtonDisable('add')">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                       </button>                   
-                    </div>
+                    </div>                    
+
                   </form>
+
                   <div v-show="stopList.length > 0" class="col-sm-12">
                      <!-- stops list -->
                       <div class="panel panel-primary">
@@ -114,14 +117,7 @@
                                 </tbody>
                             </table>      
                           </div>
-                      </div>
-                      <!-- {{-- panel-footer --}} -->
-                      <!-- <div class="panel-footer">                                            
-                        <show-alert :show.sync="showAlert" :type="alertType">                           
-                          <strong>{{ cityName }} </strong> has been 
-                          <strong> {{ actionStatus }} </strong> successfully!
-                        </show-alert>
-                      </div> -->
+                      </div>                     
                     </div>
                   </div>  
                   <div class="col-sm-4">
@@ -129,17 +125,16 @@
                       <button v-on:click.prevent="saveStops()" class="btn btn-primary" :disabled="isButtonDisable('save')">Save</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="isButtonDisable('reset')">Reset</button>
                     </div>
-                  </div>                      
-                <!-- </form> -->
+                  </div>                                      
               </div>
           </div>         
       </div> <!-- row -->
       
       <loader :show="loading"></loader>
 
-      <div class="row">
+      <div class="row view-available-info">
         <div class="panel panel-info">
-          <div class="panel-heading">Service Available City Info</div>
+          <div class="panel-heading">Available Stops <span> {{ availableStopList.length }} </span></div>
           <div class="panel-body">
               <div id="scroll-cities">
                 <table class="table table-striped table-hover">
@@ -196,13 +191,9 @@
             alertType: '',
             availableStopList: [],
             cityList: [],
-            cityName: '',
-            //busAvailableToCityList: [], //bus service availble to the cities
+            cityName: '',            
             deletedStopName: '',
             divisionList: [],
-            // disableSaveButton: true,
-            // disableResetButton: true,
-            // disableAddButton: true,
             disableSorting: true,
             error: '',
             loading: false,
@@ -216,8 +207,7 @@
           }
         },
         mounted() {           
-           this.fetchDivisions();
-           //this.fetchBusAvailableToCities();           
+           this.fetchDivisions();                 
            this.fetchAvailableStopList();           
            this.enableSlimScroll();
         },
@@ -227,10 +217,7 @@
             },
             cityList() {                
                 this.disableSaveButton = (this.cityList.length < 1) ? true : false; 
-            },
-            // stopName() {
-            //   this.disableAddButton = (this.stopName == '' || ||) ? true : false;
-            // }
+            },           
         },
         methods: {
           addStop() {
@@ -239,25 +226,24 @@
               city_id: vm.selectedCity.id,
               name: vm.stopName
             });
-            this.stopName = '';
-            //console.log('added', this.selectedCity.id);
+            this.stopName = '';           
           },
           enableSlimScroll() {
                 $('#scroll-cities',).slimScroll({
                   color: '#00f',
                   size: '8px',
-                  height: '300px',
+                  height: '500px',
                   //height: auto,
                   wheelStep: 10                  
                 });
 
-                // $('#scroll-stops',).slimScroll({
-                //   color: '#00f',
-                //   size: '8px',
-                //   height: '200px',
-                //   //height: auto,
-                //   wheelStep: 10                  
-                // });
+                $('#scroll-stops',).slimScroll({
+                  color: '#00f',
+                  size: '8px',
+                  height: '200px',
+                  //height: auto,
+                  wheelStep: 10                  
+                });
           },
           expandAddCityPanel() {
             this.show = !this.show;
@@ -275,9 +261,8 @@
           fetchDivisions() {
             this.loading = true;
             this.divisionList= [];            
-            var vm = this;                      
-            //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz  (wrong)
-            axios.get('/api/divisions')  //--> api/bus?q=xyz        (right)
+            var vm = this;               
+            axios.get('/api/divisions')  
                 .then(function (response) {                  
                    response.data.error ? vm.error = response.data.error : vm.divisionList = response.data;
                    vm.loading = false;                  
@@ -287,7 +272,7 @@
             this.loading = true;
             this.availableStopList= [];            
             var vm = this;                
-            axios.get('/api/stops')  //--> api/bus?q=xyz        (right)
+            axios.get('/api/stops') 
                 .then(function (response) {                  
                    response.data.error ? vm.error = response.data.error : vm.availableStopList = response.data;
                    vm.loading = false;
@@ -308,11 +293,6 @@
                 default:
                     return true;
             }
-
-            // if ( btn == 'reset') {
-            //   return ( this.stopName == '' && this.selectedCity == '' && this.selectedDivision == '') ? true : false;  
-            // }             
-            // return ( this.stopName == '' || this.selectedCity == '' || this.selectedDivision == '') ? true : false;
           },
           isSortingAvailableBy(val) {
             if (val== 'name') {
@@ -344,8 +324,7 @@
                         axios.post('/delete/stop', {                            
                             stop_id: stop.id, 
                         })          
-                        .then(function (response) {                                           
-                            // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+                        .then(function (response) {                           
                             response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
                             if (vm.response) {                                
@@ -372,25 +351,24 @@
             this.availableStopList.splice(index, 1);            
             //return;
           },
+          
           removeStopFromStopLis(index) {
             this.stopList.splice(index, 1);
           },
+
           saveStops() {
             var vm = this;
             //this.loading = true;            
-            axios.post('/cities', {
-                city_id: this.selectedCity.id,
-                //city_name: this.selectedCity.name,
-                //division_name: this.selectedDivision.name,
-                stop_name: this.stopName
+            axios.post('/stops', {
+                city_id: this.selectedCity.id,                
+                stop_list: this.stopList
             })          
-            .then(function (response) {
-                //console.log(response.data);
+            .then(function (response) {                
                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                if (vm.response) {
-                   //console.log(vm.response);
+                if (vm.response) {                   
                    vm.fetchAvailableStopList();
-                   vm.SortByStopNameAvailableStopList(vm.busAvailableToCityList);
+                   vm.SortByStopNameAvailableStopList(vm.availableStopList);
+                   vm.stopList = '',
                    vm.loading = false;
                    vm.disableSaveButton = true;
                    vm.cityAddedAlert(vm.selectedCity.name);
@@ -404,6 +382,7 @@
           reset() {
             this.selectedCity = '';
             this.selectedDivision = '';
+            this.stopName = '';
           },
           SortByStopNameAvailableStopList(arr) {
             // sort by name            
@@ -416,7 +395,6 @@
                   if (nameA > nameB) {
                     return 1;
                   }
-
                   // names must be equal
                   return 0;
                 });
@@ -429,7 +407,7 @@
           cityAddedAlert(cityName) {
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+                title: '<span style="color:#A5DC86"> Bus Stops for <strong>'+cityName+'</strong></span></br> Added successfully!',
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
                 html: true,
                 //type: "info",
@@ -444,6 +422,13 @@
 </script>
 
 <style lang="scss" scoped>
+     .view-available-info .panel-heading span {
+      background-color: yellow;
+      font-weight: 600;
+      float: right;
+      padding: 2px 6px;
+      color: royalblue;
+    }
     #scroll-cities {
         span {
             cursor: pointer;
@@ -454,5 +439,4 @@
             opacity: 0.65;
         }
     } 
-
 </style>

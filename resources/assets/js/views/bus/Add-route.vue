@@ -152,7 +152,7 @@
       
       <loader :show="loading"></loader>
 
-      <div class="row view-route-info">
+      <div class="row view-available-info">
         <div class="panel panel-info">
           <div class="panel-heading">Route Info <span> {{ availableRouteList.length }} </span></div>
           <div class="panel-body">
@@ -338,7 +338,7 @@
                 $('#scroll-routes').slimScroll({
                   color: '#00f',
                   size: '8px',
-                  height: '300px',
+                  height: '500px',
                   //height: auto,
                   wheelStep: 10                  
                 });
@@ -559,7 +559,8 @@
 </script>
 
 <style lang="scss" scoped>
-    .view-route-info .panel-heading span {
+    // .view-route-info .panel-heading span {
+    .view-available-info .panel-heading span {
       background-color: yellow;
       font-weight: 600;
       float: right;

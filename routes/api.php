@@ -22,16 +22,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     'uses' => 'Api\SearchController@search'
 // ]);
 
+//bus
 Route::get('/bus', 'Api\SearchBusController@busInfo');
 Route::get('/city', 'Api\SearchCitiesController@cityTo');
+Route::get('/routes', 'Api\SearchBusController@routeList');
+Route::get('/stops', 'Api\SearchBusController@stopList');
+
+//city
 Route::get('/divisions', 'Api\SearchCitiesController@divisionList');
 Route::get('/districts', 'Api\SearchCitiesController@districtList');
 Route::get('/cities', 'Api\SearchCitiesController@cityList');
-Route::get('/routes', 'Api\SearchCitiesController@routeList');
-Route::get('/stops', 'Api\SearchCitiesController@stopList');
 Route::get('/pickup', 'Api\SearchCitiesController@pickupPoints');
 Route::get('/dropping', 'Api\SearchCitiesController@droppingPoints');
-Route::get('/test', 'Api\SearchCitiesController@index');
+
+
+//Route::get('/test', 'Api\SearchCitiesController@index');
 Route::get('/testapi', 'Api\SearchCitiesController@testApi');
 Route::get('/zipcode', 'Api\SearchCitiesController@cityName');
 //Route::get('/pay/{booking}', 'Api\SearchCitiesController@makeMyPayment');

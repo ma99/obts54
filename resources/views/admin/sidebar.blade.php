@@ -87,19 +87,19 @@
          <li>
               <router-link to="/add-city">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  Add City
+                  Add/ View City
               </router-link> 
           </li>
           <li>
               <router-link to="/add-stop">
                   <i class="fa fa-link" aria-hidden="true"></i>
-                  Add Stop
+                  Add/ View Stop
               </router-link> 
           </li>  
           <li>
               <router-link to="/add-route">
                   <i class="fa fa-link" aria-hidden="true"></i>
-                  Add Route
+                  Add/ View Route
               </router-link> 
           </li>          
         </ul>

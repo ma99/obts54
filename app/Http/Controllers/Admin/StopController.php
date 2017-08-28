@@ -11,21 +11,21 @@ class StopController extends Controller
 {
     public function store(Request $request)
     {
-    	$this->validate($request, [
-            'name' => 'required|max:50',
-            //'division_name' => 'required|max:50'
-            //'code' => 'required|max:25',
+    	
+        $this->validate($request, [            
+            'stop_list.*.name' => 'required|max:50',       // array validation     
         ]);
 
-    	$stopName = $request->input('name');
-        //$stopId = $request->input('id');
+        $stopList = $request->input('stop_list');    	
         $cityCode = $request->input('city_id');
-        
 
-        Stop::updateOrCreate(
-            ['city_id' => $cityCode, 'name' => $cityName ],
-            ['name' => $cityName]            
-        );
+        
+        foreach ($stopList as $stop) {                
+           Stop::updateOrCreate(
+                ['city_id' => $stop['city_id'], 'name' => $stop['name'] ],
+                ['name' => $stop['name']]            
+            );
+        }
     	return 'successfully added';
     }
 

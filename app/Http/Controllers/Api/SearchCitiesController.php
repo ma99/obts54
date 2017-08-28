@@ -6,12 +6,12 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Rout;
-use App\Fare;
-use App\Stop;
+//use App\Stop;
 use App\City;
 use App\Division;
 use App\District;
+use App\Fare;
+use App\Rout;
 
 class SearchCitiesController extends Controller
 {
@@ -24,10 +24,10 @@ class SearchCitiesController extends Controller
    } 
    public function index(Request $request)
    {
-        $city_name = 'sylhet';
-        //dd($city_name);
-        $cities = Rout::where('departure_city', $city_name)->get();
-        dd($cities);
+        // $city_name = 'sylhet';
+        // //dd($city_name);
+        // $cities = Rout::where('departure_city', $city_name)->get();
+        // dd($cities);
    }
 
    public function cityTo()
@@ -116,26 +116,7 @@ class SearchCitiesController extends Controller
       return $response->getBody();
    }
 
-   public function routeList()
-   {
-    $error = ['error' => 'Route Not Found']; 
-
-    //$divisionId = $this->request->input('q');
-    //$routes = Rout::all();
-    //$routes = Rout::all();
-    $routes = Rout::with('fare')->get();
-    return $routes->count() ? $routes : $error;
-   }
-
-   public function stopList()
-   {
-    $error = ['error' => 'Stop Not Found']; 
-    
-    $stops = Stop::all();
-    return $stops->count() ? $stops : $error;
-   }
-
-
+   
    public function testApi(Request $request)
    {
      # code...
