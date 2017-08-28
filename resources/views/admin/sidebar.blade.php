@@ -73,33 +73,33 @@
         </a>
         <ul class="treeview-menu">
           <li>
-              <router-link to="/add-bus">
+              <router-link to="/bus">
                   <i class="fa fa-bus" aria-hidden="true"></i>
-                  Add Bus
+                  Bus
               </router-link> 
           </li>          
           <li> 
               <router-link to="/bus-list">
                   <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                  View Bus List
+                  Bus List
               </router-link>
          </li> 
          <li>
-              <router-link to="/add-city">
+              <router-link to="/city">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  Add/ View City
+                  City
               </router-link> 
           </li>
           <li>
-              <router-link to="/add-stop">
+              <router-link to="/stop">
                   <i class="fa fa-link" aria-hidden="true"></i>
-                  Add/ View Stop
+                  Stop
               </router-link> 
           </li>  
           <li>
-              <router-link to="/add-route">
+              <router-link to="/route">
                   <i class="fa fa-link" aria-hidden="true"></i>
-                  Add/ View Route
+                  Route
               </router-link> 
           </li>          
         </ul>

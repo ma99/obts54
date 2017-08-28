@@ -31,8 +31,8 @@
                       <div class="form-group">
                         <label for="cityTo">To</label>  
                         <select v-model="selectedTo" class="form-control" id="cityTo">
-                          <option v-if="!error" disabled value="">Please select one</option>
-                          <option v-if="error" disabled value="">@{{ error }}</option>
+                          <option v-if="!error.city" disabled value="">Please select one</option>
+                          <option v-if="error.city" disabled value="">@{{ error.city }}</option>
                           <option v-for="city in cityToList">
                             @{{ city.arrival_city }}                            
                           </option>                          

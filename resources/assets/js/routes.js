@@ -35,24 +35,24 @@ let routes = [
     },
     //Bus 
     {
-        path: '/add-bus',
-        component: require('./views/bus/Add-bus')
+        path: '/bus',
+        component: require('./views/bus/Bus')
     },
     {
-        path: '/bus-list',
+        path: '/list',
         component: require('./views/bus/Bus-list')
     },
     {
-        path: '/add-route',
-        component: require('./views/bus/Add-route')
+        path: '/route',
+        component: require('./views/bus/Route')
     },
     {
-        path: '/add-city',
-        component: require('./views/city/Add-city')
+        path: '/city',
+        component: require('./views/city/City')
     },
     {
-        path: '/add-stop',
-        component: require('./views/city/Add-stop')
+        path: '/stop',
+        component: require('./views/city/Stop')
     },
     //404
     {   

@@ -11,7 +11,12 @@
               buses:[],
               cityList:[],
               cityToList:[],
-              error: false,
+              //error: false,
+              error: {
+                city: false,
+                pickupPoint: false,
+                droppingPoint: false
+              },
               loading: false,
               message: '',
               modal: false,
@@ -507,7 +512,7 @@
 
         fetchCityToList(cityName) {
           
-          this.error = false;
+          this.error.city = false;
           this.loading = true;
           this.cityToList = [];
           var vm = this;
@@ -515,9 +520,9 @@
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
-              response.data.error ? vm.error = response.data.error : vm.cityToList = response.data;
+              response.data.error ? vm.error.city = response.data.error : vm.cityToList = response.data;
               vm.loading = false;               
-               if (vm.error){
+               if (vm.error.city){
                 vm.selectedTo='';
                 vm.buses= [];
                 return;
@@ -533,7 +538,7 @@
 
         fetchPickupPointList(cityName) {
           
-          this.error = false;
+          this.error.pickupPoint = false;
           this.loading = true;
           this.pickupList = [];
           var vm = this;
@@ -541,7 +546,7 @@
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
-               response.data.error ? vm.error = response.data.error : vm.pickupList = response.data;
+               response.data.error ? vm.error.pickupPoint = response.data.error : vm.pickupList = response.data;
                vm.loading = false;
               // console.log(vm.error);
                //vm.cityToList = response.data;
@@ -555,7 +560,7 @@
           if (cityName == undefined || cityName =='') {
             return;
           }
-          this.error = false;
+          this.error.droppingPoint = false;
           this.loading = true;
           this.droppingList = [];
           var vm = this;
@@ -563,7 +568,7 @@
             .then(function (response) {
               //vm.answer = _.capitalize(response.data.answer)
               // console.log(response.data);
-               response.data.error ? vm.error = response.data.error : vm.droppingList = response.data;
+               response.data.error ? vm.error.droppingPoint = response.data.error : vm.droppingList = response.data;
                vm.loading = false;
               // console.log(vm.error);
                //vm.cityToList = response.data;
