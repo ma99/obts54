@@ -17523,10 +17523,145 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            availableRouteList: [],
+            busIds: [],
+            disableShowButton: false,
+            disableSaveButton: false,
+            error: '',
+            loading: false,
+            routeIds: [],
+            routeInfo: [],
+            selectedBusId: '',
+            selectedRouteId: ''
+        };
+    },
+
+    watch: {
+        selectedRouteId: function selectedRouteId() {
+            this.fetchRouteInfo(this.selectedRouteId);
+        }
+    },
     mounted: function mounted() {
-        console.log('Component mounted.');
+        //console.log('Component mounted.')
+        this.fetchBusIds();
+        this.fetchAvailableRoutes();
+    },
+
+    methods: {
+        fetchRouteInfo: function fetchRouteInfo(routeId) {
+            this.routeInfo = [];
+            this.routeInfo = this.availableRouteList.find(function (obj) {
+                // console.log('iddd=', obj.id);    
+                // console.log('routeId=', routeId);
+                return obj.id == routeId;
+            });
+        },
+        fetchBusIds: function fetchBusIds() {
+            //this.error = false;
+            this.loading = true;
+            //this.cityToList = [];
+            var vm = this;
+            axios.get('/bus/ids').then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
+                vm.loading = false;
+            });
+        },
+        fetchAvailableRoutes: function fetchAvailableRoutes() {
+            this.loading = true;
+            this.availableRouteList = [];
+            var vm = this;
+            axios.get('/api/routes') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+                //vm.tempAvailableRouteList = response.data;
+                vm.SortByIdAvailableRouteList(vm.availableRouteList);
+                vm.loading = false;
+            });
+        },
+        SortByIdAvailableRouteList: function SortByIdAvailableRouteList(arr) {
+            arr.sort(function (a, b) {
+                return a.id - b.id;
+            });
+        }
     }
 });
 
@@ -48296,21 +48431,185 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-dashboard"
   }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Schedule")])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
+  }, [_vm._v("Schedule")])])]), _vm._v(" "), _c('section', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
   }, [_c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
   }, [_vm._v("Bus Schedule")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n             Bus Schedule\n          ")])])])])])
+  }, [_c('form', [_c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "routeId"
+    }
+  }, [_vm._v(" Route Ids ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedRouteId),
+      expression: "selectedRouteId"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "route_id",
+      "id": "routeId"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedRouteId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableRouteList), function(availableRoute) {
+    return _c('option', [_vm._v("\n                        " + _vm._s(availableRoute.id) + "\n                      ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "busId"
+    }
+  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedBusId),
+      expression: "selectedBusId"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "bus_id",
+      "id": "busId"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedBusId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.busIds), function(busId) {
+    return _c('option', [_vm._v("\n                        " + _vm._s(busId) + "\n                      ")])
+  })], 2)])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (Object.keys(_vm.routeInfo).length > 0),
+      expression: "Object.keys(routeInfo).length > 0"
+    }],
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Route Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table .table-striped"
+  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.routeInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.distance))])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "button-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.disableShowButton
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.createList()
+      }
+    }
+  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.reset()
+      }
+    }
+  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": _vm.disableSaveButton
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveSeatList()
+      }
+    }
+  }, [_vm._v("Save")])])])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "departure-time"
+    }
+  }, [_vm._v("Departure time: ")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "departure-time",
+      "type": "time",
+      "name": "departure-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    }
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "arrival-time"
+    }
+  }, [_vm._v("Arrival time: ")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "id": "arrival-time",
+      "type": "time",
+      "name": "arrival-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    }
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Route Id")]), _vm._v(" "), _c('th', [_vm._v("Departure City")]), _vm._v(" "), _c('th', [_vm._v("Arrival City")]), _vm._v(" "), _c('th', [_vm._v("Distance")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
