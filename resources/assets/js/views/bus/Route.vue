@@ -196,7 +196,7 @@
                           Deluxe: {{ route.fare.details.deluxe }} </br> 
                         </td>                              
                         <td> 
-                            <button v-on:click.prevent="editRoute(route)" class="btn btn-primary">
+                            <button v-on:click.prevent="editRoute(route)" class="btn btn-primary" :disabled="route.fare == null">
                               <i class="fa fa-edit fa-fw"></i>Edit
                             </button>  
                             <button v-on:click.prevent="removeRoute(route)" class="btn btn-danger">
