@@ -19,8 +19,17 @@
       <div class="row">
           <!-- <div class="col-md-8 col-md-offset-2"> -->
           <div class="panel panel-default">
-            <div class="panel-heading">Bus Schedule</div>
-            <div class="panel-body">
+            <div class="panel-heading">
+              <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" @click="expandAddSchedulePanel" v-show="!show">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-warning" type="button" @click="expandAddSchedulePanel" v-show="show">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                </span>                
+            </div>
+            <div class="panel-body" v-show="show">
                <form>
                    <div class="col-sm-4"> 
                    <div class="form-group">
@@ -50,14 +59,14 @@
                  <div class="col-sm-2"> 
                     <div class="form-group">
                        <label for="departure-time">Departure time: </label>
-                       <input id="departure-time" type="time" name="departure-time" class="form-control" min="00:00" max="23:00" required>
+                       <input v-model="departureTime"id="departure-time" type="time" name="departure-time" class="form-control" min="00:00" max="23:00" required>
                     </div>
                  </div>
 
                  <div class="col-sm-2"> 
                     <div class="form-group">                     
                        <label for="arrival-time">Arrival time: </label>
-                       <input id="arrival-time" type="time" name="arrival-time" class="form-control" min="00:00" max="23:00" required>
+                       <input v-model="arrivalTime"id="arrival-time" type="time" name="arrival-time" class="form-control" min="00:00" max="23:00" required>
                     </div>
                  </div>
 
@@ -90,9 +99,9 @@
 
                  <div class="col-sm-4">
                     <div class="button-group">
-                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                      <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
+                      <button v-on:click.prevent="saveSchedule()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                     </div>
                   </div>
 
@@ -108,6 +117,8 @@
     export default {
         data() {
             return {
+                arrivalTime: '',
+                departureTime: '',
                 availableBusList: [],
                 availableRouteList: [],                               
                 disableShowButton: false,
@@ -118,6 +129,7 @@
                 routeInfo: [],
                 selectedBusId: '',
                 selectedRouteId: '',
+                show: false,
             }
         },
         watch: {
@@ -139,6 +151,10 @@
             //         // console.log('routeId=', routeId);
             //         return obj.id == busId; });
             // },
+            expandAddSchedulePanel() {
+                this.show = !this.show;
+            },
+
             fetchRouteInfo(routeId) {
                 this.routeInfo = [];
                 this.routeInfo = this.availableRouteList.find(function (obj) { 
@@ -169,12 +185,44 @@
                        vm.SortByIdAvailableRouteList(vm.availableRouteList);
                        vm.loading = false;
                 });
-             },
-             SortByIdAvailableRouteList(arr) {
+            },
+            SortByIdAvailableRouteList(arr) {
                 arr.sort(function(a, b) {
                   return a.id - b.id;
                 });
-             },
+            },
+            saveSchedule() {
+                var vm = this;
+                axios.post('/schedule', {
+                    route_id: this.selectedRouteId,
+                    bus_id: this.selectedBusId,
+                    departure_time: this.departureTime,                
+                    arrival_time: this.arrivalTime
+                })          
+                .then(function (response) {
+                    //console.log(response.data);
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                    if (vm.response) {
+                       //console.log(vm.response);
+                       //vm.fetchAvailableSchedules();
+                       //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                       vm.loading = false;
+                       vm.disableSaveButton = true;
+                       //vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+                       vm.reset();
+                       return;                   
+                    }
+                    vm.loading = false;
+                    vm.disableSaveButton = true;
+                });
+            },
+
+            reset() {
+                this.selectedBusId = '';
+                this.selectedRouteId = '';
+                this.arrivalTime = '';
+                this.departureTime = '';                
+          },
         },
     }
 </script>

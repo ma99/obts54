@@ -55,6 +55,10 @@ Route::post('/update/fare', 'Admin\RouteController@updateFare');
 Route::post('/cities', 'Admin\CityController@store');
 Route::post('/delete/city', 'Admin\CityController@destroy');
 
+//schedule
+Route::post('/schedule', 'Admin\ScheduleController@store');
+
+
 //stop
 Route::post('/stops', 'Admin\StopController@store');
 Route::post('/delete/stop', 'Admin\StopController@destroy');

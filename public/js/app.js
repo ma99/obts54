@@ -17586,10 +17586,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            arrivalTime: '',
+            departureTime: '',
             availableBusList: [],
             availableRouteList: [],
             disableShowButton: false,
@@ -17599,7 +17610,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //routeIds: [],
             routeInfo: [],
             selectedBusId: '',
-            selectedRouteId: ''
+            selectedRouteId: '',
+            show: false
         };
     },
 
@@ -17623,6 +17635,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //         // console.log('routeId=', routeId);
         //         return obj.id == busId; });
         // },
+        expandAddSchedulePanel: function expandAddSchedulePanel() {
+            this.show = !this.show;
+        },
         fetchRouteInfo: function fetchRouteInfo(routeId) {
             this.routeInfo = [];
             this.routeInfo = this.availableRouteList.find(function (obj) {
@@ -17657,6 +17672,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             arr.sort(function (a, b) {
                 return a.id - b.id;
             });
+        },
+        saveSchedule: function saveSchedule() {
+            var vm = this;
+            axios.post('/schedule', {
+                route_id: this.selectedRouteId,
+                bus_id: this.selectedBusId,
+                departure_time: this.departureTime,
+                arrival_time: this.arrivalTime
+            }).then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    //console.log(vm.response);
+                    //vm.fetchAvailableSchedules();
+                    //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                    vm.loading = false;
+                    vm.disableSaveButton = true;
+                    //vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+                    vm.reset();
+                    return;
+                }
+                vm.loading = false;
+                vm.disableSaveButton = true;
+            });
+        },
+        reset: function reset() {
+            this.selectedBusId = '';
+            this.selectedRouteId = '';
+            this.arrivalTime = '';
+            this.departureTime = '';
         }
     }
 });
@@ -48435,7 +48480,53 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Bus Schedule")]), _vm._v(" "), _c('div', {
+  }, [_c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.show),
+      expression: "!show"
+    }],
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddSchedulePanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddSchedulePanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-minus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
     staticClass: "panel-body"
   }, [_c('form', [_c('div', {
     staticClass: "col-sm-4"
@@ -48513,7 +48604,73 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
     return _c('option', [_vm._v("\n                        " + _vm._s(bus.id) + "\n                      ")])
-  })], 2)])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "departure-time"
+    }
+  }, [_vm._v("Departure time: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.departureTime),
+      expression: "departureTime"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "departure-time",
+      "type": "time",
+      "name": "departure-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.departureTime)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.departureTime = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "arrival-time"
+    }
+  }, [_vm._v("Arrival time: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.arrivalTime),
+      expression: "arrivalTime"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "arrival-time",
+      "type": "time",
+      "name": "arrival-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.arrivalTime)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.arrivalTime = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12"
   }, [_c('div', {
     directives: [{
@@ -48529,30 +48686,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table .table-striped"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.routeInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.distance))])])])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.routeInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.distance))])])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4"
   }, [_c('div', {
     staticClass: "button-group"
   }, [_c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": _vm.disableShowButton
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.createList()
-      }
-    }
-  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.reset()
-      }
-    }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "disabled": _vm.disableSaveButton
@@ -48560,51 +48698,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.saveSeatList()
+        _vm.saveSchedule()
       }
     }
-  }, [_vm._v("Save")])])])])])])])])])
+  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.reset()
+      }
+    }
+  }, [_vm._v("Reset")])])])])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-2"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "departure-time"
-    }
-  }, [_vm._v("Departure time: ")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "departure-time",
-      "type": "time",
-      "name": "departure-time",
-      "min": "00:00",
-      "max": "23:00",
-      "required": ""
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-sm-2"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "arrival-time"
-    }
-  }, [_vm._v("Arrival time: ")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "id": "arrival-time",
-      "type": "time",
-      "name": "arrival-time",
-      "min": "00:00",
-      "max": "23:00",
-      "required": ""
-    }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Route Id")]), _vm._v(" "), _c('th', [_vm._v("Departure City")]), _vm._v(" "), _c('th', [_vm._v("Arrival City")]), _vm._v(" "), _c('th', [_vm._v("Distance")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
 }]}
 module.exports.render._withStripped = true

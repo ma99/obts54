@@ -8,6 +8,9 @@ use App\Booking;
 
 class Schedule extends Model
 {
+    protected $fillable = [
+        'departure_time', 'arrival_time', 'bus_id', 'rout_id'
+    ];
     public function bookings()
     {
     	//return $this->hasMany('Booking');
