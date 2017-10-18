@@ -16710,8 +16710,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // }
     data: function data() {
         return {
-            busIds: [],
-            busInfo: {},
+            availableBusList: [],
+            busInfo: [],
             disableShowButton: false,
             disableSaveButton: true,
             error: '',
@@ -16734,7 +16734,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        this.fetchBusIds();
+        //this.fetchBusIds();
+        this.fetchAvailableBuses();
         this.createIndexList();
     },
 
@@ -16745,7 +16746,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         selectedBusId: function selectedBusId() {
             this.isSaveButtonDisable();
-            this.fetchBusInfoById(this.selectedBusId);
+            //this.fetchBusInfoById(this.selectedBusId);
+            this.fetchBusInfo(this.selectedBusId);
         },
         seatListLength: function seatListLength() {
             this.isSaveButtonDisable();
@@ -16762,6 +16764,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 index = index + 4;
                 //console.log('index', index);
             }
+        },
+        fetchAvailableBuses: function fetchAvailableBuses() {
+            this.loading = true;
+            this.availableBusList = [];
+            var vm = this;
+            axios.get('/api/buses') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.loading = false;
+            });
+        },
+        fetchBusInfo: function fetchBusInfo(busId) {
+            this.busInfo = [];
+            this.busInfo = this.availableBusList.find(function (obj) {
+                // console.log('iddd=', obj.id);    
+                // console.log('routeId=', routeId);
+                return obj.id == busId;
+            });
         },
         isShowButtonDisable: function isShowButtonDisable() {
             this.disableShowButton = this.numberOfRow == '' || this.numberOfRow == 0 ? true : false;
@@ -16813,38 +16833,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return indx == index;
             });
             return index == val ? true : false;
-        },
-        fetchBusIds: function fetchBusIds() {
-            //this.error = false;
-            this.loading = true;
-            //this.cityToList = [];
-            var vm = this;
-            axios.get('/bus/ids').then(function (response) {
-                //vm.answer = _.capitalize(response.data.answer)
-                // console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
-                vm.loading = false;
-                // console.log(vm.error);
-                //vm.cityToList = response.data;
-                //vm.message= response.data
-            });
-        },
-        fetchBusInfoById: function fetchBusInfoById(busId) {
-            this.loading = true;
-            this.busInfo = [];
-            var vm = this;
-            //axios.get('/bus/ids')          
-            //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz 
-            axios.get('/api/bus?q=' + busId) //--> api/bus?q=xyz
-            .then(function (response) {
-                //vm.answer = _.capitalize(response.data.answer)
-                // console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.busInfo = response.data;
-                vm.loading = false;
-                // console.log(vm.error);
-                //vm.cityToList = response.data;
-                //vm.message= response.data
-            });
         },
         createList: function createList() {
             var r; //row                    
@@ -17602,13 +17590,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            availableBusList: [],
             availableRouteList: [],
-            busIds: [],
             disableShowButton: false,
             disableSaveButton: false,
             error: '',
             loading: false,
-            routeIds: [],
+            //routeIds: [],
             routeInfo: [],
             selectedBusId: '',
             selectedRouteId: ''
@@ -17622,11 +17610,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         //console.log('Component mounted.')
-        this.fetchBusIds();
+        //this.fetchBusIds();
+        this.fetchAvailableBuses();
         this.fetchAvailableRoutes();
     },
 
     methods: {
+        // fetchBusInfo(busId) {
+        //     this.busInfo = [];
+        //     this.busInfo = this.availableBusList.find(function (obj) { 
+        //         // console.log('iddd=', obj.id);    
+        //         // console.log('routeId=', routeId);
+        //         return obj.id == busId; });
+        // },
         fetchRouteInfo: function fetchRouteInfo(routeId) {
             this.routeInfo = [];
             this.routeInfo = this.availableRouteList.find(function (obj) {
@@ -17635,13 +17631,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return obj.id == routeId;
             });
         },
-        fetchBusIds: function fetchBusIds() {
-            //this.error = false;
+        fetchAvailableBuses: function fetchAvailableBuses() {
             this.loading = true;
-            //this.cityToList = [];
+            this.availableBusList = [];
             var vm = this;
-            axios.get('/bus/ids').then(function (response) {
-                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
+            axios.get('/api/buses') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
                 vm.loading = false;
             });
         },
@@ -48087,8 +48083,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": "",
       "value": ""
     }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.busIds), function(busId) {
-    return _c('option', [_vm._v("\n                        " + _vm._s(busId) + "\n                      ")])
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [_vm._v("\n                        " + _vm._s(bus.id) + "\n                      ")])
   })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-2"
   }, [_c('div', {
@@ -48515,8 +48511,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": "",
       "value": ""
     }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.busIds), function(busId) {
-    return _c('option', [_vm._v("\n                        " + _vm._s(busId) + "\n                      ")])
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [_vm._v("\n                        " + _vm._s(bus.id) + "\n                      ")])
   })], 2)])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12"
   }, [_c('div', {

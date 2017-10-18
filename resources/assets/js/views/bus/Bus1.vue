@@ -30,9 +30,9 @@
                       <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
                       <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
                         <option disabled value="">Please select one</option>
-                        <option v-for="bus in availableBusList">
-                          {{ bus.id }}
-                        </option>                         
+                        <option v-for="busId in busIds">
+                          {{ busId }}
+                        </option>                           
                       </select>
                     </div>
                   </div>
@@ -134,8 +134,8 @@
         // }
         data() {
                 return {
-                    availableBusList: [],                    
-                    busInfo: [],
+                    busIds: [],
+                    busInfo: {},
                     disableShowButton: false,
                     disableSaveButton: true,
                     error: '',
@@ -159,8 +159,7 @@
 
                 },
                 mounted() {
-                    //this.fetchBusIds();
-                    this.fetchAvailableBuses();
+                    this.fetchBusIds();
                     this.createIndexList();                  
                 },
                 watch: {
@@ -172,8 +171,7 @@
 
                     selectedBusId() {
                         this.isSaveButtonDisable();
-                        //this.fetchBusInfoById(this.selectedBusId);
-                        this.fetchBusInfo(this.selectedBusId);
+                        this.fetchBusInfoById(this.selectedBusId);
                     },
                     seatListLength() {
                         this.isSaveButtonDisable();
@@ -192,24 +190,6 @@
                             index = index+4; 
                             //console.log('index', index);
                         }
-                    },
-                    fetchAvailableBuses() {
-                        this.loading = true;
-                        this.availableBusList= [];            
-                        var vm = this;                
-                        axios.get('/api/buses')  //--> api/bus?q=xyz        (right)
-                            .then(function (response) {                  
-                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;                       
-                               vm.loading = false;
-                        });
-                    },
-
-                    fetchBusInfo(busId) {
-                        this.busInfo = [];
-                        this.busInfo = this.availableBusList.find(function (obj) { 
-                            // console.log('iddd=', obj.id);    
-                            // console.log('routeId=', routeId);
-                            return obj.id == busId; });
                     },
 
                     isShowButtonDisable() {
@@ -268,7 +248,42 @@
                             return indx == index;
                         });
                         return (index == val) ? true : false;
-                    },                    
+                    },
+
+                    fetchBusIds() {
+                        //this.error = false;
+                        this.loading = true;
+                        //this.cityToList = [];
+                        var vm = this;
+                        axios.get('/bus/ids')          
+                            .then(function (response) {
+                              //vm.answer = _.capitalize(response.data.answer)
+                              // console.log(response.data);
+                               response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
+                               vm.loading = false;
+                              // console.log(vm.error);
+                               //vm.cityToList = response.data;
+                               //vm.message= response.data
+                        });
+                    },
+
+                    fetchBusInfoById(busId) {
+                        this.loading = true;
+                        this.busInfo = [];
+                        var vm = this;
+                        //axios.get('/bus/ids')          
+                        //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz 
+                        axios.get('/api/bus?q=' + busId)  //--> api/bus?q=xyz
+                            .then(function (response) {
+                              //vm.answer = _.capitalize(response.data.answer)
+                              // console.log(response.data);
+                               response.data.error ? vm.error = response.data.error : vm.busInfo = response.data;
+                               vm.loading = false;
+                              // console.log(vm.error);
+                               //vm.cityToList = response.data;
+                               //vm.message= response.data
+                        });
+                    },
 
                     createList() {
                         var r; //row                    

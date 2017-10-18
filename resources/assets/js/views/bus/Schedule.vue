@@ -40,8 +40,8 @@
                       <label for="busId"> Bus Ids </label>                    
                       <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
                         <option disabled value="">Please select one</option>
-                        <option v-for="busId in busIds">
-                          {{ busId }}
+                        <option v-for="bus in availableBusList">
+                          {{ bus.id }}
                         </option>                           
                       </select>
                     </div>
@@ -108,13 +108,13 @@
     export default {
         data() {
             return {
-                availableRouteList: [],
-                busIds: [],
+                availableBusList: [],
+                availableRouteList: [],                               
                 disableShowButton: false,
                 disableSaveButton: false,
                 error: '',
                 loading: false,
-                routeIds: [],
+                //routeIds: [],
                 routeInfo: [],
                 selectedBusId: '',
                 selectedRouteId: '',
@@ -127,10 +127,18 @@
         },        
         mounted() {
             //console.log('Component mounted.')
-            this.fetchBusIds();
-             this.fetchAvailableRoutes();
+            //this.fetchBusIds();
+            this.fetchAvailableBuses();
+            this.fetchAvailableRoutes();
         },
         methods: {
+            // fetchBusInfo(busId) {
+            //     this.busInfo = [];
+            //     this.busInfo = this.availableBusList.find(function (obj) { 
+            //         // console.log('iddd=', obj.id);    
+            //         // console.log('routeId=', routeId);
+            //         return obj.id == busId; });
+            // },
             fetchRouteInfo(routeId) {
                 this.routeInfo = [];
                 this.routeInfo = this.availableRouteList.find(function (obj) { 
@@ -138,18 +146,18 @@
                     // console.log('routeId=', routeId);
                     return obj.id == routeId; });
             },
-            fetchBusIds() {
-                //this.error = false;
+            
+            fetchAvailableBuses() {
                 this.loading = true;
-                //this.cityToList = [];
-                var vm = this;
-                axios.get('/bus/ids')          
-                    .then(function (response) {      
-                       response.data.error ? vm.error = response.data.error : vm.busIds = response.data;                       
+                this.availableBusList= [];            
+                var vm = this;                
+                axios.get('/api/buses')  //--> api/bus?q=xyz        (right)
+                    .then(function (response) {                  
+                       response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;                       
                        vm.loading = false;
-                      
                 });
             },
+
             fetchAvailableRoutes() {
                 this.loading = true;
                 this.availableRouteList= [];            
