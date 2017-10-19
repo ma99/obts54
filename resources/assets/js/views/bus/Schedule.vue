@@ -100,7 +100,8 @@
                  <div class="col-sm-4">
                     <div class="button-group">
                       <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
-                      <button v-on:click.prevent="saveSchedule()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                      <!-- <button v-on:click.prevent="saveSchedule()" class="btn btn-primary" :disabled="disableSaveButton">Save</button> -->
+                      <button v-on:click.prevent="saveSchedule()" class="btn btn-primary" :disabled="!isValid">Save</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
                     </div>
                   </div>
@@ -109,7 +110,66 @@
             </div>
           </div>
         <!-- </div> -->
-      </div>      
+      </div>   <!-- /row -->   
+      <loader :show="loading"></loader>
+
+
+      <div class="row view-available-info">
+        <div class="panel panel-info">
+          <div class="panel-heading">Schedule Info <span> {{ availableScheduleList.length }} </span></div>
+          <div class="panel-body">
+              <div id="scroll-routes">
+                <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sl. No.</th>
+                        <th>Schedulel #</th>
+                        <th>Route ID
+                              <!-- <span type="button" @click="isSortingAvailableBy('name')" :disabled="disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                              </span> -->
+                        </th>
+                        <th>Bus ID                      
+                             <!-- <span type="button" @click="isSortingAvailableBy('division')" :disabled="!disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span> -->
+                        </th>
+                        <th>Departure Time</th>      
+                        <th>Arrival Time</th>     
+                        <th>Action</th>                                                         
+                        <!-- <th>&nbsp;</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  v-for="(schedule, index) in availableScheduleList" >                              
+                        <td>{{ index+1 }}</td>                              
+                        <td>{{ schedule.id }}</td>
+                        <td>{{ schedule.rout_id }}</td>
+                        <td>{{ schedule.bus_id }}</td>                              
+                        <td>{{ schedule.departure_time }}</td>
+                        <td>{{ schedule.arrival_time }}</td>
+                        <td> 
+                            <button v-on:click.prevent="editSchedule(schedule)" class="btn btn-primary">
+                              <i class="fa fa-edit fa-fw"></i>Edit
+                            </button>  
+                            <button v-on:click.prevent="removeSchedule(schedule)" class="btn btn-danger">
+                              <i class="fa fa-trash fa-fw"></i>Remove
+                            </button> 
+                        </td>                        
+                      </tr>                            
+                    </tbody>
+                </table>      
+              </div>
+          </div>
+          <!-- {{-- panel-footer --}} -->
+          <!-- <div class="panel-footer">                                
+            <show-alert :show.sync="showAlert" :type="alertType">
+              <strong>{{ routeName }} </strong> has been 
+              <strong> {{ actionStatus }} </strong> successfully!
+            </show-alert>
+          </div> -->
+        </div>
+      </div>
     </section>        
   </div>      
 </template>
@@ -117,12 +177,13 @@
     export default {
         data() {
             return {
+                actionStatus: '',
+                alertType: '',
                 arrivalTime: '',
                 departureTime: '',
                 availableBusList: [],
-                availableRouteList: [],                               
-                disableShowButton: false,
-                disableSaveButton: false,
+                availableRouteList: [], 
+                availableScheduleList: [], 
                 error: '',
                 loading: false,
                 //routeIds: [],
@@ -130,19 +191,32 @@
                 selectedBusId: '',
                 selectedRouteId: '',
                 show: false,
+                showAlert: false
             }
         },
         watch: {
             selectedRouteId() {
-                this.fetchRouteInfo(this.selectedRouteId);                
-            }
+                if (this.selectedRouteId != '') {                   
+                    this.fetchRouteInfo(this.selectedRouteId);                
+                }
+            },
+
         },        
         mounted() {
             //console.log('Component mounted.')
             //this.fetchBusIds();
             this.fetchAvailableBuses();
             this.fetchAvailableRoutes();
+            this.fetchAvailableSchedules();
         },
+        computed: {
+            isValid() {
+                return this.routeId != '' && 
+                        this.busId != '' &&
+                        this.departureTime != '' &&
+                        this.arrivalTime != '' 
+              }
+            },      
         methods: {
             // fetchBusInfo(busId) {
             //     this.busInfo = [];
@@ -173,7 +247,18 @@
                        vm.loading = false;
                 });
             },
-
+            fetchAvailableSchedules() {
+                this.loading = true;
+                this.availableScheduleList= [];            
+                var vm = this;                
+                axios.get('/api/schedule')  //--> api/bus?q=xyz        (right)
+                    .then(function (response) {                  
+                       response.data.error ? vm.error = response.data.error : vm.availableScheduleList = response.data;
+                       //vm.tempAvailableRouteList = response.data;
+                      // vm.SortByIdAvailableRouteList(vm.availableRouteList);
+                       vm.loading = false;
+                });
+            },
             fetchAvailableRoutes() {
                 this.loading = true;
                 this.availableRouteList= [];            
@@ -221,8 +306,67 @@
                 this.selectedBusId = '';
                 this.selectedRouteId = '';
                 this.arrivalTime = '';
-                this.departureTime = '';                
+                this.departureTime = '';
+                this.routeInfo = '';                                
           },
         },
     }
 </script>
+<style lang="scss" scoped>
+    // .view-route-info .panel-heading span {
+    .view-available-info .panel-heading span {
+      background-color: yellow;
+      font-weight: 600;
+      float: right;
+      padding: 2px 6px;
+      color: royalblue;
+    }
+    .route-info {
+      border: 1px dashed lightblue;
+      padding: 25px 10px;
+      margin: 25px 25px 50px 25px;
+      position: relative;
+      text-align: center;      
+
+      span {
+        /* background-color: lightblue; */
+        display: block;
+        font-weight: 600;
+        letter-spacing: 1px;        
+        left: 14px;
+        top: -16px;
+        position: absolute;
+        padding: 5px 10px;
+        width: 90px;
+      }
+      .arrival {
+        @extend span;
+        background-color: lightblue;
+      }
+      .departure {
+        @extend span;
+        background-color: lightgreen;
+      }
+    }
+
+    form {
+         label {
+          padding: 0 5px 0 15px;
+         }
+    }
+
+    .route-distance {
+      margin: -15px 10px 10px 15px;
+    }     
+    #scroll-routes {
+        span {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        span[disabled] {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+    } 
+
+</style>

@@ -25,11 +25,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //bus
 //Route::get('/bus', 'Api\SearchBusController@busInfo');
 Route::get('/buses', 'Api\SearchBusController@busList');
-Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/routes', 'Api\SearchBusController@routeList');
 Route::get('/stops', 'Api\SearchBusController@stopList');
 
+//schedule
+Route::get('/schedule', 'Api\SearchScheduleController@scheduleList');
+
 //city
+Route::get('/city', 'Api\SearchCitiesController@cityTo');
 Route::get('/divisions', 'Api\SearchCitiesController@divisionList');
 Route::get('/districts', 'Api\SearchCitiesController@districtList');
 Route::get('/cities', 'Api\SearchCitiesController@cityList');

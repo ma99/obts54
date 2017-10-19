@@ -17595,29 +17595,93 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            actionStatus: '',
+            alertType: '',
             arrivalTime: '',
             departureTime: '',
             availableBusList: [],
             availableRouteList: [],
-            disableShowButton: false,
-            disableSaveButton: false,
+            availableScheduleList: [],
             error: '',
             loading: false,
             //routeIds: [],
             routeInfo: [],
             selectedBusId: '',
             selectedRouteId: '',
-            show: false
+            show: false,
+            showAlert: false
         };
     },
 
     watch: {
         selectedRouteId: function selectedRouteId() {
-            this.fetchRouteInfo(this.selectedRouteId);
+            if (this.selectedRouteId != '') {
+                this.fetchRouteInfo(this.selectedRouteId);
+            }
         }
     },
     mounted: function mounted() {
@@ -17625,8 +17689,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //this.fetchBusIds();
         this.fetchAvailableBuses();
         this.fetchAvailableRoutes();
+        this.fetchAvailableSchedules();
     },
 
+    computed: {
+        isValid: function isValid() {
+            return this.routeId != '' && this.busId != '' && this.departureTime != '' && this.arrivalTime != '';
+        }
+    },
     methods: {
         // fetchBusInfo(busId) {
         //     this.busInfo = [];
@@ -17653,6 +17723,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/buses') //--> api/bus?q=xyz        (right)
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.loading = false;
+            });
+        },
+        fetchAvailableSchedules: function fetchAvailableSchedules() {
+            this.loading = true;
+            this.availableScheduleList = [];
+            var vm = this;
+            axios.get('/api/schedule') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableScheduleList = response.data;
+                //vm.tempAvailableRouteList = response.data;
+                // vm.SortByIdAvailableRouteList(vm.availableRouteList);
                 vm.loading = false;
             });
         },
@@ -17702,6 +17784,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectedRouteId = '';
             this.arrivalTime = '';
             this.departureTime = '';
+            this.routeInfo = '';
         }
     }
 });
@@ -47683,13 +47766,17 @@ module.exports = Component.exports
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(142)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(54),
   /* template */
   __webpack_require__(109),
   /* scopeId */
-  null,
+  "data-v-3fc4e1ea",
   /* cssModules */
   null
 )
@@ -48693,7 +48780,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableSaveButton
+      "disabled": !_vm.isValid
     },
     on: {
       "click": function($event) {
@@ -48709,9 +48796,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.reset()
       }
     }
-  }, [_vm._v("Reset")])])])])])])])])])
+  }, [_vm._v("Reset")])])])])])])]), _vm._v(" "), _c('loader', {
+    attrs: {
+      "show": _vm.loading
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row view-available-info"
+  }, [_c('div', {
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Schedule Info "), _c('span', [_vm._v(" " + _vm._s(_vm.availableScheduleList.length) + " ")])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    attrs: {
+      "id": "scroll-routes"
+    }
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.availableScheduleList), function(schedule, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.rout_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.bus_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.departure_time))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.arrival_time))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.editSchedule(schedule)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-edit fa-fw"
+    }), _vm._v("Edit\n                          ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.removeSchedule(schedule)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash fa-fw"
+    }), _vm._v("Remove\n                          ")])])])
+  }))])])])])])], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Route Id")]), _vm._v(" "), _c('th', [_vm._v("Departure City")]), _vm._v(" "), _c('th', [_vm._v("Arrival City")]), _vm._v(" "), _c('th', [_vm._v("Distance")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("Schedulel #")]), _vm._v(" "), _c('th', [_vm._v("Route ID\n                            ")]), _vm._v(" "), _c('th', [_vm._v("Bus ID                      \n                           ")]), _vm._v(" "), _c('th', [_vm._v("Departure Time")]), _vm._v(" "), _c('th', [_vm._v("Arrival Time")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -60830,6 +60959,47 @@ __webpack_require__(17);
 __webpack_require__(18);
 module.exports = __webpack_require__(19);
 
+
+/***/ }),
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .arrival[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .arrival[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .departure[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .departure[data-v-3fc4e1ea] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-3fc4e1ea] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-3fc4e1ea], .route-info .arrival[data-v-3fc4e1ea], .route-info .departure[data-v-3fc4e1ea] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-3fc4e1ea] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-3fc4e1ea] {\n    background-color: lightgreen;\n}\nform label[data-v-3fc4e1ea] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-3fc4e1ea] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-3fc4e1ea], #scroll-routes .route-info .arrival[data-v-3fc4e1ea], .route-info #scroll-routes .arrival[data-v-3fc4e1ea], #scroll-routes .route-info .departure[data-v-3fc4e1ea], .route-info #scroll-routes .departure[data-v-3fc4e1ea] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-3fc4e1ea], #scroll-routes .route-info [disabled].arrival[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].arrival[data-v-3fc4e1ea], #scroll-routes .route-info [disabled].departure[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].departure[data-v-3fc4e1ea] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(141);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("3c622e97", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

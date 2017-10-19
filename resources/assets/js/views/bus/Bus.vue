@@ -180,7 +180,7 @@
                     },
 
 
-                },      
+                },                
                 methods: {
                     createIndexList() {
                         this.indexList=[];
