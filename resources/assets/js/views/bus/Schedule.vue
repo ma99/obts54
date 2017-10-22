@@ -162,14 +162,81 @@
               </div>
           </div>
           <!-- {{-- panel-footer --}} -->
-          <!-- <div class="panel-footer">                                
+          <div class="panel-footer">                                
             <show-alert :show.sync="showAlert" :type="alertType">
-              <strong>{{ routeName }} </strong> has been 
+             <!--  Schedule <strong>{{ schedule.id }} </strong> for Route ID <strong>{{ schedule.rout_id }} </strong> has been  -->
+             SCHEDULE
               <strong> {{ actionStatus }} </strong> successfully!
             </show-alert>
-          </div> -->
+          </div>
         </div>
       </div>
+      <!-- Modal -->              
+      <!-- <modal :show="modal" @close="modal=false"> -->
+      <modal v-show="modal" @close="cancelEdit">
+        <div class="row">
+            <div id="edit-schedule" class="col-sm-10 col-sm-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">Edit Schedule Info.</div>                
+                <div class="panel-body">
+                  <span> Last Updated: <strong>{{ schedule.updated_at }} </strong> </span>
+                  </br></br>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="scheduleId">Schedule ID</label>
+                        <input v-model="schedule.id" type="text" class="form-control" id="scheduleId" disabled="true">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="routeId">Route ID</label>
+                        <input v-model="schedule.rout_id" type="text" class="form-control" id="routeId" disabled="true">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3"> 
+                        <div class="form-group">
+                          <label for="busId"> Bus Ids </label>                    
+                          <select v-model="schedule.bus_id" class="form-control" name="bus_id" id="busId">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="bus in availableBusList">
+                              {{ bus.id }}
+                            </option>                           
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2"> 
+                        <div class="form-group">
+                           <label for="departure-time">Departure Time </label>
+                           <input v-model="schedule.departure_time" id="departure-time" type="time" name="departure-time" class="form-control" min="00:00" max="23:00" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2"> 
+                        <div class="form-group">                     
+                           <label for="arrival-time">Arrival Time </label>
+                           <input v-model="schedule.arrival_time" id="arrival-time" type="time" name="arrival-time" class="form-control" min="00:00" max="23:00" required>
+                        </div>
+                    </div>
+                    
+                  </div>
+                </div>
+
+                <div class="panel-footer">
+                      <button class="btn btn-primary" v-on:click.prevent="updateSchedule(schedule)">Save</button>
+                      <!-- <button class="btn btn-primary" @click.prevent="modal=false">Cancel</button> -->
+                      <button class="btn btn-primary" @click.prevent="cancelEdit()">Cancel</button>
+                </div>    
+
+              </div>
+
+            </div>               
+        </div>                 
+      </modal>
+        <!-- /Modal -->
     </section>        
   </div>      
 </template>
@@ -186,10 +253,13 @@
                 availableScheduleList: [], 
                 error: '',
                 loading: false,
+                modal: false,
                 //routeIds: [],
-                routeInfo: [],
+                response: '',
+                routeInfo: [],                
                 selectedBusId: '',
                 selectedRouteId: '',
+                schedule: {},
                 show: false,
                 showAlert: false
             }
@@ -225,6 +295,14 @@
             //         // console.log('routeId=', routeId);
             //         return obj.id == busId; });
             // },
+            cancelEdit() {
+                this.schedule = '';            
+                this.modal = false;
+            },
+            editSchedule(schedule) {
+                this.schedule = _.clone(schedule); //cloning or coppy                
+                this.modal = true; 
+            },
             expandAddSchedulePanel() {
                 this.show = !this.show;
             },
@@ -276,6 +354,55 @@
                   return a.id - b.id;
                 });
             },
+
+            removeSchedule(schedule) {  // role id of user/staff in roles table
+                var vm = this;            
+                //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+                swal({
+                      title: "Are you sure?",
+                      text: "This Route will be Removed from Route List!",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#DD6B55",
+                      confirmButtonText: "Yes, Remove!",
+                      //closeOnConfirm: false,
+                      //closeOnCancel: false                       
+                    },
+                    function() {                       
+                            vm.loading = true;
+                            vm.response = '';
+                            vm.showAlert = false;
+                            axios.post('/delete/schedule', {                            
+                                schedule_id: schedule.id, 
+                            })          
+                            .then(function (response) {                                           
+                                // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                                if (vm.response) {                                
+                                    vm.removeScheduleFromAvailableScheduleList(schedule.id); // update the array after removing
+                                    vm.loading = false;
+                                    vm.actionStatus = 'Removed';
+                                    vm.alertType = 'danger';
+                                    vm.showAlert= true;
+                                    return;                                                      
+                                }                            
+                                vm.loading = false;
+
+                            });    
+                            //swal("Deleted!", "Staff has been Removed.", "success");                      
+                        
+                    });
+              },
+             
+              removeScheduleFromAvailableScheduleList(scheduleId) {
+                var indx = this.availableRouteList.findIndex(function(schedule){                 
+                     return schedule.id == scheduleId;
+                });        
+                this.availableScheduleList.splice(indx, 1);
+                //return;
+              },
+
             saveSchedule() {
                 var vm = this;
                 axios.post('/schedule', {
@@ -292,24 +419,52 @@
                        //vm.fetchAvailableSchedules();
                        //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
                        vm.loading = false;
-                       vm.disableSaveButton = true;
+                       //vm.disableSaveButton = true;
                        //vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
                        vm.reset();
                        return;                   
                     }
                     vm.loading = false;
-                    vm.disableSaveButton = true;
+                    //vm.disableSaveButton = true;
                 });
             },
-
             reset() {
                 this.selectedBusId = '';
                 this.selectedRouteId = '';
                 this.arrivalTime = '';
                 this.departureTime = '';
                 this.routeInfo = '';                                
-          },
-        },
+            },
+            updateSchedule(schedule) {
+                var vm = this;
+                    this.response = '';
+                    this.showAlert = false;                                
+                    this.loading = true;
+                    axios.post('/edit/schedule', {                        
+                          schedule: schedule
+                        })          
+                        .then(function (response) {                                           
+                          
+                          response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                          if (vm.response) {
+                              vm.updateScheduleAtAvailableScheduleList(schedule.id, schedule);
+                              vm.loading = false;
+                              vm.modal = false;
+                              vm.actionStatus = 'Udated';
+                              vm.alertType = 'info';                          
+                              vm.showAlert= true;                                                                        
+                          }
+                        });
+            },
+
+            updateScheduleAtAvailableScheduleList(scheduleId, schedule) {                
+                 var indx = this.availableScheduleList.findIndex(function(schedule){                                        
+                        return schedule.id == scheduleId;
+                 });                                     
+                 this.availableScheduleList[indx] = schedule;                 
+            }
+
+        }
     }
 </script>
 <style lang="scss" scoped>

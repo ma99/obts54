@@ -57,6 +57,8 @@ Route::post('/delete/city', 'Admin\CityController@destroy');
 
 //schedule
 Route::post('/schedule', 'Admin\ScheduleController@store');
+Route::post('/edit/schedule', 'Admin\ScheduleController@editSchedule');
+Route::post('/delete/schedule', 'Admin\ScheduleController@destroy');
 
 
 //stop
