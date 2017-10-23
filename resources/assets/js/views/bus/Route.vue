@@ -141,7 +141,7 @@
 
                     <div class="col-sm-4">
                       <div class="button-group">
-                        <button v-on:click.prevent="saveCities()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                        <button v-on:click.prevent="addRoute()" class="btn btn-primary" :disabled="disableSaveButton">Add</button>
                         <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
                       </div>
                     </div>                      
@@ -322,6 +322,34 @@
             },
         },
         methods: {
+          addRoute() {
+            var vm = this;
+            //this.loading = true;
+            // console.log('cityId',this.selectedCity.id);
+            // console.log('cityName',this.selectedCity.name);
+            axios.post('/route', {
+                departure_city: this.selectedDepartureCity,
+                arrival_city: this.selectedArrivalCity,
+                distance: this.routeDistance,                
+                fare: this.fare
+            })          
+            .then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                   //console.log(vm.response);
+                   vm.fetchAvailableRoutes();
+                   //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                   vm.loading = false;
+                   vm.disableSaveButton = true;
+                   vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+                   vm.reset();
+                   return;                   
+                }
+                vm.loading = false;
+                vm.disableSaveButton = true;
+            });
+          },            
           cancelEdit() {
             this.fare = '';            
             this.modal = false;
@@ -452,34 +480,7 @@
             this.availableRouteList.splice(indx, 1);
             //return;
           },
-          saveCities() {
-            var vm = this;
-            //this.loading = true;
-            // console.log('cityId',this.selectedCity.id);
-            // console.log('cityName',this.selectedCity.name);
-            axios.post('/route', {
-                departure_city: this.selectedDepartureCity,
-                arrival_city: this.selectedArrivalCity,
-                distance: this.routeDistance,                
-                fare: this.fare
-            })          
-            .then(function (response) {
-                //console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                if (vm.response) {
-                   //console.log(vm.response);
-                   vm.fetchAvailableRoutes();
-                   //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
-                   vm.loading = false;
-                   vm.disableSaveButton = true;
-                   vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
-                   vm.reset();
-                   return;                   
-                }
-                vm.loading = false;
-                vm.disableSaveButton = true;
-            });
-          },
+          
           reset() {
             this.selectedArrivalCity = '';
             this.selectedDepartureCity = '';
