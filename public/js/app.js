@@ -17248,6 +17248,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
+    addRoute: function addRoute() {
+      var vm = this;
+      //this.loading = true;
+      // console.log('cityId',this.selectedCity.id);
+      // console.log('cityName',this.selectedCity.name);
+      axios.post('/route', {
+        departure_city: this.selectedDepartureCity,
+        arrival_city: this.selectedArrivalCity,
+        distance: this.routeDistance,
+        fare: this.fare
+      }).then(function (response) {
+        //console.log(response.data);
+        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+        if (vm.response) {
+          //console.log(vm.response);
+          vm.fetchAvailableRoutes();
+          //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+          vm.loading = false;
+          vm.disableSaveButton = true;
+          vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+          vm.reset();
+          return;
+        }
+        vm.loading = false;
+        vm.disableSaveButton = true;
+      });
+    },
     cancelEdit: function cancelEdit() {
       this.fare = '';
       this.modal = false;
@@ -17371,33 +17398,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.availableRouteList.splice(indx, 1);
       //return;
-    },
-    saveCities: function saveCities() {
-      var vm = this;
-      //this.loading = true;
-      // console.log('cityId',this.selectedCity.id);
-      // console.log('cityName',this.selectedCity.name);
-      axios.post('/route', {
-        departure_city: this.selectedDepartureCity,
-        arrival_city: this.selectedArrivalCity,
-        distance: this.routeDistance,
-        fare: this.fare
-      }).then(function (response) {
-        //console.log(response.data);
-        response.data.error ? vm.error = response.data.error : vm.response = response.data;
-        if (vm.response) {
-          //console.log(vm.response);
-          vm.fetchAvailableRoutes();
-          //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
-          vm.loading = false;
-          vm.disableSaveButton = true;
-          vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
-          vm.reset();
-          return;
-        }
-        vm.loading = false;
-        vm.disableSaveButton = true;
-      });
     },
     reset: function reset() {
       this.selectedArrivalCity = '';
@@ -17729,10 +17729,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             actionStatus: '',
             alertType: '',
             arrivalTime: '',
-            departureTime: '',
             availableBusList: [],
             availableRouteList: [],
             availableScheduleList: [],
+            departureTime: '',
+            disableSorting: true,
             error: '',
             loading: false,
             modal: false,
@@ -17775,6 +17776,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //         // console.log('routeId=', routeId);
         //         return obj.id == busId; });
         // },
+        addSchedule: function addSchedule() {
+            var vm = this;
+            axios.post('/schedule', {
+                route_id: this.selectedRouteId,
+                bus_id: this.selectedBusId,
+                departure_time: this.departureTime,
+                arrival_time: this.arrivalTime
+            }).then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    //console.log(vm.response);
+                    vm.fetchAvailableSchedules();
+                    //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                    vm.loading = false;
+                    vm.scheduleAddedAlert(vm.selectedRouteId, vm.selectedBusId);
+                    vm.reset();
+                    return;
+                }
+                vm.loading = false;
+                //vm.disableSaveButton = true;
+            });
+        },
         cancelEdit: function cancelEdit() {
             this.schedule = '';
             this.modal = false;
@@ -17812,7 +17836,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableScheduleList = response.data;
                 //vm.tempAvailableRouteList = response.data;
-                // vm.SortByIdAvailableRouteList(vm.availableRouteList);
+                vm.sortByIdAvailableRouteList(vm.availableRouteList);
                 vm.loading = false;
             });
         },
@@ -17824,15 +17848,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
                 //vm.tempAvailableRouteList = response.data;
-                vm.SortByIdAvailableRouteList(vm.availableRouteList);
+                vm.sortByIdAvailableRouteList(vm.availableRouteList);
                 vm.loading = false;
             });
         },
-        SortByIdAvailableRouteList: function SortByIdAvailableRouteList(arr) {
+        sortByIdAvailableRouteList: function sortByIdAvailableRouteList(arr) {
             arr.sort(function (a, b) {
                 return a.id - b.id;
             });
         },
+        sortByIdOf: function sortByIdOf(val) {
+            if (val == 'route') {
+                this.availableScheduleList.sort(function (a, b) {
+                    return a.rout_id - b.rout_id;
+                });
+                this.disableSorting = true;
+                return;
+            }
+            this.availableScheduleList.sort(function (a, b) {
+                return a.bus_id - b.bus_id;
+            });
+            this.disableSorting = false;
+        },
+
+
+        // sortByBusIdAvailableBusList(arr) { 
+        // // sort by bus id: assume bus id mixted type string like syl0654, dhk45678            
+        //     arr.sort(function(a, b) {
+        //       var nameA = a.id.toUpperCase(); // ignore upper and lowercase
+        //       var nameB = b.id.toUpperCase(); // ignore upper and lowercase
+        //       if (nameA < nameB) {
+        //         return -1;
+        //       }
+        //       if (nameA > nameB) {
+        //         return 1;
+        //       }
+
+        //       // names must be equal
+        //       return 0;
+        //     });
+
+        //     arr.sort(function(a, b) {
+        //       return a.id - b.id;
+        //     });
+
+        // },
+
         removeSchedule: function removeSchedule(schedule) {
             // role id of user/staff in roles table
             var vm = this;
@@ -17870,35 +17931,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         removeScheduleFromAvailableScheduleList: function removeScheduleFromAvailableScheduleList(scheduleId) {
-            var indx = this.availableRouteList.findIndex(function (schedule) {
+            var indx = this.availableScheduleList.findIndex(function (schedule) {
                 return schedule.id == scheduleId;
             });
             this.availableScheduleList.splice(indx, 1);
             //return;
-        },
-        saveSchedule: function saveSchedule() {
-            var vm = this;
-            axios.post('/schedule', {
-                route_id: this.selectedRouteId,
-                bus_id: this.selectedBusId,
-                departure_time: this.departureTime,
-                arrival_time: this.arrivalTime
-            }).then(function (response) {
-                //console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                if (vm.response) {
-                    //console.log(vm.response);
-                    //vm.fetchAvailableSchedules();
-                    //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
-                    vm.loading = false;
-                    //vm.disableSaveButton = true;
-                    //vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
-                    vm.reset();
-                    return;
-                }
-                vm.loading = false;
-                //vm.disableSaveButton = true;
-            });
         },
         reset: function reset() {
             this.selectedBusId = '';
@@ -17906,6 +17943,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.arrivalTime = '';
             this.departureTime = '';
             this.routeInfo = '';
+        },
+        scheduleAddedAlert: function scheduleAddedAlert(routeId, busId) {
+            swal({
+                //title: "Sorry! Not Available",
+                title: 'Schedule for Route #<span style="color:#A5DC86"> <strong>' + routeId + '&nbsp;' + ' and Bus #' + '&nbsp;' + busId + '</strong></span></br> Added successfully!',
+                //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
+                html: true,
+                //type: "info",
+                type: "success",
+                timer: 1800,
+                showConfirmButton: false,
+                allowOutsideClick: true
+            });
         },
         updateSchedule: function updateSchedule(schedule) {
             var vm = this;
@@ -48939,10 +48989,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.saveSchedule()
+        _vm.addSchedule()
       }
     }
-  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
       "click": function($event) {
@@ -48968,7 +49018,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.availableScheduleList), function(schedule, index) {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("Schedulel #")]), _vm._v(" "), _c('th', [_vm._v("Route ID\n                            "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": _vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.sortByIdOf('route')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Bus ID                      \n                           "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": !_vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.sortByIdOf('bus')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Departure Time")]), _vm._v(" "), _c('th', [_vm._v("Arrival Time")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableScheduleList), function(schedule, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.rout_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.bus_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.departure_time))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.arrival_time))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary",
       on: {
@@ -49201,7 +49281,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.updateSchedule(_vm.schedule)
       }
     }
-  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Update")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
       "click": function($event) {
@@ -49212,8 +49292,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Cancel")])])])])])])], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Route Id")]), _vm._v(" "), _c('th', [_vm._v("Departure City")]), _vm._v(" "), _c('th', [_vm._v("Arrival City")]), _vm._v(" "), _c('th', [_vm._v("Distance")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("Schedulel #")]), _vm._v(" "), _c('th', [_vm._v("Route ID\n                            ")]), _vm._v(" "), _c('th', [_vm._v("Bus ID                      \n                           ")]), _vm._v(" "), _c('th', [_vm._v("Departure Time")]), _vm._v(" "), _c('th', [_vm._v("Arrival Time")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -50073,10 +50151,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.saveCities()
+        _vm.addRoute()
       }
     }
-  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "disabled": _vm.disableResetButton
