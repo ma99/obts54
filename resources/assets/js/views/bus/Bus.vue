@@ -54,9 +54,11 @@
 
                   <div class="col-sm-4">
                     <div class="button-group">
-                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                      <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
+                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="!isValidForShow">Show</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                     <!--  <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                      --> <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="!isValidForSave">Save</button>
                     </div>
                   </div>
                 </form>  
@@ -137,7 +139,7 @@
                     availableBusList: [],                    
                     busInfo: [],
                     disableShowButton: false,
-                    disableSaveButton: true,
+                    disableSaveButton: false,
                     error: '',
                     numberOfCol: 4,                            
                     numberOfRow: 4,                            
@@ -171,16 +173,31 @@
                     },
 
                     selectedBusId() {
-                        this.isSaveButtonDisable();
+                        //this.isSaveButtonDisable();
                         //this.fetchBusInfoById(this.selectedBusId);
-                        this.fetchBusInfo(this.selectedBusId);
+                        if (this.selectedBusId != '') {
+                          this.fetchBusInfo(this.selectedBusId);
+                        }
                     },
-                    seatListLength() {
-                        this.isSaveButtonDisable();
-                    },
+                    // seatListLength() {
+                    //     this.isSaveButtonDisable();
+                    // },
+                },
 
+                computed: {
+                    isValidForShow() {                        
+                        return this.selectedBusId != '' && 
+                                this.numberOfRow != '' &&
+                                this.disableShowButton != true
+                      },
 
-                },                
+                      isValidForSave() {                        
+                        return this.selectedBusId != '' && 
+                                this.numberOfRow != '' &&
+                                this.disableSaveButton != true
+                      }
+                },
+
                 methods: {
                     createIndexList() {
                         this.indexList=[];
@@ -304,17 +321,19 @@
                         this.isDisabled = true;
                         this.disableShowButton = true;
                         this.disableSaveButton = false;
-                        this.seatListLength = this.seatList.length;
+                        //this.seatListLength = this.seatList.length;
                         
                     },
                     
                     reset() {
                         this.seatList=[];
-                        //this.numberOfRow = '';
+                        this.numberOfRow = '';
                         this.isDisabled = false;
                         this.disableShowButton = false;
-                        this.disableSaveButton= true;                        
-                        this.seatListLength= '';
+                        // this.disableSaveButton = true;                        
+                        //this.seatListLength = '';
+                        this.selectedBusId ='';
+                        this.busInfo = '';
                     },
 
                     saveSeatList() {

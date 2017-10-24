@@ -16703,6 +16703,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     // mounted() {
@@ -16713,7 +16715,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             availableBusList: [],
             busInfo: [],
             disableShowButton: false,
-            disableSaveButton: true,
+            disableSaveButton: false,
             error: '',
             numberOfCol: 4,
             numberOfRow: 4,
@@ -16745,14 +16747,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isShowButtonDisable();
         },
         selectedBusId: function selectedBusId() {
-            this.isSaveButtonDisable();
+            //this.isSaveButtonDisable();
             //this.fetchBusInfoById(this.selectedBusId);
-            this.fetchBusInfo(this.selectedBusId);
-        },
-        seatListLength: function seatListLength() {
-            this.isSaveButtonDisable();
+            if (this.selectedBusId != '') {
+                this.fetchBusInfo(this.selectedBusId);
+            }
         }
     },
+
+    computed: {
+        isValidForShow: function isValidForShow() {
+            return this.selectedBusId != '' && this.numberOfRow != '' && this.disableShowButton != true;
+        },
+        isValidForSave: function isValidForSave() {
+            return this.selectedBusId != '' && this.numberOfRow != '' && this.disableSaveButton != true;
+        }
+    },
+
     methods: {
         createIndexList: function createIndexList() {
             this.indexList = [];
@@ -16868,15 +16879,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isDisabled = true;
             this.disableShowButton = true;
             this.disableSaveButton = false;
-            this.seatListLength = this.seatList.length;
+            //this.seatListLength = this.seatList.length;
         },
         reset: function reset() {
             this.seatList = [];
-            //this.numberOfRow = '';
+            this.numberOfRow = '';
             this.isDisabled = false;
             this.disableShowButton = false;
-            this.disableSaveButton = true;
-            this.seatListLength = '';
+            // this.disableSaveButton = true;                        
+            //this.seatListLength = '';
+            this.selectedBusId = '';
+            this.busInfo = '';
         },
         saveSeatList: function saveSeatList() {
             var vm = this;
@@ -48496,7 +48509,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableShowButton
+      "disabled": !_vm.isValidForShow
     },
     on: {
       "click": function($event) {
@@ -48515,7 +48528,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableSaveButton
+      "disabled": !_vm.isValidForSave
     },
     on: {
       "click": function($event) {
