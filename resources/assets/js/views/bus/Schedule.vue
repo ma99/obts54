@@ -287,7 +287,7 @@
                         this.departureTime != '' &&
                         this.arrivalTime != '' 
               }
-            },      
+        },      
         methods: {
             // fetchBusInfo(busId) {
             //     this.busInfo = [];
