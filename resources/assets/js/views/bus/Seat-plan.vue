@@ -2,7 +2,7 @@
   <div>    
     <section class="content-header">
       <h1>
-       Bus Management
+       Seat Planning
         <!-- <small>Optional description</small> -->
       </h1>
       <ol class="breadcrumb">        
@@ -21,7 +21,7 @@
           <!-- <div class="col-md-8 col-md-offset-1"> -->
           <!-- <div class="col-md-8 col-md-offset-1"> -->
             <div class="panel panel-default">
-              <div class="panel-heading">Add New Bus</div>
+              <div class="panel-heading">Seat Plan </div>
               <div class="panel-body">
                 <form> 
                  <div class="col-sm-4"> 
@@ -30,9 +30,9 @@
                       <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
                       <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
                         <option disabled value="">Please select one</option>
-                        <option v-for="busId in busIds">
-                          {{ busId }}
-                        </option>                           
+                        <option v-for="bus in availableBusList">
+                          {{ bus.id }}
+                        </option>                         
                       </select>
                     </div>
                   </div>
@@ -54,9 +54,11 @@
 
                   <div class="col-sm-4">
                     <div class="button-group">
-                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button>
+                      <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
+                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="!isValidForShow">Show</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                     <!--  <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                      --> <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="!isValidForSave">Save</button>
                     </div>
                   </div>
                 </form>  
@@ -134,10 +136,10 @@
         // }
         data() {
                 return {
-                    busIds: [],
-                    busInfo: {},
+                    availableBusList: [],                    
+                    busInfo: [],
                     disableShowButton: false,
-                    disableSaveButton: true,
+                    disableSaveButton: false,
                     error: '',
                     numberOfCol: 4,                            
                     numberOfRow: 4,                            
@@ -159,7 +161,8 @@
 
                 },
                 mounted() {
-                    this.fetchBusIds();
+                    //this.fetchBusIds();
+                    this.fetchAvailableBuses();
                     this.createIndexList();                  
                 },
                 watch: {
@@ -170,15 +173,31 @@
                     },
 
                     selectedBusId() {
-                        this.isSaveButtonDisable();
-                        this.fetchBusInfoById(this.selectedBusId);
+                        //this.isSaveButtonDisable();
+                        //this.fetchBusInfoById(this.selectedBusId);
+                        if (this.selectedBusId != '') {
+                          this.fetchBusInfo(this.selectedBusId);
+                        }
                     },
-                    seatListLength() {
-                        this.isSaveButtonDisable();
-                    },
+                    // seatListLength() {
+                    //     this.isSaveButtonDisable();
+                    // },
+                },
 
+                computed: {
+                    isValidForShow() {                        
+                        return this.selectedBusId != '' && 
+                                this.numberOfRow != '' &&
+                                this.disableShowButton != true
+                      },
 
-                },      
+                      isValidForSave() {                        
+                        return this.selectedBusId != '' && 
+                                this.numberOfRow != '' &&
+                                this.disableSaveButton != true
+                      }
+                },
+
                 methods: {
                     createIndexList() {
                         this.indexList=[];
@@ -190,6 +209,24 @@
                             index = index+4; 
                             //console.log('index', index);
                         }
+                    },
+                    fetchAvailableBuses() {
+                        this.loading = true;
+                        this.availableBusList= [];            
+                        var vm = this;                
+                        axios.get('/api/buses')  //--> api/bus?q=xyz        (right)
+                            .then(function (response) {                  
+                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;                       
+                               vm.loading = false;
+                        });
+                    },
+
+                    fetchBusInfo(busId) {
+                        this.busInfo = [];
+                        this.busInfo = this.availableBusList.find(function (obj) { 
+                            // console.log('iddd=', obj.id);    
+                            // console.log('routeId=', routeId);
+                            return obj.id == busId; });
                     },
 
                     isShowButtonDisable() {
@@ -248,42 +285,7 @@
                             return indx == index;
                         });
                         return (index == val) ? true : false;
-                    },
-
-                    fetchBusIds() {
-                        //this.error = false;
-                        this.loading = true;
-                        //this.cityToList = [];
-                        var vm = this;
-                        axios.get('/bus/ids')          
-                            .then(function (response) {
-                              //vm.answer = _.capitalize(response.data.answer)
-                              // console.log(response.data);
-                               response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
-                               vm.loading = false;
-                              // console.log(vm.error);
-                               //vm.cityToList = response.data;
-                               //vm.message= response.data
-                        });
-                    },
-
-                    fetchBusInfoById(busId) {
-                        this.loading = true;
-                        this.busInfo = [];
-                        var vm = this;
-                        //axios.get('/bus/ids')          
-                        //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz 
-                        axios.get('/api/bus?q=' + busId)  //--> api/bus?q=xyz
-                            .then(function (response) {
-                              //vm.answer = _.capitalize(response.data.answer)
-                              // console.log(response.data);
-                               response.data.error ? vm.error = response.data.error : vm.busInfo = response.data;
-                               vm.loading = false;
-                              // console.log(vm.error);
-                               //vm.cityToList = response.data;
-                               //vm.message= response.data
-                        });
-                    },
+                    },                    
 
                     createList() {
                         var r; //row                    
@@ -319,17 +321,19 @@
                         this.isDisabled = true;
                         this.disableShowButton = true;
                         this.disableSaveButton = false;
-                        this.seatListLength = this.seatList.length;
+                        //this.seatListLength = this.seatList.length;
                         
                     },
                     
                     reset() {
                         this.seatList=[];
-                        //this.numberOfRow = '';
+                        this.numberOfRow = '';
                         this.isDisabled = false;
                         this.disableShowButton = false;
-                        this.disableSaveButton= true;                        
-                        this.seatListLength= '';
+                        // this.disableSaveButton = true;                        
+                        //this.seatListLength = '';
+                        this.selectedBusId ='';
+                        this.busInfo = '';
                     },
 
                     saveSeatList() {

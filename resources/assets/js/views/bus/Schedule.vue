@@ -125,12 +125,12 @@
                         <th>Sl. No.</th>
                         <th>Schedulel #</th>
                         <th>Route ID
-                              <span type="button" @click="sortByIdOf('route')" :disabled="disableSorting">
-                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                              </span>
+                            <span type="button" @click="sortByIdOf('route')" :disabled="disableSorting">
+                              <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span>
                         </th>
                         <th>Bus ID                      
-                             <span type="button" @click="sortByIdOf('bus')" :disabled="!disableSorting">
+                            <span type="button" @click="sortByIdOf('bus')" :disabled="!disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                             </span>
                         </th>

@@ -21,75 +21,68 @@
           <!-- <div class="col-md-8 col-md-offset-1"> -->
           <!-- <div class="col-md-8 col-md-offset-1"> -->
             <div class="panel panel-default">
-              <div class="panel-heading">Add New Bus</div>
-              <div class="panel-body">
+              <div class="panel-heading">
+              <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" @click="expandAddBusPanel" v-show="!show">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-warning" type="button" @click="expandAddBusPanel" v-show="show">
+                        <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                </span>                
+            </div>
+              <div class="panel-body" v-show="show">
                 <form> 
-                 <div class="col-sm-4"> 
-                   <div class="form-group">
-                      <label for="busId"> Bus Ids </label>
-                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" -->
-                      <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
-                        <option disabled value="">Please select one</option>
-                        <option v-for="bus in availableBusList">
-                          {{ bus.id }}
-                        </option>                         
-                      </select>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="regNumber">Registration #</label>
+                      <input v-model="regNumber" type="text" class="form-control" id="regNumber" placeholder="Registration Number">
                     </div>
                   </div>
 
-
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <div class="form-group">
-                      <label for="numberOfCol">Column #</label>
-                      <input v-model="numberOfCol" type="number" min="1" max="4" value="4" class="form-control" id="numberOfCol" placeholder="Column Number" disabled>
+                      <label for="numberPlate">Number plate #</label>
+                      <input v-model="numberPlate" type="text" class="form-control" id="numberPlate" placeholder="Number Plate" :disabled="isDisabled">
                     </div>
                   </div>
 
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label for="numberOfRow">Row #</label>
-                      <input v-model="numberOfRow" type="number" min="1" max="25" value="9" class="form-control" id="numberOfRow" placeholder="Row Number" :disabled="isDisabled">
+                      <label for="numberOfSeat">Total Seat #</label>
+                      <input v-model="numberOfSeat" type="number" min="1" max="50" value="36" class="form-control" id="numberOfSeat" placeholder="Number of Seat" :disabled="isDisabled">
                     </div>
                   </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="busType">Bus Type #</label>
+                        <select v-model="selectedBusType" class="form-control" id="busType">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="option in options" v-bind:value="option.value">
+                                {{ option.text }}
+                            </option>                                              
+                        </select>                      
+                    </div>
+                  </div>
+
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label for="busDescription">Description</label>
+                      <textarea v-model="busDescription" type="text" min="1" max="50" value="36" class="form-control" id="busDescription" placeholder="Description" :disabled="isDisabled"></textarea>
+                    </div>
+                  </div>
+
 
                   <div class="col-sm-4">
                     <div class="button-group">
                       <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
-                      <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="!isValidForShow">Show</button>
+                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
-                     <!--  <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
-                      --> <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="!isValidForSave">Save</button>
                     </div>
                   </div>
                 </form>  
-                
-                <!-- BusInfo -->
-                <div class="col-sm-12">
-                    <div class="panel panel-info" v-show="Object.keys(busInfo).length > 0">
-                      <div class="panel-heading">Bus Info</div>
-                      <div class="panel-body">
-                        <table class="table .table-striped">
-                            <thead>
-                              <tr>
-                                <th>Reg. No</th>
-                                <th>Bus Type</th>
-                                <th>Total Seat</th>
-                                <th>&nbsp;</th>              
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>                              
-                                <td>{{ busInfo.reg_no}}</td>                              
-                                <td>{{ busInfo.type}}</td>                              
-                                <td>{{ busInfo.total_seats}}</td>
-                              </tr>                            
-                            </tbody>
-                        </table>                
-                        <strong>Description:</strong>
-                        <p> {{ busInfo.description}} </p>
-                      </div>
-                    </div>
-                  </div>
               </div>
             </div>
           <!-- </div> -->
@@ -98,34 +91,62 @@
       
       <loader :show="loading"></loader>
 
-      <div class="row">
-            <div class="panel panel-default">
-              <div class="panel-heading">Seat Planning</div>
-              <div class="panel-body">
-              
-              <div class="seat-layout">
-                <button
-                    class="col-xs-2"            
-                    v-bind:class="{ active : seat.checked, 
-                            inactive : !seat.checked, 
-                            'col-xs-offset-2': emptySpace(index, seat.no)
-                            }"
-                    v-for="(seat, index) in seatList"          
-                    @click="toggle(seat)"                               
-                >                       
-                    <i class="fa fa-check fa-lg tickmark" v-show="seat.checked"></i>
-                    <i class="fa fa-times fa-lg crossmark" aria-hidden="true" v-show="!seat.checked"></i>
+      <div class="row view-available-info">
+        <div class="panel panel-info">
+          <div class="panel-heading">Bus Info <span> {{ availableBusList.length }} </span></div>
+          <div class="panel-body">
+              <div id="scroll-routes">
+                <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>Sl. No.</th>
+                        <th>Bus ID
+                            <span type="button" @click="sortByIdOf('bus')" :disabled="disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                              </span>
+                        </th>                           
+                        <th>Reg. Number</th>
+                        <th>Plate Number</th>
+                        <th>Type</th>      
+                        <th>Number Of Seat</th>     
+                        <th>Descriptin</th>                                                         
+                        <th>Action</th>                                                         
+                        <!-- <th>&nbsp;</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  v-for="(bus, index) in availableBusList" >                              
+                        <td>{{ index+1 }}</td>                              
+                        <td>{{ bus.id }}</td>
+                        <td>{{ bus.reg_no }}</td>
+                        <td>{{ bus.plate_no }}</td>                              
+                        <td>{{ bus.type }}</td>
+                        <td>{{ bus.total_seats }}</td>
+                        <td>{{ bus.description }}</td>
+                        <td> 
+                            <button v-on:click.prevent="editBus(bus)" class="btn btn-primary">
+                              <i class="fa fa-edit fa-fw"></i>Edit
+                            </button>  
+                            <button v-on:click.prevent="removeBus(bus)" class="btn btn-danger">
+                              <i class="fa fa-trash fa-fw"></i>Remove
+                            </button> 
+                        </td>                        
+                      </tr>                            
+                    </tbody>
+                </table>      
+              </div>
+          </div>
+          <!-- {{-- panel-footer --}} -->
+          <!-- <div class="panel-footer">                                
+            <show-alert :show.sync="showAlert" :type="alertType">             
+             SCHEDULE
+              <strong> {{ actionStatus }} </strong> successfully!
+            </show-alert>
+          </div> -->
+        </div>
+      </div>
 
-                    <!-- {{ seat.no }} - {{ seat.sts }} : {{index}}  -->
-                    {{ seat.no }} - {{ seat.sts }} : {{index}} 
-                    
-                </button> 
-              </div>
-                 
-              </div>
-            </div>  
-          
-        </div>        
+           
     </section>        
   </div>      
 </template>
@@ -135,81 +156,45 @@
         //     console.log('Component mounted.')
         // }
         data() {
-                return {
-                    availableBusList: [],                    
-                    busInfo: [],
+                return {                    
+                    availableBusList: [],
                     disableShowButton: false,
-                    disableSaveButton: false,
-                    error: '',
-                    numberOfCol: 4,                            
-                    numberOfRow: 4,                            
-                    response: '',
-                    seatChar:["A","B", "C" , "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
-                    seatList: [],
-                    selectedBusId: '',
-                    seatListLength: '',
-                    //seatList2: [],
-                    //finalSeatList: [],
-                    //seatStatus: '',
-                    isDisabled: false,
-                    index: 2, // empty space strating for this index then index+4
-                    indexList: [],
+                    disableSaveButton: true,
+                    disableSorting: true,
+                    error: '',                                              
+                    response: '',                                        
+                    show: false,                    
+                    isDisabled: false,                    
                     loading: false,
-                    fiveColValue: '',
-                   // lastRowSeatList:[]                            
+                    //bus
+                    regNumber: '',
+                    numberPlate: '',
+                    numberOfSeat: '',
+                    busDescription: '',
+                    selectedBusType: '',
+                    options: [
+                      { text: 'AC', value: 'ac' },
+                      { text: 'AC-Deluxe', value: 'ac-deluxe' },
+                      { text: 'Deluxe', value: 'deluxe' },
+                      { text: 'Non-AC', value: 'Non-AC' }
+                    ]
+                    
                 }
 
                 },
                 mounted() {
-                    //this.fetchBusIds();
-                    this.fetchAvailableBuses();
-                    this.createIndexList();                  
+                    // this.fetchBusIds();
+                    // this.createIndexList();  
+                    this.fetchAvailableBuses();                
                 },
                 watch: {
-                    
-                    numberOfRow() {
-                        this.createIndexList();
-                        this.isShowButtonDisable();                        
-                    },
 
-                    selectedBusId() {
-                        //this.isSaveButtonDisable();
-                        //this.fetchBusInfoById(this.selectedBusId);
-                        if (this.selectedBusId != '') {
-                          this.fetchBusInfo(this.selectedBusId);
-                        }
-                    },
-                    // seatListLength() {
-                    //     this.isSaveButtonDisable();
-                    // },
-                },
-
-                computed: {
-                    isValidForShow() {                        
-                        return this.selectedBusId != '' && 
-                                this.numberOfRow != '' &&
-                                this.disableShowButton != true
-                      },
-
-                      isValidForSave() {                        
-                        return this.selectedBusId != '' && 
-                                this.numberOfRow != '' &&
-                                this.disableSaveButton != true
-                      }
-                },
-
+                },      
                 methods: {
-                    createIndexList() {
-                        this.indexList=[];
-                        var r;
-                        var numberOfRow = this.numberOfRow;
-                        var index = this.index;
-                        for ( r=1; r<numberOfRow; r++ ) { 
-                            this.indexList.push(index);
-                            index = index+4; 
-                            //console.log('index', index);
-                        }
+                    expandAddBusPanel() {
+                        this.show = !this.show;
                     },
+
                     fetchAvailableBuses() {
                         this.loading = true;
                         this.availableBusList= [];            
@@ -221,119 +206,19 @@
                         });
                     },
 
-                    fetchBusInfo(busId) {
-                        this.busInfo = [];
-                        this.busInfo = this.availableBusList.find(function (obj) { 
-                            // console.log('iddd=', obj.id);    
-                            // console.log('routeId=', routeId);
-                            return obj.id == busId; });
-                    },
-
-                    isShowButtonDisable() {
-                        this.disableShowButton = ( this.numberOfRow == '' || this.numberOfRow == 0) ? 
-                                                true : false;
-                    },
-
-                     isSaveButtonDisable() { 
-                        
-                        this.disableSaveButton = ( this.selectedBusId == '' || this.seatListLength == '') ? 
-                                                true : false;
-                      /* if ( this.selectedBusId == '' || this.seatListLength == '') {
-                       
-                            console.log( 'DISABLE SAVE BUTTION = TRUE');
-                            this.disableSaveButton = true;
-                            return;
-                        }
-                         console.log( 'DISABLE SAVE BUTTION = FALSE');
-                         this.disableSaveButton = false;
-                         return;*/
-
-                    },
-
-                    /*emptySpace(seatNo) {
-
-                        if ( this.isFiveCol(seatNo) ) {
-                            return false; // no need empty space between columns
-                        }
-                        var seatNumber = parseInt(seatNo.match(/\d+/),10);                      
-                        return ( (seatNumber % 3) == 0 ) ? true : false;
-
-                    }, */                 
-
-                    emptySpace(index, seatNo) {  //2, 6, 10
-
-                        if ( this.isFiveCol(seatNo) ) {
-                            return false; // no need empty space between columns
-                        }
-                        return this.isEmptySpaceAvailable(index);
-                    }, 
-                    
-                    isFiveCol(seatNo) {                        
-                       // var seatListLength =  this.seatList.length;
-                        //var numberOfRow = (seatListLength-1) /4; //2
-                        var numberOfRow = this.numberOfRow;
-                        var lastRowChar = this.seatChar[numberOfRow-1]; //B
-                        lastRowChar = lastRowChar.trim();
-                        
-                        var seatChar = seatNo.substr(0, 1); //extract char from seat no
-                        return ( lastRowChar == seatChar ) ? true : false ;
-                    },
-                    
-                    isEmptySpaceAvailable(index) {
-
-                        var val = this.indexList.find( function(indx) {                            
-                            return indx == index;
+                    sortByIdOf(val) {
+                        this.availableBusList.sort(function(a, b) {
+                          return a.id - b.id;
                         });
-                        return (index == val) ? true : false;
-                    },                    
-
-                    createList() {
-                        var r; //row                    
-                        var code = 64;
-                        var seatNo;
-                        var numberOfRow = this.numberOfRow//8;
-                        var numberOfCol = this.numberOfCol //4;
-                        for ( r=1; r<=numberOfRow; r++ ) {
-                            // console.log('row=', r);
-                            var c; //col                            
-                            for( c=1; c<=numberOfCol; c++) {
-                                seatNo = String.fromCharCode(code+r)+ c ;
-                                // console.log('col=', c);
-                                // console.log('seat=', seatNo); 
-                                this.seatList.push({
-                                    no: seatNo,
-                                    sts: 'available', 
-                                    checked: true
-                                });
-                            }
-                        }
-
-                        // for 5th column                         
-                        this.fiveColValue = code+numberOfRow;
-                        seatNo = String.fromCharCode(code+parseInt(numberOfRow))+ c ; //64+6 + 5 E5
-                        this.seatList.push({
-                                    no: seatNo,
-                                    sts: 'available', 
-                                    checked: true
-                        }); 
-
-                        //this.finalSeatList = this.seatList.concat();
-                        this.isDisabled = true;
-                        this.disableShowButton = true;
-                        this.disableSaveButton = false;
-                        //this.seatListLength = this.seatList.length;
-                        
                     },
                     
                     reset() {
-                        this.seatList=[];
-                        this.numberOfRow = '';
+                       // this.seatList=[];
+                        //this.numberOfRow = '';
                         this.isDisabled = false;
                         this.disableShowButton = false;
-                        // this.disableSaveButton = true;                        
-                        //this.seatListLength = '';
-                        this.selectedBusId ='';
-                        this.busInfo = '';
+                        this.disableSaveButton= true;                        
+                       // this.seatListLength= '';
                     },
 
                     saveSeatList() {
@@ -351,74 +236,57 @@
                         });
                         //this.disableSaveButton = true;
                     },
-
-                    updateSeatList(seat) {
-                        // if (seat.sts == 'n/a') {
-                            var index = this.seatList.indexOf(seat);
-                            this.seatList[index+1].no = seat.no;
-                        //}
-                    },                    
-                    toggle(seat) {
-                       // var index = this.seatList.indexOf(seat);
-                        // console.log('indexxxxx',index);                     
-                        // console.log(this.seatList[index]);                     
-                        seat.checked = !seat.checked;                                   
-                        if (seat.checked) {
-                            seat.sts = 'available';
-                            //this.seatStatus= '';                            
-                            return ;
-                        }                                                       
-                        seat.sts = 'n/a';
-                       // this.seatStatus= 'n/a';
-                       //this.seatList2 = this.seatList.concat();
-                        //this.seatList[index+1].no = seat.no;
-                       this.updateSeatList(seat);                       
-                    }
                 }
     }
 </script>
-<style>
-    .seat-layout .active {
-        background-color: #f4e542;
-        position: relative;
-    }                   
-    .inactive {
-        background-color: #c4c0c0;  
-    }                       
-    .tickmark {
-        /*background-color: green;*/
-        color: green;
-        /*padding: 5px;*/
+<style lang="scss" scoped>
+    // .view-route-info .panel-heading span {
+    .view-available-info .panel-heading span {
+      background-color: yellow;
+      font-weight: 600;
+      float: right;
+      padding: 2px 6px;
+      color: royalblue;
     }
-    .crossmark {
-        /*background-color: red;*/
-        /*padding: 5px;*/
-        color: red;
-    }
-    /*#app button {               
-        height: 50px;
-        margin: 10px 10px 0 0;
-    }*/
-    .seat-layout button {               
-        height: 50px;
-        margin: 10px 10px 0 0;
-    }
-    #app button.col-xs-2 {
-        width: 16.76666667%;
-    }
-    #app button.col-xs-offset-2 {
-        margin-left: 17.666667%;
+    .route-info {
+      border: 1px dashed lightblue;
+      padding: 25px 10px;
+      margin: 25px 25px 50px 25px;
+      position: relative;
+      text-align: center;      
+
+      span {
+        /* background-color: lightblue; */
+        display: block;
+        font-weight: 600;
+        letter-spacing: 1px;        
+        left: 14px;
+        top: -16px;
+        position: absolute;
+        padding: 5px 10px;
+        width: 90px;
+      }
+      
     }
 
-    .content { 
-        padding-left: 30px;
-        padding-right: 30px;
+    form {
+         label {
+          padding: 0 5px 0 15px;
+         }
     }
 
-    #app .seat-layout {
-        padding-left: 50px;
-    }
-    #app .button-group {
-      margin: 2.5rem auto; /*25px*/
-    }
+    .route-distance {
+      margin: -15px 10px 10px 15px;
+    }     
+    #scroll-routes {
+        span {
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        span[disabled] {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+    } 
+
 </style>
