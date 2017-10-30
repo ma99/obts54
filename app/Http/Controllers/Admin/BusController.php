@@ -68,6 +68,29 @@ class BusController extends Controller
         return $error;
     }*/
 
+    public function storeBus()
+    {        
+        $this->validate($this->request, [
+            'reg_no' => 'required|max:50',
+            'number_plate' => 'required',
+            'type' => 'required',
+            'total_seats' => 'required',
+        ]);
+        
+        Bus::updateOrCreate(
+            ['reg_no' => $this->request->input('reg_no')],
+            [
+              'number_plate' => $this->request->input('number_plate'),
+              'type' => $this->request->input('type'),
+              'total_seats' => $this->request->input('total_seats'),
+              'description' => $this->request->input('description')
+            ]            
+        );
+
+        return 'Success';
+
+    }
+
     public function storeSeatPlan()
     {        
         $this->validate($this->request, [

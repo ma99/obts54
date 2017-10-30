@@ -37,7 +37,7 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <label for="regNumber">Registration #</label>
-                      <input v-model="regNumber" type="text" class="form-control" id="regNumber" placeholder="Registration Number">
+                      <input v-model.lazy="regNumber" type="text" class="form-control" id="regNumber" placeholder="Registration Number">
                     </div>
                   </div>
 
@@ -78,7 +78,7 @@
                   <div class="col-sm-4">
                     <div class="button-group">
                       <!-- <button v-on:click.prevent="createList()" class="btn btn-primary" :disabled="disableShowButton">Show</button> -->
-                      <button v-on:click.prevent="saveSeatList()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                      <button v-on:click.prevent="addBus()" class="btn btn-primary" :disabled="!isValid">Add</button>
                       <button v-on:click.prevent="reset()" class="btn btn-primary">Reset</button>
                     </div>
                   </div>
@@ -103,9 +103,13 @@
                         <th>Bus ID
                             <span type="button" @click="sortByIdOf('bus')" :disabled="disableSorting">
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
-                              </span>
+                            </span>
                         </th>                           
-                        <th>Reg. Number</th>
+                        <th>Reg. Number
+                            <span type="button" @click="sortByIdOf('registration')" :disabled="!disableSorting">
+                                <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                            </span>
+                        </th>
                         <th>Plate Number</th>
                         <th>Type</th>      
                         <th>Number Of Seat</th>     
@@ -159,7 +163,7 @@
                 return {                    
                     availableBusList: [],
                     disableShowButton: false,
-                    disableSaveButton: true,
+                    //disableSaveButton: true,
                     disableSorting: true,
                     error: '',                                              
                     response: '',                                        
@@ -182,15 +186,56 @@
                 }
 
                 },
+                watch: {
+                    regNumber() {
+                        var aa = this.isRegNumberAvailableInBusList(this.availableBusList, this.regNumber);
+                        if (aa) {
+                             alert('Regnumber already exist');
+                        }
+
+                    }
+                },      
                 mounted() {
                     // this.fetchBusIds();
                     // this.createIndexList();  
                     this.fetchAvailableBuses();                
                 },
-                watch: {
-
-                },      
+                computed: {
+                    isValid() {
+                        return this.regNumber != '' && 
+                                this.numberPlate != '' &&
+                                this.numberOfSeat != '' &&
+                                this.selectedBusType != '' &&
+                                this.busDescription != '' 
+                     }
+                }, 
                 methods: {
+                    
+                    addBus() {
+                        var vm = this;
+                        axios.post('/bus', {
+                            reg_no: this.regNumber,
+                            number_plate: this.numberPlate,
+                            type: this.selectedBusType,                
+                            total_seats: this.numberOfSeat,
+                            description: this.busDescription
+                        })          
+                        .then(function (response) {
+                            //console.log(response.data);
+                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                            if (vm.response) {
+                               //console.log(vm.response);
+                               vm.fetchAvailableBuses();
+                               //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                               vm.loading = false;                      
+                               //vm.scheduleAddedAlert(vm.selectedRouteId, vm.selectedBusId);
+                               vm.reset();
+                               return;                   
+                            }
+                            vm.loading = false;
+                            //vm.disableSaveButton = true;
+                        });
+                    },
                     expandAddBusPanel() {
                         this.show = !this.show;
                     },
@@ -205,38 +250,50 @@
                                vm.loading = false;
                         });
                     },
-
-                    sortByIdOf(val) {
-                        this.availableBusList.sort(function(a, b) {
-                          return a.id - b.id;
+                    
+                    isRegNumberAvailableInBusList(arr, val){
+                        //var vm = this;
+                         return arr.some(function(bus) {
+                            return val === bus.reg_no;
                         });
+                    },
+                    sortByIdOf(val) {
+                        if (val== 'bus') { 
+                            this.availableBusList.sort(function(a, b) {
+                              return a.id - b.id;
+                            });
+                            this.disableSorting = true;
+                            return ;
+                        }
+                        this.sortByRegNumber(this.availableBusList);
+                        this.disableSorting = false;
                     },
                     
-                    reset() {
-                       // this.seatList=[];
-                        //this.numberOfRow = '';
-                        this.isDisabled = false;
-                        this.disableShowButton = false;
-                        this.disableSaveButton= true;                        
-                       // this.seatListLength= '';
-                    },
-
-                    saveSeatList() {
-                        var vm = this;
-                        this.loading = true;
-                        axios.post('/bus/seatplan', {
-                            bus_id: this.selectedBusId,
-                            seat_list: this.seatList
-                        })          
-                        .then(function (response) {
-                               console.log(response.data);
-                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                               vm.loading = false;
-                               vm.disableSaveButton = true;
+                    sortByRegNumber(arr) {
+                        arr.sort(function(a, b) {
+                            var nameA = a.reg_no; // ignore upper and lowercase
+                            var nameB = b.reg_no // ignore upper and lowercase
+                            if (nameA < nameB) {
+                              return -1;
+                            }
+                            if (nameA > nameB) {
+                              return 1;
+                            }
+                            // names must be equal
+                            return 0;
                         });
-                        //this.disableSaveButton = true;
                     },
-                }
+                    reset() {                       
+                        this.isDisabled = false;
+                        // this.disableShowButton = false;
+                        // this.disableSaveButton= true;
+                        this.regNumber = '' ; 
+                        this.numberPlate = '';
+                        this.numberOfSeat = '';
+                        this.selectedBusType = '';
+                        this.busDescription = '';    
+                    }
+        }
     }
 </script>
 <style lang="scss" scoped>
@@ -269,11 +326,11 @@
       
     }
 
-    form {
-         label {
-          padding: 0 5px 0 15px;
-         }
-    }
+    // form {
+    //      label {
+    //       padding: 0 5px 0 15px;
+    //      }
+    // }
 
     .route-distance {
       margin: -15px 10px 10px 15px;
