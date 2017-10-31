@@ -46,6 +46,7 @@ Route::get('/bus/ids', 'Admin\BusController@busIds');
 Route::get('/bus/{id}', 'Admin\BusController@showSeat');
 Route::post('/bus', 'Admin\BusController@storeBus');
 Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
+Route::post('/delete/bus', 'Admin\BusController@destroy');
 
 //route
 Route::post('/route', 'Admin\RouteController@store');

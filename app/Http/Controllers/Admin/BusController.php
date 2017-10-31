@@ -38,22 +38,9 @@ class BusController extends Controller
 
     public function busIds()
     {
-       $error = ['error' => 'No results found'];
-       //users with roles
-         $busIds = Bus::pluck('id')->all(); //->get();         
-         
-         
-         
-         /*$staffs =json_decode(json_encode($staffs), FALSE); // object <-- works         
-         foreach ($staffs as $staff) {
-            //echo $staff['name']; //accesing as array
-            echo $staff->name;    // accessing as object
-         }*/         
-         
-         return $busIds;
-         //return response()->json($staffs);
-         //return json_decode(json_encode($staffs), FALSE);
-        // return $error;
+        $error = ['error' => 'No results found'];
+        $busIds = Bus::pluck('id')->all(); //->get();         
+        return $busIds;         
     }
 
     /*public function destroy()
@@ -67,6 +54,18 @@ class BusController extends Controller
         }
         return $error;
     }*/
+
+    public function destroy()
+    {
+        $error = ['error' => 'No results found'];
+        $busId = $this->request->input('bus_id');
+        $bus = Bus::find($busId);
+        if ($bus) {
+            $bus->delete();
+            return 'success';            
+        }
+        return $error;
+    }
 
     public function storeBus()
     {        

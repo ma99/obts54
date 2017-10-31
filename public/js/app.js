@@ -16737,13 +16737,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // }
     data: function data() {
         return {
+            actionStatus: '',
+            alertType: '',
             availableBusList: [],
             disableShowButton: false,
             //disableSaveButton: true,
             disableSorting: true,
             error: '',
             response: '',
-            show: false,
             isDisabled: false,
             loading: false,
             //bus
@@ -16752,6 +16753,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             numberOfSeat: '',
             busDescription: '',
             selectedBusType: '',
+            showAlert: false,
+            show: false,
             options: [{ text: 'AC', value: 'ac' }, { text: 'AC-Deluxe', value: 'ac-deluxe' }, { text: 'Deluxe', value: 'deluxe' }, { text: 'Non-AC', value: 'Non-AC' }]
 
         };
@@ -16761,7 +16764,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         regNumber: function regNumber() {
             var aa = this.isRegNumberAvailableInBusList(this.availableBusList, this.regNumber);
             if (aa) {
-                alert('Regnumber already exist');
+                alert('Registration Number already exist');
             }
         }
     },
@@ -16811,6 +16814,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/buses') //--> api/bus?q=xyz        (right)
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.sortByBusId(vm.availableBusList);
                 vm.loading = false;
             });
         },
@@ -16822,19 +16826,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         sortByIdOf: function sortByIdOf(val) {
             if (val == 'bus') {
-                this.availableBusList.sort(function (a, b) {
-                    return a.id - b.id;
-                });
+                this.sortByBusId(this.availableBusList);
                 this.disableSorting = true;
                 return;
             }
             this.sortByRegNumber(this.availableBusList);
             this.disableSorting = false;
         },
+        sortByBusId: function sortByBusId(arr) {
+            arr.sort(function (a, b) {
+                return a.id - b.id;
+            });
+        },
         sortByRegNumber: function sortByRegNumber(arr) {
             arr.sort(function (a, b) {
-                var nameA = a.reg_no; // ignore upper and lowercase
-                var nameB = b.reg_no; // ignore upper and lowercase
+                var nameA = a.reg_no; //.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.reg_no; //.toUpperCase // ignore upper and lowercase
                 if (nameA < nameB) {
                     return -1;
                 }
@@ -16844,6 +16851,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 // names must be equal
                 return 0;
             });
+        },
+        removeBus: function removeBus(bus) {
+            // role id of user/staff in roles table
+            var vm = this;
+            //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+            swal({
+                title: "Are you sure?",
+                text: "This BUS will be Removed!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, Remove!"
+                //closeOnConfirm: false,
+                //closeOnCancel: false                       
+            }, function () {
+                vm.loading = true;
+                vm.response = '';
+                vm.showAlert = false;
+                axios.post('/delete/bus', {
+                    bus_id: bus.id
+                }).then(function (response) {
+
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                    if (vm.response) {
+                        vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert = true;
+                        return;
+                    }
+                    vm.loading = false;
+                });
+                //swal("Deleted!", "Staff has been Removed.", "success");                      
+            });
+        },
+        removeBusFromAvailableBusList: function removeBusFromAvailableBusList(busId) {
+            var indx = this.availableBusList.findIndex(function (bus) {
+                return bus.id == busId;
+            });
+            this.availableBusList.splice(indx, 1);
+            //return;
         },
         reset: function reset() {
             this.isDisabled = false;
@@ -18142,7 +18192,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/buses') //--> api/bus?q=xyz        (right)
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.sortByBusId(vm.availableBusList);
                 vm.loading = false;
+            });
+        },
+        sortByBusId: function sortByBusId(arr) {
+            arr.sort(function (a, b) {
+                return a.id - b.id;
             });
         },
         fetchBusInfo: function fetchBusInfo(busId) {
@@ -49023,8 +49079,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _vm._v(" "), _c('th', [_vm._v("Plate Number")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Number Of Seat")]), _vm._v(" "), _c('th', [_vm._v("Descriptin")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableBusList), function(bus, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.plate_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.total_seats))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.description))]), _vm._v(" "), _c('td', [_c('button', {
+  })])]), _vm._v(" "), _c('th', [_vm._v("Number Plate")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Number Of Seat")]), _vm._v(" "), _c('th', [_vm._v("Descriptin")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableBusList), function(bus, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.number_plate))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.total_seats))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.description))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary",
       on: {
         "click": function($event) {
@@ -49045,7 +49101,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('i', {
       staticClass: "fa fa-trash fa-fw"
     }), _vm._v("Remove\n                          ")])])])
-  }))])])])])])], 1)])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('show-alert', {
+    attrs: {
+      "show": _vm.showAlert,
+      "type": _vm.alertType
+    },
+    on: {
+      "update:show": function($event) {
+        _vm.showAlert = $event
+      }
+    }
+  }, [_vm._v("             \n           Bus\n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

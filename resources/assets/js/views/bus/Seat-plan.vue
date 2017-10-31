@@ -216,9 +216,16 @@
                         var vm = this;                
                         axios.get('/api/buses')  //--> api/bus?q=xyz        (right)
                             .then(function (response) {                  
-                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;                       
+                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                               vm.sortByBusId(vm.availableBusList);                             
                                vm.loading = false;
                         });
+                    },
+
+                    sortByBusId(arr) {
+                        arr.sort(function(a, b) {
+                              return a.id - b.id;
+                            });
                     },
 
                     fetchBusInfo(busId) {

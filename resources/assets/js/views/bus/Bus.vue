@@ -110,7 +110,7 @@
                                 <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                             </span>
                         </th>
-                        <th>Plate Number</th>
+                        <th>Number Plate</th>
                         <th>Type</th>      
                         <th>Number Of Seat</th>     
                         <th>Descriptin</th>                                                         
@@ -123,7 +123,7 @@
                         <td>{{ index+1 }}</td>                              
                         <td>{{ bus.id }}</td>
                         <td>{{ bus.reg_no }}</td>
-                        <td>{{ bus.plate_no }}</td>                              
+                        <td>{{ bus.number_plate }}</td>                              
                         <td>{{ bus.type }}</td>
                         <td>{{ bus.total_seats }}</td>
                         <td>{{ bus.description }}</td>
@@ -141,12 +141,12 @@
               </div>
           </div>
           <!-- {{-- panel-footer --}} -->
-          <!-- <div class="panel-footer">                                
+          <div class="panel-footer">                                
             <show-alert :show.sync="showAlert" :type="alertType">             
-             SCHEDULE
+             Bus
               <strong> {{ actionStatus }} </strong> successfully!
             </show-alert>
-          </div> -->
+          </div>
         </div>
       </div>
 
@@ -161,13 +161,14 @@
         // }
         data() {
                 return {                    
+                    actionStatus: '',
+                    alertType: '',
                     availableBusList: [],
                     disableShowButton: false,
                     //disableSaveButton: true,
                     disableSorting: true,
                     error: '',                                              
                     response: '',                                        
-                    show: false,                    
                     isDisabled: false,                    
                     loading: false,
                     //bus
@@ -176,6 +177,8 @@
                     numberOfSeat: '',
                     busDescription: '',
                     selectedBusType: '',
+                    showAlert: false,
+                    show: false,                    
                     options: [
                       { text: 'AC', value: 'ac' },
                       { text: 'AC-Deluxe', value: 'ac-deluxe' },
@@ -190,7 +193,7 @@
                     regNumber() {
                         var aa = this.isRegNumberAvailableInBusList(this.availableBusList, this.regNumber);
                         if (aa) {
-                             alert('Regnumber already exist');
+                             alert('Registration Number already exist');
                         }
 
                     }
@@ -246,7 +249,8 @@
                         var vm = this;                
                         axios.get('/api/buses')  //--> api/bus?q=xyz        (right)
                             .then(function (response) {                  
-                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;                       
+                               response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                               vm.sortByBusId(vm.availableBusList);                       
                                vm.loading = false;
                         });
                     },
@@ -259,20 +263,24 @@
                     },
                     sortByIdOf(val) {
                         if (val== 'bus') { 
-                            this.availableBusList.sort(function(a, b) {
-                              return a.id - b.id;
-                            });
+                            this.sortByBusId(this.availableBusList);
                             this.disableSorting = true;
                             return ;
                         }
                         this.sortByRegNumber(this.availableBusList);
                         this.disableSorting = false;
                     },
-                    
+
+                    sortByBusId(arr) {
+                        arr.sort(function(a, b) {
+                              return a.id - b.id;
+                            });
+                    },
+
                     sortByRegNumber(arr) {
                         arr.sort(function(a, b) {
-                            var nameA = a.reg_no; // ignore upper and lowercase
-                            var nameB = b.reg_no // ignore upper and lowercase
+                            var nameA = a.reg_no; //.toUpperCase(); // ignore upper and lowercase
+                            var nameB = b.reg_no; //.toUpperCase // ignore upper and lowercase
                             if (nameA < nameB) {
                               return -1;
                             }
@@ -283,6 +291,53 @@
                             return 0;
                         });
                     },
+                    removeBus(bus) {  // role id of user/staff in roles table
+                        var vm = this;            
+                        //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+                        swal({
+                              title: "Are you sure?",
+                              text: "This BUS will be Removed!",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#DD6B55",
+                              confirmButtonText: "Yes, Remove!",
+                              //closeOnConfirm: false,
+                              //closeOnCancel: false                       
+                            },
+                            function() {                       
+                                    vm.loading = true;
+                                    vm.response = '';
+                                    vm.showAlert = false;
+                                    axios.post('/delete/bus', {    
+                                        bus_id: bus.id, 
+                                    })          
+                                    .then(function (response) {                 
+                                       
+                                        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                                        if (vm.response) {                                
+                                            vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                                            vm.loading = false;
+                                            vm.actionStatus = 'Removed';
+                                            vm.alertType = 'danger';
+                                            vm.showAlert= true;
+                                            return;                                                      
+                                        }                            
+                                        vm.loading = false;
+
+                                    });    
+                                    //swal("Deleted!", "Staff has been Removed.", "success");                      
+                                
+                            });
+                    },
+             
+            removeBusFromAvailableBusList(busId) {
+                var indx = this.availableBusList.findIndex(function(bus){                 
+                     return bus.id == busId;
+                });        
+                this.availableBusList.splice(indx, 1);
+                //return;
+            },
                     reset() {                       
                         this.isDisabled = false;
                         // this.disableShowButton = false;
@@ -325,13 +380,7 @@
       }
       
     }
-
-    // form {
-    //      label {
-    //       padding: 0 5px 0 15px;
-    //      }
-    // }
-
+   
     .route-distance {
       margin: -15px 10px 10px 15px;
     }     
