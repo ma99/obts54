@@ -179,6 +179,9 @@
                         <th>
                           Fare
                         </th>
+                        <th>
+                          Route ID
+                        </th>
                         <th>Action</th>                                                         
                         <!-- <th>&nbsp;</th> -->
                       </tr>
@@ -195,6 +198,7 @@
                           Non-AC: {{ route.fare.details.non_ac }} </br> 
                           Deluxe: {{ route.fare.details.deluxe }} </br> 
                         </td>                              
+                        <td><strong>{{ route.id }}</strong></td>
                         <td> 
                             <button v-on:click.prevent="editRoute(route)" class="btn btn-primary" :disabled="route.fare == null">
                               <i class="fa fa-edit fa-fw"></i>Edit

@@ -31,7 +31,9 @@
                       <select v-model="selectedBusId" class="form-control" name="bus_id" id="busId">
                         <option disabled value="">Please select one</option>
                         <option v-for="bus in availableBusList">
-                          {{ bus.id }}
+                          <!-- {{ bus.id }} -->
+                          <!-- Display Bus id which seat plan not available -->
+                          <span v-if="bus.seat_plan == 0" >{{ bus.id }} </span> 
                         </option>                         
                       </select>
                     </div>

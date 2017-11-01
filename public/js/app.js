@@ -16421,6 +16421,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list__);
 //
@@ -16481,50 +16525,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 50 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
 /* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16534,46 +16534,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -16909,11 +16869,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
 /* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -17983,6 +17991,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -19472,7 +19482,7 @@ var routes = [{
     component: __webpack_require__(91)
 }, {
     path: '/staff-management',
-    component: __webpack_require__(96)
+    component: __webpack_require__(97)
 },
 //User
 {
@@ -19483,15 +19493,15 @@ var routes = [{
     component: __webpack_require__(95)
 }, {
     path: '/staff-list',
-    component: __webpack_require__(97)
+    component: __webpack_require__(96)
 },
 //Bus 
 {
     path: '/bus',
-    component: __webpack_require__(99)
+    component: __webpack_require__(98)
 }, {
     path: '/list',
-    component: __webpack_require__(98)
+    component: __webpack_require__(99)
 }, {
     path: '/route',
     component: __webpack_require__(100)
@@ -24207,70 +24217,70 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.table-hover > tbody > tr[data-v-1cf63056]:hover {\n  background-color: #d6edd7;\n}\n.fa-fw[data-v-1cf63056] {\n  width: 1.4em;\n}\nth[data-v-1cf63056] {\n  line-height: 2.5;\n}\n.table > thead > tr > th[data-v-1cf63056], .table > thead > tr > td[data-v-1cf63056], .table > tbody > tr > th[data-v-1cf63056], .table > tbody > tr > td[data-v-1cf63056], .table > tfoot > tr > th[data-v-1cf63056], .table > tfoot > tr > td[data-v-1cf63056] {\n  vertical-align: middle;\n}\n.role-selection[data-v-1cf63056] {\n  margin-left: 1.5em;\n}\n", ""]);
+exports.push([module.i, "\n.seat-layout .active {\n    background-color: #f4e542;\n    position: relative;\n}\n.inactive {\n    background-color: #c4c0c0;\n}\n.tickmark {\n    /*background-color: green;*/\n    color: green;\n    /*padding: 5px;*/\n}\n.crossmark {\n    /*background-color: red;*/\n    /*padding: 5px;*/\n    color: red;\n}\n/*#app button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}*/\n.seat-layout button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#app button.col-xs-2 {\n    width: 16.76666667%;\n}\n#app button.col-xs-offset-2 {\n    margin-left: 17.666667%;\n}\n.content { \n    padding-left: 30px;\n    padding-right: 30px;\n}\n#app .seat-layout {\n    padding-left: 50px;\n}\n#app .button-group {\n  margin: 2.5rem auto; /*25px*/\n}\n", ""]);
 
 /***/ }),
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-2108cb88] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-2108cb88] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-2108cb88] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-distance[data-v-2108cb88] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-2108cb88] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-2108cb88] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n.table-hover > tbody > tr[data-v-1cf63056]:hover {\n  background-color: #d6edd7;\n}\n.fa-fw[data-v-1cf63056] {\n  width: 1.4em;\n}\nth[data-v-1cf63056] {\n  line-height: 2.5;\n}\n.table > thead > tr > th[data-v-1cf63056], .table > thead > tr > td[data-v-1cf63056], .table > tbody > tr > th[data-v-1cf63056], .table > tbody > tr > td[data-v-1cf63056], .table > tfoot > tr > th[data-v-1cf63056], .table > tfoot > tr > td[data-v-1cf63056] {\n  vertical-align: middle;\n}\n.role-selection[data-v-1cf63056] {\n  margin-left: 1.5em;\n}\n", ""]);
 
 /***/ }),
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "/* The Modal (background) */\n#loader.modal[data-v-3f039bd8] {\n  display: block;\n  position: absolute;\n  z-index: 99999;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n  /* Modal Content/Box */\n}\n#loader.modal > .modal-content[data-v-3f039bd8] {\n    background-color: #fefefe;\n    margin: 160px auto;\n    /*padding: 20px;*/\n    padding: 35px 20px 30px;\n    position: relative;\n    top: 25%;\n    border: 1px solid #888;\n    width: 10%;\n}\n#loader.modal > .modal-content > .loading[data-v-3f039bd8] {\n      text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-2108cb88] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-2108cb88] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-2108cb88] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-distance[data-v-2108cb88] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-2108cb88] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-2108cb88] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .arrival[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .arrival[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .departure[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .departure[data-v-3fc4e1ea] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-3fc4e1ea] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-3fc4e1ea], .route-info .arrival[data-v-3fc4e1ea], .route-info .departure[data-v-3fc4e1ea] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-3fc4e1ea] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-3fc4e1ea] {\n    background-color: lightgreen;\n}\nform label[data-v-3fc4e1ea] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-3fc4e1ea] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-3fc4e1ea], #scroll-routes .route-info .arrival[data-v-3fc4e1ea], .route-info #scroll-routes .arrival[data-v-3fc4e1ea], #scroll-routes .route-info .departure[data-v-3fc4e1ea], .route-info #scroll-routes .departure[data-v-3fc4e1ea] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-3fc4e1ea], #scroll-routes .route-info [disabled].arrival[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].arrival[data-v-3fc4e1ea], #scroll-routes .route-info [disabled].departure[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].departure[data-v-3fc4e1ea] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "/* The Modal (background) */\n#loader.modal[data-v-3f039bd8] {\n  display: block;\n  position: absolute;\n  z-index: 99999;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n  /* Modal Content/Box */\n}\n#loader.modal > .modal-content[data-v-3f039bd8] {\n    background-color: #fefefe;\n    margin: 160px auto;\n    /*padding: 20px;*/\n    padding: 35px 20px 30px;\n    position: relative;\n    top: 25%;\n    border: 1px solid #888;\n    width: 10%;\n}\n#loader.modal > .modal-content > .loading[data-v-3f039bd8] {\n      text-align: center;\n}\n", ""]);
 
 /***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n#scroll-cities span[data-v-4286404c] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-4286404c] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .arrival[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .arrival[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .departure[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .departure[data-v-3fc4e1ea] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-3fc4e1ea] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-3fc4e1ea], .route-info .arrival[data-v-3fc4e1ea], .route-info .departure[data-v-3fc4e1ea] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-3fc4e1ea] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-3fc4e1ea] {\n    background-color: lightgreen;\n}\nform label[data-v-3fc4e1ea] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-3fc4e1ea] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-3fc4e1ea], #scroll-routes .route-info .arrival[data-v-3fc4e1ea], .route-info #scroll-routes .arrival[data-v-3fc4e1ea], #scroll-routes .route-info .departure[data-v-3fc4e1ea], .route-info #scroll-routes .departure[data-v-3fc4e1ea] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-3fc4e1ea], #scroll-routes .route-info [disabled].arrival[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].arrival[data-v-3fc4e1ea], #scroll-routes .route-info [disabled].departure[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].departure[data-v-3fc4e1ea] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "/* The Modal (background) */\n.modal[data-v-5561eb10] {\n  display: block;\n  position: fixed;\n  /* Stay in place */\n  z-index: 11111;\n  /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%;\n  /* Full width */\n  height: 100%;\n  /* Full height */\n  overflow: auto;\n  /* Enable scroll if needed */\n  background-color: black;\n  /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content[data-v-5561eb10] {\n  background-color: #fefefe;\n  margin: 160px auto;\n  /* 15% from the top and centered */\n  /*padding: 20px;*/\n  padding: 35px 20px 30px;\n  border: 1px solid #888;\n  width: 89%;\n  /* Could be more or less, depending on screen size */\n}\n\n/* circle*/\n.circle[data-v-5561eb10] {\n  float: right;\n  margin-top: -28px;\n  position: relative;\n  width: 24px;\n  height: 24px;\n  background: #3c8dbc;\n  border-radius: 12px;\n  -moz-border-radius: 15px;\n  -webkit-border-radius: 15px;\n}\n\n/* The Close Button */\n.close[data-v-5561eb10] {\n  color: #fff;\n  /*float: right;*/\n  margin-left: 7px;\n  font-size: 20px;\n  font-weight: bold;\n  position: absolute;\n  /*margin-top: -18px;*/\n}\n.close[data-v-5561eb10]:hover,\n.close[data-v-5561eb10]:focus {\n  color: black;\n  text-decoration: none;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n#scroll-cities span[data-v-4286404c] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-4286404c] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-97a3eef6], .view-available-info .panel-heading .route-info .arrival[data-v-97a3eef6], .route-info .view-available-info .panel-heading .arrival[data-v-97a3eef6], .view-available-info .panel-heading .route-info .departure[data-v-97a3eef6], .route-info .view-available-info .panel-heading .departure[data-v-97a3eef6] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-97a3eef6] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-97a3eef6], .route-info .arrival[data-v-97a3eef6], .route-info .departure[data-v-97a3eef6] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-97a3eef6] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-97a3eef6] {\n    background-color: lightgreen;\n}\nform label[data-v-97a3eef6] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-97a3eef6] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-97a3eef6], #scroll-routes .route-info .arrival[data-v-97a3eef6], .route-info #scroll-routes .arrival[data-v-97a3eef6], #scroll-routes .route-info .departure[data-v-97a3eef6], .route-info #scroll-routes .departure[data-v-97a3eef6] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-97a3eef6], #scroll-routes .route-info [disabled].arrival[data-v-97a3eef6], .route-info #scroll-routes [disabled].arrival[data-v-97a3eef6], #scroll-routes .route-info [disabled].departure[data-v-97a3eef6], .route-info #scroll-routes [disabled].departure[data-v-97a3eef6] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "/* The Modal (background) */\n.modal[data-v-5561eb10] {\n  display: block;\n  position: fixed;\n  /* Stay in place */\n  z-index: 11111;\n  /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%;\n  /* Full width */\n  height: 100%;\n  /* Full height */\n  overflow: auto;\n  /* Enable scroll if needed */\n  background-color: black;\n  /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content[data-v-5561eb10] {\n  background-color: #fefefe;\n  margin: 160px auto;\n  /* 15% from the top and centered */\n  /*padding: 20px;*/\n  padding: 35px 20px 30px;\n  border: 1px solid #888;\n  width: 89%;\n  /* Could be more or less, depending on screen size */\n}\n\n/* circle*/\n.circle[data-v-5561eb10] {\n  float: right;\n  margin-top: -28px;\n  position: relative;\n  width: 24px;\n  height: 24px;\n  background: #3c8dbc;\n  border-radius: 12px;\n  -moz-border-radius: 15px;\n  -webkit-border-radius: 15px;\n}\n\n/* The Close Button */\n.close[data-v-5561eb10] {\n  color: #fff;\n  /*float: right;*/\n  margin-left: 7px;\n  font-size: 20px;\n  font-weight: bold;\n  position: absolute;\n  /*margin-top: -18px;*/\n}\n.close[data-v-5561eb10]:hover,\n.close[data-v-5561eb10]:focus {\n  color: black;\n  text-decoration: none;\n  cursor: pointer;\n}\n", ""]);
 
 /***/ }),
 /* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search[data-v-c3bf27e6] {\n    margin-top: 25px;\n}\n}\n@media (max-width: 767px) {\n#app .alert[data-v-c3bf27e6] {\n    margin-top: 15px;\n}\n}\n\n/*[v-cloak] { display:none; }*/\n.loading[data-v-c3bf27e6] {\n  text-align: center;\n  z-index: 11111;\n}\n.seat-error[data-v-c3bf27e6] {\n  text-align: center;\n}\n.form-control[disabled][data-v-c3bf27e6] {\n  background-color: #3097D1;\n}\n\n/* The Modal (background) */\n.modal[data-v-c3bf27e6] {\n  display: block;\n  position: fixed;\n  z-index: 11111;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\n\n/* seat display */\n.is-active[data-v-c3bf27e6] {\n  background-color: green;\n}\n.booked[data-v-c3bf27e6] {\n  background-color: yellow;\n}\n.buying[data-v-c3bf27e6] {\n  background-color: orange;\n}\n.confirmed[data-v-c3bf27e6] {\n  background-color: red;\n}\n.empty[data-v-c3bf27e6] {\n  background-color: white;\n  border-width: 0;\n  /*color: #0a0a0a;*/\n  color: white;\n}\n\n/*#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #modal button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }*/\n/* #seat-layout .seat-plan-body button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #seat-layout button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #seat-layout button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #seat-layout button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }\n  .seat-plan-body {\n    padding-left: 20px;\n  } */\n#seat-layout .seat-plan-body[data-v-c3bf27e6] {\n  padding-left: 20px;\n}\n#seat-layout .seat-plan-body button[data-v-c3bf27e6] {\n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#seat-layout .seat-plan-body button.col-xs-2[data-v-c3bf27e6] {\n      width: 16.76666667%;\n}\n#seat-layout .seat-plan-body button.col-xs-offset-2[data-v-c3bf27e6] {\n      margin-left: 17.666667%;\n}\n#seat-layout .seat-plan-body button.is-white[data-v-c3bf27e6] {\n      background-color: #fff;\n      border-width: 0;\n      color: #0a0a0a;\n}\n\n/*#modal .row  {\n    background-color: #e5ecff;\n  }*/\n/* end seat display */\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-97a3eef6], .view-available-info .panel-heading .route-info .arrival[data-v-97a3eef6], .route-info .view-available-info .panel-heading .arrival[data-v-97a3eef6], .view-available-info .panel-heading .route-info .departure[data-v-97a3eef6], .route-info .view-available-info .panel-heading .departure[data-v-97a3eef6] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-97a3eef6] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-97a3eef6], .route-info .arrival[data-v-97a3eef6], .route-info .departure[data-v-97a3eef6] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-97a3eef6] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-97a3eef6] {\n    background-color: lightgreen;\n}\nform label[data-v-97a3eef6] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-97a3eef6] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-97a3eef6], #scroll-routes .route-info .arrival[data-v-97a3eef6], .route-info #scroll-routes .arrival[data-v-97a3eef6], #scroll-routes .route-info .departure[data-v-97a3eef6], .route-info #scroll-routes .departure[data-v-97a3eef6] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-97a3eef6], #scroll-routes .route-info [disabled].arrival[data-v-97a3eef6], .route-info #scroll-routes [disabled].arrival[data-v-97a3eef6], #scroll-routes .route-info [disabled].departure[data-v-97a3eef6], .route-info #scroll-routes [disabled].departure[data-v-97a3eef6] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-cca5aa1e] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n#scroll-cities span[data-v-cca5aa1e] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-cca5aa1e] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search[data-v-ca08cef0] {\n    margin-top: 25px;\n}\n}\n@media (max-width: 767px) {\n#app .alert[data-v-ca08cef0] {\n    margin-top: 15px;\n}\n}\n\n/*[v-cloak] { display:none; }*/\n.loading[data-v-ca08cef0] {\n  text-align: center;\n  z-index: 11111;\n}\n.seat-error[data-v-ca08cef0] {\n  text-align: center;\n}\n.form-control[disabled][data-v-ca08cef0] {\n  background-color: #3097D1;\n}\n\n/* The Modal (background) */\n.modal[data-v-ca08cef0] {\n  display: block;\n  position: fixed;\n  z-index: 11111;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\n\n/* seat display */\n.is-active[data-v-ca08cef0] {\n  background-color: green;\n}\n.booked[data-v-ca08cef0] {\n  background-color: yellow;\n}\n.buying[data-v-ca08cef0] {\n  background-color: orange;\n}\n.confirmed[data-v-ca08cef0] {\n  background-color: red;\n}\n.empty[data-v-ca08cef0] {\n  background-color: white;\n  border-width: 0;\n  /*color: #0a0a0a;*/\n  color: white;\n}\n\n/*#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #modal button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }*/\n/* #seat-layout .seat-plan-body button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #seat-layout button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #seat-layout button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #seat-layout button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }\n  .seat-plan-body {\n    padding-left: 20px;\n  } */\n#seat-layout .seat-plan-body[data-v-ca08cef0] {\n  padding-left: 20px;\n}\n#seat-layout .seat-plan-body button[data-v-ca08cef0] {\n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#seat-layout .seat-plan-body button.col-xs-2[data-v-ca08cef0] {\n      width: 16.76666667%;\n}\n#seat-layout .seat-plan-body button.col-xs-offset-2[data-v-ca08cef0] {\n      margin-left: 17.666667%;\n}\n#seat-layout .seat-plan-body button.is-white[data-v-ca08cef0] {\n      background-color: #fff;\n      border-width: 0;\n      color: #0a0a0a;\n}\n\n/*#modal .row  {\n    background-color: #e5ecff;\n  }*/\n/* end seat display */\n", ""]);
 
 /***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.seat-layout .active {\n    background-color: #f4e542;\n    position: relative;\n}\n.inactive {\n    background-color: #c4c0c0;\n}\n.tickmark {\n    /*background-color: green;*/\n    color: green;\n    /*padding: 5px;*/\n}\n.crossmark {\n    /*background-color: red;*/\n    /*padding: 5px;*/\n    color: red;\n}\n/*#app button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}*/\n.seat-layout button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#app button.col-xs-2 {\n    width: 16.76666667%;\n}\n#app button.col-xs-offset-2 {\n    margin-left: 17.666667%;\n}\n.content { \n    padding-left: 30px;\n    padding-right: 30px;\n}\n#app .seat-layout {\n    padding-left: 50px;\n}\n#app .button-group {\n  margin: 2.5rem auto; /*25px*/\n}\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-cca5aa1e] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n#scroll-cities span[data-v-cca5aa1e] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-cca5aa1e] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 75 */
@@ -47780,7 +47790,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(38),
   /* template */
-  __webpack_require__(106),
+  __webpack_require__(107),
   /* scopeId */
   null,
   /* cssModules */
@@ -47814,7 +47824,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(39),
   /* template */
-  __webpack_require__(114),
+  __webpack_require__(115),
   /* scopeId */
   null,
   /* cssModules */
@@ -47846,13 +47856,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(128)
+__webpack_require__(129)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(40),
   /* template */
-  __webpack_require__(112),
+  __webpack_require__(113),
   /* scopeId */
   "data-v-3f039bd8",
   /* cssModules */
@@ -47884,13 +47894,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(131)
+__webpack_require__(132)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(41),
   /* template */
-  __webpack_require__(116),
+  __webpack_require__(117),
   /* scopeId */
   "data-v-5561eb10",
   /* cssModules */
@@ -47922,7 +47932,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(133)
+__webpack_require__(134)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -47930,11 +47940,11 @@ var Component = __webpack_require__(0)(
   /* template */
   null,
   /* scopeId */
-  "data-v-c3bf27e6",
+  "data-v-ca08cef0",
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\SeatDisplay.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -47944,9 +47954,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c3bf27e6", Component.options)
+    hotAPI.createRecord("data-v-ca08cef0", Component.options)
   } else {
-    hotAPI.reload("data-v-c3bf27e6", Component.options)
+    hotAPI.reload("data-v-ca08cef0", Component.options)
   }
 })()}
 
@@ -47961,7 +47971,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(43),
   /* template */
-  __webpack_require__(111),
+  __webpack_require__(112),
   /* scopeId */
   null,
   /* cssModules */
@@ -47995,7 +48005,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(44),
   /* template */
-  __webpack_require__(124),
+  __webpack_require__(125),
   /* scopeId */
   null,
   /* cssModules */
@@ -48029,7 +48039,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(45),
   /* template */
-  __webpack_require__(110),
+  __webpack_require__(111),
   /* scopeId */
   null,
   /* cssModules */
@@ -48063,7 +48073,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(46),
   /* template */
-  __webpack_require__(117),
+  __webpack_require__(118),
   /* scopeId */
   null,
   /* cssModules */
@@ -48097,7 +48107,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(47),
   /* template */
-  __webpack_require__(122),
+  __webpack_require__(123),
   /* scopeId */
   null,
   /* cssModules */
@@ -48165,15 +48175,15 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(49),
   /* template */
-  __webpack_require__(120),
+  __webpack_require__(122),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Staff-Management.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\StaffList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Staff-Management.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] StaffList.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -48182,9 +48192,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9f73b096", Component.options)
+    hotAPI.createRecord("data-v-c735efae", Component.options)
   } else {
-    hotAPI.reload("data-v-9f73b096", Component.options)
+    hotAPI.reload("data-v-c735efae", Component.options)
   }
 })()}
 
@@ -48205,9 +48215,9 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Staff-list.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\StaffManagement.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Staff-list.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] StaffManagement.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -48216,9 +48226,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-249ca1f0", Component.options)
+    hotAPI.createRecord("data-v-1eb319e4", Component.options)
   } else {
-    hotAPI.reload("data-v-249ca1f0", Component.options)
+    hotAPI.reload("data-v-1eb319e4", Component.options)
   }
 })()}
 
@@ -48229,49 +48239,15 @@ module.exports = Component.exports
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(128)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(51),
   /* template */
-  __webpack_require__(118),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Bus-list.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Bus-list.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-92ccb382", Component.options)
-  } else {
-    hotAPI.reload("data-v-92ccb382", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(127)
-
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(52),
-  /* template */
-  __webpack_require__(108),
+  __webpack_require__(110),
   /* scopeId */
   "data-v-2108cb88",
   /* cssModules */
@@ -48298,12 +48274,46 @@ module.exports = Component.exports
 
 
 /***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(52),
+  /* template */
+  __webpack_require__(120),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\BusList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BusList.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9cc2840c", Component.options)
+  } else {
+    hotAPI.reload("data-v-9cc2840c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(132)
+__webpack_require__(133)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -48341,13 +48351,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(129)
+__webpack_require__(130)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(54),
   /* template */
-  __webpack_require__(113),
+  __webpack_require__(114),
   /* scopeId */
   "data-v-3fc4e1ea",
   /* cssModules */
@@ -48379,21 +48389,21 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(135)
+__webpack_require__(126)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(55),
   /* template */
-  __webpack_require__(125),
+  __webpack_require__(106),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Seat-plan.vue"
+Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\SeatPlan.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Seat-plan.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] SeatPlan.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -48402,9 +48412,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-e9072ba6", Component.options)
+    hotAPI.createRecord("data-v-001d687c", Component.options)
   } else {
-    hotAPI.reload("data-v-e9072ba6", Component.options)
+    hotAPI.reload("data-v-001d687c", Component.options)
   }
 })()}
 
@@ -48417,13 +48427,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(130)
+__webpack_require__(131)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(56),
   /* template */
-  __webpack_require__(115),
+  __webpack_require__(116),
   /* scopeId */
   "data-v-4286404c",
   /* cssModules */
@@ -48455,13 +48465,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(134)
+__webpack_require__(135)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(57),
   /* template */
-  __webpack_require__(123),
+  __webpack_require__(124),
   /* scopeId */
   "data-v-cca5aa1e",
   /* cssModules */
@@ -48493,13 +48503,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(126)
+__webpack_require__(127)
 
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(58),
   /* template */
-  __webpack_require__(107),
+  __webpack_require__(108),
   /* scopeId */
   "data-v-1cf63056",
   /* cssModules */
@@ -48527,6 +48537,249 @@ module.exports = Component.exports
 
 /***/ }),
 /* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\n     Seat Planning\n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Seat Plan ")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('form', [_c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "busId"
+    }
+  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedBusId),
+      expression: "selectedBusId"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "bus_id",
+      "id": "busId"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedBusId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [(bus.seat_plan == 0) ? _c('span', [_vm._v(_vm._s(bus.id) + " ")]) : _vm._e()])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberOfCol"
+    }
+  }, [_vm._v("Column #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberOfCol),
+      expression: "numberOfCol"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "min": "1",
+      "max": "4",
+      "value": "4",
+      "id": "numberOfCol",
+      "placeholder": "Column Number",
+      "disabled": ""
+    },
+    domProps: {
+      "value": (_vm.numberOfCol)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberOfCol = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberOfRow"
+    }
+  }, [_vm._v("Row #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberOfRow),
+      expression: "numberOfRow"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "min": "1",
+      "max": "25",
+      "value": "9",
+      "id": "numberOfRow",
+      "placeholder": "Row Number",
+      "disabled": _vm.isDisabled
+    },
+    domProps: {
+      "value": (_vm.numberOfRow)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberOfRow = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "button-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": !_vm.isValidForShow
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.createList()
+      }
+    }
+  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.reset()
+      }
+    }
+  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": !_vm.isValidForSave
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveSeatList()
+      }
+    }
+  }, [_vm._v("Save")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (Object.keys(_vm.busInfo).length > 0),
+      expression: "Object.keys(busInfo).length > 0"
+    }],
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Bus Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table .table-striped"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.busInfo.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.total_seats))])])])]), _vm._v(" "), _c('strong', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(" " + _vm._s(_vm.busInfo.description) + " ")])])])])])])]), _vm._v(" "), _c('loader', {
+    attrs: {
+      "show": _vm.loading
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Seat Planning")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "seat-layout"
+  }, _vm._l((_vm.seatList), function(seat, index) {
+    return _c('button', {
+      staticClass: "col-xs-2",
+      class: {
+        active: seat.checked,
+          inactive: !seat.checked,
+          'col-xs-offset-2': _vm.emptySpace(index, seat.no)
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggle(seat)
+        }
+      }
+    }, [_c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (seat.checked),
+        expression: "seat.checked"
+      }],
+      staticClass: "fa fa-check fa-lg tickmark"
+    }), _vm._v(" "), _c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (!seat.checked),
+        expression: "!seat.checked"
+      }],
+      staticClass: "fa fa-times fa-lg crossmark",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" "), _vm._v("\n                  " + _vm._s(seat.no) + " - " + _vm._s(seat.sts) + " : " + _vm._s(index) + " \n                  \n              ")])
+  }))])])])], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Reg. No")]), _vm._v(" "), _c('th', [_vm._v("Bus Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-001d687c", module.exports)
+  }
+}
+
+/***/ }),
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48570,7 +48823,7 @@ if (false) {
 }
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48763,7 +49016,108 @@ if (false) {
 }
 
 /***/ }),
-/* 108 */
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\r\n        Page Name        \r\n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\r\n          ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Here")])])]), _vm._v(" "), _c('section', {
+    staticClass: "content"
+  }, [_c('div', [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('tab-staff-list'), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "profile"
+    }
+  }, [_vm._v("Profile Tab")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "messages"
+    }
+  }, [_vm._v("Something")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "settings"
+    }
+  }, [_vm._v("something else")])], 1)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav nav-tabs",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_c('li', {
+    staticClass: "active",
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#home",
+      "aria-controls": "home",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#profile",
+      "aria-controls": "profile",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Profile")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#messages",
+      "aria-controls": "messages",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Messages")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#settings",
+      "aria-controls": "settings",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Settings")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1eb319e4", module.exports)
+  }
+}
+
+/***/ }),
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49079,8 +49433,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _vm._v(" "), _c('th', [_vm._v("Number Plate")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Number Of Seat")]), _vm._v(" "), _c('th', [_vm._v("Descriptin")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableBusList), function(bus, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.number_plate))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.total_seats))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.description))]), _vm._v(" "), _c('td', [_c('button', {
+  })])]), _vm._v(" "), _c('th', [_vm._v("Number Plate")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v("Seat Plan")]), _vm._v(" "), _c('th', [_vm._v("Descriptin")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableBusList), function(bus, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.number_plate))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.total_seats))]), _vm._v(" "), (bus.seat_plan == 0) ? _c('td', [_c('strong', [_vm._v("N/A")])]) : _c('td', [_c('strong', [_vm._v("Available")])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.description))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary",
       on: {
         "click": function($event) {
@@ -49124,49 +49478,7 @@ if (false) {
 }
 
 /***/ }),
-/* 109 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\n      Admin Staff\n      ")]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', [_c('router-link', {
-    attrs: {
-      "to": "/dashboard",
-      "exact": ""
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
-    staticClass: "active"
-  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "content"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("The Admin Staff Page")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n              I'm an Admin Staff component!\n          ")])])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-249ca1f0", module.exports)
-  }
-}
-
-/***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49195,7 +49507,7 @@ if (false) {
 }
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49237,7 +49549,7 @@ if (false) {
 }
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49271,7 +49583,7 @@ if (false) {
 }
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49827,7 +50139,7 @@ if (false) {
 }
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49844,7 +50156,7 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -50146,7 +50458,7 @@ if (false) {
 }
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -50180,7 +50492,7 @@ if (false) {
 }
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -50236,48 +50548,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-6b87b724", module.exports)
-  }
-}
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\n      Bus Management\n      ")]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', [_c('router-link', {
-    attrs: {
-      "to": "/dashboard",
-      "exact": ""
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
-    staticClass: "active"
-  }, [_vm._v("Bus List")])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "content"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Bus List")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n             Bus List\n          ")])])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-92ccb382", module.exports)
   }
 }
 
@@ -50738,8 +51008,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(route, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.distance))]), _vm._v(" "), (route.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(route.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(route.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(route.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('button', {
+  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("\n                        Route ID\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(route, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.distance))]), _vm._v(" "), (route.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(route.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(route.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(route.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('strong', [_vm._v(_vm._s(route.id))])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary",
       attrs: {
         "disabled": route.fare == null
@@ -50925,97 +51195,38 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\r\n        Page Name        \r\n      ")]), _vm._v(" "), _c('ol', {
+  }, [_c('h1', [_vm._v("\n      Bus Management\n      ")]), _vm._v(" "), _c('ol', {
     staticClass: "breadcrumb"
   }, [_c('li', [_c('router-link', {
     attrs: {
-      "to": "/dashboard"
+      "to": "/dashboard",
+      "exact": ""
     }
   }, [_c('i', {
     staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\r\n          ")])], 1), _vm._v(" "), _c('li', {
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Here")])])]), _vm._v(" "), _c('section', {
-    staticClass: "content"
-  }, [_c('div', [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "tab-content"
-  }, [_c('tab-staff-list'), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "profile"
-    }
-  }, [_vm._v("Profile Tab")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "messages"
-    }
-  }, [_vm._v("Something")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "settings"
-    }
-  }, [_vm._v("something else")])], 1)])])])
+  }, [_vm._v("Bus List")])])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "nav nav-tabs",
-    attrs: {
-      "role": "tablist"
-    }
-  }, [_c('li', {
-    staticClass: "active",
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#home",
-      "aria-controls": "home",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#profile",
-      "aria-controls": "profile",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Profile")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#messages",
-      "aria-controls": "messages",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Messages")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#settings",
-      "aria-controls": "settings",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Settings")])])])
+  return _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Bus List")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n             Bus List\n          ")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-9f73b096", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-9cc2840c", module.exports)
   }
 }
 
@@ -51068,6 +51279,48 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\n      Admin Staff\n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("The Admin Staff Page")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n              I'm an Admin Staff component!\n          ")])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c735efae", module.exports)
+  }
+}
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
   }, [_c('h1', [_vm._v("\n      Profile\n      ")]), _vm._v(" "), _c('ol', {
     staticClass: "breadcrumb"
   }, [_c('li', [_c('router-link', {
@@ -51109,7 +51362,7 @@ if (false) {
 }
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -51522,7 +51775,7 @@ if (false) {
 }
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -51564,249 +51817,6 @@ if (false) {
 }
 
 /***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\n     Seat Planning\n      ")]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', [_c('router-link', {
-    attrs: {
-      "to": "/dashboard",
-      "exact": ""
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
-    staticClass: "active"
-  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _c('section', {
-    staticClass: "content"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Seat Plan ")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('form', [_c('div', {
-    staticClass: "col-sm-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "busId"
-    }
-  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.selectedBusId),
-      expression: "selectedBusId"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "bus_id",
-      "id": "busId"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.selectedBusId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "disabled": "",
-      "value": ""
-    }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
-    return _c('option', [_vm._v("\n                        " + _vm._s(bus.id) + "\n                      ")])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-2"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "numberOfCol"
-    }
-  }, [_vm._v("Column #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.numberOfCol),
-      expression: "numberOfCol"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "number",
-      "min": "1",
-      "max": "4",
-      "value": "4",
-      "id": "numberOfCol",
-      "placeholder": "Column Number",
-      "disabled": ""
-    },
-    domProps: {
-      "value": (_vm.numberOfCol)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.numberOfCol = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-2"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "numberOfRow"
-    }
-  }, [_vm._v("Row #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.numberOfRow),
-      expression: "numberOfRow"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "number",
-      "min": "1",
-      "max": "25",
-      "value": "9",
-      "id": "numberOfRow",
-      "placeholder": "Row Number",
-      "disabled": _vm.isDisabled
-    },
-    domProps: {
-      "value": (_vm.numberOfRow)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.numberOfRow = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-4"
-  }, [_c('div', {
-    staticClass: "button-group"
-  }, [_c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": !_vm.isValidForShow
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.createList()
-      }
-    }
-  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.reset()
-      }
-    }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": !_vm.isValidForSave
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.saveSeatList()
-      }
-    }
-  }, [_vm._v("Save")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-12"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (Object.keys(_vm.busInfo).length > 0),
-      expression: "Object.keys(busInfo).length > 0"
-    }],
-    staticClass: "panel panel-info"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Bus Info")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('table', {
-    staticClass: "table .table-striped"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.busInfo.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.total_seats))])])])]), _vm._v(" "), _c('strong', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(" " + _vm._s(_vm.busInfo.description) + " ")])])])])])])]), _vm._v(" "), _c('loader', {
-    attrs: {
-      "show": _vm.loading
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Seat Planning")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('div', {
-    staticClass: "seat-layout"
-  }, _vm._l((_vm.seatList), function(seat, index) {
-    return _c('button', {
-      staticClass: "col-xs-2",
-      class: {
-        active: seat.checked,
-          inactive: !seat.checked,
-          'col-xs-offset-2': _vm.emptySpace(index, seat.no)
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggle(seat)
-        }
-      }
-    }, [_c('i', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (seat.checked),
-        expression: "seat.checked"
-      }],
-      staticClass: "fa fa-check fa-lg tickmark"
-    }), _vm._v(" "), _c('i', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (!seat.checked),
-        expression: "!seat.checked"
-      }],
-      staticClass: "fa fa-times fa-lg crossmark",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }), _vm._v(" "), _vm._v("\n                  " + _vm._s(seat.no) + " - " + _vm._s(seat.sts) + " : " + _vm._s(index) + " \n                  \n              ")])
-  }))])])])], 1)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Reg. No")]), _vm._v(" "), _c('th', [_vm._v("Bus Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-e9072ba6", module.exports)
-  }
-}
-
-/***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51817,13 +51827,13 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("8fb73486", content, false);
+var update = __webpack_require__(3)("0f2635c0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1cf63056\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Staff_list.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1cf63056\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Staff_list.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-001d687c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatPlan.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-001d687c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatPlan.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51843,13 +51853,13 @@ var content = __webpack_require__(66);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("4a73d440", content, false);
+var update = __webpack_require__(3)("8fb73486", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1cf63056\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Staff_list.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1cf63056\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Staff_list.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51869,13 +51879,13 @@ var content = __webpack_require__(67);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("4a12b320", content, false);
+var update = __webpack_require__(3)("4a73d440", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f039bd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f039bd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51895,13 +51905,13 @@ var content = __webpack_require__(68);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("3c622e97", content, false);
+var update = __webpack_require__(3)("4a12b320", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f039bd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3f039bd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51921,13 +51931,13 @@ var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("b32ae2f0", content, false);
+var update = __webpack_require__(3)("3c622e97", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4286404c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./City.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4286404c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./City.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51947,13 +51957,13 @@ var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d1e69590", content, false);
+var update = __webpack_require__(3)("b32ae2f0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5561eb10\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5561eb10\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4286404c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./City.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4286404c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./City.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51973,13 +51983,13 @@ var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("c478045e", content, false);
+var update = __webpack_require__(3)("d1e69590", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-97a3eef6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Route.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-97a3eef6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Route.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5561eb10\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5561eb10\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Modal.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -51999,13 +52009,13 @@ var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d97ece18", content, false);
+var update = __webpack_require__(3)("c478045e", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-97a3eef6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Route.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-97a3eef6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Route.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -52025,13 +52035,13 @@ var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("27d326d0", content, false);
+var update = __webpack_require__(3)("516a603a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cca5aa1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stop.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cca5aa1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stop.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ca08cef0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatDisplay.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ca08cef0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatDisplay.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -52051,13 +52061,13 @@ var content = __webpack_require__(74);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0eb183b6", content, false);
+var update = __webpack_require__(3)("27d326d0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e9072ba6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat-plan.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e9072ba6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat-plan.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cca5aa1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stop.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cca5aa1e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stop.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

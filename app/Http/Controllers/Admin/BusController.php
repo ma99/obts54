@@ -9,6 +9,7 @@ Use App\User;
 Use App\Bus;
 //Use App\City;
 Use App\SeatPlan;
+Use App\Schedule;
 
 class BusController extends Controller
 {
@@ -59,12 +60,26 @@ class BusController extends Controller
     {
         $error = ['error' => 'No results found'];
         $busId = $this->request->input('bus_id');
+
+       
         $bus = Bus::find($busId);
         if ($bus) {
+            $this->deleteBusFromSchedule($busId);
+            $this->deleteBusFromSeatPlan($busId);
             $bus->delete();
             return 'success';            
         }
         return $error;
+    }
+
+    public function deleteBusFromSchedule($busId)
+    {
+        return Schedule::where('bus_id', $busId)->delete();
+    }
+
+    public function deleteBusFromSeatPlan($busId)
+    {
+        return SeatPlan::where('bus_id', $busId)->delete();
     }
 
     public function storeBus()
@@ -87,7 +102,6 @@ class BusController extends Controller
         );
 
         return 'Success';
-
     }
 
     public function storeSeatPlan()
@@ -107,9 +121,21 @@ class BusController extends Controller
             ['bus_id' => $busId],
             ['seat_list' => $seatList]
         );
-
+        $this->updateSeatPlanStatusInBus($busId);
         return 'Success';
 
+    }
+
+    public function updateSeatPlanStatusInBus($busId)
+    {
+        $bus = Bus::find($busId);
+        $bus->seat_plan = true;
+        $bus->save();
+        // Bus::updateOrCreate(
+        //     ['id' => $busId],
+        //     ['seat_plan' => true]
+        // );
+        return;
     }
 
     public function showSeat($busId)

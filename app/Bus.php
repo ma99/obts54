@@ -11,6 +11,7 @@ class Bus extends Model
         'number_plate',
 		'type',
 		'total_seats',
-		'description'
+		'description',
+		'seatplan_done'
    	];
 }

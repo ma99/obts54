@@ -21,6 +21,7 @@ class CreateBusesTable extends Migration
            // $table->smallInteger('fare')->unsigned()->default(400);
             $table->tinyInteger('total_seats')->unsigned();
             $table->string('description');
+            $table->boolean('seat_plan')->default(false);
             $table->timestamps();
         });
     }

@@ -112,7 +112,8 @@
                         </th>
                         <th>Number Plate</th>
                         <th>Type</th>      
-                        <th>Number Of Seat</th>     
+                        <th>Total Seat</th>     
+                        <th>Seat Plan</th>     
                         <th>Descriptin</th>                                                         
                         <th>Action</th>                                                         
                         <!-- <th>&nbsp;</th> -->
@@ -126,6 +127,9 @@
                         <td>{{ bus.number_plate }}</td>                              
                         <td>{{ bus.type }}</td>
                         <td>{{ bus.total_seats }}</td>
+                        <!-- <td >{{ bus.seat_plan }}</td> -->
+                        <td v-if="bus.seat_plan == 0"><strong>N/A</strong></td>
+                        <td v-else><strong>Available</strong></td>
                         <td>{{ bus.description }}</td>
                         <td> 
                             <button v-on:click.prevent="editBus(bus)" class="btn btn-primary">

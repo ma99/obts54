@@ -18,7 +18,7 @@ let routes = [
     },
     {
         path: '/staff-management',
-        component: require('./views/Staff-Management')
+        component: require('./views/StaffManagement')
     },
     //User
     {
@@ -31,7 +31,7 @@ let routes = [
     },
     {
         path: '/staff-list',
-        component: require('./views/Staff-list')
+        component: require('./views/StaffList')
     },
     //Bus 
     {
@@ -40,7 +40,7 @@ let routes = [
     },
     {
         path: '/list',
-        component: require('./views/bus/Bus-list')
+        component: require('./views/bus/BusList')
     },
     {
         path: '/route',
@@ -48,7 +48,7 @@ let routes = [
     },
     {
         path: '/seat-plan',
-        component: require('./views/bus/Seat-plan')
+        component: require('./views/bus/SeatPlan')
     },
     {
         path: '/schedule',
