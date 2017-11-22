@@ -9,7 +9,7 @@ class Role extends Model
     //
     //protected $table = 'status';
     protected $fillable = [
-        'name'
+        'name', 'user_id'
     ];
     public function user()
     {
