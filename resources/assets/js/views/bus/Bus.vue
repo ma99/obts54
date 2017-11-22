@@ -295,18 +295,34 @@
                             return 0;
                         });
                     },
-                    removeBus(bus) {  // role id of user/staff in roles table
+                    /*removeBus(bus) {  // role id of user/staff in roles table
                         var vm = this;            
                         //this.routeName = route.departure_city + ' to ' + route.arrival_city;
                         swal({
                               title: "Are you sure?",
                               text: "This BUS will be Removed!",
-                              type: "warning",
-                              showCancelButton: true,
-                              confirmButtonColor: "#DD6B55",
-                              confirmButtonText: "Yes, Remove!",
+                              //type: "warning",
+                              icon: "warning",
+                              // showCancelButton: true,
+                              // confirmButtonColor: "#DD6B55",
+                              // confirmButtonText: "Yes, Remove!",
                               //closeOnConfirm: false,
-                              //closeOnCancel: false                       
+                              //closeOnCancel: false 
+                              cancel: {
+                                text: "Cancel",
+                                // value: null,
+                                // visible: false,
+                                // className: "",
+                                // closeModal: true,
+                              },
+                              confirm: {
+                                text: "Yes, Remove!",
+                                value: true,
+                                visible: true,
+                                className: "",
+                                //closeModal: true
+                              }        
+
                             },
                             function() {                       
                                     vm.loading = true;
@@ -333,8 +349,108 @@
                                     //swal("Deleted!", "Staff has been Removed.", "success");                      
                                 
                             });
-                    },
-             
+                    },*/
+
+            /*removeBus(bus) {  // role id of user/staff in roles table
+                        var vm = this;            
+                        //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+                        //swal("This BUS will be Removed!", {
+                        swal({
+                            title: "Are you sure?",
+                            text: "This BUS will be Removed!",
+                            icon: "warning",
+                            dangerMode: true,
+                            buttons: {
+                                cancel: "cancel",
+                                confirm: {
+                                  text: "Remove It!",
+                                  value: "remove",
+                                },                                
+                            },
+                        
+                        })
+                        .then((value) => {
+                            switch (value) {
+                           
+                              case "cancel":
+                                break;                             
+                           
+                              case "remove":        
+                                vm.loading = true;
+                                vm.response = '';
+                                vm.showAlert = false;
+
+                                axios.post('/delete/bus', {    
+                                    bus_id: bus.id, 
+                                })          
+                                .then(function (response) {                 
+                                   
+                                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                                    if (vm.response) {                                
+                                        vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                                        vm.loading = false;
+                                        vm.actionStatus = 'Removed';
+                                        vm.alertType = 'danger';
+                                        vm.showAlert= true;
+                                        return;                                                      
+                                    }                            
+                                    vm.loading = false;
+
+                                });   
+                                  
+                                break;
+                           
+                              default:
+                                // swal("Got away safely!");
+                                break;
+                            }
+                        });                           
+                    },*/
+
+
+            removeBus(bus) { 
+                var vm = this;
+                swal({
+                  title: "Are you sure?",
+                  text: "This BUS will be Removed!",
+                  icon: "error",                 
+                  dangerMode: true,
+                  buttons: {
+                      cancel: "cancel",
+                      confirm: {
+                        text: "Remove It!",
+                        value: true,
+                      },                                
+                  },
+                })
+                .then((value) => {
+                  if (value) {
+
+                    vm.loading = true;
+                    vm.response = '';
+                    vm.showAlert = false;
+
+                    axios.post('/delete/bus', {    
+                        bus_id: bus.id, 
+                    })          
+                    .then(function (response) {               
+                        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                        if (vm.response) {                                
+                            vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                            vm.loading = false;
+                            vm.actionStatus = 'Removed';
+                            vm.alertType = 'danger';
+                            vm.showAlert= true;
+                            return;                                                      
+                        }                            
+                        vm.loading = false;
+                    }); 
+                    
+                  } 
+                  
+                }); 
+            },
             removeBusFromAvailableBusList(busId) {
                 var indx = this.availableBusList.findIndex(function(bus){                 
                      return bus.id == busId;

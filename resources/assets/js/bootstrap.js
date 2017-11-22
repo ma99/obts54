@@ -13,7 +13,8 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-window.swal = require('sweetalert');
+//window.swal = require('sweetalert');
+import swal from 'sweetalert';
 
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

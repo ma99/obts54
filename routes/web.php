@@ -39,6 +39,8 @@ Route::get('/forbidden', 'HomeController@forbidden');
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 Route::get('/staffs', 'Admin\DashboardController@staffInfo');
 Route::post('/delete', 'Admin\DashboardController@destroy');
+Route::post('/search-user', 'Admin\DashboardController@searchUser');
+Route::post('/set-role', 'Admin\DashboardController@setRole');
 Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 
 //bus

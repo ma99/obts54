@@ -421,42 +421,47 @@
 
             removeSchedule(schedule) {  // role id of user/staff in roles table
                 var vm = this;            
-                //this.routeName = route.departure_city + ' to ' + route.arrival_city;
                 swal({
-                      title: "Are you sure?",
-                      text: "This Route will be Removed from Route List!",
-                      type: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#DD6B55",
-                      confirmButtonText: "Yes, Remove!",
-                      //closeOnConfirm: false,
-                      //closeOnCancel: false                       
-                    },
-                    function() {                       
-                            vm.loading = true;
-                            vm.response = '';
-                            vm.showAlert = false;
-                            axios.post('/delete/schedule', {                            
-                                schedule_id: schedule.id, 
-                            })          
-                            .then(function (response) {                                           
-                                // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
-                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                title: "Are you sure?",
+                text: "This SCHEDULE will be Removed!",
+                icon: "error",                 
+                dangerMode: true,
+                buttons: {
+                    cancel: "cancel",
+                    confirm: {
+                      text: "Remove It!",
+                      value: true,
+                    },                                
+                },
+              })
+              .then((value) => {
+                if (value) {
+                
+                  vm.loading = true;
+                  vm.response = '';
+                  vm.showAlert = false;
+                  axios.post('/delete/schedule', {                            
+                      schedule_id: schedule.id, 
+                  })          
+                  .then(function (response) {                                           
+                     
+                      response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
-                                if (vm.response) {                                
-                                    vm.removeScheduleFromAvailableScheduleList(schedule.id); // update the array after removing
-                                    vm.loading = false;
-                                    vm.actionStatus = 'Removed';
-                                    vm.alertType = 'danger';
-                                    vm.showAlert= true;
-                                    return;                                                      
-                                }                            
-                                vm.loading = false;
+                      if (vm.response) {                                
+                          vm.removeScheduleFromAvailableScheduleList(schedule.id); // update the array after removing
+                          vm.loading = false;
+                          vm.actionStatus = 'Removed';
+                          vm.alertType = 'danger';
+                          vm.showAlert= true;
+                          return;                                                      
+                      }                            
+                      vm.loading = false;
 
-                            });    
-                            //swal("Deleted!", "Staff has been Removed.", "success");                      
-                        
-                    });
+                  });     
+                  
+                } 
+                
+              }); 
             },
              
             removeScheduleFromAvailableScheduleList(scheduleId) {
@@ -478,14 +483,15 @@
             scheduleAddedAlert(routeId, busId) {
               swal({
                 //title: "Sorry! Not Available",
-                title: 'Schedule for Route #<span style="color:#A5DC86"> <strong>'+ routeId + '&nbsp;' +' and Bus #'+ '&nbsp;' + busId +'</strong></span></br> Added successfully!',
+                //title: 'Schedule for Route #<span style="color:#A5DC86"> <strong>'+ routeId + '&nbsp;' +' and Bus #'+ '&nbsp;' + busId +'</strong></span></br> Added successfully!',
+                title: 'Schedule for Route '+ routeId + ' ' +' and Bus #'+ ' ' + busId +' ',
+                text: 'Added successfully!',
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-                html: true,
+                //html: true,
                 //type: "info",
-                type: "success",
-                timer: 1800,
-                showConfirmButton: false,
-                allowOutsideClick: true,
+                icon: "success",
+                timer: 2000,                
+                closeOnClickOutside: true,
               });
             },
             updateSchedule(schedule) {

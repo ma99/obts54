@@ -441,40 +441,46 @@
             var vm = this;            
             this.routeName = route.departure_city + ' to ' + route.arrival_city;
             swal({
-                  title: "Are you sure?",
-                  text: "This Route will be Removed from Route List!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Yes, Remove!",
-                  //closeOnConfirm: false,
-                  //closeOnCancel: false                       
-                },
-                function() {                       
-                        vm.loading = true;
-                        vm.response = '';
-                        vm.showAlert = false;
-                        axios.post('/delete/route', {                            
-                            route_id: route.id, 
-                        })          
-                        .then(function (response) {                                           
-                            // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
-                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+              title: "Are you sure?",
+              text: "This ROUTE will be Removed!",
+              icon: "error",                 
+              dangerMode: true,
+              buttons: {
+                  cancel: "cancel",
+                  confirm: {
+                    text: "Remove It!",
+                    value: true,
+                  },                                
+              },
+            })
+            .then((value) => {
+              if (value) {
 
-                            if (vm.response) {                                
-                                vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
-                                vm.loading = false;
-                                vm.actionStatus = 'Removed';
-                                vm.alertType = 'danger';
-                                vm.showAlert= true;
-                                return;                                                      
-                            }                            
-                            vm.loading = false;
+                vm.loading = true;
+                vm.response = '';
+                vm.showAlert = false;
+                axios.post('/delete/route', {                            
+                    route_id: route.id, 
+                })          
+                .then(function (response) {                                           
+                    // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
-                        });    
-                        //swal("Deleted!", "Staff has been Removed.", "success");                      
-                    
-                });
+                    if (vm.response) {                                
+                        vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert= true;
+                        return;                                                      
+                    }                            
+                    vm.loading = false;
+
+                });   
+                
+              } 
+              
+            }); 
           },
          
           removeRouteFromAvailableRouteList(routeId) {
@@ -515,16 +521,21 @@
                 });
           },
           routeAddedAlert(depatureCity, arrivalCity) {
+              
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
-                //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-                html: true,
+                //title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
+                title: depatureCity + ''  +' to '+ ' ' + arrivalCity,
+                text: 'Route Added successfully!',
+                //text: '<span style="color:#F8BB86"> <strong>'+depatureCity+'</strong></span> Not Available.',
+                //html: true,
                 //type: "info",
-                type: "success",
-                timer: 1800,
-                showConfirmButton: false,
-                allowOutsideClick: true,
+                //type: "success",
+                //content: html,
+                icon: "success",
+                timer: 2000,
+                //showConfirmButton: false,
+                closeOnClickOutside: true,
               });
           },
           updateRouteFare() {

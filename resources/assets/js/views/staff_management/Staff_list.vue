@@ -196,37 +196,43 @@
                 var vm = this;
                 this.staffName = staff.name; 
                 swal({
-                      title: "Are you sure?",
-                      text: "This staff will be Removed from Staff Roles!",
-                      type: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#DD6B55",
-                      confirmButtonText: "Yes, Remove!",
-                      //closeOnConfirm: false,
-                      //closeOnCancel: false                       
-                    },
-                    function() {                       
-                            vm.loading = true;
-                            vm.response = '';
-                            vm.showAlert = false;
-                            axios.post('/delete', {
-                                id: staff.role_id, 
-                                user_id: staff.id 
-                            })          
-                            .then(function (response) {                                           
-                                //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
-                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                                if (vm.response) {
-                                  vm.removeStaffFromStaffs(staff.id);
-                                  vm.loading = false;
-                                  vm.actionStatus = 'Removed';
-                                  vm.alertType = 'danger';
-                                  vm.showAlert= true;                                                        
-                                }
-                            });    
-                            //swal("Deleted!", "Staff has been Removed.", "success");                      
-                        
-                    });
+                title: "Are you sure?",
+                text: "This staff will be Removed from Staff Roles!",
+                icon: "error",                 
+                dangerMode: true,
+                buttons: {
+                    cancel: "cancel",
+                    confirm: {
+                      text: "Remove It!",
+                      value: true,
+                    },                                
+                },
+              })
+              .then((value) => {
+                if (value) {
+
+                  vm.loading = true;
+                  vm.response = '';
+                  vm.showAlert = false;
+                  axios.post('/delete', {
+                      id: staff.role_id, 
+                      user_id: staff.id 
+                  })          
+                  .then(function (response) {                                           
+                      //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                      response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                      if (vm.response) {
+                        vm.removeStaffFromStaffs(staff.id);
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert= true;                                                        
+                      }
+                  });      
+                  
+                } 
+                
+              }); 
             },
             
             removeStaffFromStaffs(staffId) {
