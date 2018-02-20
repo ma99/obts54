@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 132);
+/******/ 	return __webpack_require__(__webpack_require__.s = 135);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -130,7 +130,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(12);
+var bind = __webpack_require__(11);
 
 /*global toString:true*/
 
@@ -505,7 +505,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(129)
+var listToStyles = __webpack_require__(132)
 
 /*
 type StyleObject = {
@@ -711,459 +711,10 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-var hasClass = function hasClass(elem, className) {
-  return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
-};
-
-var addClass = function addClass(elem, className) {
-  if (!hasClass(elem, className)) {
-    elem.className += ' ' + className;
-  }
-};
-
-var removeClass = function removeClass(elem, className) {
-  var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, ' ') + ' ';
-  if (hasClass(elem, className)) {
-    while (newClass.indexOf(' ' + className + ' ') >= 0) {
-      newClass = newClass.replace(' ' + className + ' ', ' ');
-    }
-    elem.className = newClass.replace(/^\s+|\s+$/g, '');
-  }
-};
-
-var escapeHtml = function escapeHtml(str) {
-  var div = document.createElement('div');
-  div.appendChild(document.createTextNode(str));
-  return div.innerHTML;
-};
-
-var _show = function _show(elem) {
-  elem.style.opacity = '';
-  elem.style.display = 'block';
-};
-
-var show = function show(elems) {
-  if (elems && !elems.length) {
-    return _show(elems);
-  }
-  for (var i = 0; i < elems.length; ++i) {
-    _show(elems[i]);
-  }
-};
-
-var _hide = function _hide(elem) {
-  elem.style.opacity = '';
-  elem.style.display = 'none';
-};
-
-var hide = function hide(elems) {
-  if (elems && !elems.length) {
-    return _hide(elems);
-  }
-  for (var i = 0; i < elems.length; ++i) {
-    _hide(elems[i]);
-  }
-};
-
-var isDescendant = function isDescendant(parent, child) {
-  var node = child.parentNode;
-  while (node !== null) {
-    if (node === parent) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-  return false;
-};
-
-var getTopMargin = function getTopMargin(elem) {
-  elem.style.left = '-9999px';
-  elem.style.display = 'block';
-
-  var height = elem.clientHeight,
-      padding;
-  if (typeof getComputedStyle !== 'undefined') {
-    // IE 8
-    padding = parseInt(getComputedStyle(elem).getPropertyValue('padding-top'), 10);
-  } else {
-    padding = parseInt(elem.currentStyle.padding);
-  }
-
-  elem.style.left = '';
-  elem.style.display = 'none';
-  return '-' + parseInt((height + padding) / 2) + 'px';
-};
-
-var fadeIn = function fadeIn(elem, interval) {
-  if (+elem.style.opacity < 1) {
-    interval = interval || 16;
-    elem.style.opacity = 0;
-    elem.style.display = 'block';
-    var last = +new Date();
-    var tick = (function (_tick) {
-      function tick() {
-        return _tick.apply(this, arguments);
-      }
-
-      tick.toString = function () {
-        return _tick.toString();
-      };
-
-      return tick;
-    })(function () {
-      elem.style.opacity = +elem.style.opacity + (new Date() - last) / 100;
-      last = +new Date();
-
-      if (+elem.style.opacity < 1) {
-        setTimeout(tick, interval);
-      }
-    });
-    tick();
-  }
-  elem.style.display = 'block'; //fallback IE8
-};
-
-var fadeOut = function fadeOut(elem, interval) {
-  interval = interval || 16;
-  elem.style.opacity = 1;
-  var last = +new Date();
-  var tick = (function (_tick2) {
-    function tick() {
-      return _tick2.apply(this, arguments);
-    }
-
-    tick.toString = function () {
-      return _tick2.toString();
-    };
-
-    return tick;
-  })(function () {
-    elem.style.opacity = +elem.style.opacity - (new Date() - last) / 100;
-    last = +new Date();
-
-    if (+elem.style.opacity > 0) {
-      setTimeout(tick, interval);
-    } else {
-      elem.style.display = 'none';
-    }
-  });
-  tick();
-};
-
-var fireClick = function fireClick(node) {
-  // Taken from http://www.nonobtrusive.com/2011/11/29/programatically-fire-crossbrowser-click-event-with-javascript/
-  // Then fixed for today's Chrome browser.
-  if (typeof MouseEvent === 'function') {
-    // Up-to-date approach
-    var mevt = new MouseEvent('click', {
-      view: window,
-      bubbles: false,
-      cancelable: true
-    });
-    node.dispatchEvent(mevt);
-  } else if (document.createEvent) {
-    // Fallback
-    var evt = document.createEvent('MouseEvents');
-    evt.initEvent('click', false, false);
-    node.dispatchEvent(evt);
-  } else if (document.createEventObject) {
-    node.fireEvent('onclick');
-  } else if (typeof node.onclick === 'function') {
-    node.onclick();
-  }
-};
-
-var stopEventPropagation = function stopEventPropagation(e) {
-  // In particular, make sure the space bar doesn't scroll the main window.
-  if (typeof e.stopPropagation === 'function') {
-    e.stopPropagation();
-    e.preventDefault();
-  } else if (window.event && window.event.hasOwnProperty('cancelBubble')) {
-    window.event.cancelBubble = true;
-  }
-};
-
-exports.hasClass = hasClass;
-exports.addClass = addClass;
-exports.removeClass = removeClass;
-exports.escapeHtml = escapeHtml;
-exports._show = _show;
-exports.show = show;
-exports._hide = _hide;
-exports.hide = hide;
-exports.isDescendant = isDescendant;
-exports.getTopMargin = getTopMargin;
-exports.fadeIn = fadeIn;
-exports.fadeOut = fadeOut;
-exports.fireClick = fireClick;
-exports.stopEventPropagation = stopEventPropagation;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _hexToRgb = __webpack_require__(6);
-
-var _removeClass$getTopMargin$fadeIn$show$addClass = __webpack_require__(4);
-
-var _defaultParams = __webpack_require__(14);
-
-var _defaultParams2 = _interopRequireWildcard(_defaultParams);
-
-/*
- * Add modal + overlay to DOM
- */
-
-var _injectedHTML = __webpack_require__(79);
-
-var _injectedHTML2 = _interopRequireWildcard(_injectedHTML);
-
-var modalClass = '.sweet-alert';
-var overlayClass = '.sweet-overlay';
-
-var sweetAlertInitialize = function sweetAlertInitialize() {
-  var sweetWrap = document.createElement('div');
-  sweetWrap.innerHTML = _injectedHTML2['default'];
-
-  // Append elements to body
-  while (sweetWrap.firstChild) {
-    document.body.appendChild(sweetWrap.firstChild);
-  }
-};
-
-/*
- * Get DOM element of modal
- */
-var getModal = (function (_getModal) {
-  function getModal() {
-    return _getModal.apply(this, arguments);
-  }
-
-  getModal.toString = function () {
-    return _getModal.toString();
-  };
-
-  return getModal;
-})(function () {
-  var $modal = document.querySelector(modalClass);
-
-  if (!$modal) {
-    sweetAlertInitialize();
-    $modal = getModal();
-  }
-
-  return $modal;
-});
-
-/*
- * Get DOM element of input (in modal)
- */
-var getInput = function getInput() {
-  var $modal = getModal();
-  if ($modal) {
-    return $modal.querySelector('input');
-  }
-};
-
-/*
- * Get DOM element of overlay
- */
-var getOverlay = function getOverlay() {
-  return document.querySelector(overlayClass);
-};
-
-/*
- * Add box-shadow style to button (depending on its chosen bg-color)
- */
-var setFocusStyle = function setFocusStyle($button, bgColor) {
-  var rgbColor = _hexToRgb.hexToRgb(bgColor);
-  $button.style.boxShadow = '0 0 2px rgba(' + rgbColor + ', 0.8), inset 0 0 0 1px rgba(0, 0, 0, 0.05)';
-};
-
-/*
- * Animation when opening modal
- */
-var openModal = function openModal(callback) {
-  var $modal = getModal();
-  _removeClass$getTopMargin$fadeIn$show$addClass.fadeIn(getOverlay(), 10);
-  _removeClass$getTopMargin$fadeIn$show$addClass.show($modal);
-  _removeClass$getTopMargin$fadeIn$show$addClass.addClass($modal, 'showSweetAlert');
-  _removeClass$getTopMargin$fadeIn$show$addClass.removeClass($modal, 'hideSweetAlert');
-
-  window.previousActiveElement = document.activeElement;
-  var $okButton = $modal.querySelector('button.confirm');
-  $okButton.focus();
-
-  setTimeout(function () {
-    _removeClass$getTopMargin$fadeIn$show$addClass.addClass($modal, 'visible');
-  }, 500);
-
-  var timer = $modal.getAttribute('data-timer');
-
-  if (timer !== 'null' && timer !== '') {
-    var timerCallback = callback;
-    $modal.timeout = setTimeout(function () {
-      var doneFunctionExists = (timerCallback || null) && $modal.getAttribute('data-has-done-function') === 'true';
-      if (doneFunctionExists) {
-        timerCallback(null);
-      } else {
-        sweetAlert.close();
-      }
-    }, timer);
-  }
-};
-
-/*
- * Reset the styling of the input
- * (for example if errors have been shown)
- */
-var resetInput = function resetInput() {
-  var $modal = getModal();
-  var $input = getInput();
-
-  _removeClass$getTopMargin$fadeIn$show$addClass.removeClass($modal, 'show-input');
-  $input.value = _defaultParams2['default'].inputValue;
-  $input.setAttribute('type', _defaultParams2['default'].inputType);
-  $input.setAttribute('placeholder', _defaultParams2['default'].inputPlaceholder);
-
-  resetInputError();
-};
-
-var resetInputError = function resetInputError(event) {
-  // If press enter => ignore
-  if (event && event.keyCode === 13) {
-    return false;
-  }
-
-  var $modal = getModal();
-
-  var $errorIcon = $modal.querySelector('.sa-input-error');
-  _removeClass$getTopMargin$fadeIn$show$addClass.removeClass($errorIcon, 'show');
-
-  var $errorContainer = $modal.querySelector('.sa-error-container');
-  _removeClass$getTopMargin$fadeIn$show$addClass.removeClass($errorContainer, 'show');
-};
-
-/*
- * Set "margin-top"-property on modal based on its computed height
- */
-var fixVerticalPosition = function fixVerticalPosition() {
-  var $modal = getModal();
-  $modal.style.marginTop = _removeClass$getTopMargin$fadeIn$show$addClass.getTopMargin(getModal());
-};
-
-exports.sweetAlertInitialize = sweetAlertInitialize;
-exports.getModal = getModal;
-exports.getOverlay = getOverlay;
-exports.getInput = getInput;
-exports.setFocusStyle = setFocusStyle;
-exports.openModal = openModal;
-exports.resetInput = resetInput;
-exports.resetInputError = resetInputError;
-exports.fixVerticalPosition = fixVerticalPosition;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-/*
- * Allow user to pass their own params
- */
-var extend = function extend(a, b) {
-  for (var key in b) {
-    if (b.hasOwnProperty(key)) {
-      a[key] = b[key];
-    }
-  }
-  return a;
-};
-
-/*
- * Convert HEX codes to RGB values (#000000 -> rgb(0,0,0))
- */
-var hexToRgb = function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? parseInt(result[1], 16) + ', ' + parseInt(result[2], 16) + ', ' + parseInt(result[3], 16) : null;
-};
-
-/*
- * Check if the user is using Internet Explorer 8 (for fallbacks)
- */
-var isIE8 = function isIE8() {
-  return window.attachEvent && !window.addEventListener;
-};
-
-/*
- * IE compatible logging for developers
- */
-var logStr = function logStr(string) {
-  if (window.console) {
-    // IE...
-    window.console.log('SweetAlert: ' + string);
-  }
-};
-
-/*
- * Set hover, active and focus-states for buttons 
- * (source: http://www.sitepoint.com/javascript-generate-lighter-darker-color)
- */
-var colorLuminance = function colorLuminance(hex, lum) {
-  // Validate hex string
-  hex = String(hex).replace(/[^0-9a-f]/gi, '');
-  if (hex.length < 6) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  }
-  lum = lum || 0;
-
-  // Convert to decimal and change luminosity
-  var rgb = '#';
-  var c;
-  var i;
-
-  for (i = 0; i < 3; i++) {
-    c = parseInt(hex.substr(i * 2, 2), 16);
-    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
-    rgb += ('00' + c).substr(c.length);
-  }
-
-  return rgb;
-};
-
-exports.extend = extend;
-exports.hexToRgb = hexToRgb;
-exports.isIE8 = isIE8;
-exports.logStr = logStr;
-exports.colorLuminance = colorLuminance;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(35);
+var normalizeHeaderName = __webpack_require__(33);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -1180,10 +731,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(8);
+    adapter = __webpack_require__(7);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(8);
+    adapter = __webpack_require__(7);
   }
   return adapter;
 }
@@ -1254,22 +805,108 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(75)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ }),
-/* 8 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(78);
+exports.setImmediate = setImmediate;
+exports.clearImmediate = clearImmediate;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(27);
-var buildURL = __webpack_require__(30);
-var parseHeaders = __webpack_require__(36);
-var isURLSameOrigin = __webpack_require__(34);
-var createError = __webpack_require__(11);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
+var settle = __webpack_require__(25);
+var buildURL = __webpack_require__(28);
+var parseHeaders = __webpack_require__(34);
+var isURLSameOrigin = __webpack_require__(32);
+var createError = __webpack_require__(10);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1365,7 +1002,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(32);
+      var cookies = __webpack_require__(30);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1441,7 +1078,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1467,7 +1104,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1479,13 +1116,13 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(26);
+var enhanceError = __webpack_require__(24);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -1503,7 +1140,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1521,7 +1158,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11781,50 +11418,202 @@ return jQuery;
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 13 */
+/***/ (function(module, exports) {
 
-"use strict";
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
 
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-var defaultParams = {
-  title: '',
-  text: '',
-  type: null,
-  allowOutsideClick: false,
-  showConfirmButton: true,
-  showCancelButton: false,
-  closeOnConfirm: true,
-  closeOnCancel: true,
-  confirmButtonText: 'OK',
-  confirmButtonColor: '#8CD4F5',
-  cancelButtonText: 'Cancel',
-  imageUrl: null,
-  imageSize: null,
-  timer: null,
-  customClass: '',
-  html: false,
-  animation: true,
-  allowEscapeKey: true,
-  inputType: 'text',
-  inputPlaceholder: '',
-  inputValue: '',
-  showLoaderOnConfirm: false
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
 };
 
-exports['default'] = defaultParams;
-module.exports = exports['default'];
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /**
-  * vue-router v2.7.0
+  * vue-router v3.0.1
   * (c) 2017 Evan You
   * @license MIT
   */
@@ -11912,14 +11701,26 @@ var View = {
       }
     }
 
-    // also regiseter instance in prepatch hook
+    // also register instance in prepatch hook
     // in case the same component instance is reused across different routes
     ;(data.hook || (data.hook = {})).prepatch = function (_, vnode) {
       matched.instances[name] = vnode.componentInstance;
     };
 
     // resolve props
-    data.props = resolveProps(route, matched.props && matched.props[name]);
+    var propsToPass = data.props = resolveProps(route, matched.props && matched.props[name]);
+    if (propsToPass) {
+      // clone to prevent mutation
+      propsToPass = data.props = extend({}, propsToPass);
+      // pass non-declared props as attrs
+      var attrs = data.attrs = data.attrs || {};
+      for (var key in propsToPass) {
+        if (!component.props || !(key in component.props)) {
+          attrs[key] = propsToPass[key];
+          delete propsToPass[key];
+        }
+      }
+    }
 
     return h(component, data, children)
   }
@@ -11944,6 +11745,13 @@ function resolveProps (route, config) {
         );
       }
   }
+}
+
+function extend (to, from) {
+  for (var key in from) {
+    to[key] = from[key];
+  }
+  return to
 }
 
 /*  */
@@ -11977,8 +11785,7 @@ function resolveQuery (
     parsedQuery = {};
   }
   for (var key in extraQuery) {
-    var val = extraQuery[key];
-    parsedQuery[key] = Array.isArray(val) ? val.slice() : val;
+    parsedQuery[key] = extraQuery[key];
   }
   return parsedQuery
 }
@@ -12055,12 +11862,18 @@ function createRoute (
   router
 ) {
   var stringifyQuery$$1 = router && router.options.stringifyQuery;
+
+  var query = location.query || {};
+  try {
+    query = clone(query);
+  } catch (e) {}
+
   var route = {
     name: location.name || (record && record.name),
     meta: (record && record.meta) || {},
     path: location.path || '/',
     hash: location.hash || '',
-    query: location.query || {},
+    query: query,
     params: location.params || {},
     fullPath: getFullPath(location, stringifyQuery$$1),
     matched: record ? formatMatch(record) : []
@@ -12069,6 +11882,20 @@ function createRoute (
     route.redirectedFrom = getFullPath(redirectedFrom, stringifyQuery$$1);
   }
   return Object.freeze(route)
+}
+
+function clone (value) {
+  if (Array.isArray(value)) {
+    return value.map(clone)
+  } else if (value && typeof value === 'object') {
+    var res = {};
+    for (var key in value) {
+      res[key] = clone(value[key]);
+    }
+    return res
+  } else {
+    return value
+  }
 }
 
 // the starting route that represents the initial state
@@ -12124,6 +11951,8 @@ function isObjectEqual (a, b) {
   if ( a === void 0 ) a = {};
   if ( b === void 0 ) b = {};
 
+  // handle null value #1566
+  if (!a || !b) { return a === b }
   var aKeys = Object.keys(a);
   var bKeys = Object.keys(b);
   if (aKeys.length !== bKeys.length) {
@@ -12303,7 +12132,7 @@ function findAnchor (children) {
 var _Vue;
 
 function install (Vue) {
-  if (install.installed) { return }
+  if (install.installed && _Vue === Vue) { return }
   install.installed = true;
 
   _Vue = Vue;
@@ -12425,14 +12254,14 @@ function cleanPath (path) {
   return path.replace(/\/\//g, '/')
 }
 
-var index$1 = Array.isArray || function (arr) {
+var isarray = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
 /**
  * Expose `pathToRegexp`.
  */
-var index = pathToRegexp;
+var pathToRegexp_1 = pathToRegexp;
 var parse_1 = parse;
 var compile_1 = compile;
 var tokensToFunction_1 = tokensToFunction;
@@ -12609,7 +12438,7 @@ function tokensToFunction (tokens) {
         }
       }
 
-      if (index$1(value)) {
+      if (isarray(value)) {
         if (!token.repeat) {
           throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
         }
@@ -12760,7 +12589,7 @@ function stringToRegexp (path, keys, options) {
  * @return {!RegExp}
  */
 function tokensToRegExp (tokens, keys, options) {
-  if (!index$1(keys)) {
+  if (!isarray(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
   }
@@ -12836,7 +12665,7 @@ function tokensToRegExp (tokens, keys, options) {
  * @return {!RegExp}
  */
 function pathToRegexp (path, keys, options) {
-  if (!index$1(keys)) {
+  if (!isarray(keys)) {
     options = /** @type {!Object} */ (keys || options);
     keys = [];
   }
@@ -12847,20 +12676,21 @@ function pathToRegexp (path, keys, options) {
     return regexpToRegexp(path, /** @type {!Array} */ (keys))
   }
 
-  if (index$1(path)) {
+  if (isarray(path)) {
     return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
   }
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-index.parse = parse_1;
-index.compile = compile_1;
-index.tokensToFunction = tokensToFunction_1;
-index.tokensToRegExp = tokensToRegExp_1;
+pathToRegexp_1.parse = parse_1;
+pathToRegexp_1.compile = compile_1;
+pathToRegexp_1.tokensToFunction = tokensToFunction_1;
+pathToRegexp_1.tokensToRegExp = tokensToRegExp_1;
 
 /*  */
 
+// $flow-disable-line
 var regexpCompileCache = Object.create(null);
 
 function fillParams (
@@ -12871,7 +12701,7 @@ function fillParams (
   try {
     var filler =
       regexpCompileCache[path] ||
-      (regexpCompileCache[path] = index.compile(path));
+      (regexpCompileCache[path] = pathToRegexp_1.compile(path));
     return filler(params || {}, { pretty: true })
   } catch (e) {
     if (true) {
@@ -12891,7 +12721,9 @@ function createRouteMap (
 ) {
   // the path list is used to control path matching priority
   var pathList = oldPathList || [];
+  // $flow-disable-line
   var pathMap = oldPathMap || Object.create(null);
+  // $flow-disable-line
   var nameMap = oldNameMap || Object.create(null);
 
   routes.forEach(function (route) {
@@ -12933,8 +12765,12 @@ function addRouteRecord (
     );
   }
 
-  var normalizedPath = normalizePath(path, parent);
   var pathToRegexpOptions = route.pathToRegexpOptions || {};
+  var normalizedPath = normalizePath(
+    path,
+    parent,
+    pathToRegexpOptions.strict
+  );
 
   if (typeof route.caseSensitive === 'boolean') {
     pathToRegexpOptions.sensitive = route.caseSensitive;
@@ -13022,9 +12858,9 @@ function addRouteRecord (
 }
 
 function compileRouteRegex (path, pathToRegexpOptions) {
-  var regex = index(path, [], pathToRegexpOptions);
+  var regex = pathToRegexp_1(path, [], pathToRegexpOptions);
   if (true) {
-    var keys = {};
+    var keys = Object.create(null);
     regex.keys.forEach(function (key) {
       warn(!keys[key.name], ("Duplicate param keys in route with path: \"" + path + "\""));
       keys[key.name] = true;
@@ -13033,8 +12869,8 @@ function compileRouteRegex (path, pathToRegexpOptions) {
   return regex
 }
 
-function normalizePath (path, parent) {
-  path = path.replace(/\/$/, '');
+function normalizePath (path, parent, strict) {
+  if (!strict) { path = path.replace(/\/$/, ''); }
   if (path[0] === '/') { return path }
   if (parent == null) { return path }
   return cleanPath(((parent.path) + "/" + path))
@@ -13306,6 +13142,8 @@ function resolveRecordPath (path, record) {
 var positionStore = Object.create(null);
 
 function setupScroll () {
+  // Fix for #1585 for Firefox
+  window.history.replaceState({ key: getStateKey() }, '');
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -13337,25 +13175,21 @@ function handleScroll (
   router.app.$nextTick(function () {
     var position = getScrollPosition();
     var shouldScroll = behavior(to, from, isPop ? position : null);
+
     if (!shouldScroll) {
       return
     }
-    var isObject = typeof shouldScroll === 'object';
-    if (isObject && typeof shouldScroll.selector === 'string') {
-      var el = document.querySelector(shouldScroll.selector);
-      if (el) {
-        var offset = shouldScroll.offset && typeof shouldScroll.offset === 'object' ? shouldScroll.offset : {};
-        offset = normalizeOffset(offset);
-        position = getElementPosition(el, offset);
-      } else if (isValidPosition(shouldScroll)) {
-        position = normalizePosition(shouldScroll);
-      }
-    } else if (isObject && isValidPosition(shouldScroll)) {
-      position = normalizePosition(shouldScroll);
-    }
 
-    if (position) {
-      window.scrollTo(position.x, position.y);
+    if (typeof shouldScroll.then === 'function') {
+      shouldScroll.then(function (shouldScroll) {
+        scrollToPosition((shouldScroll), position);
+      }).catch(function (err) {
+        if (true) {
+          assert(false, err.toString());
+        }
+      });
+    } else {
+      scrollToPosition(shouldScroll, position);
     }
   });
 }
@@ -13407,6 +13241,26 @@ function normalizeOffset (obj) {
 
 function isNumber (v) {
   return typeof v === 'number'
+}
+
+function scrollToPosition (shouldScroll, position) {
+  var isObject = typeof shouldScroll === 'object';
+  if (isObject && typeof shouldScroll.selector === 'string') {
+    var el = document.querySelector(shouldScroll.selector);
+    if (el) {
+      var offset = shouldScroll.offset && typeof shouldScroll.offset === 'object' ? shouldScroll.offset : {};
+      offset = normalizeOffset(offset);
+      position = getElementPosition(el, offset);
+    } else if (isValidPosition(shouldScroll)) {
+      position = normalizePosition(shouldScroll);
+    }
+  } else if (isObject && isValidPosition(shouldScroll)) {
+    position = normalizePosition(shouldScroll);
+  }
+
+  if (position) {
+    window.scrollTo(position.x, position.y);
+  }
 }
 
 /*  */
@@ -13504,7 +13358,7 @@ function resolveAsyncComponents (matched) {
         pending++;
 
         var resolve = once(function (resolvedDef) {
-          if (resolvedDef.__esModule && resolvedDef.default) {
+          if (isESModule(resolvedDef)) {
             resolvedDef = resolvedDef.default;
           }
           // save resolved on async factory in case it's used elsewhere
@@ -13568,6 +13422,14 @@ function flatMapComponents (
 
 function flatten (arr) {
   return Array.prototype.concat.apply([], arr)
+}
+
+var hasSymbol =
+  typeof Symbol === 'function' &&
+  typeof Symbol.toStringTag === 'symbol';
+
+function isESModule (obj) {
+  return obj.__esModule || (hasSymbol && obj[Symbol.toStringTag] === 'Module')
 }
 
 // in Webpack 2, require.ensure now also returns a Promise
@@ -13898,9 +13760,18 @@ var HTML5History = (function (History$$1) {
       setupScroll();
     }
 
+    var initLocation = getLocation(this.base);
     window.addEventListener('popstate', function (e) {
       var current = this$1.current;
-      this$1.transitionTo(getLocation(this$1.base), function (route) {
+
+      // Avoiding first `popstate` event dispatched in some browsers but first
+      // history route not updated since async guard at the same time.
+      var location = getLocation(this$1.base);
+      if (this$1.current === START && location === initLocation) {
+        return
+      }
+
+      this$1.transitionTo(location, function (route) {
         if (expectScroll) {
           handleScroll(router, route, current, true);
         }
@@ -13984,26 +13855,50 @@ var HashHistory = (function (History$$1) {
   HashHistory.prototype.setupListeners = function setupListeners () {
     var this$1 = this;
 
-    window.addEventListener('hashchange', function () {
+    var router = this.router;
+    var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
+
+    if (supportsScroll) {
+      setupScroll();
+    }
+
+    window.addEventListener(supportsPushState ? 'popstate' : 'hashchange', function () {
+      var current = this$1.current;
       if (!ensureSlash()) {
         return
       }
       this$1.transitionTo(getHash(), function (route) {
-        replaceHash(route.fullPath);
+        if (supportsScroll) {
+          handleScroll(this$1.router, route, current, true);
+        }
+        if (!supportsPushState) {
+          replaceHash(route.fullPath);
+        }
       });
     });
   };
 
   HashHistory.prototype.push = function push (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
     this.transitionTo(location, function (route) {
       pushHash(route.fullPath);
+      handleScroll(this$1.router, route, fromRoute, false);
       onComplete && onComplete(route);
     }, onAbort);
   };
 
   HashHistory.prototype.replace = function replace (location, onComplete, onAbort) {
+    var this$1 = this;
+
+    var ref = this;
+    var fromRoute = ref.current;
     this.transitionTo(location, function (route) {
       replaceHash(route.fullPath);
+      handleScroll(this$1.router, route, fromRoute, false);
       onComplete && onComplete(route);
     }, onAbort);
   };
@@ -14053,15 +13948,27 @@ function getHash () {
   return index === -1 ? '' : href.slice(index + 1)
 }
 
-function pushHash (path) {
-  window.location.hash = path;
-}
-
-function replaceHash (path) {
+function getUrl (path) {
   var href = window.location.href;
   var i = href.indexOf('#');
   var base = i >= 0 ? href.slice(0, i) : href;
-  window.location.replace((base + "#" + path));
+  return (base + "#" + path)
+}
+
+function pushHash (path) {
+  if (supportsPushState) {
+    pushState(getUrl(path));
+  } else {
+    window.location.hash = path;
+  }
+}
+
+function replaceHash (path) {
+  if (supportsPushState) {
+    replaceState(getUrl(path));
+  } else {
+    window.location.replace(getUrl(path));
+  }
 }
 
 /*  */
@@ -14163,7 +14070,7 @@ var VueRouter = function VueRouter (options) {
   }
 };
 
-var prototypeAccessors = { currentRoute: {} };
+var prototypeAccessors = { currentRoute: { configurable: true } };
 
 VueRouter.prototype.match = function match (
   raw,
@@ -14321,7 +14228,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '2.7.0';
+VueRouter.version = '3.0.1';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -14331,49 +14238,22 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(59);
-__webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes__ = __webpack_require__(58);
+__webpack_require__(57);
 
 
 // Vue.component('example', require('./components/Example.vue'));
 //Vue.component('seat', require('./components/Seat.vue'));
-Vue.component('seat-display', __webpack_require__(86));
-Vue.component('modal', __webpack_require__(85));
-Vue.component('show-alert', __webpack_require__(82));
-Vue.component('high-light', __webpack_require__(83));
-Vue.component('loader', __webpack_require__(84));
+Vue.component('seat-display', __webpack_require__(84));
+Vue.component('modal', __webpack_require__(83));
+Vue.component('show-alert', __webpack_require__(80));
+Vue.component('high-light', __webpack_require__(81));
+Vue.component('loader', __webpack_require__(82));
 //const app = new Vue({
 var app = new Vue({
     el: '#app',
@@ -14382,34 +14262,34 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(19);
 
 /***/ }),
 /* 19 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(21);
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(12);
-var Axios = __webpack_require__(23);
-var defaults = __webpack_require__(7);
+var bind = __webpack_require__(11);
+var Axios = __webpack_require__(21);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -14442,15 +14322,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
-axios.CancelToken = __webpack_require__(22);
-axios.isCancel = __webpack_require__(10);
+axios.Cancel = __webpack_require__(8);
+axios.CancelToken = __webpack_require__(20);
+axios.isCancel = __webpack_require__(9);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(37);
+axios.spread = __webpack_require__(35);
 
 module.exports = axios;
 
@@ -14459,13 +14339,13 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(8);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -14523,18 +14403,18 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 23 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(1);
-var InterceptorManager = __webpack_require__(24);
-var dispatchRequest = __webpack_require__(25);
-var isAbsoluteURL = __webpack_require__(33);
-var combineURLs = __webpack_require__(31);
+var InterceptorManager = __webpack_require__(22);
+var dispatchRequest = __webpack_require__(23);
+var isAbsoluteURL = __webpack_require__(31);
+var combineURLs = __webpack_require__(29);
 
 /**
  * Create a new instance of Axios
@@ -14615,7 +14495,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 24 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14674,16 +14554,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 25 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(28);
-var isCancel = __webpack_require__(10);
-var defaults = __webpack_require__(7);
+var transformData = __webpack_require__(26);
+var isCancel = __webpack_require__(9);
+var defaults = __webpack_require__(4);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -14760,7 +14640,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 26 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14786,13 +14666,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 27 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(10);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -14818,7 +14698,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 28 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14845,7 +14725,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14888,7 +14768,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 30 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14963,7 +14843,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 31 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14982,7 +14862,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 32 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15042,7 +14922,7 @@ module.exports = (
 
 
 /***/ }),
-/* 33 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15063,7 +14943,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 34 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15138,7 +15018,7 @@ module.exports = (
 
 
 /***/ }),
-/* 35 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15157,7 +15037,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 36 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15201,7 +15081,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 37 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15235,7 +15115,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 38 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15298,7 +15178,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 39 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15336,7 +15216,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 40 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15378,7 +15258,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 41 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15417,7 +15297,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 42 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15715,7 +15595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         response.data.error ? vm.seatError = response.data.error : vm.seatList = response.data;
         vm.loading = false;
         if (vm.seatError) {
-          vm.seatNotAvailableAlert('BUS', 'error');
+          vm.seatNotAvailableAlert('SEAT PLAN', 'error');
           return;
         }
         vm.modal = true;
@@ -15724,179 +15604,285 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     seatNotAvailableAlert: function seatNotAvailableAlert(val, type) {
       swal({
         //title: "Sorry! Not Available",
-        title: '<span style="color:#F8BB86"> <strong>' + val + '</strong></span></br>Not Available. Sorry!',
+        title: val,
+        text: "Not Available!",
+        // title: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span></br>Not Available. Sorry!',
         //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-        html: true,
+        //html: true,
         //type: "info",
-        type: type,
-        timer: 1800,
-        showConfirmButton: false,
-        allowOutsideClick: true
+        //type: type,
+        icon: type,
+        timer: 2000,
+        //showConfirmButton: false,
+        closeOnClickOutside: true
       });
     },
+
+
+    // seatBookingByGuest() {
+    //   //this.loading = true;
+    //   //this.buses = []; // hide table
+    //   var vm = this; 
+    //   //this.changeStatusOfSelectedSeat(this.selectedSeat); 
+    //   console.log('modified selected seat'); 
+    //   console.log(this.selectedSeat); 
+
+    //   swal({
+    //       title: "Are you sure?",
+    //       text: "This will register a BOOKING for you",
+    //       type: "info",
+    //       showCancelButton: true,
+    //       confirmButtonColor: "#DD6B55",
+    //       confirmButtonText: "Yes, Book!",
+    //       //closeOnConfirm: false,
+    //       //closeOnCancel: false                        
+    //     },
+    //     function() {  
+    //       vm.loading = true;
+    //       vm.buses = []; // hide table
+    //       vm.changeStatusOfSelectedSeat(vm.selectedSeat); 
+    //       // // non form data  
+    //       vm.form.bus_id = vm.busId;
+    //       vm.form.date = vm.startDate;
+    //       vm.form.schedule_id = vm.scheduleId;
+    //       vm.form.selected_seats = vm.selectedSeat;
+    //       vm.form.total_seats = vm.totalSeats;
+    //       vm.form.total_fare = vm.totalFare; 
+    //       vm.form.pickup_point = vm.selectedPickupPoint; 
+    //       vm.form.dropping_point = vm.selectedDroppingPoint; 
+
+
+    //     vm.form.post(vm.url)
+    //           //.then(response => alert('Wahoo!'));
+    //     .then(function (response) {
+    //        //console.log(response.data)
+    //        vm.selectedSeat= [];                                  
+    //        vm.bookedSeatInfo = response;
+    //        vm.modal = false;
+    //        vm.loading = false;
+    //        //console.log('res=', response);
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //       vm.loading = false;
+    //     });
+    //   // end of non form data
+    //   });
+
+    //     // // non form data  
+    //     // this.form.bus_id = this.busId;
+    //     // this.form.date = this.startDate;
+    //     // this.form.schedule_id = this.scheduleId;
+    //     // this.form.selected_seats = this.selectedSeat;
+    //     // this.form.total_seats = this.totalSeats;
+    //     // this.form.total_fare = this.totalFare; 
+
+
+    //     // this.form.post(this.url)
+    //     //       //.then(response => alert('Wahoo!'));
+    //     // .then(function (response) {
+    //     //    //console.log(response.data)
+    //     //    vm.selectedSeat= [];                                  
+    //     //    vm.bookedSeatInfo = response;
+    //     //    vm.modal = false;
+    //     //    vm.loading = false;
+    //     //    //console.log('res=', response);
+    //     // })
+    //     // .catch(function (error) {
+    //     //   console.log(error);
+    //     //   vm.loading = false;
+    //     // });
+    //   // end of non form data
+    //   // swal({
+    //   //   title: "Are you sure?",
+    //   //   text: "This will register a BOOKING for you",
+    //   //   type: "info",
+    //   //   showCancelButton: true,
+    //   //   confirmButtonColor: "#DD6B55",
+    //   //   confirmButtonText: "Yes, Book!",
+    //   //   //closeOnConfirm: false,
+    //   //   //closeOnCancel: false                       
+    //   // },
+    //   // function() {                       
+
+    //   //         //swal("Deleted!", "Staff has been Removed.", "success");                      
+
+    //   // });
+
+
+    //   /*
+    //   axios.post('/seatbooking', {
+    //       bus_id: this.busId,
+    //       date: this.startDate,
+    //       schedule_id: this.scheduleId,
+    //       selected_seats:this.selectedSeat,
+    //       total_seats: this.totalSeats,
+    //       total_fare: this.totalFare
+    //   })          
+    //   .then(function (response) {
+    //        console.log(response.data)
+    //        vm.selectedSeat= [];
+    //        vm.loading = false;
+    //        vm.modal = false;
+    //        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+    //   });
+    //   */
+    // },
+
     seatBookingByGuest: function seatBookingByGuest() {
-      //this.loading = true;
-      //this.buses = []; // hide table
       var vm = this;
-      //this.changeStatusOfSelectedSeat(this.selectedSeat); 
-      console.log('modified selected seat');
-      console.log(this.selectedSeat);
-
       swal({
         title: "Are you sure?",
         text: "This will register a BOOKING for you",
-        type: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Book!"
-        //closeOnConfirm: false,
-        //closeOnCancel: false                        
-      }, function () {
-        vm.loading = true;
-        vm.buses = []; // hide table
-        vm.changeStatusOfSelectedSeat(vm.selectedSeat);
-        // // non form data  
-        vm.form.bus_id = vm.busId;
-        vm.form.date = vm.startDate;
-        vm.form.schedule_id = vm.scheduleId;
-        vm.form.selected_seats = vm.selectedSeat;
-        vm.form.total_seats = vm.totalSeats;
-        vm.form.total_fare = vm.totalFare;
-        vm.form.pickup_point = vm.selectedPickupPoint;
-        vm.form.dropping_point = vm.selectedDroppingPoint;
+        icon: "info",
+        //dangerMode: true,
+        buttons: {
+          cancel: "cancel",
+          confirm: {
+            text: "Yes! Book It.",
+            value: true
+          }
+        }
+      }).then(function (value) {
+        if (value) {
 
-        vm.form.post(vm.url)
-        //.then(response => alert('Wahoo!'));
-        .then(function (response) {
-          //console.log(response.data)
-          vm.selectedSeat = [];
-          vm.bookedSeatInfo = response;
-          vm.modal = false;
-          vm.loading = false;
-          //console.log('res=', response);
-        }).catch(function (error) {
-          console.log(error);
-          vm.loading = false;
-        });
-        // end of non form data
+          vm.loading = true;
+          vm.buses = []; // hide table
+          vm.changeStatusOfSelectedSeat(vm.selectedSeat);
+          // // non form data  
+          vm.form.bus_id = vm.busId;
+          vm.form.date = vm.startDate;
+          vm.form.schedule_id = vm.scheduleId;
+          vm.form.selected_seats = vm.selectedSeat;
+          vm.form.total_seats = vm.totalSeats;
+          vm.form.total_fare = vm.totalFare;
+          vm.form.pickup_point = vm.selectedPickupPoint;
+          vm.form.dropping_point = vm.selectedDroppingPoint;
+
+          vm.form.post(vm.url)
+          //.then(response => alert('Wahoo!'));
+          .then(function (response) {
+            //console.log(response.data)
+            vm.selectedSeat = [];
+            vm.bookedSeatInfo = response;
+            vm.modal = false;
+            vm.loading = false;
+            //console.log('res=', response);
+          }).catch(function (error) {
+            console.log(error);
+            vm.loading = false;
+          });
+        }
       });
-
-      // // non form data  
-      // this.form.bus_id = this.busId;
-      // this.form.date = this.startDate;
-      // this.form.schedule_id = this.scheduleId;
-      // this.form.selected_seats = this.selectedSeat;
-      // this.form.total_seats = this.totalSeats;
-      // this.form.total_fare = this.totalFare; 
-
-
-      // this.form.post(this.url)
-      //       //.then(response => alert('Wahoo!'));
-      // .then(function (response) {
-      //    //console.log(response.data)
-      //    vm.selectedSeat= [];                                  
-      //    vm.bookedSeatInfo = response;
-      //    vm.modal = false;
-      //    vm.loading = false;
-      //    //console.log('res=', response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      //   vm.loading = false;
-      // });
-      // end of non form data
-      // swal({
-      //   title: "Are you sure?",
-      //   text: "This will register a BOOKING for you",
-      //   type: "info",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#DD6B55",
-      //   confirmButtonText: "Yes, Book!",
-      //   //closeOnConfirm: false,
-      //   //closeOnCancel: false                       
-      // },
-      // function() {                       
-
-      //         //swal("Deleted!", "Staff has been Removed.", "success");                      
-
-      // });
-
-
-      /*
-      axios.post('/seatbooking', {
-          bus_id: this.busId,
-          date: this.startDate,
-          schedule_id: this.scheduleId,
-          selected_seats:this.selectedSeat,
-          total_seats: this.totalSeats,
-          total_fare: this.totalFare
-      })          
-      .then(function (response) {
-           console.log(response.data)
-           vm.selectedSeat= [];
-           vm.loading = false;
-           vm.modal = false;
-           // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-      });
-      */
     },
+
+
+    // seatBookingByUser() {
+    //   //this.loading = true;
+    //   //this.buses = []; // hide table
+    //   var vm = this; 
+    //   //this.changeStatusOfSelectedSeat(this.selectedSeat);         
+    //   swal({
+    //       title: "Are you sure?",
+    //       text: "This will register a BOOKING for you",
+    //       type: "info",
+    //       showCancelButton: true,
+    //       confirmButtonColor: "#DD6B55",
+    //       confirmButtonText: "Yes, Book!",
+    //       //closeOnConfirm: false,
+    //       //closeOnCancel: false                        
+    //     },
+    //     function() {  
+    //       vm.loading = true;
+    //       vm.buses = []; // hide table
+    //       vm.changeStatusOfSelectedSeat(vm.selectedSeat);               
+
+    //       axios.post(vm.url, {
+    //         bus_id: vm.busId,
+    //         date: vm.startDate,
+    //         schedule_id: vm.scheduleId,
+    //         selected_seats:vm.selectedSeat,
+    //         total_seats: vm.totalSeats,
+    //         total_fare: vm.totalFare,
+    //         pickup_point:  vm.selectedPickupPoint,
+    //         dropping_point: vm.selectedDroppingPoint 
+    //       })                           
+    //       .then(function (response) {
+    //          //console.log(response.data)
+    //          vm.selectedSeat= [];
+    //          vm.bookedSeatInfo = response.data;
+    //          vm.loading = false;
+    //          vm.modal = false;
+    //          // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //         vm.loading = false;
+    //       });
+
+    //   });
+
+    //   /*axios.post(this.url, {
+    //       bus_id: this.busId,
+    //       date: this.startDate,
+    //       schedule_id: this.scheduleId,
+    //       selected_seats:this.selectedSeat,
+    //       total_seats: this.totalSeats,
+    //       total_fare: this.totalFare
+    //   })          
+    //   .then(function (response) {
+    //        console.log(response)
+    //        vm.selectedSeat= [];
+    //        vm.bookedSeatInfo = response.data;
+    //        vm.loading = false;
+    //        vm.modal = false;
+    //        // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+    //   });*/
+
+    // },
     seatBookingByUser: function seatBookingByUser() {
-      //this.loading = true;
-      //this.buses = []; // hide table
       var vm = this;
-      //this.changeStatusOfSelectedSeat(this.selectedSeat);         
       swal({
         title: "Are you sure?",
         text: "This will register a BOOKING for you",
-        type: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Book!"
-        //closeOnConfirm: false,
-        //closeOnCancel: false                        
-      }, function () {
-        vm.loading = true;
-        vm.buses = []; // hide table
-        vm.changeStatusOfSelectedSeat(vm.selectedSeat);
+        icon: "info",
+        //dangerMode: true,
+        buttons: {
+          cancel: "cancel",
+          confirm: {
+            text: "Yes! Book It.",
+            value: true
+          }
+        }
+      }).then(function (value) {
+        if (value) {
 
-        axios.post(vm.url, {
-          bus_id: vm.busId,
-          date: vm.startDate,
-          schedule_id: vm.scheduleId,
-          selected_seats: vm.selectedSeat,
-          total_seats: vm.totalSeats,
-          total_fare: vm.totalFare,
-          pickup_point: vm.selectedPickupPoint,
-          dropping_point: vm.selectedDroppingPoint
-        }).then(function (response) {
-          //console.log(response.data)
-          vm.selectedSeat = [];
-          vm.bookedSeatInfo = response.data;
-          vm.loading = false;
-          vm.modal = false;
-          // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-        }).catch(function (error) {
-          console.log(error);
-          vm.loading = false;
-        });
+          vm.loading = true;
+          vm.buses = []; // hide table
+          vm.changeStatusOfSelectedSeat(vm.selectedSeat);
+
+          axios.post(vm.url, {
+            bus_id: vm.busId,
+            date: vm.startDate,
+            schedule_id: vm.scheduleId,
+            selected_seats: vm.selectedSeat,
+            total_seats: vm.totalSeats,
+            total_fare: vm.totalFare,
+            pickup_point: vm.selectedPickupPoint,
+            dropping_point: vm.selectedDroppingPoint
+          }).then(function (response) {
+            //console.log(response.data)
+            vm.selectedSeat = [];
+            vm.bookedSeatInfo = response.data;
+            vm.loading = false;
+            vm.modal = false;
+            // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
+          }).catch(function (error) {
+            console.log(error);
+            vm.loading = false;
+          });
+        } //if
       });
-
-      /*axios.post(this.url, {
-          bus_id: this.busId,
-          date: this.startDate,
-          schedule_id: this.scheduleId,
-          selected_seats:this.selectedSeat,
-          total_seats: this.totalSeats,
-          total_fare: this.totalFare
-      })          
-      .then(function (response) {
-           console.log(response)
-           vm.selectedSeat= [];
-           vm.bookedSeatInfo = response.data;
-           vm.loading = false;
-           vm.modal = false;
-           // response.data.error ? vm.busError = response.data.error : vm.buses = response.data;
-      });*/
     },
     changeStatusOfSelectedSeat: function changeStatusOfSelectedSeat(selectedSeat) {
       var vm = this;
@@ -16132,7 +16118,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 43 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16151,6 +16137,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        // axios call here.
+    }
+});
+
+/***/ }),
+/* 42 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -16214,6 +16276,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -16245,11 +16326,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        // axios call here.
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+
+  methods: {
+    showAler: function showAler() {
+      console.log('sweet');
+      swal("Good job!", "You clicked the button!", "success");
+      console.log('......sweet');
     }
+  }
 });
 
 /***/ }),
@@ -16309,10 +16413,155 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            alertType: '',
+            error: '',
+            loading: false,
+            show: false,
+            showAlert: false,
+            userInfo: {},
+            user: {},
+            response: '',
+            search: false,
+            searchString: '',
+            selectedRole: 'staff'
+        };
+    },
     mounted: function mounted() {
         console.log('Component mounted.');
+    },
+
+    watch: {
+        searchString: function searchString() {
+            this.error = '';
+            this.show = false;
+            this.userInfo = {};
+        }
+    },
+
+    methods: {
+        expandAddRolePanel: function expandAddRolePanel() {
+            this.show = !this.show;
+        },
+        searchButton: function searchButton() {
+            //this.search = !this.search;
+
+            this.userInfo = {};
+            this.user = {}, this.error = '';
+            this.search = true;
+            this.show = false;
+
+            var vm = this;
+            axios.post('/search-user', {
+                search_string: this.searchString
+            }).then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.userInfo = response.data;
+                vm.search = false;
+            });
+        },
+        setRole: function setRole() {
+
+            var vm = this;
+            //this.showAlert = false;
+            this.loading = true;
+
+            this.user = Object.assign({}, this.userInfo); // clone a object
+            //console.log('mm=', this.user);
+
+            axios.post('/set-role', {
+                role: this.selectedRole,
+                user_id: this.userInfo.id
+            }).then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    vm.search = false;
+                    vm.userInfo = {};
+                    vm.show = true;
+                    //vm.alertType = 'info';
+                    //vm.showAlert= true;                    
+                }
+                vm.loading = false;
+            });
+        }
     }
 });
 
@@ -16353,61 +16602,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
-
-  methods: {
-    showAler: function showAler() {
-      console.log('sweet');
-      swal("Good job!", "You clicked the button!", "success");
-      console.log('......sweet');
-    }
-  }
-});
-
-/***/ }),
-/* 48 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -16416,12 +16610,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__staff_management_Staff_list__);
 //
 //
@@ -16481,7 +16675,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16517,63 +16711,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 51 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -16710,231 +16847,341 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     // }
     data: function data() {
         return {
-            busIds: [],
-            busInfo: {},
+            actionStatus: '',
+            alertType: '',
+            availableBusList: [],
             disableShowButton: false,
-            disableSaveButton: true,
+            //disableSaveButton: true,
+            disableSorting: true,
             error: '',
-            numberOfCol: 4,
-            numberOfRow: 4,
             response: '',
-            seatChar: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
-            seatList: [],
-            selectedBusId: '',
-            seatListLength: '',
-            //seatList2: [],
-            //finalSeatList: [],
-            //seatStatus: '',
             isDisabled: false,
-            index: 2, // empty space strating for this index then index+4
-            indexList: [],
             loading: false,
-            fiveColValue: ''
-            // lastRowSeatList:[]                            
+            //bus
+            regNumber: '',
+            numberPlate: '',
+            numberOfSeat: '',
+            busDescription: '',
+            selectedBusType: '',
+            showAlert: false,
+            show: false,
+            options: [{ text: 'AC', value: 'ac' }, { text: 'AC-Deluxe', value: 'ac-deluxe' }, { text: 'Deluxe', value: 'deluxe' }, { text: 'Non-AC', value: 'Non-AC' }]
+
         };
-    },
-    mounted: function mounted() {
-        this.fetchBusIds();
-        this.createIndexList();
     },
 
     watch: {
-        numberOfRow: function numberOfRow() {
-            this.createIndexList();
-            this.isShowButtonDisable();
-        },
-        selectedBusId: function selectedBusId() {
-            this.isSaveButtonDisable();
-            this.fetchBusInfoById(this.selectedBusId);
-        },
-        seatListLength: function seatListLength() {
-            this.isSaveButtonDisable();
+        regNumber: function regNumber() {
+            var aa = this.isRegNumberAvailableInBusList(this.availableBusList, this.regNumber);
+            if (aa) {
+                alert('Registration Number already exist');
+            }
+        }
+    },
+    mounted: function mounted() {
+        // this.fetchBusIds();
+        // this.createIndexList();  
+        this.fetchAvailableBuses();
+    },
+
+    computed: {
+        isValid: function isValid() {
+            return this.regNumber != '' && this.numberPlate != '' && this.numberOfSeat != '' && this.selectedBusType != '' && this.busDescription != '';
         }
     },
     methods: {
-        createIndexList: function createIndexList() {
-            this.indexList = [];
-            var r;
-            var numberOfRow = this.numberOfRow;
-            var index = this.index;
-            for (r = 1; r < numberOfRow; r++) {
-                this.indexList.push(index);
-                index = index + 4;
-                //console.log('index', index);
-            }
-        },
-        isShowButtonDisable: function isShowButtonDisable() {
-            this.disableShowButton = this.numberOfRow == '' || this.numberOfRow == 0 ? true : false;
-        },
-        isSaveButtonDisable: function isSaveButtonDisable() {
-
-            this.disableSaveButton = this.selectedBusId == '' || this.seatListLength == '' ? true : false;
-            /* if ( this.selectedBusId == '' || this.seatListLength == '') {
-             
-                  console.log( 'DISABLE SAVE BUTTION = TRUE');
-                  this.disableSaveButton = true;
-                  return;
-              }
-               console.log( 'DISABLE SAVE BUTTION = FALSE');
-               this.disableSaveButton = false;
-               return;*/
-        },
-
-
-        /*emptySpace(seatNo) {
-             if ( this.isFiveCol(seatNo) ) {
-                return false; // no need empty space between columns
-            }
-            var seatNumber = parseInt(seatNo.match(/\d+/),10);                      
-            return ( (seatNumber % 3) == 0 ) ? true : false;
-         }, */
-
-        emptySpace: function emptySpace(index, seatNo) {
-            //2, 6, 10
-
-            if (this.isFiveCol(seatNo)) {
-                return false; // no need empty space between columns
-            }
-            return this.isEmptySpaceAvailable(index);
-        },
-        isFiveCol: function isFiveCol(seatNo) {
-            // var seatListLength =  this.seatList.length;
-            //var numberOfRow = (seatListLength-1) /4; //2
-            var numberOfRow = this.numberOfRow;
-            var lastRowChar = this.seatChar[numberOfRow - 1]; //B
-            lastRowChar = lastRowChar.trim();
-
-            var seatChar = seatNo.substr(0, 1); //extract char from seat no
-            return lastRowChar == seatChar ? true : false;
-        },
-        isEmptySpaceAvailable: function isEmptySpaceAvailable(index) {
-
-            var val = this.indexList.find(function (indx) {
-                return indx == index;
-            });
-            return index == val ? true : false;
-        },
-        fetchBusIds: function fetchBusIds() {
-            //this.error = false;
-            this.loading = true;
-            //this.cityToList = [];
+        addBus: function addBus() {
             var vm = this;
-            axios.get('/bus/ids').then(function (response) {
-                //vm.answer = _.capitalize(response.data.answer)
-                // console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
-                vm.loading = false;
-                // console.log(vm.error);
-                //vm.cityToList = response.data;
-                //vm.message= response.data
-            });
-        },
-        fetchBusInfoById: function fetchBusInfoById(busId) {
-            this.loading = true;
-            this.busInfo = [];
-            var vm = this;
-            //axios.get('/bus/ids')          
-            //axios.get('api/bus?q=' + busId) //--> admin/api/bus?q=xyz 
-            axios.get('/api/bus?q=' + busId) //--> api/bus?q=xyz
-            .then(function (response) {
-                //vm.answer = _.capitalize(response.data.answer)
-                // console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.busInfo = response.data;
-                vm.loading = false;
-                // console.log(vm.error);
-                //vm.cityToList = response.data;
-                //vm.message= response.data
-            });
-        },
-        createList: function createList() {
-            var r; //row                    
-            var code = 64;
-            var seatNo;
-            var numberOfRow = this.numberOfRow; //8;
-            var numberOfCol = this.numberOfCol; //4;
-            for (r = 1; r <= numberOfRow; r++) {
-                // console.log('row=', r);
-                var c; //col                            
-                for (c = 1; c <= numberOfCol; c++) {
-                    seatNo = String.fromCharCode(code + r) + c;
-                    // console.log('col=', c);
-                    // console.log('seat=', seatNo); 
-                    this.seatList.push({
-                        no: seatNo,
-                        sts: 'available',
-                        checked: true
-                    });
-                }
-            }
-
-            // for 5th column                         
-            this.fiveColValue = code + numberOfRow;
-            seatNo = String.fromCharCode(code + parseInt(numberOfRow)) + c; //64+6 + 5 E5
-            this.seatList.push({
-                no: seatNo,
-                sts: 'available',
-                checked: true
-            });
-
-            //this.finalSeatList = this.seatList.concat();
-            this.isDisabled = true;
-            this.disableShowButton = true;
-            this.disableSaveButton = false;
-            this.seatListLength = this.seatList.length;
-        },
-        reset: function reset() {
-            this.seatList = [];
-            //this.numberOfRow = '';
-            this.isDisabled = false;
-            this.disableShowButton = false;
-            this.disableSaveButton = true;
-            this.seatListLength = '';
-        },
-        saveSeatList: function saveSeatList() {
-            var vm = this;
-            this.loading = true;
-            axios.post('/bus/seatplan', {
-                bus_id: this.selectedBusId,
-                seat_list: this.seatList
+            axios.post('/bus', {
+                reg_no: this.regNumber,
+                number_plate: this.numberPlate,
+                type: this.selectedBusType,
+                total_seats: this.numberOfSeat,
+                description: this.busDescription
             }).then(function (response) {
-                console.log(response.data);
+                //console.log(response.data);
                 response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    //console.log(vm.response);
+                    vm.fetchAvailableBuses();
+                    //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                    vm.loading = false;
+                    //vm.scheduleAddedAlert(vm.selectedRouteId, vm.selectedBusId);
+                    vm.reset();
+                    return;
+                }
                 vm.loading = false;
-                vm.disableSaveButton = true;
+                //vm.disableSaveButton = true;
             });
-            //this.disableSaveButton = true;
         },
-        updateSeatList: function updateSeatList(seat) {
-            // if (seat.sts == 'n/a') {
-            var index = this.seatList.indexOf(seat);
-            this.seatList[index + 1].no = seat.no;
-            //}
+        expandAddBusPanel: function expandAddBusPanel() {
+            this.show = !this.show;
         },
-        toggle: function toggle(seat) {
-            // var index = this.seatList.indexOf(seat);
-            // console.log('indexxxxx',index);                     
-            // console.log(this.seatList[index]);                     
-            seat.checked = !seat.checked;
-            if (seat.checked) {
-                seat.sts = 'available';
-                //this.seatStatus= '';                            
+        fetchAvailableBuses: function fetchAvailableBuses() {
+            this.loading = true;
+            this.availableBusList = [];
+            var vm = this;
+            axios.get('/api/buses') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.sortByBusId(vm.availableBusList);
+                vm.loading = false;
+            });
+        },
+        isRegNumberAvailableInBusList: function isRegNumberAvailableInBusList(arr, val) {
+            //var vm = this;
+            return arr.some(function (bus) {
+                return val === bus.reg_no;
+            });
+        },
+        sortByIdOf: function sortByIdOf(val) {
+            if (val == 'bus') {
+                this.sortByBusId(this.availableBusList);
+                this.disableSorting = true;
                 return;
             }
-            seat.sts = 'n/a';
-            // this.seatStatus= 'n/a';
-            //this.seatList2 = this.seatList.concat();
-            //this.seatList[index+1].no = seat.no;
-            this.updateSeatList(seat);
+            this.sortByRegNumber(this.availableBusList);
+            this.disableSorting = false;
+        },
+        sortByBusId: function sortByBusId(arr) {
+            arr.sort(function (a, b) {
+                return a.id - b.id;
+            });
+        },
+        sortByRegNumber: function sortByRegNumber(arr) {
+            arr.sort(function (a, b) {
+                var nameA = a.reg_no; //.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.reg_no; //.toUpperCase // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            });
+        },
+
+        /*removeBus(bus) {  // role id of user/staff in roles table
+            var vm = this;            
+            //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+            swal({
+                  title: "Are you sure?",
+                  text: "This BUS will be Removed!",
+                  //type: "warning",
+                  icon: "warning",
+                  // showCancelButton: true,
+                  // confirmButtonColor: "#DD6B55",
+                  // confirmButtonText: "Yes, Remove!",
+                  //closeOnConfirm: false,
+                  //closeOnCancel: false 
+                  cancel: {
+                    text: "Cancel",
+                    // value: null,
+                    // visible: false,
+                    // className: "",
+                    // closeModal: true,
+                  },
+                  confirm: {
+                    text: "Yes, Remove!",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    //closeModal: true
+                  }        
+                 },
+                function() {                       
+                        vm.loading = true;
+                        vm.response = '';
+                        vm.showAlert = false;
+                        axios.post('/delete/bus', {    
+                            bus_id: bus.id, 
+                        })          
+                        .then(function (response) {                 
+                           
+                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                             if (vm.response) {                                
+                                vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                                vm.loading = false;
+                                vm.actionStatus = 'Removed';
+                                vm.alertType = 'danger';
+                                vm.showAlert= true;
+                                return;                                                      
+                            }                            
+                            vm.loading = false;
+                         });    
+                        //swal("Deleted!", "Staff has been Removed.", "success");                      
+                    
+                });
+        },*/
+
+        /*removeBus(bus) {  // role id of user/staff in roles table
+                    var vm = this;            
+                    //this.routeName = route.departure_city + ' to ' + route.arrival_city;
+                    //swal("This BUS will be Removed!", {
+                    swal({
+                        title: "Are you sure?",
+                        text: "This BUS will be Removed!",
+                        icon: "warning",
+                        dangerMode: true,
+                        buttons: {
+                            cancel: "cancel",
+                            confirm: {
+                              text: "Remove It!",
+                              value: "remove",
+                            },                                
+                        },
+                    
+                    })
+                    .then((value) => {
+                        switch (value) {
+                       
+                          case "cancel":
+                            break;                             
+                       
+                          case "remove":        
+                            vm.loading = true;
+                            vm.response = '';
+                            vm.showAlert = false;
+                             axios.post('/delete/bus', {    
+                                bus_id: bus.id, 
+                            })          
+                            .then(function (response) {                 
+                               
+                                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                                 if (vm.response) {                                
+                                    vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                                    vm.loading = false;
+                                    vm.actionStatus = 'Removed';
+                                    vm.alertType = 'danger';
+                                    vm.showAlert= true;
+                                    return;                                                      
+                                }                            
+                                vm.loading = false;
+                             });   
+                              
+                            break;
+                       
+                          default:
+                            // swal("Got away safely!");
+                            break;
+                        }
+                    });                           
+                },*/
+
+        removeBus: function removeBus(bus) {
+            var vm = this;
+            swal({
+                title: "Are you sure?",
+                text: "This BUS will be Removed!",
+                icon: "error",
+                dangerMode: true,
+                buttons: {
+                    cancel: "cancel",
+                    confirm: {
+                        text: "Remove It!",
+                        value: true
+                    }
+                }
+            }).then(function (value) {
+                if (value) {
+
+                    vm.loading = true;
+                    vm.response = '';
+                    vm.showAlert = false;
+
+                    axios.post('/delete/bus', {
+                        bus_id: bus.id
+                    }).then(function (response) {
+                        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                        if (vm.response) {
+                            vm.removeBusFromAvailableBusList(bus.id); // update the array after removing
+                            vm.loading = false;
+                            vm.actionStatus = 'Removed';
+                            vm.alertType = 'danger';
+                            vm.showAlert = true;
+                            return;
+                        }
+                        vm.loading = false;
+                    });
+                }
+            });
+        },
+        removeBusFromAvailableBusList: function removeBusFromAvailableBusList(busId) {
+            var indx = this.availableBusList.findIndex(function (bus) {
+                return bus.id == busId;
+            });
+            this.availableBusList.splice(indx, 1);
+            //return;
+        },
+        reset: function reset() {
+            this.isDisabled = false;
+            // this.disableShowButton = false;
+            // this.disableSaveButton= true;
+            this.regNumber = '';
+            this.numberPlate = '';
+            this.numberOfSeat = '';
+            this.selectedBusType = '';
+            this.busDescription = '';
         }
     }
 });
 
 /***/ }),
-/* 53 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -17260,6 +17507,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   methods: {
+    addRoute: function addRoute() {
+      var vm = this;
+      //this.loading = true;
+      // console.log('cityId',this.selectedCity.id);
+      // console.log('cityName',this.selectedCity.name);
+      axios.post('/route', {
+        departure_city: this.selectedDepartureCity,
+        arrival_city: this.selectedArrivalCity,
+        distance: this.routeDistance,
+        fare: this.fare
+      }).then(function (response) {
+        //console.log(response.data);
+        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+        if (vm.response) {
+          //console.log(vm.response);
+          vm.fetchAvailableRoutes();
+          //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+          vm.loading = false;
+          vm.disableSaveButton = true;
+          vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+          vm.reset();
+          return;
+        }
+        vm.loading = false;
+        vm.disableSaveButton = true;
+      });
+    },
     cancelEdit: function cancelEdit() {
       this.fare = '';
       this.modal = false;
@@ -17347,34 +17621,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.routeName = route.departure_city + ' to ' + route.arrival_city;
       swal({
         title: "Are you sure?",
-        text: "This Route will be Removed from Route List!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Remove!"
-        //closeOnConfirm: false,
-        //closeOnCancel: false                       
-      }, function () {
-        vm.loading = true;
-        vm.response = '';
-        vm.showAlert = false;
-        axios.post('/delete/route', {
-          route_id: route.id
-        }).then(function (response) {
-          // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
-          response.data.error ? vm.error = response.data.error : vm.response = response.data;
-
-          if (vm.response) {
-            vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
-            vm.loading = false;
-            vm.actionStatus = 'Removed';
-            vm.alertType = 'danger';
-            vm.showAlert = true;
-            return;
+        text: "This ROUTE will be Removed!",
+        icon: "error",
+        dangerMode: true,
+        buttons: {
+          cancel: "cancel",
+          confirm: {
+            text: "Remove It!",
+            value: true
           }
-          vm.loading = false;
-        });
-        //swal("Deleted!", "Staff has been Removed.", "success");                      
+        }
+      }).then(function (value) {
+        if (value) {
+
+          vm.loading = true;
+          vm.response = '';
+          vm.showAlert = false;
+          axios.post('/delete/route', {
+            route_id: route.id
+          }).then(function (response) {
+            // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+            if (vm.response) {
+              vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
+              vm.loading = false;
+              vm.actionStatus = 'Removed';
+              vm.alertType = 'danger';
+              vm.showAlert = true;
+              return;
+            }
+            vm.loading = false;
+          });
+        }
       });
     },
     removeRouteFromAvailableRouteList: function removeRouteFromAvailableRouteList(routeId) {
@@ -17383,33 +17662,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
       this.availableRouteList.splice(indx, 1);
       //return;
-    },
-    saveCities: function saveCities() {
-      var vm = this;
-      //this.loading = true;
-      // console.log('cityId',this.selectedCity.id);
-      // console.log('cityName',this.selectedCity.name);
-      axios.post('/route', {
-        departure_city: this.selectedDepartureCity,
-        arrival_city: this.selectedArrivalCity,
-        distance: this.routeDistance,
-        fare: this.fare
-      }).then(function (response) {
-        //console.log(response.data);
-        response.data.error ? vm.error = response.data.error : vm.response = response.data;
-        if (vm.response) {
-          //console.log(vm.response);
-          vm.fetchAvailableRoutes();
-          //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
-          vm.loading = false;
-          vm.disableSaveButton = true;
-          vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
-          vm.reset();
-          return;
-        }
-        vm.loading = false;
-        vm.disableSaveButton = true;
-      });
     },
     reset: function reset() {
       this.selectedArrivalCity = '';
@@ -17441,16 +17693,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     routeAddedAlert: function routeAddedAlert(depatureCity, arrivalCity) {
+
       swal({
         //title: "Sorry! Not Available",
-        title: '<span style="color:#A5DC86"> <strong>' + depatureCity + '&nbsp;' + ' to ' + '&nbsp;' + arrivalCity + '</strong></span></br> Route Added successfully!',
-        //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-        html: true,
+        //title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
+        title: depatureCity + '' + ' to ' + ' ' + arrivalCity,
+        text: 'Route Added successfully!',
+        //text: '<span style="color:#F8BB86"> <strong>'+depatureCity+'</strong></span> Not Available.',
+        //html: true,
         //type: "info",
-        type: "success",
-        timer: 1800,
-        showConfirmButton: false,
-        allowOutsideClick: true
+        //type: "success",
+        //content: html,
+        icon: "success",
+        timer: 2000,
+        //showConfirmButton: false,
+        closeOnClickOutside: true
       });
     },
     updateRouteFare: function updateRouteFare() {
@@ -17487,7 +17744,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 54 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17598,35 +17855,230 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            actionStatus: '',
+            alertType: '',
+            arrivalTime: '',
+            availableBusList: [],
             availableRouteList: [],
-            busIds: [],
-            disableShowButton: false,
-            disableSaveButton: false,
+            availableScheduleList: [],
+            departureTime: '',
+            disableSorting: true,
             error: '',
             loading: false,
-            routeIds: [],
+            modal: false,
+            //routeIds: [],
+            response: '',
             routeInfo: [],
             selectedBusId: '',
-            selectedRouteId: ''
+            selectedRouteId: '',
+            schedule: {},
+            show: false,
+            showAlert: false
         };
     },
 
     watch: {
         selectedRouteId: function selectedRouteId() {
-            this.fetchRouteInfo(this.selectedRouteId);
+            if (this.selectedRouteId != '') {
+                this.fetchRouteInfo(this.selectedRouteId);
+            }
         }
     },
     mounted: function mounted() {
         //console.log('Component mounted.')
-        this.fetchBusIds();
+        //this.fetchBusIds();
+        this.fetchAvailableBuses();
         this.fetchAvailableRoutes();
+        this.fetchAvailableSchedules();
     },
 
+    computed: {
+        isValid: function isValid() {
+            return this.routeId != '' && this.busId != '' && this.departureTime != '' && this.arrivalTime != '';
+        }
+    },
     methods: {
+        // fetchBusInfo(busId) {
+        //     this.busInfo = [];
+        //     this.busInfo = this.availableBusList.find(function (obj) { 
+        //         // console.log('iddd=', obj.id);    
+        //         // console.log('routeId=', routeId);
+        //         return obj.id == busId; });
+        // },
+        addSchedule: function addSchedule() {
+            var vm = this;
+            axios.post('/schedule', {
+                route_id: this.selectedRouteId,
+                bus_id: this.selectedBusId,
+                departure_time: this.departureTime,
+                arrival_time: this.arrivalTime
+            }).then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    //console.log(vm.response);
+                    vm.fetchAvailableSchedules();
+                    //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                    vm.loading = false;
+                    vm.scheduleAddedAlert(vm.selectedRouteId, vm.selectedBusId);
+                    vm.reset();
+                    return;
+                }
+                vm.loading = false;
+                //vm.disableSaveButton = true;
+            });
+        },
+        cancelEdit: function cancelEdit() {
+            this.schedule = '';
+            this.modal = false;
+        },
+        editSchedule: function editSchedule(schedule) {
+            this.schedule = _.clone(schedule); //cloning or coppy                
+            this.modal = true;
+        },
+        expandAddSchedulePanel: function expandAddSchedulePanel() {
+            this.show = !this.show;
+        },
         fetchRouteInfo: function fetchRouteInfo(routeId) {
             this.routeInfo = [];
             this.routeInfo = this.availableRouteList.find(function (obj) {
@@ -17635,13 +18087,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return obj.id == routeId;
             });
         },
-        fetchBusIds: function fetchBusIds() {
-            //this.error = false;
+        fetchAvailableBuses: function fetchAvailableBuses() {
             this.loading = true;
-            //this.cityToList = [];
+            this.availableBusList = [];
             var vm = this;
-            axios.get('/bus/ids').then(function (response) {
-                response.data.error ? vm.error = response.data.error : vm.busIds = response.data;
+            axios.get('/api/buses') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.loading = false;
+            });
+        },
+        fetchAvailableSchedules: function fetchAvailableSchedules() {
+            this.loading = true;
+            this.availableScheduleList = [];
+            var vm = this;
+            axios.get('/api/schedule') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableScheduleList = response.data;
+                //vm.tempAvailableRouteList = response.data;
+                vm.sortByIdAvailableRouteList(vm.availableRouteList);
                 vm.loading = false;
             });
         },
@@ -17653,20 +18117,521 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             .then(function (response) {
                 response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
                 //vm.tempAvailableRouteList = response.data;
-                vm.SortByIdAvailableRouteList(vm.availableRouteList);
+                vm.sortByIdAvailableRouteList(vm.availableRouteList);
                 vm.loading = false;
             });
         },
-        SortByIdAvailableRouteList: function SortByIdAvailableRouteList(arr) {
+        sortByIdAvailableRouteList: function sortByIdAvailableRouteList(arr) {
             arr.sort(function (a, b) {
                 return a.id - b.id;
             });
+        },
+        sortByIdOf: function sortByIdOf(val) {
+            if (val == 'route') {
+                this.availableScheduleList.sort(function (a, b) {
+                    return a.rout_id - b.rout_id;
+                });
+                this.disableSorting = true;
+                return;
+            }
+            this.availableScheduleList.sort(function (a, b) {
+                return a.bus_id - b.bus_id;
+            });
+            this.disableSorting = false;
+        },
+
+
+        // sortByBusIdAvailableBusList(arr) { 
+        // // sort by bus id: assume bus id mixted type string like syl0654, dhk45678            
+        //     arr.sort(function(a, b) {
+        //       var nameA = a.id.toUpperCase(); // ignore upper and lowercase
+        //       var nameB = b.id.toUpperCase(); // ignore upper and lowercase
+        //       if (nameA < nameB) {
+        //         return -1;
+        //       }
+        //       if (nameA > nameB) {
+        //         return 1;
+        //       }
+
+        //       // names must be equal
+        //       return 0;
+        //     });
+
+        //     arr.sort(function(a, b) {
+        //       return a.id - b.id;
+        //     });
+
+        // },
+
+        removeSchedule: function removeSchedule(schedule) {
+            // role id of user/staff in roles table
+            var vm = this;
+            swal({
+                title: "Are you sure?",
+                text: "This SCHEDULE will be Removed!",
+                icon: "error",
+                dangerMode: true,
+                buttons: {
+                    cancel: "cancel",
+                    confirm: {
+                        text: "Remove It!",
+                        value: true
+                    }
+                }
+            }).then(function (value) {
+                if (value) {
+
+                    vm.loading = true;
+                    vm.response = '';
+                    vm.showAlert = false;
+                    axios.post('/delete/schedule', {
+                        schedule_id: schedule.id
+                    }).then(function (response) {
+
+                        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+                        if (vm.response) {
+                            vm.removeScheduleFromAvailableScheduleList(schedule.id); // update the array after removing
+                            vm.loading = false;
+                            vm.actionStatus = 'Removed';
+                            vm.alertType = 'danger';
+                            vm.showAlert = true;
+                            return;
+                        }
+                        vm.loading = false;
+                    });
+                }
+            });
+        },
+        removeScheduleFromAvailableScheduleList: function removeScheduleFromAvailableScheduleList(scheduleId) {
+            var indx = this.availableScheduleList.findIndex(function (schedule) {
+                return schedule.id == scheduleId;
+            });
+            this.availableScheduleList.splice(indx, 1);
+            //return;
+        },
+        reset: function reset() {
+            this.selectedBusId = '';
+            this.selectedRouteId = '';
+            this.arrivalTime = '';
+            this.departureTime = '';
+            this.routeInfo = '';
+        },
+        scheduleAddedAlert: function scheduleAddedAlert(routeId, busId) {
+            swal({
+                //title: "Sorry! Not Available",
+                //title: 'Schedule for Route #<span style="color:#A5DC86"> <strong>'+ routeId + '&nbsp;' +' and Bus #'+ '&nbsp;' + busId +'</strong></span></br> Added successfully!',
+                title: 'Schedule for Route ' + routeId + ' ' + ' and Bus #' + ' ' + busId + ' ',
+                text: 'Added successfully!',
+                //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
+                //html: true,
+                //type: "info",
+                icon: "success",
+                timer: 2000,
+                closeOnClickOutside: true
+            });
+        },
+        updateSchedule: function updateSchedule(schedule) {
+            var vm = this;
+            this.response = '';
+            this.showAlert = false;
+            this.loading = true;
+            axios.post('/edit/schedule', {
+                schedule: schedule
+            }).then(function (response) {
+
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                    vm.updateScheduleAtAvailableScheduleList(schedule.id, schedule);
+                    vm.loading = false;
+                    vm.modal = false;
+                    vm.actionStatus = 'Udated';
+                    vm.alertType = 'info';
+                    vm.showAlert = true;
+                }
+            });
+        },
+        updateScheduleAtAvailableScheduleList: function updateScheduleAtAvailableScheduleList(scheduleId, schedule) {
+            var indx = this.availableScheduleList.findIndex(function (schedule) {
+                return schedule.id == scheduleId;
+            });
+            this.availableScheduleList[indx] = schedule;
         }
     }
 });
 
 /***/ }),
-/* 55 */
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    // mounted() {
+    //     console.log('Component mounted.')
+    // }
+    data: function data() {
+        return {
+            availableBusList: [],
+            busInfo: [],
+            disableShowButton: false,
+            disableSaveButton: false,
+            error: '',
+            numberOfCol: 4,
+            numberOfRow: 4,
+            response: '',
+            seatChar: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"],
+            seatList: [],
+            selectedBusId: '',
+            seatListLength: '',
+            //seatList2: [],
+            //finalSeatList: [],
+            //seatStatus: '',
+            isDisabled: false,
+            index: 2, // empty space strating for this index then index+4
+            indexList: [],
+            loading: false,
+            fiveColValue: ''
+            // lastRowSeatList:[]                            
+        };
+    },
+    mounted: function mounted() {
+        //this.fetchBusIds();
+        this.fetchAvailableBuses();
+        this.createIndexList();
+    },
+
+    watch: {
+        numberOfRow: function numberOfRow() {
+            this.createIndexList();
+            this.isShowButtonDisable();
+        },
+        selectedBusId: function selectedBusId() {
+            //this.isSaveButtonDisable();
+            //this.fetchBusInfoById(this.selectedBusId);
+            if (this.selectedBusId != '') {
+                this.fetchBusInfo(this.selectedBusId);
+            }
+        }
+    },
+
+    computed: {
+        isValidForShow: function isValidForShow() {
+            return this.selectedBusId != '' && this.numberOfRow != '' && this.disableShowButton != true;
+        },
+        isValidForSave: function isValidForSave() {
+            return this.selectedBusId != '' && this.numberOfRow != '' && this.disableSaveButton != true;
+        }
+    },
+
+    methods: {
+        createIndexList: function createIndexList() {
+            this.indexList = [];
+            var r;
+            var numberOfRow = this.numberOfRow;
+            var index = this.index;
+            for (r = 1; r < numberOfRow; r++) {
+                this.indexList.push(index);
+                index = index + 4;
+                //console.log('index', index);
+            }
+        },
+        fetchAvailableBuses: function fetchAvailableBuses() {
+            this.loading = true;
+            this.availableBusList = [];
+            var vm = this;
+            axios.get('/api/buses') //--> api/bus?q=xyz        (right)
+            .then(function (response) {
+                response.data.error ? vm.error = response.data.error : vm.availableBusList = response.data;
+                vm.sortByBusId(vm.availableBusList);
+                vm.loading = false;
+            });
+        },
+        sortByBusId: function sortByBusId(arr) {
+            arr.sort(function (a, b) {
+                return a.id - b.id;
+            });
+        },
+        fetchBusInfo: function fetchBusInfo(busId) {
+            this.busInfo = [];
+            this.busInfo = this.availableBusList.find(function (obj) {
+                // console.log('iddd=', obj.id);    
+                // console.log('routeId=', routeId);
+                return obj.id == busId;
+            });
+        },
+        isShowButtonDisable: function isShowButtonDisable() {
+            this.disableShowButton = this.numberOfRow == '' || this.numberOfRow == 0 ? true : false;
+        },
+        isSaveButtonDisable: function isSaveButtonDisable() {
+
+            this.disableSaveButton = this.selectedBusId == '' || this.seatListLength == '' ? true : false;
+            /* if ( this.selectedBusId == '' || this.seatListLength == '') {
+             
+                  console.log( 'DISABLE SAVE BUTTION = TRUE');
+                  this.disableSaveButton = true;
+                  return;
+              }
+               console.log( 'DISABLE SAVE BUTTION = FALSE');
+               this.disableSaveButton = false;
+               return;*/
+        },
+
+
+        /*emptySpace(seatNo) {
+             if ( this.isFiveCol(seatNo) ) {
+                return false; // no need empty space between columns
+            }
+            var seatNumber = parseInt(seatNo.match(/\d+/),10);                      
+            return ( (seatNumber % 3) == 0 ) ? true : false;
+         }, */
+
+        emptySpace: function emptySpace(index, seatNo) {
+            //2, 6, 10
+
+            if (this.isFiveCol(seatNo)) {
+                return false; // no need empty space between columns
+            }
+            return this.isEmptySpaceAvailable(index);
+        },
+        isFiveCol: function isFiveCol(seatNo) {
+            // var seatListLength =  this.seatList.length;
+            //var numberOfRow = (seatListLength-1) /4; //2
+            var numberOfRow = this.numberOfRow;
+            var lastRowChar = this.seatChar[numberOfRow - 1]; //B
+            lastRowChar = lastRowChar.trim();
+
+            var seatChar = seatNo.substr(0, 1); //extract char from seat no
+            return lastRowChar == seatChar ? true : false;
+        },
+        isEmptySpaceAvailable: function isEmptySpaceAvailable(index) {
+
+            var val = this.indexList.find(function (indx) {
+                return indx == index;
+            });
+            return index == val ? true : false;
+        },
+        createList: function createList() {
+            var r; //row                    
+            var code = 64;
+            var seatNo;
+            var numberOfRow = this.numberOfRow; //8;
+            var numberOfCol = this.numberOfCol; //4;
+            for (r = 1; r <= numberOfRow; r++) {
+                // console.log('row=', r);
+                var c; //col                            
+                for (c = 1; c <= numberOfCol; c++) {
+                    seatNo = String.fromCharCode(code + r) + c;
+                    // console.log('col=', c);
+                    // console.log('seat=', seatNo); 
+                    this.seatList.push({
+                        no: seatNo,
+                        sts: 'available',
+                        checked: true
+                    });
+                }
+            }
+
+            // for 5th column                         
+            this.fiveColValue = code + numberOfRow;
+            seatNo = String.fromCharCode(code + parseInt(numberOfRow)) + c; //64+6 + 5 E5
+            this.seatList.push({
+                no: seatNo,
+                sts: 'available',
+                checked: true
+            });
+
+            //this.finalSeatList = this.seatList.concat();
+            this.isDisabled = true;
+            this.disableShowButton = true;
+            this.disableSaveButton = false;
+            //this.seatListLength = this.seatList.length;
+        },
+        reset: function reset() {
+            this.seatList = [];
+            this.numberOfRow = '';
+            this.isDisabled = false;
+            this.disableShowButton = false;
+            // this.disableSaveButton = true;                        
+            //this.seatListLength = '';
+            this.selectedBusId = '';
+            this.busInfo = '';
+        },
+        saveSeatList: function saveSeatList() {
+            var vm = this;
+            this.loading = true;
+            axios.post('/bus/seatplan', {
+                bus_id: this.selectedBusId,
+                seat_list: this.seatList
+            }).then(function (response) {
+                console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                vm.loading = false;
+                vm.disableSaveButton = true;
+            });
+            //this.disableSaveButton = true;
+        },
+        updateSeatList: function updateSeatList(seat) {
+            // if (seat.sts == 'n/a') {
+            var index = this.seatList.indexOf(seat);
+            this.seatList[index + 1].no = seat.no;
+            //}
+        },
+        toggle: function toggle(seat) {
+            // var index = this.seatList.indexOf(seat);
+            // console.log('indexxxxx',index);                     
+            // console.log(this.seatList[index]);                     
+            seat.checked = !seat.checked;
+            if (seat.checked) {
+                seat.sts = 'available';
+                //this.seatStatus= '';                            
+                return;
+            }
+            seat.sts = 'n/a';
+            // this.seatStatus= 'n/a';
+            //this.seatList2 = this.seatList.concat();
+            //this.seatList[index+1].no = seat.no;
+            this.updateSeatList(seat);
+        }
+    }
+});
+
+/***/ }),
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17903,34 +18868,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.cityName = city.name;
       swal({
         title: "Are you sure?",
-        text: "This city will be Removed from Bus Service available City List!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Remove!"
-        //closeOnConfirm: false,
-        //closeOnCancel: false                       
-      }, function () {
-        vm.loading = true;
-        vm.response = '';
-        vm.showAlert = false;
-        axios.post('/delete/city', {
-          city_code: city.code
-        }).then(function (response) {
-          // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
-          response.data.error ? vm.error = response.data.error : vm.response = response.data;
-
-          if (vm.response) {
-            vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
-            vm.loading = false;
-            vm.actionStatus = 'Removed';
-            vm.alertType = 'danger';
-            vm.showAlert = true;
-            return;
+        text: "This CITY will be Removed!",
+        icon: "error",
+        dangerMode: true,
+        buttons: {
+          cancel: "cancel",
+          confirm: {
+            text: "Remove It!",
+            value: true
           }
-          vm.loading = false;
-        });
-        //swal("Deleted!", "Staff has been Removed.", "success");                      
+        }
+      }).then(function (value) {
+        if (value) {
+
+          vm.loading = true;
+          vm.response = '';
+          vm.showAlert = false;
+          axios.post('/delete/city', {
+            city_code: city.code
+          }).then(function (response) {
+            // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+            if (vm.response) {
+              vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+              vm.loading = false;
+              vm.actionStatus = 'Removed';
+              vm.alertType = 'danger';
+              vm.showAlert = true;
+              return;
+            }
+            vm.loading = false;
+          });
+        }
       });
     },
     removeCityFromBusAvailableToCityList: function removeCityFromBusAvailableToCityList(cityCode) {
@@ -18006,21 +18976,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cityAddedAlert: function cityAddedAlert(cityName) {
       swal({
         //title: "Sorry! Not Available",
-        title: '<span style="color:#A5DC86"> <strong>' + cityName + '</strong></span></br> Added successfully!',
+        //title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+        title: cityName,
+        text: 'Added successfully!',
         //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-        html: true,
+        //html: true,
         //type: "info",
-        type: "success",
-        timer: 1800,
-        showConfirmButton: false,
-        allowOutsideClick: true
+        icon: "success",
+        timer: 2000,
+        closeOnClickOutside: false
       });
     }
   }
 });
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18335,33 +19306,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.deletedStopName = stop.name;
       swal({
         title: "Are you sure?",
-        text: "This Stop will be Removed from available Stop List!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, Remove!"
-        //closeOnConfirm: false,
-        //closeOnCancel: false                       
-      }, function () {
-        vm.loading = true;
-        vm.response = '';
-        vm.showAlert = false;
-        axios.post('/delete/stop', {
-          stop_id: stop.id
-        }).then(function (response) {
-          response.data.error ? vm.error = response.data.error : vm.response = response.data;
-
-          if (vm.response) {
-            vm.removeStopFromAvailableStopList(index); // update the array after removing                                
-            vm.loading = false;
-            vm.actionStatus = 'Removed';
-            vm.alertType = 'danger';
-            vm.showAlert = true;
-            return;
+        text: "This STOP will be Removed!",
+        icon: "error",
+        dangerMode: true,
+        buttons: {
+          cancel: "cancel",
+          confirm: {
+            text: "Remove It!",
+            value: true
           }
-          vm.loading = false;
-        });
-        //swal("Deleted!", "Staff has been Removed.", "success");                      
+        }
+      }).then(function (value) {
+        if (value) {
+
+          vm.loading = true;
+          vm.response = '';
+          vm.showAlert = false;
+          axios.post('/delete/stop', {
+            stop_id: stop.id
+          }).then(function (response) {
+            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+
+            if (vm.response) {
+              vm.removeStopFromAvailableStopList(index); // update the array after removing                                
+              vm.loading = false;
+              vm.actionStatus = 'Removed';
+              vm.alertType = 'danger';
+              vm.showAlert = true;
+              return;
+            }
+            vm.loading = false;
+          });
+        }
       });
     },
     removeStopFromAvailableStopList: function removeStopFromAvailableStopList(index) {
@@ -18386,7 +19362,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (vm.response) {
           vm.fetchAvailableStopList();
           vm.SortByStopNameAvailableStopList(vm.availableStopList);
-          vm.stopList = '', vm.loading = false;
+          vm.stopList = [], vm.loading = false;
           vm.disableSaveButton = true;
           vm.cityAddedAlert(vm.selectedCity.name);
           vm.reset();
@@ -18424,21 +19400,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     cityAddedAlert: function cityAddedAlert(cityName) {
       swal({
         //title: "Sorry! Not Available",
-        title: '<span style="color:#A5DC86"> Bus Stops for <strong>' + cityName + '</strong></span></br> Added successfully!',
+        title: 'Bus Stops for ' + cityName + ' ',
+        text: "Added successfully!",
         //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-        html: true,
+        //html: true,
         //type: "info",
-        type: "success",
-        timer: 1800,
-        showConfirmButton: false,
-        allowOutsideClick: true
+        icon: "success",
+        timer: 2000,
+        closeOnClickOutside: true
       });
     }
   }
 });
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18646,31 +19622,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             swal({
                 title: "Are you sure?",
                 text: "This staff will be Removed from Staff Roles!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, Remove!"
-                //closeOnConfirm: false,
-                //closeOnCancel: false                       
-            }, function () {
-                vm.loading = true;
-                vm.response = '';
-                vm.showAlert = false;
-                axios.post('/delete', {
-                    id: staff.role_id,
-                    user_id: staff.id
-                }).then(function (response) {
-                    //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
-                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                    if (vm.response) {
-                        vm.removeStaffFromStaffs(staff.id);
-                        vm.loading = false;
-                        vm.actionStatus = 'Removed';
-                        vm.alertType = 'danger';
-                        vm.showAlert = true;
+                icon: "error",
+                dangerMode: true,
+                buttons: {
+                    cancel: "cancel",
+                    confirm: {
+                        text: "Remove It!",
+                        value: true
                     }
-                });
-                //swal("Deleted!", "Staff has been Removed.", "success");                      
+                }
+            }).then(function (value) {
+                if (value) {
+
+                    vm.loading = true;
+                    vm.response = '';
+                    vm.showAlert = false;
+                    axios.post('/delete', {
+                        id: staff.role_id,
+                        user_id: staff.id
+                    }).then(function (response) {
+                        //response.data.error ? vm.error = response.data.error : vm.staffs = response.data;
+                        response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                        if (vm.response) {
+                            vm.removeStaffFromStaffs(staff.id);
+                            vm.loading = false;
+                            vm.actionStatus = 'Removed';
+                            vm.alertType = 'danger';
+                            vm.showAlert = true;
+                        }
+                    });
+                }
             });
         },
         removeStaffFromStaffs: function removeStaffFromStaffs(staffId) {
@@ -18720,32 +19701,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utilities_Form__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_laravel_echo__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_laravel_echo__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sweetalert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sweetalert__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_Form__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_laravel_echo__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_laravel_echo__);
 
-window._ = __webpack_require__(74);
+window._ = __webpack_require__(76);
 
-window.$ = window.jQuery = __webpack_require__(13);
+window.$ = window.jQuery = __webpack_require__(12);
 
-__webpack_require__(63);
 __webpack_require__(62);
+__webpack_require__(61);
 
-__webpack_require__(72);
+__webpack_require__(74);
 
-window.Vue = __webpack_require__(130);
+window.Vue = __webpack_require__(133);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
-window.swal = __webpack_require__(81);
+//window.swal = require('sweetalert');
 
-window.axios = __webpack_require__(20);
+
+window.axios = __webpack_require__(18);
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // window.axios.defaults.headers.common = {
@@ -18762,74 +19746,77 @@ if (token) {
 }
 
 
-window.Form = __WEBPACK_IMPORTED_MODULE_1__utilities_Form__["a" /* default */];
+window.Form = __WEBPACK_IMPORTED_MODULE_2__utilities_Form__["a" /* default */];
 
 
-window.Pusher = __webpack_require__(76);
+window.Pusher = __webpack_require__(77);
 
-window.Echo = new __WEBPACK_IMPORTED_MODULE_2_laravel_echo___default.a({
+window.Echo = new __WEBPACK_IMPORTED_MODULE_3_laravel_echo___default.a({
 				broadcaster: 'pusher',
 				key: 'cb975329f18a7dd87b00'
 });
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(14);
 
 
 var routes = [{
     path: '/dashboard',
-    component: __webpack_require__(90)
+    component: __webpack_require__(88)
 }, {
     //path: '/about',
     path: '/about',
-    component: __webpack_require__(87)
+    component: __webpack_require__(85)
 }, {
     path: '/contact',
-    component: __webpack_require__(88)
+    component: __webpack_require__(86)
 }, {
     path: '/staff-management',
-    component: __webpack_require__(93)
+    component: __webpack_require__(92)
 },
 //User
 {
     path: '/profile',
-    component: __webpack_require__(91)
+    component: __webpack_require__(89)
 }, {
     path: '/roles',
-    component: __webpack_require__(92)
+    component: __webpack_require__(90)
 }, {
     path: '/staff-list',
-    component: __webpack_require__(94)
+    component: __webpack_require__(91)
 },
 //Bus 
 {
     path: '/bus',
-    component: __webpack_require__(96)
+    component: __webpack_require__(93)
 }, {
     path: '/list',
-    component: __webpack_require__(95)
+    component: __webpack_require__(94)
 }, {
     path: '/route',
+    component: __webpack_require__(95)
+}, {
+    path: '/seat-plan',
     component: __webpack_require__(97)
 }, {
     path: '/schedule',
-    component: __webpack_require__(98)
+    component: __webpack_require__(96)
 }, {
     path: '/city',
-    component: __webpack_require__(99)
+    component: __webpack_require__(98)
 }, {
     path: '/stop',
-    component: __webpack_require__(100)
+    component: __webpack_require__(99)
 },
 //404
 {
     path: '*',
     //component: fourohfour
-    component: __webpack_require__(89)
+    component: __webpack_require__(87)
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -18840,7 +19827,7 @@ var routes = [{
 }));
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18932,11 +19919,11 @@ var Errors = function () {
 /* harmony default export */ __webpack_exports__["a"] = (Errors);
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Errors__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Errors__ = __webpack_require__(59);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19098,7 +20085,7 @@ var Form = function () {
 /* harmony default export */ __webpack_exports__["a"] = (Form);
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -19109,7 +20096,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function(factory){
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(12)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -21137,7 +22124,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /*!
@@ -23520,6 +24507,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.seat-layout .active {\n    background-color: #f4e542;\n    position: relative;\n}\n.inactive {\n    background-color: #c4c0c0;\n}\n.tickmark {\n    /*background-color: green;*/\n    color: green;\n    /*padding: 5px;*/\n}\n.crossmark {\n    /*background-color: red;*/\n    /*padding: 5px;*/\n    color: red;\n}\n/*#app button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}*/\n.seat-layout button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#app button.col-xs-2 {\n    width: 16.76666667%;\n}\n#app button.col-xs-offset-2 {\n    margin-left: 17.666667%;\n}\n.content { \n    padding-left: 30px;\n    padding-right: 30px;\n}\n#app .seat-layout {\n    padding-left: 50px;\n}\n#app .button-group {\n  margin: 2.5rem auto; /*25px*/\n}\n", ""]);
+
+/***/ }),
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23531,7 +24525,7 @@ exports.push([module.i, "\n.table-hover > tbody > tr[data-v-1cf63056]:hover {\n 
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.seat-layout .active {\n    background-color: #f4e542;\n    position: relative;\n}\n.inactive {\n    background-color: #c4c0c0;\n}\n.tickmark {\n    /*background-color: green;*/\n    color: green;\n    /*padding: 5px;*/\n}\n.crossmark {\n    /*background-color: red;*/\n    /*padding: 5px;*/\n    color: red;\n}\n/*#app button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}*/\n.seat-layout button {               \n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#app button.col-xs-2 {\n    width: 16.76666667%;\n}\n#app button.col-xs-offset-2 {\n    margin-left: 17.666667%;\n}\n.content { \n    padding-left: 30px;\n    padding-right: 30px;\n}\n#app .seat-layout {\n    padding-left: 50px;\n}\n#app .button-group {\n  margin: 2.5rem auto; /*25px*/\n}\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-2108cb88] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-2108cb88] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-2108cb88] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-distance[data-v-2108cb88] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-2108cb88] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-2108cb88] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 66 */
@@ -23545,38 +24539,52 @@ exports.push([module.i, "/* The Modal (background) */\n#loader.modal[data-v-3f03
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n#scroll-cities span[data-v-4286404c] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-4286404c] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .arrival[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .arrival[data-v-3fc4e1ea], .view-available-info .panel-heading .route-info .departure[data-v-3fc4e1ea], .route-info .view-available-info .panel-heading .departure[data-v-3fc4e1ea] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-3fc4e1ea] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-3fc4e1ea], .route-info .arrival[data-v-3fc4e1ea], .route-info .departure[data-v-3fc4e1ea] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-3fc4e1ea] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-3fc4e1ea] {\n    background-color: lightgreen;\n}\nform label[data-v-3fc4e1ea] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-3fc4e1ea] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-3fc4e1ea], #scroll-routes .route-info .arrival[data-v-3fc4e1ea], .route-info #scroll-routes .arrival[data-v-3fc4e1ea], #scroll-routes .route-info .departure[data-v-3fc4e1ea], .route-info #scroll-routes .departure[data-v-3fc4e1ea] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-3fc4e1ea], #scroll-routes .route-info [disabled].arrival[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].arrival[data-v-3fc4e1ea], #scroll-routes .route-info [disabled].departure[data-v-3fc4e1ea], .route-info #scroll-routes [disabled].departure[data-v-3fc4e1ea] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "/* The Modal (background) */\n.modal[data-v-5561eb10] {\n  display: block;\n  position: fixed;\n  /* Stay in place */\n  z-index: 11111;\n  /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%;\n  /* Full width */\n  height: 100%;\n  /* Full height */\n  overflow: auto;\n  /* Enable scroll if needed */\n  background-color: black;\n  /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content[data-v-5561eb10] {\n  background-color: #fefefe;\n  margin: 160px auto;\n  /* 15% from the top and centered */\n  /*padding: 20px;*/\n  padding: 35px 20px 30px;\n  border: 1px solid #888;\n  width: 89%;\n  /* Could be more or less, depending on screen size */\n}\n\n/* circle*/\n.circle[data-v-5561eb10] {\n  float: right;\n  margin-top: -28px;\n  position: relative;\n  width: 24px;\n  height: 24px;\n  background: #3c8dbc;\n  border-radius: 12px;\n  -moz-border-radius: 15px;\n  -webkit-border-radius: 15px;\n}\n\n/* The Close Button */\n.close[data-v-5561eb10] {\n  color: #fff;\n  /*float: right;*/\n  margin-left: 7px;\n  font-size: 20px;\n  font-weight: bold;\n  position: absolute;\n  /*margin-top: -18px;*/\n}\n.close[data-v-5561eb10]:hover,\n.close[data-v-5561eb10]:focus {\n  color: black;\n  text-decoration: none;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n#scroll-cities span[data-v-4286404c] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-4286404c] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-97a3eef6], .view-available-info .panel-heading .route-info .arrival[data-v-97a3eef6], .route-info .view-available-info .panel-heading .arrival[data-v-97a3eef6], .view-available-info .panel-heading .route-info .departure[data-v-97a3eef6], .route-info .view-available-info .panel-heading .departure[data-v-97a3eef6] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-97a3eef6] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-97a3eef6], .route-info .arrival[data-v-97a3eef6], .route-info .departure[data-v-97a3eef6] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-97a3eef6] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-97a3eef6] {\n    background-color: lightgreen;\n}\nform label[data-v-97a3eef6] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-97a3eef6] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-97a3eef6], #scroll-routes .route-info .arrival[data-v-97a3eef6], .route-info #scroll-routes .arrival[data-v-97a3eef6], #scroll-routes .route-info .departure[data-v-97a3eef6], .route-info #scroll-routes .departure[data-v-97a3eef6] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-97a3eef6], #scroll-routes .route-info [disabled].arrival[data-v-97a3eef6], .route-info #scroll-routes [disabled].arrival[data-v-97a3eef6], #scroll-routes .route-info [disabled].departure[data-v-97a3eef6], .route-info #scroll-routes [disabled].departure[data-v-97a3eef6] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "/* The Modal (background) */\n.modal[data-v-5561eb10] {\n  display: block;\n  position: fixed;\n  /* Stay in place */\n  z-index: 1111;\n  /* Sit on top */\n  left: 0;\n  top: 0;\n  width: 100%;\n  /* Full width */\n  height: 100%;\n  /* Full height */\n  overflow: auto;\n  /* Enable scroll if needed */\n  background-color: black;\n  /* Fallback color */\n  background-color: rgba(0, 0, 0, 0.4);\n  /* Black w/ opacity */\n}\n\n/* Modal Content/Box */\n.modal-content[data-v-5561eb10] {\n  background-color: #fefefe;\n  margin: 160px auto;\n  /* 15% from the top and centered */\n  /*padding: 20px;*/\n  padding: 35px 20px 30px;\n  border: 1px solid #888;\n  width: 89%;\n  /* Could be more or less, depending on screen size */\n}\n\n/* circle*/\n.circle[data-v-5561eb10] {\n  float: right;\n  margin-top: -28px;\n  position: relative;\n  width: 24px;\n  height: 24px;\n  background: #3c8dbc;\n  border-radius: 12px;\n  -moz-border-radius: 15px;\n  -webkit-border-radius: 15px;\n}\n\n/* The Close Button */\n.close[data-v-5561eb10] {\n  color: #fff;\n  /*float: right;*/\n  margin-left: 7px;\n  font-size: 20px;\n  font-weight: bold;\n  position: absolute;\n  /*margin-top: -18px;*/\n}\n.close[data-v-5561eb10]:hover,\n.close[data-v-5561eb10]:focus {\n  color: black;\n  text-decoration: none;\n  cursor: pointer;\n}\n", ""]);
 
 /***/ }),
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search[data-v-c3bf27e6] {\n    margin-top: 25px;\n}\n}\n@media (max-width: 767px) {\n#app .alert[data-v-c3bf27e6] {\n    margin-top: 15px;\n}\n}\n\n/*[v-cloak] { display:none; }*/\n.loading[data-v-c3bf27e6] {\n  text-align: center;\n  z-index: 11111;\n}\n.seat-error[data-v-c3bf27e6] {\n  text-align: center;\n}\n.form-control[disabled][data-v-c3bf27e6] {\n  background-color: #3097D1;\n}\n\n/* The Modal (background) */\n.modal[data-v-c3bf27e6] {\n  display: block;\n  position: fixed;\n  z-index: 11111;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\n\n/* seat display */\n.is-active[data-v-c3bf27e6] {\n  background-color: green;\n}\n.booked[data-v-c3bf27e6] {\n  background-color: yellow;\n}\n.buying[data-v-c3bf27e6] {\n  background-color: orange;\n}\n.confirmed[data-v-c3bf27e6] {\n  background-color: red;\n}\n.empty[data-v-c3bf27e6] {\n  background-color: white;\n  border-width: 0;\n  /*color: #0a0a0a;*/\n  color: white;\n}\n\n/*#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #modal button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }*/\n/* #seat-layout .seat-plan-body button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #seat-layout button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #seat-layout button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #seat-layout button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }\n  .seat-plan-body {\n    padding-left: 20px;\n  } */\n#seat-layout .seat-plan-body[data-v-c3bf27e6] {\n  padding-left: 20px;\n}\n#seat-layout .seat-plan-body button[data-v-c3bf27e6] {\n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#seat-layout .seat-plan-body button.col-xs-2[data-v-c3bf27e6] {\n      width: 16.76666667%;\n}\n#seat-layout .seat-plan-body button.col-xs-offset-2[data-v-c3bf27e6] {\n      margin-left: 17.666667%;\n}\n#seat-layout .seat-plan-body button.is-white[data-v-c3bf27e6] {\n      background-color: #fff;\n      border-width: 0;\n      color: #0a0a0a;\n}\n\n/*#modal .row  {\n    background-color: #e5ecff;\n  }*/\n/* end seat display */\n", ""]);
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-97a3eef6], .view-available-info .panel-heading .route-info .arrival[data-v-97a3eef6], .route-info .view-available-info .panel-heading .arrival[data-v-97a3eef6], .view-available-info .panel-heading .route-info .departure[data-v-97a3eef6], .route-info .view-available-info .panel-heading .departure[data-v-97a3eef6] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n.route-info[data-v-97a3eef6] {\n  border: 1px dashed lightblue;\n  padding: 25px 10px;\n  margin: 25px 25px 50px 25px;\n  position: relative;\n  text-align: center;\n}\n.route-info span[data-v-97a3eef6], .route-info .arrival[data-v-97a3eef6], .route-info .departure[data-v-97a3eef6] {\n    /* background-color: lightblue; */\n    display: block;\n    font-weight: 600;\n    letter-spacing: 1px;\n    left: 14px;\n    top: -16px;\n    position: absolute;\n    padding: 5px 10px;\n    width: 90px;\n}\n.route-info .arrival[data-v-97a3eef6] {\n    background-color: lightblue;\n}\n.route-info .departure[data-v-97a3eef6] {\n    background-color: lightgreen;\n}\nform label[data-v-97a3eef6] {\n  padding: 0 5px 0 15px;\n}\n.route-distance[data-v-97a3eef6] {\n  margin: -15px 10px 10px 15px;\n}\n#scroll-routes span[data-v-97a3eef6], #scroll-routes .route-info .arrival[data-v-97a3eef6], .route-info #scroll-routes .arrival[data-v-97a3eef6], #scroll-routes .route-info .departure[data-v-97a3eef6], .route-info #scroll-routes .departure[data-v-97a3eef6] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-routes span[disabled][data-v-97a3eef6], #scroll-routes .route-info [disabled].arrival[data-v-97a3eef6], .route-info #scroll-routes [disabled].arrival[data-v-97a3eef6], #scroll-routes .route-info [disabled].departure[data-v-97a3eef6], .route-info #scroll-routes [disabled].departure[data-v-97a3eef6] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
 
 /***/ }),
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-cca5aa1e] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n#scroll-cities span[data-v-cca5aa1e] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-cca5aa1e] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+exports.push([module.i, "\n.user-info[data-v-c23e2d70] {\n  margin-bottom: 20px;\n}\n.error-bg[data-v-c23e2d70] {\n  background-color: #ffd700;\n  font-weight: 500;\n  padding: 10px 80px;\n}\n", ""]);
 
 /***/ }),
 /* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n@media (min-width: 992px) {\n.btn-search[data-v-ca08cef0] {\n    margin-top: 25px;\n}\n}\n@media (max-width: 767px) {\n#app .alert[data-v-ca08cef0] {\n    margin-top: 15px;\n}\n}\n\n/*[v-cloak] { display:none; }*/\n.loading[data-v-ca08cef0] {\n  text-align: center;\n  z-index: 11111;\n}\n.seat-error[data-v-ca08cef0] {\n  text-align: center;\n}\n.form-control[disabled][data-v-ca08cef0] {\n  background-color: #3097D1;\n}\n\n/* The Modal (background) */\n.modal[data-v-ca08cef0] {\n  display: block;\n  position: fixed;\n  z-index: 11111;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: black;\n  background-color: rgba(0, 0, 0, 0.4);\n}\n\n/* seat display */\n.is-active[data-v-ca08cef0] {\n  background-color: green;\n}\n.booked[data-v-ca08cef0] {\n  background-color: yellow;\n}\n.buying[data-v-ca08cef0] {\n  background-color: orange;\n}\n.confirmed[data-v-ca08cef0] {\n  background-color: red;\n}\n.empty[data-v-ca08cef0] {\n  background-color: white;\n  border-width: 0;\n  /*color: #0a0a0a;*/\n  color: white;\n}\n\n/*#modal button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #modal button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #modal button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #modal button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }*/\n/* #seat-layout .seat-plan-body button {       \n    height: 50px;\n    margin: 10px 10px 0 0;\n  }\n  #seat-layout button.col-xs-2 {\n      width: 16.76666667%;          \n  }\n  #seat-layout button.col-xs-offset-2 {\n      margin-left: 17.666667%;\n  }\n  #seat-layout button.is-white {\n      background-color: white;\n      border-width: 0;\n      color: #0a0a0a;\n  }\n  .seat-plan-body {\n    padding-left: 20px;\n  } */\n#seat-layout .seat-plan-body[data-v-ca08cef0] {\n  padding-left: 20px;\n}\n#seat-layout .seat-plan-body button[data-v-ca08cef0] {\n    height: 50px;\n    margin: 10px 10px 0 0;\n}\n#seat-layout .seat-plan-body button.col-xs-2[data-v-ca08cef0] {\n      width: 16.76666667%;\n}\n#seat-layout .seat-plan-body button.col-xs-offset-2[data-v-ca08cef0] {\n      margin-left: 17.666667%;\n}\n#seat-layout .seat-plan-body button.is-white[data-v-ca08cef0] {\n      background-color: #fff;\n      border-width: 0;\n      color: #0a0a0a;\n}\n\n/*#modal .row  {\n    background-color: #e5ecff;\n  }*/\n/* end seat display */\n", ""]);
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-cca5aa1e] {\n  background-color: yellow;\n  font-weight: 600;\n  float: right;\n  padding: 2px 6px;\n  color: royalblue;\n}\n#scroll-cities span[data-v-cca5aa1e] {\n  cursor: pointer;\n  margin-left: 5px;\n}\n#scroll-cities span[disabled][data-v-cca5aa1e] {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n", ""]);
+
+/***/ }),
+/* 74 */
 /***/ (function(module, exports) {
 
 /*! Copyright (c) 2011 Piotr Rochala (http://rocha.la)
@@ -24056,7 +25064,7 @@ exports.push([module.i, "\n.view-available-info .panel-heading span[data-v-cca5a
 
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports) {
 
 var asyncGenerator = function () {
@@ -24842,7 +25850,7 @@ var Echo = function () {
 module.exports = Echo;
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -41931,204 +42939,14 @@ module.exports = Echo;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(131)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(134)(module)))
 
 /***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
- * Pusher JavaScript Library v4.1.0
+ * Pusher JavaScript Library v4.2.1
  * https://pusher.com/
  *
  * Copyright 2017, Pusher
@@ -42203,20 +43021,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	var runtime_1 = __webpack_require__(2);
 	var Collections = __webpack_require__(9);
-	var dispatcher_1 = __webpack_require__(23);
-	var timeline_1 = __webpack_require__(38);
-	var level_1 = __webpack_require__(39);
-	var StrategyBuilder = __webpack_require__(40);
+	var dispatcher_1 = __webpack_require__(24);
+	var timeline_1 = __webpack_require__(39);
+	var level_1 = __webpack_require__(40);
+	var StrategyBuilder = __webpack_require__(41);
 	var timers_1 = __webpack_require__(12);
 	var defaults_1 = __webpack_require__(5);
-	var DefaultConfig = __webpack_require__(62);
+	var DefaultConfig = __webpack_require__(63);
 	var logger_1 = __webpack_require__(8);
-	var factory_1 = __webpack_require__(42);
+	var factory_1 = __webpack_require__(43);
+	var url_store_1 = __webpack_require__(14);
 	var Pusher = (function () {
 	    function Pusher(app_key, options) {
 	        var _this = this;
 	        checkAppKey(app_key);
 	        options = options || {};
+	        if (!options.cluster) {
+	            var suffix = url_store_1["default"].buildLogSuffix("javascriptQuickStart");
+	            logger_1["default"].warn("You should always specify a cluster when connecting. " + suffix);
+	        }
 	        this.key = app_key;
 	        this.config = Collections.extend(DefaultConfig.getGlobalConfig(), options.cluster ? DefaultConfig.getClusterConfig(options.cluster) : {}, options);
 	        this.channels = factory_1["default"].createChannels();
@@ -42405,16 +43228,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	var dependencies_1 = __webpack_require__(3);
 	var xhr_auth_1 = __webpack_require__(7);
-	var jsonp_auth_1 = __webpack_require__(14);
-	var script_request_1 = __webpack_require__(15);
-	var jsonp_request_1 = __webpack_require__(16);
+	var jsonp_auth_1 = __webpack_require__(15);
+	var script_request_1 = __webpack_require__(16);
+	var jsonp_request_1 = __webpack_require__(17);
 	var script_receiver_factory_1 = __webpack_require__(4);
-	var jsonp_timeline_1 = __webpack_require__(17);
-	var transports_1 = __webpack_require__(18);
-	var net_info_1 = __webpack_require__(25);
-	var default_strategy_1 = __webpack_require__(26);
-	var transport_connection_initializer_1 = __webpack_require__(27);
-	var http_1 = __webpack_require__(28);
+	var jsonp_timeline_1 = __webpack_require__(18);
+	var transports_1 = __webpack_require__(19);
+	var net_info_1 = __webpack_require__(26);
+	var default_strategy_1 = __webpack_require__(27);
+	var transport_connection_initializer_1 = __webpack_require__(28);
+	var http_1 = __webpack_require__(29);
 	var Runtime = {
 	    nextAuthCallbackID: 1,
 	    auth_callbacks: {},
@@ -42600,7 +43423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var Defaults = {
-	    VERSION: "4.1.0",
+	    VERSION: "4.2.1",
 	    PROTOCOL: 7,
 	    host: 'ws.pusherapp.com',
 	    ws_port: 80,
@@ -42690,6 +43513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	var logger_1 = __webpack_require__(8);
 	var runtime_1 = __webpack_require__(2);
+	var url_store_1 = __webpack_require__(14);
 	var ajax = function (context, socketId, callback) {
 	    var self = this, xhr;
 	    xhr = runtime_1["default"].createXHR();
@@ -42714,7 +43538,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            else {
-	                logger_1["default"].warn("Couldn't get auth info from your webapp", xhr.status);
+	                var suffix = url_store_1["default"].buildLogSuffix("authenticationEndpoint");
+	                logger_1["default"].warn(("Couldn't retrieve authentication info. " + xhr.status) +
+	                    ("Clients must be authenticated to join private or presence channels. " + suffix));
 	                callback(true, xhr.status);
 	            }
 	        }
@@ -43135,6 +43961,42 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	var urlStore = {
+	    baseUrl: "https://pusher.com",
+	    urls: {
+	        authenticationEndpoint: {
+	            path: "/docs/authenticating_users"
+	        },
+	        javascriptQuickStart: {
+	            path: "/docs/javascript_quick_start"
+	        }
+	    }
+	};
+	var buildLogSuffix = function (key) {
+	    var urlPrefix = "See:";
+	    var urlObj = urlStore.urls[key];
+	    if (!urlObj)
+	        return "";
+	    var url;
+	    if (urlObj.fullUrl) {
+	        url = urlObj.fullUrl;
+	    }
+	    else if (urlObj.path) {
+	        url = urlStore.baseUrl + urlObj.path;
+	    }
+	    if (!url)
+	        return "";
+	    return urlPrefix + " " + url;
+	};
+	exports.__esModule = true;
+	exports["default"] = { buildLogSuffix: buildLogSuffix };
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43164,7 +44026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -43233,7 +44095,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43265,7 +44127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43298,13 +44160,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var transports_1 = __webpack_require__(19);
-	var transport_1 = __webpack_require__(21);
-	var URLSchemes = __webpack_require__(20);
+	var transports_1 = __webpack_require__(20);
+	var transport_1 = __webpack_require__(22);
+	var URLSchemes = __webpack_require__(21);
 	var runtime_1 = __webpack_require__(2);
 	var dependencies_1 = __webpack_require__(3);
 	var Collections = __webpack_require__(9);
@@ -43349,12 +44211,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var URLSchemes = __webpack_require__(20);
-	var transport_1 = __webpack_require__(21);
+	var URLSchemes = __webpack_require__(21);
+	var transport_1 = __webpack_require__(22);
 	var Collections = __webpack_require__(9);
 	var runtime_1 = __webpack_require__(2);
 	var WSTransport = new transport_1["default"]({
@@ -43404,7 +44266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43444,11 +44306,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var transport_connection_1 = __webpack_require__(22);
+	var transport_connection_1 = __webpack_require__(23);
 	var Transport = (function () {
 	    function Transport(hooks) {
 	        this.hooks = hooks;
@@ -43466,7 +44328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43477,7 +44339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	var util_1 = __webpack_require__(11);
 	var Collections = __webpack_require__(9);
-	var dispatcher_1 = __webpack_require__(23);
+	var dispatcher_1 = __webpack_require__(24);
 	var logger_1 = __webpack_require__(8);
 	var runtime_1 = __webpack_require__(2);
 	var TransportConnection = (function (_super) {
@@ -43628,12 +44490,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Collections = __webpack_require__(9);
-	var callback_registry_1 = __webpack_require__(24);
+	var callback_registry_1 = __webpack_require__(25);
 	var Dispatcher = (function () {
 	    function Dispatcher(failThrough) {
 	        this.callbacks = new callback_registry_1["default"]();
@@ -43688,7 +44550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43747,7 +44609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43756,7 +44618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var dispatcher_1 = __webpack_require__(23);
+	var dispatcher_1 = __webpack_require__(24);
 	var NetInfo = (function (_super) {
 	    __extends(NetInfo, _super);
 	    function NetInfo() {
@@ -43786,7 +44648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -43888,7 +44750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43926,12 +44788,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var http_xdomain_request_1 = __webpack_require__(29);
-	var http_1 = __webpack_require__(31);
+	var http_xdomain_request_1 = __webpack_require__(30);
+	var http_1 = __webpack_require__(32);
 	http_1["default"].createXDR = function (method, url) {
 	    return this.createRequest(http_xdomain_request_1["default"], method, url);
 	};
@@ -43940,11 +44802,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Errors = __webpack_require__(30);
+	var Errors = __webpack_require__(31);
 	var hooks = {
 	    getRequest: function (socket) {
 	        var xdr = new window.XDomainRequest();
@@ -43980,7 +44842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44040,15 +44902,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var http_request_1 = __webpack_require__(32);
-	var http_socket_1 = __webpack_require__(33);
-	var http_streaming_socket_1 = __webpack_require__(35);
-	var http_polling_socket_1 = __webpack_require__(36);
-	var http_xhr_request_1 = __webpack_require__(37);
+	var http_request_1 = __webpack_require__(33);
+	var http_socket_1 = __webpack_require__(34);
+	var http_streaming_socket_1 = __webpack_require__(36);
+	var http_polling_socket_1 = __webpack_require__(37);
+	var http_xhr_request_1 = __webpack_require__(38);
 	var HTTP = {
 	    createStreamingSocket: function (url) {
 	        return this.createSocket(http_streaming_socket_1["default"], url);
@@ -44071,7 +44933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44081,7 +44943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var runtime_1 = __webpack_require__(2);
-	var dispatcher_1 = __webpack_require__(23);
+	var dispatcher_1 = __webpack_require__(24);
 	var MAX_BUFFER_LENGTH = 256 * 1024;
 	var HTTPRequest = (function (_super) {
 	    __extends(HTTPRequest, _super);
@@ -44150,11 +45012,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var state_1 = __webpack_require__(34);
+	var state_1 = __webpack_require__(35);
 	var util_1 = __webpack_require__(11);
 	var runtime_1 = __webpack_require__(2);
 	var autoIncrement = 1;
@@ -44331,7 +45193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44346,7 +45208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44369,7 +45231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44396,7 +45258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44433,13 +45295,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Collections = __webpack_require__(9);
 	var util_1 = __webpack_require__(11);
-	var level_1 = __webpack_require__(39);
+	var level_1 = __webpack_require__(40);
 	var Timeline = (function () {
 	    function Timeline(key, session, options) {
 	        this.key = key;
@@ -44503,7 +45365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44518,21 +45380,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Collections = __webpack_require__(9);
 	var util_1 = __webpack_require__(11);
-	var transport_manager_1 = __webpack_require__(41);
-	var Errors = __webpack_require__(30);
-	var transport_strategy_1 = __webpack_require__(55);
-	var sequential_strategy_1 = __webpack_require__(56);
-	var best_connected_ever_strategy_1 = __webpack_require__(57);
-	var cached_strategy_1 = __webpack_require__(58);
-	var delayed_strategy_1 = __webpack_require__(59);
-	var if_strategy_1 = __webpack_require__(60);
-	var first_connected_strategy_1 = __webpack_require__(61);
+	var transport_manager_1 = __webpack_require__(42);
+	var Errors = __webpack_require__(31);
+	var transport_strategy_1 = __webpack_require__(56);
+	var sequential_strategy_1 = __webpack_require__(57);
+	var best_connected_ever_strategy_1 = __webpack_require__(58);
+	var cached_strategy_1 = __webpack_require__(59);
+	var delayed_strategy_1 = __webpack_require__(60);
+	var if_strategy_1 = __webpack_require__(61);
+	var first_connected_strategy_1 = __webpack_require__(62);
 	var runtime_1 = __webpack_require__(2);
 	var Transports = runtime_1["default"].Transports;
 	exports.build = function (scheme, options) {
@@ -44688,11 +45550,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var factory_1 = __webpack_require__(42);
+	var factory_1 = __webpack_require__(43);
 	var TransportManager = (function () {
 	    function TransportManager(options) {
 	        this.options = options || {};
@@ -44717,19 +45579,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var assistant_to_the_transport_manager_1 = __webpack_require__(43);
-	var handshake_1 = __webpack_require__(44);
-	var pusher_authorizer_1 = __webpack_require__(47);
-	var timeline_sender_1 = __webpack_require__(48);
-	var presence_channel_1 = __webpack_require__(49);
-	var private_channel_1 = __webpack_require__(50);
-	var channel_1 = __webpack_require__(51);
-	var connection_manager_1 = __webpack_require__(53);
-	var channels_1 = __webpack_require__(54);
+	var assistant_to_the_transport_manager_1 = __webpack_require__(44);
+	var handshake_1 = __webpack_require__(45);
+	var pusher_authorizer_1 = __webpack_require__(48);
+	var timeline_sender_1 = __webpack_require__(49);
+	var presence_channel_1 = __webpack_require__(50);
+	var private_channel_1 = __webpack_require__(51);
+	var channel_1 = __webpack_require__(52);
+	var connection_manager_1 = __webpack_require__(54);
+	var channels_1 = __webpack_require__(55);
 	var Factory = {
 	    createChannels: function () {
 	        return new channels_1["default"]();
@@ -44767,7 +45629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44819,13 +45681,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Collections = __webpack_require__(9);
-	var Protocol = __webpack_require__(45);
-	var connection_1 = __webpack_require__(46);
+	var Protocol = __webpack_require__(46);
+	var connection_1 = __webpack_require__(47);
 	var Handshake = (function () {
 	    function Handshake(transport, callback) {
 	        this.transport = transport;
@@ -44883,7 +45745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -44973,7 +45835,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44983,8 +45845,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var Collections = __webpack_require__(9);
-	var dispatcher_1 = __webpack_require__(23);
-	var Protocol = __webpack_require__(45);
+	var dispatcher_1 = __webpack_require__(24);
+	var Protocol = __webpack_require__(46);
 	var logger_1 = __webpack_require__(8);
 	var Connection = (function (_super) {
 	    __extends(Connection, _super);
@@ -45092,7 +45954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45127,7 +45989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45150,7 +46012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45159,9 +46021,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var private_channel_1 = __webpack_require__(50);
+	var private_channel_1 = __webpack_require__(51);
 	var logger_1 = __webpack_require__(8);
-	var members_1 = __webpack_require__(52);
+	var members_1 = __webpack_require__(53);
+	var url_store_1 = __webpack_require__(14);
 	var PresenceChannel = (function (_super) {
 	    __extends(PresenceChannel, _super);
 	    function PresenceChannel(name, pusher) {
@@ -45173,9 +46036,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _super.prototype.authorize.call(this, socketId, function (error, authData) {
 	            if (!error) {
 	                if (authData.channel_data === undefined) {
-	                    logger_1["default"].warn("Invalid auth response for channel '" +
-	                        _this.name +
-	                        "', expected 'channel_data' field");
+	                    var suffix = url_store_1["default"].buildLogSuffix("authenticationEndpoint");
+	                    logger_1["default"].warn(("Invalid auth response for channel '" + _this.name + "',") +
+	                        ("expected 'channel_data' field. " + suffix));
 	                    callback("Invalid auth response");
 	                    return;
 	                }
@@ -45223,7 +46086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45232,8 +46095,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var factory_1 = __webpack_require__(42);
-	var channel_1 = __webpack_require__(51);
+	var factory_1 = __webpack_require__(43);
+	var channel_1 = __webpack_require__(52);
 	var PrivateChannel = (function (_super) {
 	    __extends(PrivateChannel, _super);
 	    function PrivateChannel() {
@@ -45250,7 +46113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45259,8 +46122,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var dispatcher_1 = __webpack_require__(23);
-	var Errors = __webpack_require__(30);
+	var dispatcher_1 = __webpack_require__(24);
+	var Errors = __webpack_require__(31);
 	var logger_1 = __webpack_require__(8);
 	var Channel = (function (_super) {
 	    __extends(Channel, _super);
@@ -45285,6 +46148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    Channel.prototype.disconnect = function () {
 	        this.subscribed = false;
+	        this.subscriptionPending = false;
 	    };
 	    Channel.prototype.handleEvent = function (event, data) {
 	        if (event.indexOf("pusher_internal:") === 0) {
@@ -45342,7 +46206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45404,7 +46268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45413,7 +46277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var dispatcher_1 = __webpack_require__(23);
+	var dispatcher_1 = __webpack_require__(24);
 	var timers_1 = __webpack_require__(12);
 	var logger_1 = __webpack_require__(8);
 	var Collections = __webpack_require__(9);
@@ -45577,7 +46441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ConnectionManager.prototype.resetActivityCheck = function () {
 	        var _this = this;
 	        this.stopActivityCheck();
-	        if (!this.connection.handlesActivityChecks()) {
+	        if (this.connection && !this.connection.handlesActivityChecks()) {
 	            this.activityTimer = new timers_1.OneOffTimer(this.activityTimeout, function () {
 	                _this.sendActivityCheck();
 	            });
@@ -45700,12 +46564,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Collections = __webpack_require__(9);
-	var factory_1 = __webpack_require__(42);
+	var factory_1 = __webpack_require__(43);
 	var Channels = (function () {
 	    function Channels() {
 	        this.channels = {};
@@ -45750,13 +46614,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var factory_1 = __webpack_require__(42);
+	var factory_1 = __webpack_require__(43);
 	var util_1 = __webpack_require__(11);
-	var Errors = __webpack_require__(30);
+	var Errors = __webpack_require__(31);
 	var Collections = __webpack_require__(9);
 	var TransportStrategy = (function () {
 	    function TransportStrategy(name, priority, transport, options) {
@@ -45857,7 +46721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45954,7 +46818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -46017,13 +46881,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var util_1 = __webpack_require__(11);
 	var runtime_1 = __webpack_require__(2);
-	var sequential_strategy_1 = __webpack_require__(56);
+	var sequential_strategy_1 = __webpack_require__(57);
 	var Collections = __webpack_require__(9);
 	var CachedStrategy = (function () {
 	    function CachedStrategy(strategy, transports, options) {
@@ -46132,7 +46996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -46174,7 +47038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -46199,7 +47063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -46226,7 +47090,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -46262,826 +47126,212 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _colorLuminance = __webpack_require__(6);
-
-var _getModal = __webpack_require__(5);
-
-var _hasClass$isDescendant = __webpack_require__(4);
-
-/*
- * User clicked on "Confirm"/"OK" or "Cancel"
- */
-var handleButton = function handleButton(event, params, modal) {
-  var e = event || window.event;
-  var target = e.target || e.srcElement;
-
-  var targetedConfirm = target.className.indexOf('confirm') !== -1;
-  var targetedOverlay = target.className.indexOf('sweet-overlay') !== -1;
-  var modalIsVisible = _hasClass$isDescendant.hasClass(modal, 'visible');
-  var doneFunctionExists = params.doneFunction && modal.getAttribute('data-has-done-function') === 'true';
-
-  // Since the user can change the background-color of the confirm button programmatically,
-  // we must calculate what the color should be on hover/active
-  var normalColor, hoverColor, activeColor;
-  if (targetedConfirm && params.confirmButtonColor) {
-    normalColor = params.confirmButtonColor;
-    hoverColor = _colorLuminance.colorLuminance(normalColor, -0.04);
-    activeColor = _colorLuminance.colorLuminance(normalColor, -0.14);
-  }
-
-  function shouldSetConfirmButtonColor(color) {
-    if (targetedConfirm && params.confirmButtonColor) {
-      target.style.backgroundColor = color;
-    }
-  }
-
-  switch (e.type) {
-    case 'mouseover':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'mouseout':
-      shouldSetConfirmButtonColor(normalColor);
-      break;
-
-    case 'mousedown':
-      shouldSetConfirmButtonColor(activeColor);
-      break;
-
-    case 'mouseup':
-      shouldSetConfirmButtonColor(hoverColor);
-      break;
-
-    case 'focus':
-      var $confirmButton = modal.querySelector('button.confirm');
-      var $cancelButton = modal.querySelector('button.cancel');
-
-      if (targetedConfirm) {
-        $cancelButton.style.boxShadow = 'none';
-      } else {
-        $confirmButton.style.boxShadow = 'none';
-      }
-      break;
-
-    case 'click':
-      var clickedOnModal = modal === target;
-      var clickedOnModalChild = _hasClass$isDescendant.isDescendant(modal, target);
-
-      // Ignore click outside if allowOutsideClick is false
-      if (!clickedOnModal && !clickedOnModalChild && modalIsVisible && !params.allowOutsideClick) {
-        break;
-      }
-
-      if (targetedConfirm && doneFunctionExists && modalIsVisible) {
-        handleConfirm(modal, params);
-      } else if (doneFunctionExists && modalIsVisible || targetedOverlay) {
-        handleCancel(modal, params);
-      } else if (_hasClass$isDescendant.isDescendant(modal, target) && target.tagName === 'BUTTON') {
-        sweetAlert.close();
-      }
-      break;
-  }
-};
-
-/*
- *  User clicked on "Confirm"/"OK"
- */
-var handleConfirm = function handleConfirm(modal, params) {
-  var callbackValue = true;
-
-  if (_hasClass$isDescendant.hasClass(modal, 'show-input')) {
-    callbackValue = modal.querySelector('input').value;
-
-    if (!callbackValue) {
-      callbackValue = '';
-    }
-  }
-
-  params.doneFunction(callbackValue);
-
-  if (params.closeOnConfirm) {
-    sweetAlert.close();
-  }
-  // Disable cancel and confirm button if the parameter is true
-  if (params.showLoaderOnConfirm) {
-    sweetAlert.disableButtons();
-  }
-};
-
-/*
- *  User clicked on "Cancel"
- */
-var handleCancel = function handleCancel(modal, params) {
-  // Check if callback function expects a parameter (to track cancel actions)
-  var functionAsStr = String(params.doneFunction).replace(/\s/g, '');
-  var functionHandlesCancel = functionAsStr.substring(0, 9) === 'function(' && functionAsStr.substring(9, 10) !== ')';
-
-  if (functionHandlesCancel) {
-    params.doneFunction(false);
-  }
-
-  if (params.closeOnCancel) {
-    sweetAlert.close();
-  }
-};
-
-exports['default'] = {
-  handleButton: handleButton,
-  handleConfirm: handleConfirm,
-  handleCancel: handleCancel
-};
-module.exports = exports['default'];
-
-/***/ }),
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
 
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _stopEventPropagation$fireClick = __webpack_require__(4);
-
-var _setFocusStyle = __webpack_require__(5);
-
-var handleKeyDown = function handleKeyDown(event, params, modal) {
-  var e = event || window.event;
-  var keyCode = e.keyCode || e.which;
-
-  var $okButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  var $modalButtons = modal.querySelectorAll('button[tabindex]');
-
-  if ([9, 13, 32, 27].indexOf(keyCode) === -1) {
-    // Don't do work on keys we don't care about.
-    return;
-  }
-
-  var $targetElement = e.target || e.srcElement;
-
-  var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
-  for (var i = 0; i < $modalButtons.length; i++) {
-    if ($targetElement === $modalButtons[i]) {
-      btnIndex = i;
-      break;
+    if (global.setImmediate) {
+        return;
     }
-  }
 
-  if (keyCode === 9) {
-    // TAB
-    if (btnIndex === -1) {
-      // No button focused. Jump to the confirm button.
-      $targetElement = $okButton;
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
     } else {
-      // Cycle to the next button
-      if (btnIndex === $modalButtons.length - 1) {
-        $targetElement = $modalButtons[0];
-      } else {
-        $targetElement = $modalButtons[btnIndex + 1];
-      }
+        // For older browsers
+        installSetTimeoutImplementation();
     }
 
-    _stopEventPropagation$fireClick.stopEventPropagation(e);
-    $targetElement.focus();
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-    if (params.confirmButtonColor) {
-      _setFocusStyle.setFocusStyle($targetElement, params.confirmButtonColor);
-    }
-  } else {
-    if (keyCode === 13) {
-      if ($targetElement.tagName === 'INPUT') {
-        $targetElement = $okButton;
-        $okButton.focus();
-      }
-
-      if (btnIndex === -1) {
-        // ENTER/SPACE clicked outside of a button.
-        $targetElement = $okButton;
-      } else {
-        // Do nothing - let the browser handle it.
-        $targetElement = undefined;
-      }
-    } else if (keyCode === 27 && params.allowEscapeKey === true) {
-      $targetElement = $cancelButton;
-      _stopEventPropagation$fireClick.fireClick($targetElement, e);
-    } else {
-      // Fallback - let the browser handle it.
-      $targetElement = undefined;
-    }
-  }
-};
-
-exports['default'] = handleKeyDown;
-module.exports = exports['default'];
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(13)))
 
 /***/ }),
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var injectedHTML =
-
-// Dark overlay
-"<div class=\"sweet-overlay\" tabIndex=\"-1\"></div>" +
-
-// Modal
-"<div class=\"sweet-alert\">" +
-
-// Error icon
-"<div class=\"sa-icon sa-error\">\n      <span class=\"sa-x-mark\">\n        <span class=\"sa-line sa-left\"></span>\n        <span class=\"sa-line sa-right\"></span>\n      </span>\n    </div>" +
-
-// Warning icon
-"<div class=\"sa-icon sa-warning\">\n      <span class=\"sa-body\"></span>\n      <span class=\"sa-dot\"></span>\n    </div>" +
-
-// Info icon
-"<div class=\"sa-icon sa-info\"></div>" +
-
-// Success icon
-"<div class=\"sa-icon sa-success\">\n      <span class=\"sa-line sa-tip\"></span>\n      <span class=\"sa-line sa-long\"></span>\n\n      <div class=\"sa-placeholder\"></div>\n      <div class=\"sa-fix\"></div>\n    </div>" + "<div class=\"sa-icon sa-custom\"></div>" +
-
-// Title, text and input
-"<h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type=\"text\" tabIndex=\"3\" />\n      <div class=\"sa-input-error\"></div>\n    </fieldset>" +
-
-// Input errors
-"<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
-
-// Cancel and confirm buttons
-"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
-
-// Loading animation
-"<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
-
-// End of modal
-"</div>";
-
-exports["default"] = injectedHTML;
-module.exports = exports["default"];
+/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {!function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.swal=e():t.swal=e()}(this,function(){return function(t){function e(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return t[o].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var n={};return e.m=t,e.c=n,e.d=function(t,n,o){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:o})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=8)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o="swal-button";e.CLASS_NAMES={MODAL:"swal-modal",OVERLAY:"swal-overlay",SHOW_MODAL:"swal-overlay--show-modal",MODAL_TITLE:"swal-title",MODAL_TEXT:"swal-text",ICON:"swal-icon",ICON_CUSTOM:"swal-icon--custom",CONTENT:"swal-content",FOOTER:"swal-footer",BUTTON_CONTAINER:"swal-button-container",BUTTON:o,CONFIRM_BUTTON:o+"--confirm",CANCEL_BUTTON:o+"--cancel",DANGER_BUTTON:o+"--danger",BUTTON_LOADING:o+"--loading",BUTTON_LOADER:o+"__loader"},e.default=e.CLASS_NAMES},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getNode=function(t){var e="."+t;return document.querySelector(e)},e.stringToNode=function(t){var e=document.createElement("div");return e.innerHTML=t.trim(),e.firstChild},e.insertAfter=function(t,e){var n=e.nextSibling;e.parentNode.insertBefore(t,n)},e.removeNode=function(t){t.parentElement.removeChild(t)},e.throwErr=function(t){throw t=t.replace(/ +(?= )/g,""),"SweetAlert: "+(t=t.trim())},e.isPlainObject=function(t){if("[object Object]"!==Object.prototype.toString.call(t))return!1;var e=Object.getPrototypeOf(t);return null===e||e===Object.prototype},e.ordinalSuffixOf=function(t){var e=t%10,n=t%100;return 1===e&&11!==n?t+"st":2===e&&12!==n?t+"nd":3===e&&13!==n?t+"rd":t+"th"}},function(t,e,n){"use strict";function o(t){for(var n in t)e.hasOwnProperty(n)||(e[n]=t[n])}Object.defineProperty(e,"__esModule",{value:!0}),o(n(25));var r=n(26);e.overlayMarkup=r.default,o(n(27)),o(n(28)),o(n(29));var i=n(0),a=i.default.MODAL_TITLE,s=i.default.MODAL_TEXT,c=i.default.ICON,l=i.default.FOOTER;e.iconMarkup='\n  <div class="'+c+'"></div>',e.titleMarkup='\n  <div class="'+a+'"></div>\n',e.textMarkup='\n  <div class="'+s+'"></div>',e.footerMarkup='\n  <div class="'+l+'"></div>\n'},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1);e.CONFIRM_KEY="confirm",e.CANCEL_KEY="cancel";var r={visible:!0,text:null,value:null,className:"",closeModal:!0},i=Object.assign({},r,{visible:!1,text:"Cancel",value:null}),a=Object.assign({},r,{text:"OK",value:!0});e.defaultButtonList={cancel:i,confirm:a};var s=function(t){switch(t){case e.CONFIRM_KEY:return a;case e.CANCEL_KEY:return i;default:var n=t.charAt(0).toUpperCase()+t.slice(1);return Object.assign({},r,{text:n,value:t})}},c=function(t,e){var n=s(t);return!0===e?Object.assign({},n,{visible:!0}):"string"==typeof e?Object.assign({},n,{visible:!0,text:e}):o.isPlainObject(e)?Object.assign({visible:!0},n,e):Object.assign({},n,{visible:!1})},l=function(t){for(var e={},n=0,o=Object.keys(t);n<o.length;n++){var r=o[n],a=t[r],s=c(r,a);e[r]=s}return e.cancel||(e.cancel=i),e},u=function(t){var n={};switch(t.length){case 1:n[e.CANCEL_KEY]=Object.assign({},i,{visible:!1});break;case 2:n[e.CANCEL_KEY]=c(e.CANCEL_KEY,t[0]),n[e.CONFIRM_KEY]=c(e.CONFIRM_KEY,t[1]);break;default:o.throwErr("Invalid number of 'buttons' in array ("+t.length+").\n      If you want more than 2 buttons, you need to use an object!")}return n};e.getButtonListOpts=function(t){var n=e.defaultButtonList;return"string"==typeof t?n[e.CONFIRM_KEY]=c(e.CONFIRM_KEY,t):Array.isArray(t)?n=u(t):o.isPlainObject(t)?n=l(t):!0===t?n=u([!0,!0]):!1===t?n=u([!1,!1]):void 0===t&&(n=e.defaultButtonList),n}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(2),i=n(0),a=i.default.MODAL,s=i.default.OVERLAY,c=n(30),l=n(31),u=n(32),f=n(33);e.injectElIntoModal=function(t){var e=o.getNode(a),n=o.stringToNode(t);return e.appendChild(n),n};var d=function(t){t.className=a,t.textContent=""},p=function(t,e){d(t);var n=e.className;n&&t.classList.add(n)};e.initModalContent=function(t){var e=o.getNode(a);p(e,t),c.default(t.icon),l.initTitle(t.title),l.initText(t.text),f.default(t.content),u.default(t.buttons,t.dangerMode)};var m=function(){var t=o.getNode(s),e=o.stringToNode(r.modalMarkup);t.appendChild(e)};e.default=m},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(3),r={isOpen:!1,promise:null,actions:{},timer:null},i=Object.assign({},r);e.resetState=function(){i=Object.assign({},r)},e.setActionValue=function(t){if("string"==typeof t)return a(o.CONFIRM_KEY,t);for(var e in t)a(e,t[e])};var a=function(t,e){i.actions[t]||(i.actions[t]={}),Object.assign(i.actions[t],{value:e})};e.setActionOptionsFor=function(t,e){var n=(void 0===e?{}:e).closeModal,o=void 0===n||n;Object.assign(i.actions[t],{closeModal:o})},e.default=i},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(3),i=n(0),a=i.default.OVERLAY,s=i.default.SHOW_MODAL,c=i.default.BUTTON,l=i.default.BUTTON_LOADING,u=n(5);e.openModal=function(){o.getNode(a).classList.add(s),u.default.isOpen=!0};var f=function(){o.getNode(a).classList.remove(s),u.default.isOpen=!1};e.onAction=function(t){void 0===t&&(t=r.CANCEL_KEY);var e=u.default.actions[t],n=e.value;if(!1===e.closeModal){var i=c+"--"+t;o.getNode(i).classList.add(l)}else f();u.default.promise.resolve(n)},e.getState=function(){var t=Object.assign({},u.default);return delete t.promise,delete t.timer,t},e.stopLoading=function(){for(var t=document.querySelectorAll("."+c),e=0;e<t.length;e++){t[e].classList.remove(l)}}},function(t,e){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(n=window)}t.exports=n},function(t,e,n){(function(e){t.exports=e.sweetAlert=n(9)}).call(e,n(7))},function(t,e,n){(function(e){t.exports=e.swal=n(10)}).call(e,n(7))},function(t,e,n){"undefined"!=typeof window&&n(11),n(16);var o=n(23).default;t.exports=o},function(t,e,n){var o=n(12);"string"==typeof o&&(o=[[t.i,o,""]]);var r={insertAt:"top"};r.transform=void 0;n(14)(o,r);o.locals&&(t.exports=o.locals)},function(t,e,n){e=t.exports=n(13)(void 0),e.push([t.i,'.swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px}.swal-icon--error__line--left{-webkit-transform:rotate(45deg);transform:rotate(45deg);left:17px}.swal-icon--error__line--right{-webkit-transform:rotate(-45deg);transform:rotate(-45deg);right:16px}@-webkit-keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@keyframes animateErrorIcon{0%{-webkit-transform:rotateX(100deg);transform:rotateX(100deg);opacity:0}to{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1}}@-webkit-keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}@keyframes animateXMark{0%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}50%{-webkit-transform:scale(.4);transform:scale(.4);margin-top:26px;opacity:0}80%{-webkit-transform:scale(1.15);transform:scale(1.15);margin-top:-6px}to{-webkit-transform:scale(1);transform:scale(1);margin-top:0;opacity:1}}.swal-icon--warning{border-color:#f8bb86;-webkit-animation:pulseWarning .75s infinite alternate;animation:pulseWarning .75s infinite alternate}.swal-icon--warning__body{width:5px;height:47px;top:10px;border-radius:2px;margin-left:-2px}.swal-icon--warning__body,.swal-icon--warning__dot{position:absolute;left:50%;background-color:#f8bb86}.swal-icon--warning__dot{width:7px;height:7px;border-radius:50%;margin-left:-4px;bottom:-11px}@-webkit-keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}@keyframes pulseWarning{0%{border-color:#f8d486}to{border-color:#f8bb86}}.swal-icon--success{border-color:#a5dc86}.swal-icon--success:after,.swal-icon--success:before{content:"";border-radius:50%;position:absolute;width:60px;height:120px;background:#fff;-webkit-transform:rotate(45deg);transform:rotate(45deg)}.swal-icon--success:before{border-radius:120px 0 0 120px;top:-7px;left:-33px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:60px 60px;transform-origin:60px 60px}.swal-icon--success:after{border-radius:0 120px 120px 0;top:-11px;left:30px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-transform-origin:0 60px;transform-origin:0 60px;-webkit-animation:rotatePlaceholder 4.25s ease-in;animation:rotatePlaceholder 4.25s ease-in}.swal-icon--success__ring{width:80px;height:80px;border:4px solid hsla(98,55%,69%,.2);border-radius:50%;box-sizing:content-box;position:absolute;left:-4px;top:-4px;z-index:2}.swal-icon--success__hide-corners{width:5px;height:90px;background-color:#fff;position:absolute;left:28px;top:8px;z-index:1;-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}.swal-icon--success__line{height:5px;background-color:#a5dc86;display:block;border-radius:2px;position:absolute;z-index:2}.swal-icon--success__line--tip{width:25px;left:14px;top:46px;-webkit-transform:rotate(45deg);transform:rotate(45deg);-webkit-animation:animateSuccessTip .75s;animation:animateSuccessTip .75s}.swal-icon--success__line--long{width:47px;right:8px;top:38px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);-webkit-animation:animateSuccessLong .75s;animation:animateSuccessLong .75s}@-webkit-keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@keyframes rotatePlaceholder{0%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}5%{-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}12%{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}to{-webkit-transform:rotate(-405deg);transform:rotate(-405deg)}}@-webkit-keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@keyframes animateSuccessTip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}to{width:25px;left:14px;top:45px}}@-webkit-keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}@keyframes animateSuccessLong{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}to{width:47px;right:8px;top:38px}}.swal-icon--info{border-color:#c9dae1}.swal-icon--info:before{width:5px;height:29px;bottom:17px;border-radius:2px;margin-left:-2px}.swal-icon--info:after,.swal-icon--info:before{content:"";position:absolute;left:50%;background-color:#c9dae1}.swal-icon--info:after{width:7px;height:7px;border-radius:50%;margin-left:-3px;top:19px}.swal-icon{width:80px;height:80px;border-width:4px;border-style:solid;border-radius:50%;padding:0;position:relative;box-sizing:content-box;margin:20px auto}.swal-icon:first-child{margin-top:32px}.swal-icon--custom{width:auto;height:auto;max-width:100%;border:none;border-radius:0}.swal-icon img{max-width:100%;max-height:100%}.swal-title{color:rgba(0,0,0,.65);font-weight:600;text-transform:none;position:relative;display:block;padding:13px 16px;font-size:27px;line-height:normal;text-align:center;margin-bottom:0}.swal-title:first-child{margin-top:26px}.swal-title:not(:first-child){padding-bottom:0}.swal-title:not(:last-child){margin-bottom:13px}.swal-text{font-size:16px;position:relative;float:none;line-height:normal;vertical-align:top;text-align:left;display:inline-block;margin:0;padding:0 10px;font-weight:400;color:rgba(0,0,0,.64);max-width:calc(100% - 20px);overflow-wrap:break-word;box-sizing:border-box}.swal-text:first-child{margin-top:45px}.swal-text:last-child{margin-bottom:45px}.swal-footer{text-align:right;padding-top:13px;margin-top:13px;padding:13px 16px;border-radius:inherit;border-top-left-radius:0;border-top-right-radius:0}.swal-button-container{margin:5px;display:inline-block;position:relative}.swal-button{background-color:#7cd1f9;color:#fff;border:none;box-shadow:none;border-radius:5px;font-weight:600;font-size:14px;padding:10px 24px;margin:0;cursor:pointer}.swal-button[not:disabled]:hover{background-color:#78cbf2}.swal-button:active{background-color:#70bce0}.swal-button:focus{outline:none;box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(43,114,165,.29)}.swal-button[disabled]{opacity:.5;cursor:default}.swal-button::-moz-focus-inner{border:0}.swal-button--cancel{color:#555;background-color:#efefef}.swal-button--cancel[not:disabled]:hover{background-color:#e8e8e8}.swal-button--cancel:active{background-color:#d7d7d7}.swal-button--cancel:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(116,136,150,.29)}.swal-button--danger{background-color:#e64942}.swal-button--danger[not:disabled]:hover{background-color:#df4740}.swal-button--danger:active{background-color:#cf423b}.swal-button--danger:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(165,43,43,.29)}.swal-content{padding:0 20px;margin-top:20px;font-size:medium}.swal-content:last-child{margin-bottom:20px}.swal-content__input,.swal-content__textarea{-webkit-appearance:none;background-color:#fff;border:none;font-size:14px;display:block;box-sizing:border-box;width:100%;border:1px solid rgba(0,0,0,.14);padding:10px 13px;border-radius:2px;transition:border-color .2s}.swal-content__input:focus,.swal-content__textarea:focus{outline:none;border-color:#6db8ff}.swal-content__textarea{resize:vertical}.swal-button--loading{color:transparent}.swal-button--loading~.swal-button__loader{opacity:1}.swal-button__loader{position:absolute;height:auto;width:43px;z-index:2;left:50%;top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);text-align:center;pointer-events:none;opacity:0}.swal-button__loader div{display:inline-block;float:none;vertical-align:baseline;width:9px;height:9px;padding:0;border:none;margin:2px;opacity:.4;border-radius:7px;background-color:hsla(0,0%,100%,.9);transition:background .2s;-webkit-animation:swal-loading-anim 1s infinite;animation:swal-loading-anim 1s infinite}.swal-button__loader div:nth-child(3n+2){-webkit-animation-delay:.15s;animation-delay:.15s}.swal-button__loader div:nth-child(3n+3){-webkit-animation-delay:.3s;animation-delay:.3s}@-webkit-keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}@keyframes swal-loading-anim{0%{opacity:.4}20%{opacity:.4}50%{opacity:1}to{opacity:.4}}.swal-overlay{position:fixed;top:0;bottom:0;left:0;right:0;text-align:center;font-size:0;overflow-y:scroll;background-color:rgba(0,0,0,.4);z-index:10000;pointer-events:none;opacity:0;transition:opacity .3s}.swal-overlay:before{content:" ";display:inline-block;vertical-align:middle;height:100%}.swal-overlay--show-modal{opacity:1;pointer-events:auto}.swal-overlay--show-modal .swal-modal{opacity:1;pointer-events:auto;box-sizing:border-box;-webkit-animation:showSweetAlert .3s;animation:showSweetAlert .3s;will-change:transform}.swal-modal{width:478px;opacity:0;pointer-events:none;background-color:#fff;text-align:center;border-radius:5px;position:static;margin:20px auto;display:inline-block;vertical-align:middle;-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;z-index:10001;transition:opacity .2s,-webkit-transform .3s;transition:transform .3s,opacity .2s;transition:transform .3s,opacity .2s,-webkit-transform .3s}@media (max-width:500px){.swal-modal{width:calc(100% - 20px)}}@-webkit-keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}@keyframes showSweetAlert{0%{-webkit-transform:scale(1);transform:scale(1)}1%{-webkit-transform:scale(.5);transform:scale(.5)}45%{-webkit-transform:scale(1.05);transform:scale(1.05)}80%{-webkit-transform:scale(.95);transform:scale(.95)}to{-webkit-transform:scale(1);transform:scale(1)}}',""])},function(t,e){function n(t,e){var n=t[1]||"",r=t[3];if(!r)return n;if(e&&"function"==typeof btoa){var i=o(r);return[n].concat(r.sources.map(function(t){return"/*# sourceURL="+r.sourceRoot+t+" */"})).concat([i]).join("\n")}return[n].join("\n")}function o(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var o=n(e,t);return e[2]?"@media "+e[2]+"{"+o+"}":o}).join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var o={},r=0;r<this.length;r++){var i=this[r][0];"number"==typeof i&&(o[i]=!0)}for(r=0;r<t.length;r++){var a=t[r];"number"==typeof a[0]&&o[a[0]]||(n&&!a[2]?a[2]=n:n&&(a[2]="("+a[2]+") and ("+n+")"),e.push(a))}},e}},function(t,e,n){function o(t,e){for(var n=0;n<t.length;n++){var o=t[n],r=m[o.id];if(r){r.refs++;for(var i=0;i<r.parts.length;i++)r.parts[i](o.parts[i]);for(;i<o.parts.length;i++)r.parts.push(u(o.parts[i],e))}else{for(var a=[],i=0;i<o.parts.length;i++)a.push(u(o.parts[i],e));m[o.id]={id:o.id,refs:1,parts:a}}}}function r(t,e){for(var n=[],o={},r=0;r<t.length;r++){var i=t[r],a=e.base?i[0]+e.base:i[0],s=i[1],c=i[2],l=i[3],u={css:s,media:c,sourceMap:l};o[a]?o[a].parts.push(u):n.push(o[a]={id:a,parts:[u]})}return n}function i(t,e){var n=v(t.insertInto);if(!n)throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");var o=w[w.length-1];if("top"===t.insertAt)o?o.nextSibling?n.insertBefore(e,o.nextSibling):n.appendChild(e):n.insertBefore(e,n.firstChild),w.push(e);else{if("bottom"!==t.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(e)}}function a(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t);var e=w.indexOf(t);e>=0&&w.splice(e,1)}function s(t){var e=document.createElement("style");return t.attrs.type="text/css",l(e,t.attrs),i(t,e),e}function c(t){var e=document.createElement("link");return t.attrs.type="text/css",t.attrs.rel="stylesheet",l(e,t.attrs),i(t,e),e}function l(t,e){Object.keys(e).forEach(function(n){t.setAttribute(n,e[n])})}function u(t,e){var n,o,r,i;if(e.transform&&t.css){if(!(i=e.transform(t.css)))return function(){};t.css=i}if(e.singleton){var l=h++;n=g||(g=s(e)),o=f.bind(null,n,l,!1),r=f.bind(null,n,l,!0)}else t.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=c(e),o=p.bind(null,n,e),r=function(){a(n),n.href&&URL.revokeObjectURL(n.href)}):(n=s(e),o=d.bind(null,n),r=function(){a(n)});return o(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;o(t=e)}else r()}}function f(t,e,n,o){var r=n?"":o.css;if(t.styleSheet)t.styleSheet.cssText=x(e,r);else{var i=document.createTextNode(r),a=t.childNodes;a[e]&&t.removeChild(a[e]),a.length?t.insertBefore(i,a[e]):t.appendChild(i)}}function d(t,e){var n=e.css,o=e.media;if(o&&t.setAttribute("media",o),t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}function p(t,e,n){var o=n.css,r=n.sourceMap,i=void 0===e.convertToAbsoluteUrls&&r;(e.convertToAbsoluteUrls||i)&&(o=y(o)),r&&(o+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */");var a=new Blob([o],{type:"text/css"}),s=t.href;t.href=URL.createObjectURL(a),s&&URL.revokeObjectURL(s)}var m={},b=function(t){var e;return function(){return void 0===e&&(e=t.apply(this,arguments)),e}}(function(){return window&&document&&document.all&&!window.atob}),v=function(t){var e={};return function(n){return void 0===e[n]&&(e[n]=t.call(this,n)),e[n]}}(function(t){return document.querySelector(t)}),g=null,h=0,w=[],y=n(15);t.exports=function(t,e){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");e=e||{},e.attrs="object"==typeof e.attrs?e.attrs:{},e.singleton||(e.singleton=b()),e.insertInto||(e.insertInto="head"),e.insertAt||(e.insertAt="bottom");var n=r(t,e);return o(n,e),function(t){for(var i=[],a=0;a<n.length;a++){var s=n[a],c=m[s.id];c.refs--,i.push(c)}if(t){o(r(t,e),e)}for(var a=0;a<i.length;a++){var c=i[a];if(0===c.refs){for(var l=0;l<c.parts.length;l++)c.parts[l]();delete m[c.id]}}}};var x=function(){var t=[];return function(e,n){return t[e]=n,t.filter(Boolean).join("\n")}}()},function(t,e){t.exports=function(t){var e="undefined"!=typeof window&&window.location;if(!e)throw new Error("fixUrls requires window.location");if(!t||"string"!=typeof t)return t;var n=e.protocol+"//"+e.host,o=n+e.pathname.replace(/\/[^\/]*$/,"/");return t.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi,function(t,e){var r=e.trim().replace(/^"(.*)"$/,function(t,e){return e}).replace(/^'(.*)'$/,function(t,e){return e});if(/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(r))return t;var i;return i=0===r.indexOf("//")?r:0===r.indexOf("/")?n+r:o+r.replace(/^\.\//,""),"url("+JSON.stringify(i)+")"})}},function(t,e,n){var o=n(17);"undefined"==typeof window||window.Promise||(window.Promise=o),n(21),String.prototype.includes||(String.prototype.includes=function(t,e){"use strict";return"number"!=typeof e&&(e=0),!(e+t.length>this.length)&&-1!==this.indexOf(t,e)}),Array.prototype.includes||Object.defineProperty(Array.prototype,"includes",{value:function(t,e){if(null==this)throw new TypeError('"this" is null or not defined');var n=Object(this),o=n.length>>>0;if(0===o)return!1;for(var r=0|e,i=Math.max(r>=0?r:o-Math.abs(r),0);i<o;){if(function(t,e){return t===e||"number"==typeof t&&"number"==typeof e&&isNaN(t)&&isNaN(e)}(n[i],t))return!0;i++}return!1}}),"undefined"!=typeof window&&function(t){t.forEach(function(t){t.hasOwnProperty("remove")||Object.defineProperty(t,"remove",{configurable:!0,enumerable:!0,writable:!0,value:function(){this.parentNode.removeChild(this)}})})}([Element.prototype,CharacterData.prototype,DocumentType.prototype])},function(t,e,n){(function(e){!function(n){function o(){}function r(t,e){return function(){t.apply(e,arguments)}}function i(t){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],f(t,this)}function a(t,e){for(;3===t._state;)t=t._value;if(0===t._state)return void t._deferreds.push(e);t._handled=!0,i._immediateFn(function(){var n=1===t._state?e.onFulfilled:e.onRejected;if(null===n)return void(1===t._state?s:c)(e.promise,t._value);var o;try{o=n(t._value)}catch(t){return void c(e.promise,t)}s(e.promise,o)})}function s(t,e){try{if(e===t)throw new TypeError("A promise cannot be resolved with itself.");if(e&&("object"==typeof e||"function"==typeof e)){var n=e.then;if(e instanceof i)return t._state=3,t._value=e,void l(t);if("function"==typeof n)return void f(r(n,e),t)}t._state=1,t._value=e,l(t)}catch(e){c(t,e)}}function c(t,e){t._state=2,t._value=e,l(t)}function l(t){2===t._state&&0===t._deferreds.length&&i._immediateFn(function(){t._handled||i._unhandledRejectionFn(t._value)});for(var e=0,n=t._deferreds.length;e<n;e++)a(t,t._deferreds[e]);t._deferreds=null}function u(t,e,n){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=n}function f(t,e){var n=!1;try{t(function(t){n||(n=!0,s(e,t))},function(t){n||(n=!0,c(e,t))})}catch(t){if(n)return;n=!0,c(e,t)}}var d=setTimeout;i.prototype.catch=function(t){return this.then(null,t)},i.prototype.then=function(t,e){var n=new this.constructor(o);return a(this,new u(t,e,n)),n},i.all=function(t){var e=Array.prototype.slice.call(t);return new i(function(t,n){function o(i,a){try{if(a&&("object"==typeof a||"function"==typeof a)){var s=a.then;if("function"==typeof s)return void s.call(a,function(t){o(i,t)},n)}e[i]=a,0==--r&&t(e)}catch(t){n(t)}}if(0===e.length)return t([]);for(var r=e.length,i=0;i<e.length;i++)o(i,e[i])})},i.resolve=function(t){return t&&"object"==typeof t&&t.constructor===i?t:new i(function(e){e(t)})},i.reject=function(t){return new i(function(e,n){n(t)})},i.race=function(t){return new i(function(e,n){for(var o=0,r=t.length;o<r;o++)t[o].then(e,n)})},i._immediateFn="function"==typeof e&&function(t){e(t)}||function(t){d(t,0)},i._unhandledRejectionFn=function(t){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",t)},i._setImmediateFn=function(t){i._immediateFn=t},i._setUnhandledRejectionFn=function(t){i._unhandledRejectionFn=t},void 0!==t&&t.exports?t.exports=i:n.Promise||(n.Promise=i)}(this)}).call(e,n(18).setImmediate)},function(t,e,n){function o(t,e){this._id=t,this._clearFn=e}var r=Function.prototype.apply;e.setTimeout=function(){return new o(r.call(setTimeout,window,arguments),clearTimeout)},e.setInterval=function(){return new o(r.call(setInterval,window,arguments),clearInterval)},e.clearTimeout=e.clearInterval=function(t){t&&t.close()},o.prototype.unref=o.prototype.ref=function(){},o.prototype.close=function(){this._clearFn.call(window,this._id)},e.enroll=function(t,e){clearTimeout(t._idleTimeoutId),t._idleTimeout=e},e.unenroll=function(t){clearTimeout(t._idleTimeoutId),t._idleTimeout=-1},e._unrefActive=e.active=function(t){clearTimeout(t._idleTimeoutId);var e=t._idleTimeout;e>=0&&(t._idleTimeoutId=setTimeout(function(){t._onTimeout&&t._onTimeout()},e))},n(19),e.setImmediate=setImmediate,e.clearImmediate=clearImmediate},function(t,e,n){(function(t,e){!function(t,n){"use strict";function o(t){"function"!=typeof t&&(t=new Function(""+t));for(var e=new Array(arguments.length-1),n=0;n<e.length;n++)e[n]=arguments[n+1];var o={callback:t,args:e};return l[c]=o,s(c),c++}function r(t){delete l[t]}function i(t){var e=t.callback,o=t.args;switch(o.length){case 0:e();break;case 1:e(o[0]);break;case 2:e(o[0],o[1]);break;case 3:e(o[0],o[1],o[2]);break;default:e.apply(n,o)}}function a(t){if(u)setTimeout(a,0,t);else{var e=l[t];if(e){u=!0;try{i(e)}finally{r(t),u=!1}}}}if(!t.setImmediate){var s,c=1,l={},u=!1,f=t.document,d=Object.getPrototypeOf&&Object.getPrototypeOf(t);d=d&&d.setTimeout?d:t,"[object process]"==={}.toString.call(t.process)?function(){s=function(t){e.nextTick(function(){a(t)})}}():function(){if(t.postMessage&&!t.importScripts){var e=!0,n=t.onmessage;return t.onmessage=function(){e=!1},t.postMessage("","*"),t.onmessage=n,e}}()?function(){var e="setImmediate$"+Math.random()+"$",n=function(n){n.source===t&&"string"==typeof n.data&&0===n.data.indexOf(e)&&a(+n.data.slice(e.length))};t.addEventListener?t.addEventListener("message",n,!1):t.attachEvent("onmessage",n),s=function(n){t.postMessage(e+n,"*")}}():t.MessageChannel?function(){var t=new MessageChannel;t.port1.onmessage=function(t){a(t.data)},s=function(e){t.port2.postMessage(e)}}():f&&"onreadystatechange"in f.createElement("script")?function(){var t=f.documentElement;s=function(e){var n=f.createElement("script");n.onreadystatechange=function(){a(e),n.onreadystatechange=null,t.removeChild(n),n=null},t.appendChild(n)}}():function(){s=function(t){setTimeout(a,0,t)}}(),d.setImmediate=o,d.clearImmediate=r}}("undefined"==typeof self?void 0===t?this:t:self)}).call(e,n(7),n(20))},function(t,e){function n(){throw new Error("setTimeout has not been defined")}function o(){throw new Error("clearTimeout has not been defined")}function r(t){if(u===setTimeout)return setTimeout(t,0);if((u===n||!u)&&setTimeout)return u=setTimeout,setTimeout(t,0);try{return u(t,0)}catch(e){try{return u.call(null,t,0)}catch(e){return u.call(this,t,0)}}}function i(t){if(f===clearTimeout)return clearTimeout(t);if((f===o||!f)&&clearTimeout)return f=clearTimeout,clearTimeout(t);try{return f(t)}catch(e){try{return f.call(null,t)}catch(e){return f.call(this,t)}}}function a(){b&&p&&(b=!1,p.length?m=p.concat(m):v=-1,m.length&&s())}function s(){if(!b){var t=r(a);b=!0;for(var e=m.length;e;){for(p=m,m=[];++v<e;)p&&p[v].run();v=-1,e=m.length}p=null,b=!1,i(t)}}function c(t,e){this.fun=t,this.array=e}function l(){}var u,f,d=t.exports={};!function(){try{u="function"==typeof setTimeout?setTimeout:n}catch(t){u=n}try{f="function"==typeof clearTimeout?clearTimeout:o}catch(t){f=o}}();var p,m=[],b=!1,v=-1;d.nextTick=function(t){var e=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)e[n-1]=arguments[n];m.push(new c(t,e)),1!==m.length||b||r(s)},c.prototype.run=function(){this.fun.apply(null,this.array)},d.title="browser",d.browser=!0,d.env={},d.argv=[],d.version="",d.versions={},d.on=l,d.addListener=l,d.once=l,d.off=l,d.removeListener=l,d.removeAllListeners=l,d.emit=l,d.prependListener=l,d.prependOnceListener=l,d.listeners=function(t){return[]},d.binding=function(t){throw new Error("process.binding is not supported")},d.cwd=function(){return"/"},d.chdir=function(t){throw new Error("process.chdir is not supported")},d.umask=function(){return 0}},function(t,e,n){"use strict";n(22).polyfill()},function(t,e,n){"use strict";function o(t,e){if(void 0===t||null===t)throw new TypeError("Cannot convert first argument to object");for(var n=Object(t),o=1;o<arguments.length;o++){var r=arguments[o];if(void 0!==r&&null!==r)for(var i=Object.keys(Object(r)),a=0,s=i.length;a<s;a++){var c=i[a],l=Object.getOwnPropertyDescriptor(r,c);void 0!==l&&l.enumerable&&(n[c]=r[c])}}return n}function r(){Object.assign||Object.defineProperty(Object,"assign",{enumerable:!1,configurable:!0,writable:!0,value:o})}t.exports={assign:o,polyfill:r}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(24),r=n(6),i=n(5),a=n(36),s=function(){for(var t=[],e=0;e<arguments.length;e++)t[e]=arguments[e];if("undefined"!=typeof window){var n=a.getOpts.apply(void 0,t);return new Promise(function(t,e){i.default.promise={resolve:t,reject:e},o.default(n),setTimeout(function(){r.openModal()})})}};s.close=r.onAction,s.getState=r.getState,s.setActionValue=i.setActionValue,s.stopLoading=r.stopLoading,s.setDefaults=a.setDefaults,e.default=s},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(0),i=r.default.MODAL,a=n(4),s=n(34),c=n(35),l=n(1);e.init=function(t){o.getNode(i)||(document.body||l.throwErr("You can only use SweetAlert AFTER the DOM has loaded!"),s.default(),a.default()),a.initModalContent(t),c.default(t)},e.default=e.init},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),r=o.default.MODAL;e.modalMarkup='\n  <div class="'+r+'"></div>',e.default=e.modalMarkup},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),r=o.default.OVERLAY,i='<div \n    class="'+r+'"\n    tabIndex="-1">\n  </div>';e.default=i},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),r=o.default.ICON;e.errorIconMarkup=function(){var t=r+"--error",e=t+"__line";return'\n    <div class="'+t+'__x-mark">\n      <span class="'+e+" "+e+'--left"></span>\n      <span class="'+e+" "+e+'--right"></span>\n    </div>\n  '},e.warningIconMarkup=function(){var t=r+"--warning";return'\n    <span class="'+t+'__body">\n      <span class="'+t+'__dot"></span>\n    </span>\n  '},e.successIconMarkup=function(){var t=r+"--success";return'\n    <span class="'+t+"__line "+t+'__line--long"></span>\n    <span class="'+t+"__line "+t+'__line--tip"></span>\n\n    <div class="'+t+'__ring"></div>\n    <div class="'+t+'__hide-corners"></div>\n  '}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),r=o.default.CONTENT;e.contentMarkup='\n  <div class="'+r+'">\n\n  </div>\n'},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),r=o.default.BUTTON_CONTAINER,i=o.default.BUTTON,a=o.default.BUTTON_LOADER;e.buttonMarkup='\n  <div class="'+r+'">\n\n    <button\n      class="'+i+'"\n    ></button>\n\n    <div class="'+a+'">\n      <div></div>\n      <div></div>\n      <div></div>\n    </div>\n\n  </div>\n'},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(4),r=n(2),i=n(0),a=i.default.ICON,s=i.default.ICON_CUSTOM,c=["error","warning","success","info"],l={error:r.errorIconMarkup(),warning:r.warningIconMarkup(),success:r.successIconMarkup()},u=function(t,e){var n=a+"--"+t;e.classList.add(n);var o=l[t];o&&(e.innerHTML=o)},f=function(t,e){e.classList.add(s);var n=document.createElement("img");n.src=t,e.appendChild(n)},d=function(t){if(t){var e=o.injectElIntoModal(r.iconMarkup);c.includes(t)?u(t,e):f(t,e)}};e.default=d},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(2),r=n(4),i=function(t){navigator.userAgent.includes("AppleWebKit")&&(t.style.display="none",t.offsetHeight,t.style.display="")};e.initTitle=function(t){if(t){var e=r.injectElIntoModal(o.titleMarkup);e.textContent=t,i(e)}},e.initText=function(t){if(t){var e=r.injectElIntoModal(o.textMarkup);e.textContent=t,i(e)}}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(4),i=n(0),a=i.default.BUTTON,s=i.default.DANGER_BUTTON,c=n(3),l=n(2),u=n(6),f=n(5),d=function(t,e,n){var r=e.text,i=e.value,d=e.className,p=e.closeModal,m=o.stringToNode(l.buttonMarkup),b=m.querySelector("."+a),v=a+"--"+t;b.classList.add(v),d&&b.classList.add(d),n&&t===c.CONFIRM_KEY&&b.classList.add(s),b.textContent=r;var g={};return g[t]=i,f.setActionValue(g),f.setActionOptionsFor(t,{closeModal:p}),b.addEventListener("click",function(){return u.onAction(t)}),m},p=function(t,e){var n=r.injectElIntoModal(l.footerMarkup);for(var o in t){var i=t[o],a=d(o,i,e);i.visible&&n.appendChild(a)}0===n.children.length&&n.remove()};e.default=p},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(3),r=n(4),i=n(2),a=n(5),s=n(6),c=n(0),l=c.default.CONTENT,u=function(t){t.addEventListener("input",function(t){var e=t.target,n=e.value;a.setActionValue(n)}),t.addEventListener("keyup",function(t){if("Enter"===t.key)return s.onAction(o.CONFIRM_KEY)}),setTimeout(function(){t.focus(),a.setActionValue("")},0)},f=function(t,e,n){var o=document.createElement(e),r=l+"__"+e;o.classList.add(r);for(var i in n){var a=n[i];o[i]=a}"input"===e&&u(o),t.appendChild(o)},d=function(t){if(t){var e=r.injectElIntoModal(i.contentMarkup),n=t.element,o=t.attributes;"string"==typeof n?f(e,n,o):e.appendChild(n)}};e.default=d},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(2),i=function(){var t=o.stringToNode(r.overlayMarkup);document.body.appendChild(t)};e.default=i},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(5),r=n(6),i=n(1),a=n(3),s=n(0),c=s.default.MODAL,l=s.default.BUTTON,u=s.default.OVERLAY,f=function(t){t.preventDefault(),v()},d=function(t){t.preventDefault(),g()},p=function(t){if(o.default.isOpen)switch(t.key){case"Escape":return r.onAction(a.CANCEL_KEY)}},m=function(t){if(o.default.isOpen)switch(t.key){case"Tab":return f(t)}},b=function(t){if(o.default.isOpen)return"Tab"===t.key&&t.shiftKey?d(t):void 0},v=function(){var t=i.getNode(l);t&&(t.tabIndex=0,t.focus())},g=function(){var t=i.getNode(c),e=t.querySelectorAll("."+l),n=e.length-1,o=e[n];o&&o.focus()},h=function(t){t[t.length-1].addEventListener("keydown",m)},w=function(t){t[0].addEventListener("keydown",b)},y=function(){var t=i.getNode(c),e=t.querySelectorAll("."+l);e.length&&(h(e),w(e))},x=function(t){if(i.getNode(u)===t.target)return r.onAction(a.CANCEL_KEY)},_=function(t){var e=i.getNode(u);e.removeEventListener("click",x),t&&e.addEventListener("click",x)},k=function(t){o.default.timer&&clearTimeout(o.default.timer),t&&(o.default.timer=window.setTimeout(function(){return r.onAction(a.CANCEL_KEY)},t))},O=function(t){t.closeOnEsc?document.addEventListener("keyup",p):document.removeEventListener("keyup",p),t.dangerMode?v():g(),y(),_(t.closeOnClickOutside),k(t.timer)};e.default=O},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r=n(3),i=n(37),a=n(38),s={title:null,text:null,icon:null,buttons:r.defaultButtonList,content:null,className:null,closeOnClickOutside:!0,closeOnEsc:!0,dangerMode:!1,timer:null},c=Object.assign({},s);e.setDefaults=function(t){c=Object.assign({},s,t)};var l=function(t){var e=t&&t.button,n=t&&t.buttons;return void 0!==e&&void 0!==n&&o.throwErr("Cannot set both 'button' and 'buttons' options!"),void 0!==e?{confirm:e}:n},u=function(t){return o.ordinalSuffixOf(t+1)},f=function(t,e){o.throwErr(u(e)+" argument ('"+t+"') is invalid")},d=function(t,e){var n=t+1,r=e[n];o.isPlainObject(r)||void 0===r||o.throwErr("Expected "+u(n)+" argument ('"+r+"') to be a plain object")},p=function(t,e){var n=t+1,r=e[n];void 0!==r&&o.throwErr("Unexpected "+u(n)+" argument ("+r+")")},m=function(t,e,n,r){var i=typeof e,a="string"===i,s=e instanceof Element;if(a){if(0===n)return{text:e};if(1===n)return{text:e,title:r[0]};if(2===n)return d(n,r),{icon:e};f(e,n)}else{if(s&&0===n)return d(n,r),{content:e};if(o.isPlainObject(e))return p(n,r),e;f(e,n)}};e.getOpts=function(){for(var t=[],e=0;e<arguments.length;e++)t[e]=arguments[e];var n={};t.forEach(function(e,o){var r=m(0,e,o,t);Object.assign(n,r)});var o=l(n);n.buttons=r.getButtonListOpts(o),delete n.button,n.content=i.getContentOpts(n.content);var u=Object.assign({},s,c,n);return Object.keys(u).forEach(function(t){a.DEPRECATED_OPTS[t]&&a.logDeprecation(t)}),u}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),r={element:"input",attributes:{placeholder:""}};e.getContentOpts=function(t){var e={};return o.isPlainObject(t)?Object.assign(e,t):t instanceof Element?{element:t}:"input"===t?r:null}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.logDeprecation=function(t){var n=e.DEPRECATED_OPTS[t],o=n.onlyRename,r=n.replacement,i=n.subOption,a=n.link,s=o?"renamed":"deprecated",c='SweetAlert warning: "'+t+'" option has been '+s+".";if(r){c+=" Please use"+(i?' "'+i+'" in ':" ")+'"'+r+'" instead.'}var l="https://sweetalert.js.org";c+=a?" More details: "+l+a:" More details: "+l+"/guides/#upgrading-from-1x",console.warn(c)},e.DEPRECATED_OPTS={type:{replacement:"icon",link:"/docs/#icon"},imageUrl:{replacement:"icon",link:"/docs/#icon"},customClass:{replacement:"className",onlyRename:!0,link:"/docs/#classname"},imageSize:{},showCancelButton:{replacement:"buttons",link:"/docs/#buttons"},showConfirmButton:{replacement:"button",link:"/docs/#button"},confirmButtonText:{replacement:"button",link:"/docs/#button"},confirmButtonColor:{},cancelButtonText:{replacement:"buttons",link:"/docs/#buttons"},closeOnConfirm:{replacement:"button",subOption:"closeModal",link:"/docs/#button"},closeOnCancel:{replacement:"buttons",subOption:"closeModal",link:"/docs/#buttons"},showLoaderOnConfirm:{replacement:"buttons"},animation:{},inputType:{replacement:"content",link:"/docs/#content"},inputValue:{replacement:"content",link:"/docs/#content"},inputPlaceholder:{replacement:"content",link:"/docs/#content"},html:{replacement:"content",link:"/docs/#content"},allowEscapeKey:{replacement:"closeOnEsc",onlyRename:!0,link:"/docs/#closeonesc"},allowClickOutside:{replacement:"closeOnClickOutside",onlyRename:!0,link:"/docs/#closeonclickoutside"}}}])});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5).setImmediate, __webpack_require__(5).clearImmediate))
 
 /***/ }),
 /* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _isIE8 = __webpack_require__(6);
-
-var _getModal$getInput$setFocusStyle = __webpack_require__(5);
-
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide = __webpack_require__(4);
-
-var alertTypes = ['error', 'warning', 'info', 'success', 'input', 'prompt'];
-
-/*
- * Set type, text and actions on modal
- */
-var setParameters = function setParameters(params) {
-  var modal = _getModal$getInput$setFocusStyle.getModal();
-
-  var $title = modal.querySelector('h2');
-  var $text = modal.querySelector('p');
-  var $cancelBtn = modal.querySelector('button.cancel');
-  var $confirmBtn = modal.querySelector('button.confirm');
-
-  /*
-   * Title
-   */
-  $title.innerHTML = params.html ? params.title : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.title).split('\n').join('<br>');
-
-  /*
-   * Text
-   */
-  $text.innerHTML = params.html ? params.text : _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.text || '').split('\n').join('<br>');
-  if (params.text) _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($text);
-
-  /*
-   * Custom class
-   */
-  if (params.customClass) {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, params.customClass);
-    modal.setAttribute('data-custom-class', params.customClass);
-  } else {
-    // Find previously set classes and remove them
-    var customClass = modal.getAttribute('data-custom-class');
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.removeClass(modal, customClass);
-    modal.setAttribute('data-custom-class', '');
-  }
-
-  /*
-   * Icon
-   */
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide(modal.querySelectorAll('.sa-icon'));
-
-  if (params.type && !_isIE8.isIE8()) {
-    var _ret = (function () {
-
-      var validType = false;
-
-      for (var i = 0; i < alertTypes.length; i++) {
-        if (params.type === alertTypes[i]) {
-          validType = true;
-          break;
-        }
-      }
-
-      if (!validType) {
-        logStr('Unknown alert type: ' + params.type);
-        return {
-          v: false
-        };
-      }
-
-      var typesWithIcons = ['success', 'error', 'warning', 'info'];
-      var $icon = undefined;
-
-      if (typesWithIcons.indexOf(params.type) !== -1) {
-        $icon = modal.querySelector('.sa-icon.' + 'sa-' + params.type);
-        _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($icon);
-      }
-
-      var $input = _getModal$getInput$setFocusStyle.getInput();
-
-      // Animate icon
-      switch (params.type) {
-
-        case 'success':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animate');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-tip'), 'animateSuccessTip');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-long'), 'animateSuccessLong');
-          break;
-
-        case 'error':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'animateErrorIcon');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-x-mark'), 'animateXMark');
-          break;
-
-        case 'warning':
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon, 'pulseWarning');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-body'), 'pulseWarningIns');
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass($icon.querySelector('.sa-dot'), 'pulseWarningIns');
-          break;
-
-        case 'input':
-        case 'prompt':
-          $input.setAttribute('type', params.inputType);
-          $input.value = params.inputValue;
-          $input.setAttribute('placeholder', params.inputPlaceholder);
-          _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.addClass(modal, 'show-input');
-          setTimeout(function () {
-            $input.focus();
-            $input.addEventListener('keyup', swal.resetInputError);
-          }, 400);
-          break;
-      }
-    })();
-
-    if (typeof _ret === 'object') {
-      return _ret.v;
-    }
-  }
-
-  /*
-   * Custom image
-   */
-  if (params.imageUrl) {
-    var $customIcon = modal.querySelector('.sa-icon.sa-custom');
-
-    $customIcon.style.backgroundImage = 'url(' + params.imageUrl + ')';
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.show($customIcon);
-
-    var _imgWidth = 80;
-    var _imgHeight = 80;
-
-    if (params.imageSize) {
-      var dimensions = params.imageSize.toString().split('x');
-      var imgWidth = dimensions[0];
-      var imgHeight = dimensions[1];
-
-      if (!imgWidth || !imgHeight) {
-        logStr('Parameter imageSize expects value with format WIDTHxHEIGHT, got ' + params.imageSize);
-      } else {
-        _imgWidth = imgWidth;
-        _imgHeight = imgHeight;
-      }
-    }
-
-    $customIcon.setAttribute('style', $customIcon.getAttribute('style') + 'width:' + _imgWidth + 'px; height:' + _imgHeight + 'px');
-  }
-
-  /*
-   * Show cancel button?
-   */
-  modal.setAttribute('data-has-cancel-button', params.showCancelButton);
-  if (params.showCancelButton) {
-    $cancelBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($cancelBtn);
-  }
-
-  /*
-   * Show confirm button?
-   */
-  modal.setAttribute('data-has-confirm-button', params.showConfirmButton);
-  if (params.showConfirmButton) {
-    $confirmBtn.style.display = 'inline-block';
-  } else {
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.hide($confirmBtn);
-  }
-
-  /*
-   * Custom text on cancel/confirm buttons
-   */
-  if (params.cancelButtonText) {
-    $cancelBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.cancelButtonText);
-  }
-  if (params.confirmButtonText) {
-    $confirmBtn.innerHTML = _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide.escapeHtml(params.confirmButtonText);
-  }
-
-  /*
-   * Custom color on confirm button
-   */
-  if (params.confirmButtonColor) {
-    // Set confirm button to selected background color
-    $confirmBtn.style.backgroundColor = params.confirmButtonColor;
-
-    // Set the confirm button color to the loading ring
-    $confirmBtn.style.borderLeftColor = params.confirmLoadingButtonColor;
-    $confirmBtn.style.borderRightColor = params.confirmLoadingButtonColor;
-
-    // Set box-shadow to default focused button
-    _getModal$getInput$setFocusStyle.setFocusStyle($confirmBtn, params.confirmButtonColor);
-  }
-
-  /*
-   * Allow outside click
-   */
-  modal.setAttribute('data-allow-outside-click', params.allowOutsideClick);
-
-  /*
-   * Callback function
-   */
-  var hasDoneFunction = params.doneFunction ? true : false;
-  modal.setAttribute('data-has-done-function', hasDoneFunction);
-
-  /*
-   * Animation
-   */
-  if (!params.animation) {
-    modal.setAttribute('data-animation', 'none');
-  } else if (typeof params.animation === 'string') {
-    modal.setAttribute('data-animation', params.animation); // Custom animation
-  } else {
-    modal.setAttribute('data-animation', 'pop');
-  }
-
-  /*
-   * Timer
-   */
-  modal.setAttribute('data-timer', params.timer);
-};
-
-exports['default'] = setParameters;
-module.exports = exports['default'];
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-// SweetAlert
-// 2014-2015 (c) - Tristan Edwards
-// github.com/t4t5/sweetalert
-
-/*
- * jQuery-like functions for manipulating the DOM
- */
-
-var _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation = __webpack_require__(4);
-
-/*
- * Handy utilities
- */
-
-var _extend$hexToRgb$isIE8$logStr$colorLuminance = __webpack_require__(6);
-
-/*
- *  Handle sweetAlert's DOM elements
- */
-
-var _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition = __webpack_require__(5);
-
-// Handle button events and keyboard events
-
-var _handleButton$handleConfirm$handleCancel = __webpack_require__(77);
-
-var _handleKeyDown = __webpack_require__(78);
-
-var _handleKeyDown2 = _interopRequireWildcard(_handleKeyDown);
-
-// Default values
-
-var _defaultParams = __webpack_require__(14);
-
-var _defaultParams2 = _interopRequireWildcard(_defaultParams);
-
-var _setParameters = __webpack_require__(80);
-
-var _setParameters2 = _interopRequireWildcard(_setParameters);
-
-/*
- * Remember state in cases where opening and handling a modal will fiddle with it.
- * (We also use window.previousActiveElement as a global variable)
- */
-var previousWindowKeyDown;
-var lastFocusedButton;
-
-/*
- * Global sweetAlert function
- * (this is what the user calls)
- */
-var sweetAlert, swal;
-
-exports['default'] = sweetAlert = swal = function () {
-  var customizations = arguments[0];
-
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.addClass(document.body, 'stop-scrolling');
-  _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.resetInput();
-
-  /*
-   * Use argument if defined or default value from params object otherwise.
-   * Supports the case where a default value is boolean true and should be
-   * overridden by a corresponding explicit argument which is boolean false.
-   */
-  function argumentOrDefault(key) {
-    var args = customizations;
-    return args[key] === undefined ? _defaultParams2['default'][key] : args[key];
-  }
-
-  if (customizations === undefined) {
-    _extend$hexToRgb$isIE8$logStr$colorLuminance.logStr('SweetAlert expects at least 1 attribute!');
-    return false;
-  }
-
-  var params = _extend$hexToRgb$isIE8$logStr$colorLuminance.extend({}, _defaultParams2['default']);
-
-  switch (typeof customizations) {
-
-    // Ex: swal("Hello", "Just testing", "info");
-    case 'string':
-      params.title = customizations;
-      params.text = arguments[1] || '';
-      params.type = arguments[2] || '';
-      break;
-
-    // Ex: swal({ title:"Hello", text: "Just testing", type: "info" });
-    case 'object':
-      if (customizations.title === undefined) {
-        _extend$hexToRgb$isIE8$logStr$colorLuminance.logStr('Missing "title" argument!');
-        return false;
-      }
-
-      params.title = customizations.title;
-
-      for (var customName in _defaultParams2['default']) {
-        params[customName] = argumentOrDefault(customName);
-      }
-
-      // Show "Confirm" instead of "OK" if cancel button is visible
-      params.confirmButtonText = params.showCancelButton ? 'Confirm' : _defaultParams2['default'].confirmButtonText;
-      params.confirmButtonText = argumentOrDefault('confirmButtonText');
-
-      // Callback function when clicking on "OK"/"Cancel"
-      params.doneFunction = arguments[1] || null;
-
-      break;
-
-    default:
-      _extend$hexToRgb$isIE8$logStr$colorLuminance.logStr('Unexpected type of argument! Expected "string" or "object", got ' + typeof customizations);
-      return false;
-
-  }
-
-  _setParameters2['default'](params);
-  _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.fixVerticalPosition();
-  _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.openModal(arguments[1]);
-
-  // Modal interactions
-  var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-
-  /*
-   * Make sure all modal buttons respond to all events
-   */
-  var $buttons = modal.querySelectorAll('button');
-  var buttonEvents = ['onclick', 'onmouseover', 'onmouseout', 'onmousedown', 'onmouseup', 'onfocus'];
-  var onButtonEvent = function onButtonEvent(e) {
-    return _handleButton$handleConfirm$handleCancel.handleButton(e, params, modal);
-  };
-
-  for (var btnIndex = 0; btnIndex < $buttons.length; btnIndex++) {
-    for (var evtIndex = 0; evtIndex < buttonEvents.length; evtIndex++) {
-      var btnEvt = buttonEvents[evtIndex];
-      $buttons[btnIndex][btnEvt] = onButtonEvent;
-    }
-  }
-
-  // Clicking outside the modal dismisses it (if allowed by user)
-  _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getOverlay().onclick = onButtonEvent;
-
-  previousWindowKeyDown = window.onkeydown;
-
-  var onKeyEvent = function onKeyEvent(e) {
-    return _handleKeyDown2['default'](e, params, modal);
-  };
-  window.onkeydown = onKeyEvent;
-
-  window.onfocus = function () {
-    // When the user has focused away and focused back from the whole window.
-    setTimeout(function () {
-      // Put in a timeout to jump out of the event sequence.
-      // Calling focus() in the event sequence confuses things.
-      if (lastFocusedButton !== undefined) {
-        lastFocusedButton.focus();
-        lastFocusedButton = undefined;
-      }
-    }, 0);
-  };
-
-  // Show alert with enabled buttons always
-  swal.enableButtons();
-};
-
-/*
- * Set default params for each popup
- * @param {Object} userParams
- */
-sweetAlert.setDefaults = swal.setDefaults = function (userParams) {
-  if (!userParams) {
-    throw new Error('userParams is required');
-  }
-  if (typeof userParams !== 'object') {
-    throw new Error('userParams has to be a object');
-  }
-
-  _extend$hexToRgb$isIE8$logStr$colorLuminance.extend(_defaultParams2['default'], userParams);
-};
-
-/*
- * Animation when closing modal
- */
-sweetAlert.close = swal.close = function () {
-  var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.fadeOut(_sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getOverlay(), 5);
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.fadeOut(modal, 5);
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass(modal, 'showSweetAlert');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.addClass(modal, 'hideSweetAlert');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass(modal, 'visible');
-
-  /*
-   * Reset icon animations
-   */
-  var $successIcon = modal.querySelector('.sa-icon.sa-success');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($successIcon, 'animate');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($successIcon.querySelector('.sa-tip'), 'animateSuccessTip');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($successIcon.querySelector('.sa-long'), 'animateSuccessLong');
-
-  var $errorIcon = modal.querySelector('.sa-icon.sa-error');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($errorIcon, 'animateErrorIcon');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($errorIcon.querySelector('.sa-x-mark'), 'animateXMark');
-
-  var $warningIcon = modal.querySelector('.sa-icon.sa-warning');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($warningIcon, 'pulseWarning');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($warningIcon.querySelector('.sa-body'), 'pulseWarningIns');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($warningIcon.querySelector('.sa-dot'), 'pulseWarningIns');
-
-  // Reset custom class (delay so that UI changes aren't visible)
-  setTimeout(function () {
-    var customClass = modal.getAttribute('data-custom-class');
-    _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass(modal, customClass);
-  }, 300);
-
-  // Make page scrollable again
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass(document.body, 'stop-scrolling');
-
-  // Reset the page to its previous state
-  window.onkeydown = previousWindowKeyDown;
-  if (window.previousActiveElement) {
-    window.previousActiveElement.focus();
-  }
-  lastFocusedButton = undefined;
-  clearTimeout(modal.timeout);
-
-  return true;
-};
-
-/*
- * Validation of the input field is done by user
- * If something is wrong => call showInputError with errorMessage
- */
-sweetAlert.showInputError = swal.showInputError = function (errorMessage) {
-  var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-
-  var $errorIcon = modal.querySelector('.sa-input-error');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.addClass($errorIcon, 'show');
-
-  var $errorContainer = modal.querySelector('.sa-error-container');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.addClass($errorContainer, 'show');
-
-  $errorContainer.querySelector('p').innerHTML = errorMessage;
-
-  setTimeout(function () {
-    sweetAlert.enableButtons();
-  }, 1);
-
-  modal.querySelector('input').focus();
-};
-
-/*
- * Reset input error DOM elements
- */
-sweetAlert.resetInputError = swal.resetInputError = function (event) {
-  // If press enter => ignore
-  if (event && event.keyCode === 13) {
-    return false;
-  }
-
-  var $modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-
-  var $errorIcon = $modal.querySelector('.sa-input-error');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($errorIcon, 'show');
-
-  var $errorContainer = $modal.querySelector('.sa-error-container');
-  _hasClass$addClass$removeClass$escapeHtml$_show$show$_hide$hide$isDescendant$getTopMargin$fadeIn$fadeOut$fireClick$stopEventPropagation.removeClass($errorContainer, 'show');
-};
-
-/*
- * Disable confirm and cancel buttons
- */
-sweetAlert.disableButtons = swal.disableButtons = function (event) {
-  var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-  var $confirmButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  $confirmButton.disabled = true;
-  $cancelButton.disabled = true;
-};
-
-/*
- * Enable confirm and cancel buttons
- */
-sweetAlert.enableButtons = swal.enableButtons = function (event) {
-  var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
-  var $confirmButton = modal.querySelector('button.confirm');
-  var $cancelButton = modal.querySelector('button.cancel');
-  $confirmButton.disabled = false;
-  $cancelButton.disabled = false;
-};
-
-if (typeof window !== 'undefined') {
-  // The 'handle-click' module requires
-  // that 'sweetAlert' was set as global.
-  window.sweetAlert = window.swal = sweetAlert;
-} else {
-  _extend$hexToRgb$isIE8$logStr$colorLuminance.logStr('SweetAlert is a frontend module!');
-}
-module.exports = exports['default'];
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(38),
+  __webpack_require__(36),
   /* template */
   __webpack_require__(102),
   /* scopeId */
@@ -47089,7 +47339,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Alert.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Alert.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Alert.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47110,12 +47360,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 83 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(39),
+  __webpack_require__(37),
   /* template */
   __webpack_require__(110),
   /* scopeId */
@@ -47123,7 +47373,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Highlighter.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Highlighter.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Highlighter.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47144,16 +47394,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 84 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(123)
+__webpack_require__(124)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(40),
+  __webpack_require__(38),
   /* template */
   __webpack_require__(108),
   /* scopeId */
@@ -47161,7 +47411,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Loader.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Loader.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loader.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47182,16 +47432,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 85 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(125)
+__webpack_require__(127)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(41),
+  __webpack_require__(39),
   /* template */
   __webpack_require__(112),
   /* scopeId */
@@ -47199,7 +47449,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Modal.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\Modal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47220,24 +47470,24 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 86 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(127)
+__webpack_require__(130)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(42),
+  __webpack_require__(40),
   /* template */
   null,
   /* scopeId */
-  "data-v-c3bf27e6",
+  "data-v-ca08cef0",
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\components\\Seat_display.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\components\\SeatDisplay.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -47247,9 +47497,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c3bf27e6", Component.options)
+    hotAPI.createRecord("data-v-ca08cef0", Component.options)
   } else {
-    hotAPI.reload("data-v-c3bf27e6", Component.options)
+    hotAPI.reload("data-v-ca08cef0", Component.options)
   }
 })()}
 
@@ -47257,12 +47507,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 87 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(43),
+  __webpack_require__(41),
   /* template */
   __webpack_require__(107),
   /* scopeId */
@@ -47270,7 +47520,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\About.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] About.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47291,12 +47541,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(44),
+  __webpack_require__(42),
   /* template */
   __webpack_require__(120),
   /* scopeId */
@@ -47304,7 +47554,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Contact.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Contact.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47325,12 +47575,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 89 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(45),
+  __webpack_require__(43),
   /* template */
   __webpack_require__(106),
   /* scopeId */
@@ -47338,7 +47588,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Fourohfour.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Fourohfour.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47359,12 +47609,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 90 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(46),
+  __webpack_require__(44),
   /* template */
   __webpack_require__(113),
   /* scopeId */
@@ -47372,7 +47622,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Home.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47393,12 +47643,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 91 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(47),
+  __webpack_require__(45),
   /* template */
   __webpack_require__(118),
   /* scopeId */
@@ -47406,7 +47656,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Profile.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47427,20 +47677,24 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 92 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(129)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(48),
+  __webpack_require__(46),
   /* template */
-  __webpack_require__(117),
+  __webpack_require__(116),
   /* scopeId */
-  null,
+  "data-v-c23e2d70",
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Roles.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\Roles.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Roles.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47461,22 +47715,22 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 93 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(49),
+  __webpack_require__(47),
   /* template */
-  __webpack_require__(116),
+  __webpack_require__(117),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Staff-Management.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\StaffList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Staff-Management.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] StaffList.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -47485,9 +47739,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9f73b096", Component.options)
+    hotAPI.createRecord("data-v-c735efae", Component.options)
   } else {
-    hotAPI.reload("data-v-9f73b096", Component.options)
+    hotAPI.reload("data-v-c735efae", Component.options)
   }
 })()}
 
@@ -47495,84 +47749,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 94 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(50),
-  /* template */
-  __webpack_require__(105),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\Staff-list.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Staff-list.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-249ca1f0", Component.options)
-  } else {
-    hotAPI.reload("data-v-249ca1f0", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(51),
-  /* template */
-  __webpack_require__(114),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Bus-list.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Bus-list.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-92ccb382", Component.options)
-  } else {
-    hotAPI.reload("data-v-92ccb382", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(122)
-
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(52),
+  __webpack_require__(48),
   /* template */
   __webpack_require__(104),
   /* scopeId */
@@ -47580,7 +47762,45 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Bus.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\StaffManagement.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] StaffManagement.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1eb319e4", Component.options)
+  } else {
+    hotAPI.reload("data-v-1eb319e4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(123)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(49),
+  /* template */
+  __webpack_require__(105),
+  /* scopeId */
+  "data-v-2108cb88",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\bus\\Bus.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Bus.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47601,24 +47821,58 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 97 */
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(50),
+  /* template */
+  __webpack_require__(115),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\bus\\BusList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] BusList.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9cc2840c", Component.options)
+  } else {
+    hotAPI.reload("data-v-9cc2840c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(126)
+__webpack_require__(128)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(53),
+  __webpack_require__(51),
   /* template */
-  __webpack_require__(115),
+  __webpack_require__(114),
   /* scopeId */
   "data-v-97a3eef6",
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Route.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\bus\\Route.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Route.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47639,20 +47893,24 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 98 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(125)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(54),
+  __webpack_require__(52),
   /* template */
   __webpack_require__(109),
   /* scopeId */
-  null,
+  "data-v-3fc4e1ea",
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\bus\\Schedule.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\bus\\Schedule.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Schedule.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47673,16 +47931,54 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 99 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(124)
+__webpack_require__(121)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(55),
+  __webpack_require__(53),
+  /* template */
+  __webpack_require__(101),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\bus\\SeatPlan.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SeatPlan.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-001d687c", Component.options)
+  } else {
+    hotAPI.reload("data-v-001d687c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(126)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(54),
   /* template */
   __webpack_require__(111),
   /* scopeId */
@@ -47690,7 +47986,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\city\\City.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\city\\City.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] City.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47711,16 +48007,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(128)
+__webpack_require__(131)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(56),
+  __webpack_require__(55),
   /* template */
   __webpack_require__(119),
   /* scopeId */
@@ -47728,7 +48024,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\city\\Stop.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\city\\Stop.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Stop.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47749,16 +48045,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(121)
+__webpack_require__(122)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(57),
+  __webpack_require__(56),
   /* template */
   __webpack_require__(103),
   /* scopeId */
@@ -47766,7 +48062,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\wamp\\www\\obts54\\resources\\assets\\js\\views\\staff_management\\Staff_list.vue"
+Component.options.__file = "C:\\wamp64\\www\\obts54\\resources\\assets\\js\\views\\staff_management\\Staff_list.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Staff_list.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -47785,6 +48081,249 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\n     Seat Planning\n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Seat Plan ")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('form', [_c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "busId"
+    }
+  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedBusId),
+      expression: "selectedBusId"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "bus_id",
+      "id": "busId"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedBusId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [(bus.seat_plan == 0) ? _c('span', [_vm._v(_vm._s(bus.id) + " ")]) : _vm._e()])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberOfCol"
+    }
+  }, [_vm._v("Column #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberOfCol),
+      expression: "numberOfCol"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "min": "1",
+      "max": "4",
+      "value": "4",
+      "id": "numberOfCol",
+      "placeholder": "Column Number",
+      "disabled": ""
+    },
+    domProps: {
+      "value": (_vm.numberOfCol)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberOfCol = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberOfRow"
+    }
+  }, [_vm._v("Row #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberOfRow),
+      expression: "numberOfRow"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "min": "1",
+      "max": "25",
+      "value": "9",
+      "id": "numberOfRow",
+      "placeholder": "Row Number",
+      "disabled": _vm.isDisabled
+    },
+    domProps: {
+      "value": (_vm.numberOfRow)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberOfRow = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-4"
+  }, [_c('div', {
+    staticClass: "button-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": !_vm.isValidForShow
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.createList()
+      }
+    }
+  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.reset()
+      }
+    }
+  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "disabled": !_vm.isValidForSave
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveSeatList()
+      }
+    }
+  }, [_vm._v("Save")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (Object.keys(_vm.busInfo).length > 0),
+      expression: "Object.keys(busInfo).length > 0"
+    }],
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Bus Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table .table-striped"
+  }, [_vm._m(0, false, false), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.busInfo.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.total_seats))])])])]), _vm._v(" "), _c('strong', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(" " + _vm._s(_vm.busInfo.description) + " ")])])])])])])]), _vm._v(" "), _c('loader', {
+    attrs: {
+      "show": _vm.loading
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Seat Planning")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "seat-layout"
+  }, _vm._l((_vm.seatList), function(seat, index) {
+    return _c('button', {
+      staticClass: "col-xs-2",
+      class: {
+        active: seat.checked,
+          inactive: !seat.checked,
+          'col-xs-offset-2': _vm.emptySpace(index, seat.no)
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggle(seat)
+        }
+      }
+    }, [_c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (seat.checked),
+        expression: "seat.checked"
+      }],
+      staticClass: "fa fa-check fa-lg tickmark"
+    }), _vm._v(" "), _c('i', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (!seat.checked),
+        expression: "!seat.checked"
+      }],
+      staticClass: "fa fa-times fa-lg crossmark",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" "), _vm._v("\n                  " + _vm._s(seat.no) + " - " + _vm._s(seat.sts) + " : " + _vm._s(index) + " \n                  \n              ")])
+  }))])])])], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Reg. No")]), _vm._v(" "), _c('th', [_vm._v("Bus Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-001d687c", module.exports)
+  }
+}
 
 /***/ }),
 /* 102 */
@@ -47807,7 +48346,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "status-alert"
     }
-  }, [_vm._m(0), _vm._v(" "), _vm._t("default")], 2)
+  }, [_vm._m(0, false, false), _vm._v(" "), _vm._t("default")], 2)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
@@ -47851,8 +48390,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.staffs), function(staff, index) {
-    return _c('tr', [_vm._m(1, true), _vm._v(" "), _c('td', {
+  }, [_vm._m(0, false, false), _vm._v(" "), _c('tbody', _vm._l((_vm.staffs), function(staff, index) {
+    return _c('tr', [_vm._m(1, true, false), _vm._v(" "), _c('td', {
       staticClass: "table-text"
     }, [_c('div', [_vm._v(" " + _vm._s(index + 1) + " ")])]), _vm._v(" "), _c('td', {
       staticClass: "table-text"
@@ -47959,7 +48498,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "checked": _vm._q(_vm.rolePicked, "admin")
     },
     on: {
-      "__c": function($event) {
+      "change": function($event) {
         _vm.rolePicked = "admin"
       }
     }
@@ -47985,7 +48524,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "checked": _vm._q(_vm.rolePicked, "staff")
     },
     on: {
-      "__c": function($event) {
+      "change": function($event) {
         _vm.rolePicked = "staff"
       }
     }
@@ -48030,6 +48569,107 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\n        Page Name        \n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\n          ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Here")])])]), _vm._v(" "), _c('section', {
+    staticClass: "content"
+  }, [_c('div', [_vm._m(0, false, false), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('tab-staff-list'), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "profile"
+    }
+  }, [_vm._v("Profile Tab")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "messages"
+    }
+  }, [_vm._v("Something")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane",
+    attrs: {
+      "role": "tabpanel",
+      "id": "settings"
+    }
+  }, [_vm._v("something else")])], 1)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "nav nav-tabs",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_c('li', {
+    staticClass: "active",
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#home",
+      "aria-controls": "home",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#profile",
+      "aria-controls": "profile",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Profile")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#messages",
+      "aria-controls": "messages",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Messages")])]), _vm._v(" "), _c('li', {
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#settings",
+      "aria-controls": "settings",
+      "role": "tab",
+      "data-toggle": "tab"
+    }
+  }, [_vm._v("Settings")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1eb319e4", module.exports)
+  }
+}
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
   }, [_c('h1', [_vm._v("\n     Bus Management\n      ")]), _vm._v(" "), _c('ol', {
     staticClass: "breadcrumb"
   }, [_c('li', [_c('router-link', {
@@ -48049,7 +48689,53 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Add New Bus")]), _vm._v(" "), _c('div', {
+  }, [_c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.show),
+      expression: "!show"
+    }],
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddBusPanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddBusPanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-minus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
     staticClass: "panel-body"
   }, [_c('form', [_c('div', {
     staticClass: "col-sm-4"
@@ -48057,19 +48743,115 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "busId"
+      "for": "regNumber"
     }
-  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Registration #")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model",
-      value: (_vm.selectedBusId),
-      expression: "selectedBusId"
+      rawName: "v-model.lazy",
+      value: (_vm.regNumber),
+      expression: "regNumber",
+      modifiers: {
+        "lazy": true
+      }
     }],
     staticClass: "form-control",
     attrs: {
-      "name": "bus_id",
-      "id": "busId"
+      "type": "text",
+      "id": "regNumber",
+      "placeholder": "Registration Number"
+    },
+    domProps: {
+      "value": (_vm.regNumber)
+    },
+    on: {
+      "change": function($event) {
+        _vm.regNumber = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberPlate"
+    }
+  }, [_vm._v("Number plate #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberPlate),
+      expression: "numberPlate"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "numberPlate",
+      "placeholder": "Number Plate",
+      "disabled": _vm.isDisabled
+    },
+    domProps: {
+      "value": (_vm.numberPlate)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberPlate = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "numberOfSeat"
+    }
+  }, [_vm._v("Total Seat #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.numberOfSeat),
+      expression: "numberOfSeat"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "min": "1",
+      "max": "50",
+      "value": "36",
+      "id": "numberOfSeat",
+      "placeholder": "Number of Seat",
+      "disabled": _vm.isDisabled
+    },
+    domProps: {
+      "value": (_vm.numberOfSeat)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.numberOfSeat = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "busType"
+    }
+  }, [_vm._v("Bus Type #")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedBusType),
+      expression: "selectedBusType"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "busType"
     },
     on: {
       "change": function($event) {
@@ -48079,7 +48861,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.selectedBusId = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.selectedBusType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -48087,74 +48869,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": "",
       "value": ""
     }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.busIds), function(busId) {
-    return _c('option', [_vm._v("\n                        " + _vm._s(busId) + "\n                      ")])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-2"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "numberOfCol"
-    }
-  }, [_vm._v("Column #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.numberOfCol),
-      expression: "numberOfCol"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "number",
-      "min": "1",
-      "max": "4",
-      "value": "4",
-      "id": "numberOfCol",
-      "placeholder": "Column Number",
-      "disabled": ""
-    },
-    domProps: {
-      "value": (_vm.numberOfCol)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.numberOfCol = $event.target.value
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.options), function(option) {
+    return _c('option', {
+      domProps: {
+        "value": option.value
       }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-2"
+    }, [_vm._v("\n                              " + _vm._s(option.text) + "\n                          ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-5"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "numberOfRow"
+      "for": "busDescription"
     }
-  }, [_vm._v("Row #")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Description")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.numberOfRow),
-      expression: "numberOfRow"
+      value: (_vm.busDescription),
+      expression: "busDescription"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "number",
+      "type": "text",
       "min": "1",
-      "max": "25",
-      "value": "9",
-      "id": "numberOfRow",
-      "placeholder": "Row Number",
+      "max": "50",
+      "value": "36",
+      "id": "busDescription",
+      "placeholder": "Description",
       "disabled": _vm.isDisabled
     },
     domProps: {
-      "value": (_vm.numberOfRow)
+      "value": (_vm.busDescription)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.numberOfRow = $event.target.value
+        _vm.busDescription = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -48164,15 +48916,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableShowButton
+      "disabled": !_vm.isValid
     },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.createList()
+        _vm.addBus()
       }
     }
-  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
       "click": function($event) {
@@ -48180,84 +48932,90 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.reset()
       }
     }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "disabled": _vm.disableSaveButton
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.saveSeatList()
-      }
-    }
-  }, [_vm._v("Save")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-12"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (Object.keys(_vm.busInfo).length > 0),
-      expression: "Object.keys(busInfo).length > 0"
-    }],
-    staticClass: "panel panel-info"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Bus Info")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_c('table', {
-    staticClass: "table .table-striped"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.busInfo.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.busInfo.total_seats))])])])]), _vm._v(" "), _c('strong', [_vm._v("Description:")]), _vm._v(" "), _c('p', [_vm._v(" " + _vm._s(_vm.busInfo.description) + " ")])])])])])])]), _vm._v(" "), _c('loader', {
+  }, [_vm._v("Reset")])])])])])])]), _vm._v(" "), _c('loader', {
     attrs: {
       "show": _vm.loading
     }
   }), _vm._v(" "), _c('div', {
-    staticClass: "row"
+    staticClass: "row view-available-info"
   }, [_c('div', {
-    staticClass: "panel panel-default"
+    staticClass: "panel panel-info"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Seat Planning")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Bus Info "), _c('span', [_vm._v(" " + _vm._s(_vm.availableBusList.length) + " ")])]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_c('div', {
-    staticClass: "seat-layout"
-  }, _vm._l((_vm.seatList), function(seat, index) {
-    return _c('button', {
-      staticClass: "col-xs-2",
-      class: {
-        active: seat.checked,
-          inactive: !seat.checked,
-          'col-xs-offset-2': _vm.emptySpace(index, seat.no)
-      },
+    attrs: {
+      "id": "scroll-routes"
+    }
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("Bus ID\n                          "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": _vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.sortByIdOf('bus')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Reg. Number\n                          "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": !_vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.sortByIdOf('registration')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Number Plate")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v("Seat Plan")]), _vm._v(" "), _c('th', [_vm._v("Descriptin")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableBusList), function(bus, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.reg_no))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.number_plate))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.total_seats))]), _vm._v(" "), (bus.seat_plan == 0) ? _c('td', [_c('strong', [_vm._v("N/A")])]) : _c('td', [_c('strong', [_vm._v("Available")])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(bus.description))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
       on: {
         "click": function($event) {
-          _vm.toggle(seat)
+          $event.preventDefault();
+          _vm.editBus(bus)
         }
       }
     }, [_c('i', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (seat.checked),
-        expression: "seat.checked"
-      }],
-      staticClass: "fa fa-check fa-lg tickmark"
-    }), _vm._v(" "), _c('i', {
-      directives: [{
-        name: "show",
-        rawName: "v-show",
-        value: (!seat.checked),
-        expression: "!seat.checked"
-      }],
-      staticClass: "fa fa-times fa-lg crossmark",
-      attrs: {
-        "aria-hidden": "true"
+      staticClass: "fa fa-edit fa-fw"
+    }), _vm._v("Edit\n                          ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.removeBus(bus)
+        }
       }
-    }), _vm._v(" "), _vm._v("\n                  " + _vm._s(seat.no) + " - " + _vm._s(seat.sts) + " : " + _vm._s(index) + " \n                  \n              ")])
-  }))])])])], 1)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Reg. No")]), _vm._v(" "), _c('th', [_vm._v("Bus Type")]), _vm._v(" "), _c('th', [_vm._v("Total Seat")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
-}]}
+    }, [_c('i', {
+      staticClass: "fa fa-trash fa-fw"
+    }), _vm._v("Remove\n                          ")])])])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('show-alert', {
+    attrs: {
+      "show": _vm.showAlert,
+      "type": _vm.alertType
+    },
+    on: {
+      "update:show": function($event) {
+        _vm.showAlert = $event
+      }
+    }
+  }, [_vm._v("             \n           Bus\n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])])], 1)])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -48267,53 +49025,11 @@ if (false) {
 }
 
 /***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\n      Admin Staff\n      ")]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', [_c('router-link', {
-    attrs: {
-      "to": "/dashboard",
-      "exact": ""
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
-    staticClass: "active"
-  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "content"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("The Admin Staff Page")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n              I'm an Admin Staff component!\n          ")])])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-249ca1f0", module.exports)
-  }
-}
-
-/***/ }),
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
+  return _vm._m(0, false, false)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content"
@@ -48327,7 +49043,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("Page Not Found")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\r\n                This page not available\r\n            ")])])])])])])
+  }, [_vm._v("\n                This page not available\n            ")])])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -48355,7 +49071,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-dashboard"
   }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("About")])])]), _vm._v(" "), _vm._m(0)])
+  }, [_vm._v("About")])])]), _vm._v(" "), _vm._m(0, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "content"
@@ -48395,7 +49111,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "loader"
     }
-  }, [_vm._m(0)])
+  }, [_vm._m(0, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-content"
@@ -48439,7 +49155,53 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Bus Schedule")]), _vm._v(" "), _c('div', {
+  }, [_c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.show),
+      expression: "!show"
+    }],
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddSchedulePanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.expandAddSchedulePanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-minus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
     staticClass: "panel-body"
   }, [_c('form', [_c('div', {
     staticClass: "col-sm-4"
@@ -48515,9 +49277,75 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": "",
       "value": ""
     }
-  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.busIds), function(busId) {
-    return _c('option', [_vm._v("\n                        " + _vm._s(busId) + "\n                      ")])
-  })], 2)])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [_vm._v("\n                        " + _vm._s(bus.id) + "\n                      ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "departure-time"
+    }
+  }, [_vm._v("Departure time: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.departureTime),
+      expression: "departureTime"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "departure-time",
+      "type": "time",
+      "name": "departure-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.departureTime)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.departureTime = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "arrival-time"
+    }
+  }, [_vm._v("Arrival time: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.arrivalTime),
+      expression: "arrivalTime"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "arrival-time",
+      "type": "time",
+      "name": "arrival-time",
+      "min": "00:00",
+      "max": "23:00",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.arrivalTime)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.arrivalTime = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12"
   }, [_c('div', {
     directives: [{
@@ -48533,22 +49361,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table .table-striped"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.routeInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.distance))])])])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._m(0, false, false), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.routeInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.routeInfo.distance))])])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-4"
   }, [_c('div', {
     staticClass: "button-group"
   }, [_c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "disabled": _vm.disableShowButton
+      "disabled": !_vm.isValid
     },
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.createList()
+        _vm.addSchedule()
       }
     }
-  }, [_vm._v("Show")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
       "click": function($event) {
@@ -48556,20 +49384,212 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.reset()
       }
     }
-  }, [_vm._v("Reset")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
+  }, [_vm._v("Reset")])])])])])])]), _vm._v(" "), _c('loader', {
     attrs: {
-      "disabled": _vm.disableSaveButton
+      "show": _vm.loading
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row view-available-info"
+  }, [_c('div', {
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Schedule Info "), _c('span', [_vm._v(" " + _vm._s(_vm.availableScheduleList.length) + " ")])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    attrs: {
+      "id": "scroll-routes"
+    }
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Sl. No.")]), _vm._v(" "), _c('th', [_vm._v("Schedulel #")]), _vm._v(" "), _c('th', [_vm._v("Route ID\n                          "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": _vm.disableSorting
     },
     on: {
       "click": function($event) {
-        $event.preventDefault();
-        _vm.saveSeatList()
+        _vm.sortByIdOf('route')
       }
     }
-  }, [_vm._v("Save")])])])])])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Bus ID                      \n                          "), _c('span', {
+    attrs: {
+      "type": "button",
+      "disabled": !_vm.disableSorting
+    },
+    on: {
+      "click": function($event) {
+        _vm.sortByIdOf('bus')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-sort-amount-asc",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('th', [_vm._v("Departure Time")]), _vm._v(" "), _c('th', [_vm._v("Arrival Time")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableScheduleList), function(schedule, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.rout_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.bus_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.departure_time))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(schedule.arrival_time))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.editSchedule(schedule)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-edit fa-fw"
+    }), _vm._v("Edit\n                          ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.removeSchedule(schedule)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash fa-fw"
+    }), _vm._v("Remove\n                          ")])])])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('show-alert', {
+    attrs: {
+      "show": _vm.showAlert,
+      "type": _vm.alertType
+    },
+    on: {
+      "update:show": function($event) {
+        _vm.showAlert = $event
+      }
+    }
+  }, [_vm._v("\n           SCHEDULE\n            "), _c('strong', [_vm._v(" " + _vm._s(_vm.actionStatus) + " ")]), _vm._v(" successfully!\n          ")])], 1)])]), _vm._v(" "), _c('modal', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modal),
+      expression: "modal"
+    }],
+    on: {
+      "close": _vm.cancelEdit
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-10 col-sm-offset-1",
+    attrs: {
+      "id": "edit-schedule"
+    }
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Edit Schedule Info.")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('span', [_vm._v(" Last Updated: "), _c('strong', [_vm._v(_vm._s(_vm.schedule.updated_at) + " ")])]), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "scheduleId"
+    }
+  }, [_vm._v("Schedule ID")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.schedule.id),
+      expression: "schedule.id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "scheduleId",
+      "disabled": "true"
+    },
+    domProps: {
+      "value": (_vm.schedule.id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.schedule, "id", $event.target.value)
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-2"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "routeId"
+    }
+  }, [_vm._v("Route ID")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.schedule.rout_id),
+      expression: "schedule.rout_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "routeId",
+      "disabled": "true"
+    },
+    domProps: {
+      "value": (_vm.schedule.rout_id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.schedule, "rout_id", $event.target.value)
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "busId"
+    }
+  }, [_vm._v(" Bus Ids ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.schedule.bus_id),
+      expression: "schedule.bus_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "bus_id",
+      "id": "busId"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.$set(_vm.schedule, "bus_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("Please select one")]), _vm._v(" "), _vm._l((_vm.availableBusList), function(bus) {
+    return _c('option', [_vm._v("\n                            " + _vm._s(bus.id) + "\n                          ")])
+  })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-2"
   }, [_c('div', {
     staticClass: "form-group"
@@ -48577,7 +49597,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "departure-time"
     }
-  }, [_vm._v("Departure time: ")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Departure Time ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.schedule.departure_time),
+      expression: "schedule.departure_time"
+    }],
     staticClass: "form-control",
     attrs: {
       "id": "departure-time",
@@ -48586,10 +49612,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "min": "00:00",
       "max": "23:00",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.schedule.departure_time)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.schedule, "departure_time", $event.target.value)
+      }
     }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-2"
   }, [_c('div', {
     staticClass: "form-group"
@@ -48597,7 +49630,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "arrival-time"
     }
-  }, [_vm._v("Arrival time: ")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Arrival Time ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.schedule.arrival_time),
+      expression: "schedule.arrival_time"
+    }],
     staticClass: "form-control",
     attrs: {
       "id": "arrival-time",
@@ -48606,9 +49645,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "min": "00:00",
       "max": "23:00",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.schedule.arrival_time)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.schedule, "arrival_time", $event.target.value)
+      }
     }
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  })])])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.updateSchedule(_vm.schedule)
+      }
+    }
+  }, [_vm._v("Update")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.cancelEdit()
+      }
+    }
+  }, [_vm._v("Cancel")])])])])])])], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Route Id")]), _vm._v(" "), _c('th', [_vm._v("Departure City")]), _vm._v(" "), _c('th', [_vm._v("Arrival City")]), _vm._v(" "), _c('th', [_vm._v("Distance")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
 }]}
 module.exports.render._withStripped = true
@@ -48827,7 +49893,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.selectedCity.id = $event.target.value
+        _vm.$set(_vm.selectedCity, "id", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -48979,7 +50045,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content-header"
-  }, [_vm._m(0), _vm._v(" "), _c('ol', {
+  }, [_vm._m(0, false, false), _vm._v(" "), _c('ol', {
     staticClass: "breadcrumb"
   }, [_c('li', [_c('router-link', {
     attrs: {
@@ -48988,11 +50054,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\r\n          ")])], 1), _vm._v(" "), _c('li', {
+  }), _vm._v("Dashboard\n          ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Here")])])]), _vm._v(" "), _vm._m(1)])
+  }, [_vm._v("Here")])])]), _vm._v(" "), _vm._m(1, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("\r\n        Home Page\r\n        "), _c('small', [_vm._v("Optional description")])])
+  return _c('h1', [_vm._v("\n        Home Page\n        "), _c('small', [_vm._v("Optional description")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "content"
@@ -49006,7 +50072,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("Dashboard Home Page")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\r\n                    Welcome to Dashboard home page\r\n                ")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-5"
   }, [_c('div', {
     staticClass: "panel panel-default"
@@ -49014,7 +50080,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("Something-1")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\r\n                    Welcome to Dashboard home page\r\n                ")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-5"
   }, [_c('div', {
     staticClass: "panel panel-default"
@@ -49022,7 +50088,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-heading"
   }, [_vm._v("Something-2")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\r\n                    Welcome to Dashboard home page\r\n                ")])])])])])
+  }, [_vm._v("\n                    Welcome to Dashboard home page\n                ")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -49034,48 +50100,6 @@ if (false) {
 
 /***/ }),
 /* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\n      Bus Management\n      ")]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }, [_c('li', [_c('router-link', {
-    attrs: {
-      "to": "/dashboard",
-      "exact": ""
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
-    staticClass: "active"
-  }, [_vm._v("Bus List")])])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('section', {
-    staticClass: "content"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_vm._v("Bus List")]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body"
-  }, [_vm._v("\n             Bus List\n          ")])])])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-92ccb382", module.exports)
-  }
-}
-
-/***/ }),
-/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49394,7 +50418,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.ac = $event.target.value
+        _vm.$set(_vm.fare, "ac", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -49424,7 +50448,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.non_ac = $event.target.value
+        _vm.$set(_vm.fare, "non_ac", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -49454,7 +50478,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.deluxe = $event.target.value
+        _vm.$set(_vm.fare, "deluxe", $event.target.value)
       }
     }
   })])])])])])])]), _vm._v(" "), _c('div', {
@@ -49469,10 +50493,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.saveCities()
+        _vm.addRoute()
       }
     }
-  }, [_vm._v("Save")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "disabled": _vm.disableResetButton
@@ -49531,8 +50555,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(route, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.distance))]), _vm._v(" "), (route.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(route.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(route.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(route.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('button', {
+  })])]), _vm._v(" "), _c('th', [_vm._v("\n                        Fare\n                      ")]), _vm._v(" "), _c('th', [_vm._v("\n                        Route ID\n                      ")]), _vm._v(" "), _c('th', [_vm._v("Action")])])]), _vm._v(" "), _c('tbody', _vm._l((_vm.availableRouteList), function(route, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.departure_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.arrival_city))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(route.distance))]), _vm._v(" "), (route.fare == null) ? _c('td', [_vm._v("N/A")]) : _c('td', [_vm._v(" \n                        AC: " + _vm._s(route.fare.details.ac) + " "), _c('br'), _vm._v("\n                        Non-AC: " + _vm._s(route.fare.details.non_ac) + " "), _c('br'), _vm._v(" \n                        Deluxe: " + _vm._s(route.fare.details.deluxe) + " "), _c('br')]), _vm._v(" "), _c('td', [_c('strong', [_vm._v(_vm._s(route.id))])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary",
       attrs: {
         "disabled": route.fare == null
@@ -49620,7 +50644,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.ac = $event.target.value
+        _vm.$set(_vm.fare, "ac", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -49650,7 +50674,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.non_ac = $event.target.value
+        _vm.$set(_vm.fare, "non_ac", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -49680,7 +50704,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.fare.deluxe = $event.target.value
+        _vm.$set(_vm.fare, "deluxe", $event.target.value)
       }
     }
   })])])])]), _vm._v(" "), _c('div', {
@@ -49712,108 +50736,49 @@ if (false) {
 }
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('section', {
     staticClass: "content-header"
-  }, [_c('h1', [_vm._v("\r\n        Page Name        \r\n      ")]), _vm._v(" "), _c('ol', {
+  }, [_c('h1', [_vm._v("\n      Bus Management\n      ")]), _vm._v(" "), _c('ol', {
     staticClass: "breadcrumb"
   }, [_c('li', [_c('router-link', {
     attrs: {
-      "to": "/dashboard"
+      "to": "/dashboard",
+      "exact": ""
     }
   }, [_c('i', {
     staticClass: "fa fa-dashboard"
-  }), _vm._v("Dashboard\r\n          ")])], 1), _vm._v(" "), _c('li', {
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Here")])])]), _vm._v(" "), _c('section', {
-    staticClass: "content"
-  }, [_c('div', [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "tab-content"
-  }, [_c('tab-staff-list'), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "profile"
-    }
-  }, [_vm._v("Profile Tab")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "messages"
-    }
-  }, [_vm._v("Something")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane",
-    attrs: {
-      "role": "tabpanel",
-      "id": "settings"
-    }
-  }, [_vm._v("something else")])], 1)])])])
+  }, [_vm._v("Bus List")])])]), _vm._v(" "), _vm._m(0, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "nav nav-tabs",
-    attrs: {
-      "role": "tablist"
-    }
-  }, [_c('li', {
-    staticClass: "active",
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#home",
-      "aria-controls": "home",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Home")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#profile",
-      "aria-controls": "profile",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Profile")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#messages",
-      "aria-controls": "messages",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Messages")])]), _vm._v(" "), _c('li', {
-    attrs: {
-      "role": "presentation"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#settings",
-      "aria-controls": "settings",
-      "role": "tab",
-      "data-toggle": "tab"
-    }
-  }, [_vm._v("Settings")])])])
+  return _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("Bus List")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_vm._v("\n             Bus List\n          ")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-9f73b096", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-9cc2840c", module.exports)
   }
 }
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49830,7 +50795,207 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-dashboard"
   }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Roles")])])]), _vm._v(" "), _vm._m(0)])
+  }, [_vm._v("Roles")])])]), _vm._v(" "), _c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("\n              Role Setting           \n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "col-sm-6 user-info"
+  }, [_c('label', {
+    attrs: {
+      "for": "cityCode"
+    }
+  }, [_vm._v("User email/ phone")]), _vm._v(" "), _c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchString),
+      expression: "searchString"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "userInfo",
+      "id": "userInfo",
+      "placeholder": "Search for..."
+    },
+    domProps: {
+      "value": (_vm.searchString)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchString = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.search),
+      expression: "!search"
+    }],
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.searchButton
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-search",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.search),
+      expression: "search"
+    }],
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-search fa-spin",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12"
+  }, [(Object.keys(_vm.userInfo).length > 0) ? _c('div', {
+    staticClass: "panel panel-info"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_vm._v("User Info")]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table .table-striped"
+  }, [_vm._m(0, false, false), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(_vm.userInfo.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.userInfo.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.userInfo.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.userInfo.phone))])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-3"
+  }, [_c('label', {
+    staticClass: "radio-inline"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedRole),
+      expression: "selectedRole"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "inlineRadioOptions",
+      "id": "adminRadio",
+      "value": "admin"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.selectedRole, "admin")
+    },
+    on: {
+      "change": function($event) {
+        _vm.selectedRole = "admin"
+      }
+    }
+  }), _vm._v(" Administrator\n                                  ")]), _vm._v(" "), _c('label', {
+    staticClass: "radio-inline"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedRole),
+      expression: "selectedRole"
+    }],
+    attrs: {
+      "type": "radio",
+      "name": "inlineRadioOptions",
+      "id": "staffRadio",
+      "value": "staff"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.selectedRole, "staff")
+    },
+    on: {
+      "change": function($event) {
+        _vm.selectedRole = "staff"
+      }
+    }
+  }), _vm._v(" Staff\n                                  ")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-8"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.setRole
+    }
+  }, [_vm._v("Submit")])])])])]) : _c('div', [_c('span', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.error),
+      expression: "error"
+    }],
+    staticClass: "error-bg"
+  }, [_vm._v(" " + _vm._s(_vm.error) + "  ")])])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.show),
+      expression: "show"
+    }],
+    staticClass: "panel-footer"
+  }, [_c('strong', [_vm._v(_vm._s(_vm.user.name) + " ")]), _vm._v(" "), _c('br'), _vm._v("\n                id: " + _vm._s(_vm.user.id) + " "), _c('span', [_vm._v(" ")]), _vm._v(" email:  " + _vm._s(_vm.user.email) + " "), _c('span', [_vm._v(" ")]), _vm._v(" phone: " + _vm._s(_vm.user.phone) + " "), _c('br'), _vm._v("\n\n                Added as "), _c('strong', [_vm._v(_vm._s(_vm.selectedRole) + " ")]), _vm._v("  successfully!\n\n            ")])])]), _vm._v(" "), _c('loader', {
+    attrs: {
+      "show": _vm.loading
+    }
+  })], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("User Id")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v(" ")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c23e2d70", module.exports)
+  }
+}
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header"
+  }, [_c('h1', [_vm._v("\n      Admin Staff\n      ")]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }, [_c('li', [_c('router-link', {
+    attrs: {
+      "to": "/dashboard",
+      "exact": ""
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-dashboard"
+  }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
+    staticClass: "active"
+  }, [_vm._v("Admin Staff")])])]), _vm._v(" "), _vm._m(0, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "content"
@@ -49842,15 +51007,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
-  }, [_vm._v("Add Roles to User")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("The Admin Staff Page")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
-  }, [_vm._v("\n              User Roles Settings Here\n          ")])])])])])
+  }, [_vm._v("\n              I'm an Admin Staff component!\n          ")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-c23e2d70", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-c735efae", module.exports)
   }
 }
 
@@ -50092,7 +51257,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.selectedCity.id = $event.target.value
+        _vm.$set(_vm.selectedCity, "id", $event.target.value)
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -50332,7 +51497,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-dashboard"
   }), _vm._v("Dashboard\n        ")])], 1), _vm._v(" "), _c('li', {
     staticClass: "active"
-  }, [_vm._v("Contact")])])]), _vm._v(" "), _vm._m(0)])
+  }, [_vm._v("Contact")])])]), _vm._v(" "), _vm._m(0, false, false)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('section', {
     staticClass: "content"
@@ -50363,6 +51528,32 @@ if (false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("0f2635c0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-001d687c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatPlan.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-001d687c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatPlan.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
 var content = __webpack_require__(64);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -50383,7 +51574,7 @@ if(false) {
 }
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -50393,13 +51584,13 @@ var content = __webpack_require__(65);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("9e4bb37e", content, false);
+var update = __webpack_require__(3)("4a73d440", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2108cb88\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Bus.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50409,7 +51600,7 @@ if(false) {
 }
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -50435,13 +51626,39 @@ if(false) {
 }
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
 var content = __webpack_require__(67);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("3c622e97", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3fc4e1ea\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Schedule.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(68);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50461,13 +51678,13 @@ if(false) {
 }
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(68);
+var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50487,13 +51704,13 @@ if(false) {
 }
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(69);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50513,23 +51730,23 @@ if(false) {
 }
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(70);
+var content = __webpack_require__(71);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("d97ece18", content, false);
+var update = __webpack_require__(3)("6076ae9d", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c3bf27e6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Seat_display.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c23e2d70\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Roles.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c23e2d70\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Roles.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50539,13 +51756,39 @@ if(false) {
 }
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(71);
+var content = __webpack_require__(72);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("516a603a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ca08cef0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatDisplay.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ca08cef0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SeatDisplay.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(73);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50565,7 +51808,7 @@ if(false) {
 }
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports) {
 
 /**
@@ -50598,18 +51841,20 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/*!
- * Vue.js v2.4.2
+/* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
+ * Vue.js v2.5.6
  * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
 
 
 /*  */
+
+var emptyObject = Object.freeze({});
 
 // these helpers produces better vm code in JS engines due to their
 // explicitness and function inlining
@@ -50649,7 +51894,14 @@ function isObject (obj) {
   return obj !== null && typeof obj === 'object'
 }
 
+/**
+ * Get the raw type string of a value e.g. [object Object]
+ */
 var _toString = Object.prototype.toString;
+
+function toRawType (value) {
+  return _toString.call(value).slice(8, -1)
+}
 
 /**
  * Strict object type check. Only returns true
@@ -50667,7 +51919,7 @@ function isRegExp (v) {
  * Check if val is a valid array index.
  */
 function isValidArrayIndex (val) {
-  var n = parseFloat(val);
+  var n = parseFloat(String(val));
   return n >= 0 && Math.floor(n) === n && isFinite(val)
 }
 
@@ -50717,7 +51969,7 @@ var isBuiltInTag = makeMap('slot,component', true);
 /**
  * Check if a attribute is a reserved attribute.
  */
-var isReservedAttribute = makeMap('key,ref,slot,is');
+var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
 
 /**
  * Remove an item from an array
@@ -50768,12 +52020,9 @@ var capitalize = cached(function (str) {
 /**
  * Hyphenate a camelCase string.
  */
-var hyphenateRE = /([^-])([A-Z])/g;
+var hyphenateRE = /\B([A-Z])/g;
 var hyphenate = cached(function (str) {
-  return str
-    .replace(hyphenateRE, '$1-$2')
-    .replace(hyphenateRE, '$1-$2')
-    .toLowerCase()
+  return str.replace(hyphenateRE, '-$1').toLowerCase()
 });
 
 /**
@@ -50930,7 +52179,8 @@ var LIFECYCLE_HOOKS = [
   'beforeDestroy',
   'destroyed',
   'activated',
-  'deactivated'
+  'deactivated',
+  'errorCaptured'
 ];
 
 /*  */
@@ -51023,8 +52273,6 @@ var config = ({
 
 /*  */
 
-var emptyObject = Object.freeze({});
-
 /**
  * Check if a string starts with $ or _
  */
@@ -51065,134 +52313,23 @@ function parsePath (path) {
 
 /*  */
 
-var warn = noop;
-var tip = noop;
-var formatComponentName = (null); // work around flow check
-
-if (true) {
-  var hasConsole = typeof console !== 'undefined';
-  var classifyRE = /(?:^|[-_])(\w)/g;
-  var classify = function (str) { return str
-    .replace(classifyRE, function (c) { return c.toUpperCase(); })
-    .replace(/[-_]/g, ''); };
-
-  warn = function (msg, vm) {
-    var trace = vm ? generateComponentTrace(vm) : '';
-
-    if (config.warnHandler) {
-      config.warnHandler.call(null, msg, vm, trace);
-    } else if (hasConsole && (!config.silent)) {
-      console.error(("[Vue warn]: " + msg + trace));
-    }
-  };
-
-  tip = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.warn("[Vue tip]: " + msg + (
-        vm ? generateComponentTrace(vm) : ''
-      ));
-    }
-  };
-
-  formatComponentName = function (vm, includeFile) {
-    if (vm.$root === vm) {
-      return '<Root>'
-    }
-    var name = typeof vm === 'string'
-      ? vm
-      : typeof vm === 'function' && vm.options
-        ? vm.options.name
-        : vm._isVue
-          ? vm.$options.name || vm.$options._componentTag
-          : vm.name;
-
-    var file = vm._isVue && vm.$options.__file;
-    if (!name && file) {
-      var match = file.match(/([^/\\]+)\.vue$/);
-      name = match && match[1];
-    }
-
-    return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
-      (file && includeFile !== false ? (" at " + file) : '')
-    )
-  };
-
-  var repeat = function (str, n) {
-    var res = '';
-    while (n) {
-      if (n % 2 === 1) { res += str; }
-      if (n > 1) { str += str; }
-      n >>= 1;
-    }
-    return res
-  };
-
-  var generateComponentTrace = function (vm) {
-    if (vm._isVue && vm.$parent) {
-      var tree = [];
-      var currentRecursiveSequence = 0;
-      while (vm) {
-        if (tree.length > 0) {
-          var last = tree[tree.length - 1];
-          if (last.constructor === vm.constructor) {
-            currentRecursiveSequence++;
-            vm = vm.$parent;
-            continue
-          } else if (currentRecursiveSequence > 0) {
-            tree[tree.length - 1] = [last, currentRecursiveSequence];
-            currentRecursiveSequence = 0;
-          }
-        }
-        tree.push(vm);
-        vm = vm.$parent;
-      }
-      return '\n\nfound in\n\n' + tree
-        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
-            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
-            : formatComponentName(vm))); })
-        .join('\n')
-    } else {
-      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
-    }
-  };
-}
-
-/*  */
-
-function handleError (err, vm, info) {
-  if (config.errorHandler) {
-    config.errorHandler.call(null, err, vm, info);
-  } else {
-    if (true) {
-      warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
-    }
-    /* istanbul ignore else */
-    if (inBrowser && typeof console !== 'undefined') {
-      console.error(err);
-    } else {
-      throw err
-    }
-  }
-}
-
-/*  */
-/* globals MutationObserver */
 
 // can we use __proto__?
 var hasProto = '__proto__' in {};
 
 // Browser environment sniffing
 var inBrowser = typeof window !== 'undefined';
+var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
 var isIE = UA && /msie|trident/.test(UA);
 var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
 var isEdge = UA && UA.indexOf('edge/') > 0;
-var isAndroid = UA && UA.indexOf('android') > 0;
-var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA);
+var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
+var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
 
-// Firefix has a "watch" function on Object.prototype...
+// Firefox has a "watch" function on Object.prototype...
 var nativeWatch = ({}).watch;
 
 var supportsPassive = false;
@@ -51238,94 +52375,8 @@ var hasSymbol =
   typeof Symbol !== 'undefined' && isNative(Symbol) &&
   typeof Reflect !== 'undefined' && isNative(Reflect.ownKeys);
 
-/**
- * Defer a task to execute it asynchronously.
- */
-var nextTick = (function () {
-  var callbacks = [];
-  var pending = false;
-  var timerFunc;
-
-  function nextTickHandler () {
-    pending = false;
-    var copies = callbacks.slice(0);
-    callbacks.length = 0;
-    for (var i = 0; i < copies.length; i++) {
-      copies[i]();
-    }
-  }
-
-  // the nextTick behavior leverages the microtask queue, which can be accessed
-  // via either native Promise.then or MutationObserver.
-  // MutationObserver has wider support, however it is seriously bugged in
-  // UIWebView in iOS >= 9.3.3 when triggered in touch event handlers. It
-  // completely stops working after triggering a few times... so, if native
-  // Promise is available, we will use it:
-  /* istanbul ignore if */
-  if (typeof Promise !== 'undefined' && isNative(Promise)) {
-    var p = Promise.resolve();
-    var logError = function (err) { console.error(err); };
-    timerFunc = function () {
-      p.then(nextTickHandler).catch(logError);
-      // in problematic UIWebViews, Promise.then doesn't completely break, but
-      // it can get stuck in a weird state where callbacks are pushed into the
-      // microtask queue but the queue isn't being flushed, until the browser
-      // needs to do some other work, e.g. handle a timer. Therefore we can
-      // "force" the microtask queue to be flushed by adding an empty timer.
-      if (isIOS) { setTimeout(noop); }
-    };
-  } else if (typeof MutationObserver !== 'undefined' && (
-    isNative(MutationObserver) ||
-    // PhantomJS and iOS 7.x
-    MutationObserver.toString() === '[object MutationObserverConstructor]'
-  )) {
-    // use MutationObserver where native Promise is not available,
-    // e.g. PhantomJS IE11, iOS7, Android 4.4
-    var counter = 1;
-    var observer = new MutationObserver(nextTickHandler);
-    var textNode = document.createTextNode(String(counter));
-    observer.observe(textNode, {
-      characterData: true
-    });
-    timerFunc = function () {
-      counter = (counter + 1) % 2;
-      textNode.data = String(counter);
-    };
-  } else {
-    // fallback to setTimeout
-    /* istanbul ignore next */
-    timerFunc = function () {
-      setTimeout(nextTickHandler, 0);
-    };
-  }
-
-  return function queueNextTick (cb, ctx) {
-    var _resolve;
-    callbacks.push(function () {
-      if (cb) {
-        try {
-          cb.call(ctx);
-        } catch (e) {
-          handleError(e, ctx, 'nextTick');
-        }
-      } else if (_resolve) {
-        _resolve(ctx);
-      }
-    });
-    if (!pending) {
-      pending = true;
-      timerFunc();
-    }
-    if (!cb && typeof Promise !== 'undefined') {
-      return new Promise(function (resolve, reject) {
-        _resolve = resolve;
-      })
-    }
-  }
-})();
-
 var _Set;
-/* istanbul ignore if */
+/* istanbul ignore if */ // $flow-disable-line
 if (typeof Set !== 'undefined' && isNative(Set)) {
   // use native Set when available.
   _Set = Set;
@@ -51347,6 +52398,100 @@ if (typeof Set !== 'undefined' && isNative(Set)) {
 
     return Set;
   }());
+}
+
+/*  */
+
+var warn = noop;
+var tip = noop;
+var generateComponentTrace = (noop); // work around flow check
+var formatComponentName = (noop);
+
+if (true) {
+  var hasConsole = typeof console !== 'undefined';
+  var classifyRE = /(?:^|[-_])(\w)/g;
+  var classify = function (str) { return str
+    .replace(classifyRE, function (c) { return c.toUpperCase(); })
+    .replace(/[-_]/g, ''); };
+
+  warn = function (msg, vm) {
+    var trace = vm ? generateComponentTrace(vm) : '';
+
+    if (config.warnHandler) {
+      config.warnHandler.call(null, msg, vm, trace);
+    } else if (hasConsole && (!config.silent)) {
+      console.error(("[Vue warn]: " + msg + trace));
+    }
+  };
+
+  tip = function (msg, vm) {
+    if (hasConsole && (!config.silent)) {
+      console.warn("[Vue tip]: " + msg + (
+        vm ? generateComponentTrace(vm) : ''
+      ));
+    }
+  };
+
+  formatComponentName = function (vm, includeFile) {
+    if (vm.$root === vm) {
+      return '<Root>'
+    }
+    var options = typeof vm === 'function' && vm.cid != null
+      ? vm.options
+      : vm._isVue
+        ? vm.$options || vm.constructor.options
+        : vm || {};
+    var name = options.name || options._componentTag;
+    var file = options.__file;
+    if (!name && file) {
+      var match = file.match(/([^/\\]+)\.vue$/);
+      name = match && match[1];
+    }
+
+    return (
+      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
+      (file && includeFile !== false ? (" at " + file) : '')
+    )
+  };
+
+  var repeat = function (str, n) {
+    var res = '';
+    while (n) {
+      if (n % 2 === 1) { res += str; }
+      if (n > 1) { str += str; }
+      n >>= 1;
+    }
+    return res
+  };
+
+  generateComponentTrace = function (vm) {
+    if (vm._isVue && vm.$parent) {
+      var tree = [];
+      var currentRecursiveSequence = 0;
+      while (vm) {
+        if (tree.length > 0) {
+          var last = tree[tree.length - 1];
+          if (last.constructor === vm.constructor) {
+            currentRecursiveSequence++;
+            vm = vm.$parent;
+            continue
+          } else if (currentRecursiveSequence > 0) {
+            tree[tree.length - 1] = [last, currentRecursiveSequence];
+            currentRecursiveSequence = 0;
+          }
+        }
+        tree.push(vm);
+        vm = vm.$parent;
+      }
+      return '\n\nfound in\n\n' + tree
+        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
+            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
+            : formatComponentName(vm))); })
+        .join('\n')
+    } else {
+      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
+    }
+  };
 }
 
 /*  */
@@ -51398,6 +52543,107 @@ function pushTarget (_target) {
 
 function popTarget () {
   Dep.target = targetStack.pop();
+}
+
+/*  */
+
+var VNode = function VNode (
+  tag,
+  data,
+  children,
+  text,
+  elm,
+  context,
+  componentOptions,
+  asyncFactory
+) {
+  this.tag = tag;
+  this.data = data;
+  this.children = children;
+  this.text = text;
+  this.elm = elm;
+  this.ns = undefined;
+  this.context = context;
+  this.functionalContext = undefined;
+  this.functionalOptions = undefined;
+  this.functionalScopeId = undefined;
+  this.key = data && data.key;
+  this.componentOptions = componentOptions;
+  this.componentInstance = undefined;
+  this.parent = undefined;
+  this.raw = false;
+  this.isStatic = false;
+  this.isRootInsert = true;
+  this.isComment = false;
+  this.isCloned = false;
+  this.isOnce = false;
+  this.asyncFactory = asyncFactory;
+  this.asyncMeta = undefined;
+  this.isAsyncPlaceholder = false;
+};
+
+var prototypeAccessors = { child: { configurable: true } };
+
+// DEPRECATED: alias for componentInstance for backwards compat.
+/* istanbul ignore next */
+prototypeAccessors.child.get = function () {
+  return this.componentInstance
+};
+
+Object.defineProperties( VNode.prototype, prototypeAccessors );
+
+var createEmptyVNode = function (text) {
+  if ( text === void 0 ) text = '';
+
+  var node = new VNode();
+  node.text = text;
+  node.isComment = true;
+  return node
+};
+
+function createTextVNode (val) {
+  return new VNode(undefined, undefined, undefined, String(val))
+}
+
+// optimized shallow clone
+// used for static nodes and slot nodes because they may be reused across
+// multiple renders, cloning them avoids errors when DOM manipulations rely
+// on their elm reference.
+function cloneVNode (vnode, deep) {
+  var componentOptions = vnode.componentOptions;
+  var cloned = new VNode(
+    vnode.tag,
+    vnode.data,
+    vnode.children,
+    vnode.text,
+    vnode.elm,
+    vnode.context,
+    componentOptions,
+    vnode.asyncFactory
+  );
+  cloned.ns = vnode.ns;
+  cloned.isStatic = vnode.isStatic;
+  cloned.key = vnode.key;
+  cloned.isComment = vnode.isComment;
+  cloned.isCloned = true;
+  if (deep) {
+    if (vnode.children) {
+      cloned.children = cloneVNodes(vnode.children, true);
+    }
+    if (componentOptions && componentOptions.children) {
+      componentOptions.children = cloneVNodes(componentOptions.children, true);
+    }
+  }
+  return cloned
+}
+
+function cloneVNodes (vnodes, deep) {
+  var len = vnodes.length;
+  var res = new Array(len);
+  for (var i = 0; i < len; i++) {
+    res[i] = cloneVNode(vnodes[i], deep);
+  }
+  return res
 }
 
 /*
@@ -51485,7 +52731,7 @@ var Observer = function Observer (value) {
 Observer.prototype.walk = function walk (obj) {
   var keys = Object.keys(obj);
   for (var i = 0; i < keys.length; i++) {
-    defineReactive$$1(obj, keys[i], obj[keys[i]]);
+    defineReactive(obj, keys[i], obj[keys[i]]);
   }
 };
 
@@ -51528,7 +52774,7 @@ function copyAugment (target, src, keys) {
  * or the existing observer if the value already has one.
  */
 function observe (value, asRootData) {
-  if (!isObject(value)) {
+  if (!isObject(value) || value instanceof VNode) {
     return
   }
   var ob;
@@ -51552,7 +52798,7 @@ function observe (value, asRootData) {
 /**
  * Define a reactive property on an Object.
  */
-function defineReactive$$1 (
+function defineReactive (
   obj,
   key,
   val,
@@ -51580,9 +52826,9 @@ function defineReactive$$1 (
         dep.depend();
         if (childOb) {
           childOb.dep.depend();
-        }
-        if (Array.isArray(value)) {
-          dependArray(value);
+          if (Array.isArray(value)) {
+            dependArray(value);
+          }
         }
       }
       return value
@@ -51619,7 +52865,7 @@ function set (target, key, val) {
     target.splice(key, 1, val);
     return val
   }
-  if (hasOwn(target, key)) {
+  if (key in target && !(key in Object.prototype)) {
     target[key] = val;
     return val
   }
@@ -51635,7 +52881,7 @@ function set (target, key, val) {
     target[key] = val;
     return val
   }
-  defineReactive$$1(ob.value, key, val);
+  defineReactive(ob.value, key, val);
   ob.dep.notify();
   return val
 }
@@ -51751,7 +52997,7 @@ function mergeDataOrFn (
         typeof parentVal === 'function' ? parentVal.call(this) : parentVal
       )
     }
-  } else if (parentVal || childVal) {
+  } else {
     return function mergedInstanceDataFn () {
       // instance merge
       var instanceData = typeof childVal === 'function'
@@ -51759,7 +53005,7 @@ function mergeDataOrFn (
         : childVal;
       var defaultData = typeof parentVal === 'function'
         ? parentVal.call(vm)
-        : undefined;
+        : parentVal;
       if (instanceData) {
         return mergeData(instanceData, defaultData)
       } else {
@@ -51785,7 +53031,7 @@ strats.data = function (
 
       return parentVal
     }
-    return mergeDataOrFn.call(this, parentVal, childVal)
+    return mergeDataOrFn(parentVal, childVal)
   }
 
   return mergeDataOrFn(parentVal, childVal, vm)
@@ -51818,11 +53064,19 @@ LIFECYCLE_HOOKS.forEach(function (hook) {
  * a three-way merge between constructor options, instance
  * options and parent options.
  */
-function mergeAssets (parentVal, childVal) {
+function mergeAssets (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
   var res = Object.create(parentVal || null);
-  return childVal
-    ? extend(res, childVal)
-    : res
+  if (childVal) {
+    "development" !== 'production' && assertObjectType(key, childVal, vm);
+    return extend(res, childVal)
+  } else {
+    return res
+  }
 }
 
 ASSET_TYPES.forEach(function (type) {
@@ -51835,22 +53089,30 @@ ASSET_TYPES.forEach(function (type) {
  * Watchers hashes should not overwrite one
  * another, so we merge them as arrays.
  */
-strats.watch = function (parentVal, childVal) {
+strats.watch = function (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
   // work around Firefox's Object.prototype.watch...
   if (parentVal === nativeWatch) { parentVal = undefined; }
   if (childVal === nativeWatch) { childVal = undefined; }
   /* istanbul ignore if */
   if (!childVal) { return Object.create(parentVal || null) }
+  if (true) {
+    assertObjectType(key, childVal, vm);
+  }
   if (!parentVal) { return childVal }
   var ret = {};
   extend(ret, parentVal);
-  for (var key in childVal) {
-    var parent = ret[key];
-    var child = childVal[key];
+  for (var key$1 in childVal) {
+    var parent = ret[key$1];
+    var child = childVal[key$1];
     if (parent && !Array.isArray(parent)) {
       parent = [parent];
     }
-    ret[key] = parent
+    ret[key$1] = parent
       ? parent.concat(child)
       : Array.isArray(child) ? child : [child];
   }
@@ -51863,7 +53125,15 @@ strats.watch = function (parentVal, childVal) {
 strats.props =
 strats.methods =
 strats.inject =
-strats.computed = function (parentVal, childVal) {
+strats.computed = function (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
+  if (childVal && "development" !== 'production') {
+    assertObjectType(key, childVal, vm);
+  }
   if (!parentVal) { return childVal }
   var ret = Object.create(null);
   extend(ret, parentVal);
@@ -51900,7 +53170,7 @@ function checkComponents (options) {
  * Ensure all props option syntax are normalized into the
  * Object-based format.
  */
-function normalizeProps (options) {
+function normalizeProps (options, vm) {
   var props = options.props;
   if (!props) { return }
   var res = {};
@@ -51924,6 +53194,12 @@ function normalizeProps (options) {
         ? val
         : { type: val };
     }
+  } else if (true) {
+    warn(
+      "Invalid value for option \"props\": expected an Array or an Object, " +
+      "but got " + (toRawType(props)) + ".",
+      vm
+    );
   }
   options.props = res;
 }
@@ -51931,13 +53207,26 @@ function normalizeProps (options) {
 /**
  * Normalize all injections into Object-based format
  */
-function normalizeInject (options) {
+function normalizeInject (options, vm) {
   var inject = options.inject;
+  var normalized = options.inject = {};
   if (Array.isArray(inject)) {
-    var normalized = options.inject = {};
     for (var i = 0; i < inject.length; i++) {
-      normalized[inject[i]] = inject[i];
+      normalized[inject[i]] = { from: inject[i] };
     }
+  } else if (isPlainObject(inject)) {
+    for (var key in inject) {
+      var val = inject[key];
+      normalized[key] = isPlainObject(val)
+        ? extend({ from: key }, val)
+        : { from: val };
+    }
+  } else if ("development" !== 'production' && inject) {
+    warn(
+      "Invalid value for option \"inject\": expected an Array or an Object, " +
+      "but got " + (toRawType(inject)) + ".",
+      vm
+    );
   }
 }
 
@@ -51953,6 +53242,16 @@ function normalizeDirectives (options) {
         dirs[key] = { bind: def, update: def };
       }
     }
+  }
+}
+
+function assertObjectType (name, value, vm) {
+  if (!isPlainObject(value)) {
+    warn(
+      "Invalid value for option \"" + name + "\": expected an Object, " +
+      "but got " + (toRawType(value)) + ".",
+      vm
+    );
   }
 }
 
@@ -51973,8 +53272,8 @@ function mergeOptions (
     child = child.options;
   }
 
-  normalizeProps(child);
-  normalizeInject(child);
+  normalizeProps(child, vm);
+  normalizeInject(child, vm);
   normalizeDirectives(child);
   var extendsFrom = child.extends;
   if (extendsFrom) {
@@ -52138,9 +53437,9 @@ function assertProp (
   }
   if (!valid) {
     warn(
-      'Invalid prop: type check failed for prop "' + name + '".' +
-      ' Expected ' + expectedTypes.map(capitalize).join(', ') +
-      ', got ' + Object.prototype.toString.call(value).slice(8, -1) + '.',
+      "Invalid prop: type check failed for prop \"" + name + "\"." +
+      " Expected " + (expectedTypes.map(capitalize).join(', ')) +
+      ", got " + (toRawType(value)) + ".",
       vm
     );
     return
@@ -52162,7 +53461,12 @@ function assertType (value, type) {
   var valid;
   var expectedType = getType(type);
   if (simpleCheckRE.test(expectedType)) {
-    valid = typeof value === expectedType.toLowerCase();
+    var t = typeof value;
+    valid = t === expectedType.toLowerCase();
+    // for primitive wrapper objects
+    if (!valid && t === 'object') {
+      valid = value instanceof type;
+    }
   } else if (expectedType === 'Object') {
     valid = isPlainObject(value);
   } else if (expectedType === 'Array') {
@@ -52197,6 +53501,165 @@ function isType (type, fn) {
   }
   /* istanbul ignore next */
   return false
+}
+
+/*  */
+
+function handleError (err, vm, info) {
+  if (vm) {
+    var cur = vm;
+    while ((cur = cur.$parent)) {
+      var hooks = cur.$options.errorCaptured;
+      if (hooks) {
+        for (var i = 0; i < hooks.length; i++) {
+          try {
+            var capture = hooks[i].call(cur, err, vm, info) === false;
+            if (capture) { return }
+          } catch (e) {
+            globalHandleError(e, cur, 'errorCaptured hook');
+          }
+        }
+      }
+    }
+  }
+  globalHandleError(err, vm, info);
+}
+
+function globalHandleError (err, vm, info) {
+  if (config.errorHandler) {
+    try {
+      return config.errorHandler.call(null, err, vm, info)
+    } catch (e) {
+      logError(e, null, 'config.errorHandler');
+    }
+  }
+  logError(err, vm, info);
+}
+
+function logError (err, vm, info) {
+  if (true) {
+    warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
+  }
+  /* istanbul ignore else */
+  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
+    console.error(err);
+  } else {
+    throw err
+  }
+}
+
+/*  */
+/* globals MessageChannel */
+
+var callbacks = [];
+var pending = false;
+
+function flushCallbacks () {
+  pending = false;
+  var copies = callbacks.slice(0);
+  callbacks.length = 0;
+  for (var i = 0; i < copies.length; i++) {
+    copies[i]();
+  }
+}
+
+// Here we have async deferring wrappers using both micro and macro tasks.
+// In < 2.4 we used micro tasks everywhere, but there are some scenarios where
+// micro tasks have too high a priority and fires in between supposedly
+// sequential events (e.g. #4521, #6690) or even between bubbling of the same
+// event (#6566). However, using macro tasks everywhere also has subtle problems
+// when state is changed right before repaint (e.g. #6813, out-in transitions).
+// Here we use micro task by default, but expose a way to force macro task when
+// needed (e.g. in event handlers attached by v-on).
+var microTimerFunc;
+var macroTimerFunc;
+var useMacroTask = false;
+
+// Determine (macro) Task defer implementation.
+// Technically setImmediate should be the ideal choice, but it's only available
+// in IE. The only polyfill that consistently queues the callback after all DOM
+// events triggered in the same loop is by using MessageChannel.
+/* istanbul ignore if */
+if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+  macroTimerFunc = function () {
+    setImmediate(flushCallbacks);
+  };
+} else if (typeof MessageChannel !== 'undefined' && (
+  isNative(MessageChannel) ||
+  // PhantomJS
+  MessageChannel.toString() === '[object MessageChannelConstructor]'
+)) {
+  var channel = new MessageChannel();
+  var port = channel.port2;
+  channel.port1.onmessage = flushCallbacks;
+  macroTimerFunc = function () {
+    port.postMessage(1);
+  };
+} else {
+  /* istanbul ignore next */
+  macroTimerFunc = function () {
+    setTimeout(flushCallbacks, 0);
+  };
+}
+
+// Determine MicroTask defer implementation.
+/* istanbul ignore next, $flow-disable-line */
+if (typeof Promise !== 'undefined' && isNative(Promise)) {
+  var p = Promise.resolve();
+  microTimerFunc = function () {
+    p.then(flushCallbacks);
+    // in problematic UIWebViews, Promise.then doesn't completely break, but
+    // it can get stuck in a weird state where callbacks are pushed into the
+    // microtask queue but the queue isn't being flushed, until the browser
+    // needs to do some other work, e.g. handle a timer. Therefore we can
+    // "force" the microtask queue to be flushed by adding an empty timer.
+    if (isIOS) { setTimeout(noop); }
+  };
+} else {
+  // fallback to macro
+  microTimerFunc = macroTimerFunc;
+}
+
+/**
+ * Wrap a function so that if any code inside triggers state change,
+ * the changes are queued using a Task instead of a MicroTask.
+ */
+function withMacroTask (fn) {
+  return fn._withTask || (fn._withTask = function () {
+    useMacroTask = true;
+    var res = fn.apply(null, arguments);
+    useMacroTask = false;
+    return res
+  })
+}
+
+function nextTick (cb, ctx) {
+  var _resolve;
+  callbacks.push(function () {
+    if (cb) {
+      try {
+        cb.call(ctx);
+      } catch (e) {
+        handleError(e, ctx, 'nextTick');
+      }
+    } else if (_resolve) {
+      _resolve(ctx);
+    }
+  });
+  if (!pending) {
+    pending = true;
+    if (useMacroTask) {
+      macroTimerFunc();
+    } else {
+      microTimerFunc();
+    }
+  }
+  // $flow-disable-line
+  if (!cb && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve) {
+      _resolve = resolve;
+    })
+  }
 }
 
 /*  */
@@ -52239,8 +53702,10 @@ if (true) {
   var warnNonPresent = function (target, key) {
     warn(
       "Property or method \"" + key + "\" is not defined on the instance but " +
-      "referenced during render. Make sure to declare reactive data " +
-      "properties in the data option.",
+      'referenced during render. Make sure that this property is reactive, ' +
+      'either in the data option, or for class-based components, by ' +
+      'initializing the property. ' +
+      'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.',
       target
     );
   };
@@ -52250,7 +53715,7 @@ if (true) {
     Proxy.toString().match(/native code/);
 
   if (hasProxy) {
-    var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta');
+    var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
     config.keyCodes = new Proxy(config.keyCodes, {
       set: function set (target, key, value) {
         if (isBuiltInModifier(key)) {
@@ -52300,92 +53765,39 @@ if (true) {
 
 /*  */
 
-var VNode = function VNode (
-  tag,
-  data,
-  children,
-  text,
-  elm,
-  context,
-  componentOptions,
-  asyncFactory
-) {
-  this.tag = tag;
-  this.data = data;
-  this.children = children;
-  this.text = text;
-  this.elm = elm;
-  this.ns = undefined;
-  this.context = context;
-  this.functionalContext = undefined;
-  this.key = data && data.key;
-  this.componentOptions = componentOptions;
-  this.componentInstance = undefined;
-  this.parent = undefined;
-  this.raw = false;
-  this.isStatic = false;
-  this.isRootInsert = true;
-  this.isComment = false;
-  this.isCloned = false;
-  this.isOnce = false;
-  this.asyncFactory = asyncFactory;
-  this.asyncMeta = undefined;
-  this.isAsyncPlaceholder = false;
-};
+var seenObjects = new _Set();
 
-var prototypeAccessors = { child: {} };
-
-// DEPRECATED: alias for componentInstance for backwards compat.
-/* istanbul ignore next */
-prototypeAccessors.child.get = function () {
-  return this.componentInstance
-};
-
-Object.defineProperties( VNode.prototype, prototypeAccessors );
-
-var createEmptyVNode = function (text) {
-  if ( text === void 0 ) text = '';
-
-  var node = new VNode();
-  node.text = text;
-  node.isComment = true;
-  return node
-};
-
-function createTextVNode (val) {
-  return new VNode(undefined, undefined, undefined, String(val))
+/**
+ * Recursively traverse an object to evoke all converted
+ * getters, so that every nested property inside the object
+ * is collected as a "deep" dependency.
+ */
+function traverse (val) {
+  _traverse(val, seenObjects);
+  seenObjects.clear();
 }
 
-// optimized shallow clone
-// used for static nodes and slot nodes because they may be reused across
-// multiple renders, cloning them avoids errors when DOM manipulations rely
-// on their elm reference.
-function cloneVNode (vnode) {
-  var cloned = new VNode(
-    vnode.tag,
-    vnode.data,
-    vnode.children,
-    vnode.text,
-    vnode.elm,
-    vnode.context,
-    vnode.componentOptions,
-    vnode.asyncFactory
-  );
-  cloned.ns = vnode.ns;
-  cloned.isStatic = vnode.isStatic;
-  cloned.key = vnode.key;
-  cloned.isComment = vnode.isComment;
-  cloned.isCloned = true;
-  return cloned
-}
-
-function cloneVNodes (vnodes) {
-  var len = vnodes.length;
-  var res = new Array(len);
-  for (var i = 0; i < len; i++) {
-    res[i] = cloneVNode(vnodes[i]);
+function _traverse (val, seen) {
+  var i, keys;
+  var isA = Array.isArray(val);
+  if ((!isA && !isObject(val)) || !Object.isExtensible(val)) {
+    return
   }
-  return res
+  if (val.__ob__) {
+    var depId = val.__ob__.dep.id;
+    if (seen.has(depId)) {
+      return
+    }
+    seen.add(depId);
+  }
+  if (isA) {
+    i = val.length;
+    while (i--) { _traverse(val[i], seen); }
+  } else {
+    keys = Object.keys(val);
+    i = keys.length;
+    while (i--) { _traverse(val[keys[i]], seen); }
+  }
 }
 
 /*  */
@@ -52462,6 +53874,9 @@ function updateListeners (
 /*  */
 
 function mergeVNodeHook (def, hookKey, hook) {
+  if (def instanceof VNode) {
+    def = def.data.hook || (def.data.hook = {});
+  }
   var invoker;
   var oldHook = def[hookKey];
 
@@ -52600,20 +54015,29 @@ function isTextNode (node) {
 
 function normalizeArrayChildren (children, nestedIndex) {
   var res = [];
-  var i, c, last;
+  var i, c, lastIndex, last;
   for (i = 0; i < children.length; i++) {
     c = children[i];
     if (isUndef(c) || typeof c === 'boolean') { continue }
-    last = res[res.length - 1];
+    lastIndex = res.length - 1;
+    last = res[lastIndex];
     //  nested
     if (Array.isArray(c)) {
-      res.push.apply(res, normalizeArrayChildren(c, ((nestedIndex || '') + "_" + i)));
+      if (c.length > 0) {
+        c = normalizeArrayChildren(c, ((nestedIndex || '') + "_" + i));
+        // merge adjacent text nodes
+        if (isTextNode(c[0]) && isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + (c[0]).text);
+          c.shift();
+        }
+        res.push.apply(res, c);
+      }
     } else if (isPrimitive(c)) {
       if (isTextNode(last)) {
         // merge adjacent text nodes
         // this is necessary for SSR hydration because text nodes are
         // essentially merged when rendered to HTML strings
-        (last).text += String(c);
+        res[lastIndex] = createTextVNode(last.text + c);
       } else if (c !== '') {
         // convert primitive to vnode
         res.push(createTextVNode(c));
@@ -52621,7 +54045,7 @@ function normalizeArrayChildren (children, nestedIndex) {
     } else {
       if (isTextNode(c) && isTextNode(last)) {
         // merge adjacent text nodes
-        res[res.length - 1] = createTextVNode(last.text + c.text);
+        res[lastIndex] = createTextVNode(last.text + c.text);
       } else {
         // default key for nested array children (likely generated by v-for)
         if (isTrue(children._isVList) &&
@@ -52640,7 +54064,10 @@ function normalizeArrayChildren (children, nestedIndex) {
 /*  */
 
 function ensureCtor (comp, base) {
-  if (comp.__esModule && comp.default) {
+  if (
+    comp.__esModule ||
+    (hasSymbol && comp[Symbol.toStringTag] === 'Module')
+  ) {
     comp = comp.default;
   }
   return isObject(comp)
@@ -52765,11 +54192,17 @@ function resolveAsyncComponent (
 
 /*  */
 
+function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
+}
+
+/*  */
+
 function getFirstComponentChild (children) {
   if (Array.isArray(children)) {
     for (var i = 0; i < children.length; i++) {
       var c = children[i];
-      if (isDef(c) && isDef(c.componentOptions)) {
+      if (isDef(c) && (isDef(c.componentOptions) || isAsyncPlaceholder(c))) {
         return c
       }
     }
@@ -52792,8 +54225,8 @@ function initEvents (vm) {
 
 var target;
 
-function add (event, fn, once$$1) {
-  if (once$$1) {
+function add (event, fn, once) {
+  if (once) {
     target.$once(event, fn);
   } else {
     target.$on(event, fn);
@@ -52811,6 +54244,7 @@ function updateComponentListeners (
 ) {
   target = vm;
   updateListeners(listeners, oldListeners || {}, add, remove$1, vm);
+  target = undefined;
 }
 
 function eventsMixin (Vue) {
@@ -52856,8 +54290,8 @@ function eventsMixin (Vue) {
     }
     // array of events
     if (Array.isArray(event)) {
-      for (var i$1 = 0, l = event.length; i$1 < l; i$1++) {
-        this$1.$off(event[i$1], fn);
+      for (var i = 0, l = event.length; i < l; i++) {
+        this$1.$off(event[i], fn);
       }
       return vm
     }
@@ -52866,18 +54300,20 @@ function eventsMixin (Vue) {
     if (!cbs) {
       return vm
     }
-    if (arguments.length === 1) {
+    if (!fn) {
       vm._events[event] = null;
       return vm
     }
-    // specific handler
-    var cb;
-    var i = cbs.length;
-    while (i--) {
-      cb = cbs[i];
-      if (cb === fn || cb.fn === fn) {
-        cbs.splice(i, 1);
-        break
+    if (fn) {
+      // specific handler
+      var cb;
+      var i$1 = cbs.length;
+      while (i$1--) {
+        cb = cbs[i$1];
+        if (cb === fn || cb.fn === fn) {
+          cbs.splice(i$1, 1);
+          break
+        }
       }
     }
     return vm
@@ -52926,13 +54362,17 @@ function resolveSlots (
   if (!children) {
     return slots
   }
-  var defaultSlot = [];
   for (var i = 0, l = children.length; i < l; i++) {
     var child = children[i];
+    var data = child.data;
+    // remove slot attribute if the node is resolved as a Vue slot node
+    if (data && data.attrs && data.attrs.slot) {
+      delete data.attrs.slot;
+    }
     // named slots should only be respected if the vnode was rendered in the
     // same context.
     if ((child.context === context || child.functionalContext === context) &&
-      child.data && child.data.slot != null
+      data && data.slot != null
     ) {
       var name = child.data.slot;
       var slot = (slots[name] || (slots[name] = []));
@@ -52942,18 +54382,20 @@ function resolveSlots (
         slot.push(child);
       }
     } else {
-      defaultSlot.push(child);
+      (slots.default || (slots.default = [])).push(child);
     }
   }
-  // ignore whitespace
-  if (!defaultSlot.every(isWhitespace)) {
-    slots.default = defaultSlot;
+  // ignore slots that contains only whitespace
+  for (var name$1 in slots) {
+    if (slots[name$1].every(isWhitespace)) {
+      delete slots[name$1];
+    }
   }
   return slots
 }
 
 function isWhitespace (node) {
-  return node.isComment || node.text === ' '
+  return (node.isComment && !node.asyncFactory) || node.text === ' '
 }
 
 function resolveScopedSlots (
@@ -53089,6 +54531,10 @@ function lifecycleMixin (Vue) {
     if (vm.$el) {
       vm.$el.__vue__ = null;
     }
+    // release circular reference (#6759)
+    if (vm.$vnode) {
+      vm.$vnode.parent = null;
+    }
   };
 }
 
@@ -53132,12 +54578,12 @@ function mountComponent (
       mark(startTag);
       var vnode = vm._render();
       mark(endTag);
-      measure((name + " render"), startTag, endTag);
+      measure(("vue " + name + " render"), startTag, endTag);
 
       mark(startTag);
       vm._update(vnode, hydrating);
       mark(endTag);
-      measure((name + " patch"), startTag, endTag);
+      measure(("vue " + name + " patch"), startTag, endTag);
     };
   } else {
     updateComponent = function () {
@@ -53185,11 +54631,11 @@ function updateChildComponent (
   }
   vm.$options._renderChildren = renderChildren;
 
-  // update $attrs and $listensers hash
+  // update $attrs and $listeners hash
   // these are also reactive so they may trigger child update if the child
   // used them during render
-  vm.$attrs = parentVnode.data && parentVnode.data.attrs;
-  vm.$listeners = listeners;
+  vm.$attrs = (parentVnode.data && parentVnode.data.attrs) || emptyObject;
+  vm.$listeners = listeners || emptyObject;
 
   // update props
   if (propsData && vm.$options.props) {
@@ -53628,40 +55074,6 @@ Watcher.prototype.teardown = function teardown () {
   }
 };
 
-/**
- * Recursively traverse an object to evoke all converted
- * getters, so that every nested property inside the object
- * is collected as a "deep" dependency.
- */
-var seenObjects = new _Set();
-function traverse (val) {
-  seenObjects.clear();
-  _traverse(val, seenObjects);
-}
-
-function _traverse (val, seen) {
-  var i, keys;
-  var isA = Array.isArray(val);
-  if ((!isA && !isObject(val)) || !Object.isExtensible(val)) {
-    return
-  }
-  if (val.__ob__) {
-    var depId = val.__ob__.dep.id;
-    if (seen.has(depId)) {
-      return
-    }
-    seen.add(depId);
-  }
-  if (isA) {
-    i = val.length;
-    while (i--) { _traverse(val[i], seen); }
-  } else {
-    keys = Object.keys(val);
-    i = keys.length;
-    while (i--) { _traverse(val[keys[i]], seen); }
-  }
-}
-
 /*  */
 
 var sharedPropertyDefinition = {
@@ -53697,16 +55109,6 @@ function initState (vm) {
   }
 }
 
-function checkOptionType (vm, name) {
-  var option = vm.$options[name];
-  if (!isPlainObject(option)) {
-    warn(
-      ("component option \"" + name + "\" should be an object."),
-      vm
-    );
-  }
-}
-
 function initProps (vm, propsOptions) {
   var propsData = vm.$options.propsData || {};
   var props = vm._props = {};
@@ -53721,13 +55123,15 @@ function initProps (vm, propsOptions) {
     var value = validateProp(key, propsOptions, propsData, vm);
     /* istanbul ignore else */
     if (true) {
-      if (isReservedAttribute(key) || config.isReservedAttr(key)) {
+      var hyphenatedKey = hyphenate(key);
+      if (isReservedAttribute(hyphenatedKey) ||
+          config.isReservedAttr(hyphenatedKey)) {
         warn(
-          ("\"" + key + "\" is a reserved attribute and cannot be used as component prop."),
+          ("\"" + hyphenatedKey + "\" is a reserved attribute and cannot be used as component prop."),
           vm
         );
       }
-      defineReactive$$1(props, key, value, function () {
+      defineReactive(props, key, value, function () {
         if (vm.$parent && !isUpdatingChildComponent) {
           warn(
             "Avoid mutating a prop directly since the value will be " +
@@ -53739,7 +55143,7 @@ function initProps (vm, propsOptions) {
         }
       });
     } else {
-      defineReactive$$1(props, key, value);
+      defineReactive(props, key, value);
     }
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
@@ -53776,7 +55180,7 @@ function initData (vm) {
     if (true) {
       if (methods && hasOwn(methods, key)) {
         warn(
-          ("method \"" + key + "\" has already been defined as a data property."),
+          ("Method \"" + key + "\" has already been defined as a data property."),
           vm
         );
       }
@@ -53797,7 +55201,7 @@ function initData (vm) {
 
 function getData (data, vm) {
   try {
-    return data.call(vm)
+    return data.call(vm, vm)
   } catch (e) {
     handleError(e, vm, "data()");
     return {}
@@ -53807,8 +55211,9 @@ function getData (data, vm) {
 var computedWatcherOptions = { lazy: true };
 
 function initComputed (vm, computed) {
-  "development" !== 'production' && checkOptionType(vm, 'computed');
   var watchers = vm._computedWatchers = Object.create(null);
+  // computed properties are just getters during SSR
+  var isSSR = isServerRendering();
 
   for (var key in computed) {
     var userDef = computed[key];
@@ -53819,8 +55224,16 @@ function initComputed (vm, computed) {
         vm
       );
     }
-    // create internal watcher for the computed property.
-    watchers[key] = new Watcher(vm, getter || noop, noop, computedWatcherOptions);
+
+    if (!isSSR) {
+      // create internal watcher for the computed property.
+      watchers[key] = new Watcher(
+        vm,
+        getter || noop,
+        noop,
+        computedWatcherOptions
+      );
+    }
 
     // component-defined computed properties are already defined on the
     // component prototype. We only need to define computed properties defined
@@ -53837,13 +55250,20 @@ function initComputed (vm, computed) {
   }
 }
 
-function defineComputed (target, key, userDef) {
+function defineComputed (
+  target,
+  key,
+  userDef
+) {
+  var shouldCache = !isServerRendering();
   if (typeof userDef === 'function') {
-    sharedPropertyDefinition.get = createComputedGetter(key);
+    sharedPropertyDefinition.get = shouldCache
+      ? createComputedGetter(key)
+      : userDef;
     sharedPropertyDefinition.set = noop;
   } else {
     sharedPropertyDefinition.get = userDef.get
-      ? userDef.cache !== false
+      ? shouldCache && userDef.cache !== false
         ? createComputedGetter(key)
         : userDef.get
       : noop;
@@ -53879,30 +55299,34 @@ function createComputedGetter (key) {
 }
 
 function initMethods (vm, methods) {
-  "development" !== 'production' && checkOptionType(vm, 'methods');
   var props = vm.$options.props;
   for (var key in methods) {
-    vm[key] = methods[key] == null ? noop : bind(methods[key], vm);
     if (true) {
       if (methods[key] == null) {
         warn(
-          "method \"" + key + "\" has an undefined value in the component definition. " +
+          "Method \"" + key + "\" has an undefined value in the component definition. " +
           "Did you reference the function correctly?",
           vm
         );
       }
       if (props && hasOwn(props, key)) {
         warn(
-          ("method \"" + key + "\" has already been defined as a prop."),
+          ("Method \"" + key + "\" has already been defined as a prop."),
           vm
         );
       }
+      if ((key in vm) && isReserved(key)) {
+        warn(
+          "Method \"" + key + "\" conflicts with an existing Vue instance method. " +
+          "Avoid defining component methods that start with _ or $."
+        );
+      }
     }
+    vm[key] = methods[key] == null ? noop : bind(methods[key], vm);
   }
 }
 
 function initWatch (vm, watch) {
-  "development" !== 'production' && checkOptionType(vm, 'watch');
   for (var key in watch) {
     var handler = watch[key];
     if (Array.isArray(handler)) {
@@ -53996,7 +55420,7 @@ function initInjections (vm) {
     Object.keys(result).forEach(function (key) {
       /* istanbul ignore else */
       if (true) {
-        defineReactive$$1(vm, key, result[key], function () {
+        defineReactive(vm, key, result[key], function () {
           warn(
             "Avoid mutating an injected value directly since the changes will be " +
             "overwritten whenever the provided component re-renders. " +
@@ -54005,7 +55429,7 @@ function initInjections (vm) {
           );
         });
       } else {
-        defineReactive$$1(vm, key, result[key]);
+        defineReactive(vm, key, result[key]);
       }
     });
     observerState.shouldConvert = true;
@@ -54017,12 +55441,15 @@ function resolveInject (inject, vm) {
     // inject is :any because flow is not smart enough to figure out cached
     var result = Object.create(null);
     var keys = hasSymbol
-        ? Reflect.ownKeys(inject)
+        ? Reflect.ownKeys(inject).filter(function (key) {
+          /* istanbul ignore next */
+          return Object.getOwnPropertyDescriptor(inject, key).enumerable
+        })
         : Object.keys(inject);
 
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      var provideKey = inject[key];
+      var provideKey = inject[key].from;
       var source = vm;
       while (source) {
         if (source._provided && provideKey in source._provided) {
@@ -54031,8 +55458,15 @@ function resolveInject (inject, vm) {
         }
         source = source.$parent;
       }
-      if ("development" !== 'production' && !source) {
-        warn(("Injection \"" + key + "\" not found"), vm);
+      if (!source) {
+        if ('default' in inject[key]) {
+          var provideDefault = inject[key].default;
+          result[key] = typeof provideDefault === 'function'
+            ? provideDefault.call(vm)
+            : provideDefault;
+        } else if (true) {
+          warn(("Injection \"" + key + "\" not found"), vm);
+        }
       }
     }
     return result
@@ -54041,43 +55475,371 @@ function resolveInject (inject, vm) {
 
 /*  */
 
+/**
+ * Runtime helper for rendering v-for lists.
+ */
+function renderList (
+  val,
+  render
+) {
+  var ret, i, l, keys, key;
+  if (Array.isArray(val) || typeof val === 'string') {
+    ret = new Array(val.length);
+    for (i = 0, l = val.length; i < l; i++) {
+      ret[i] = render(val[i], i);
+    }
+  } else if (typeof val === 'number') {
+    ret = new Array(val);
+    for (i = 0; i < val; i++) {
+      ret[i] = render(i + 1, i);
+    }
+  } else if (isObject(val)) {
+    keys = Object.keys(val);
+    ret = new Array(keys.length);
+    for (i = 0, l = keys.length; i < l; i++) {
+      key = keys[i];
+      ret[i] = render(val[key], key, i);
+    }
+  }
+  if (isDef(ret)) {
+    (ret)._isVList = true;
+  }
+  return ret
+}
+
+/*  */
+
+/**
+ * Runtime helper for rendering <slot>
+ */
+function renderSlot (
+  name,
+  fallback,
+  props,
+  bindObject
+) {
+  var scopedSlotFn = this.$scopedSlots[name];
+  var nodes;
+  if (scopedSlotFn) { // scoped slot
+    props = props || {};
+    if (bindObject) {
+      if ("development" !== 'production' && !isObject(bindObject)) {
+        warn(
+          'slot v-bind without argument expects an Object',
+          this
+        );
+      }
+      props = extend(extend({}, bindObject), props);
+    }
+    nodes = scopedSlotFn(props) || fallback;
+  } else {
+    var slotNodes = this.$slots[name];
+    // warn duplicate slot usage
+    if (slotNodes) {
+      if ("development" !== 'production' && slotNodes._rendered) {
+        warn(
+          "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
+          "- this will likely cause render errors.",
+          this
+        );
+      }
+      slotNodes._rendered = true;
+    }
+    nodes = slotNodes || fallback;
+  }
+
+  var target = props && props.slot;
+  if (target) {
+    return this.$createElement('template', { slot: target }, nodes)
+  } else {
+    return nodes
+  }
+}
+
+/*  */
+
+/**
+ * Runtime helper for resolving filters
+ */
+function resolveFilter (id) {
+  return resolveAsset(this.$options, 'filters', id, true) || identity
+}
+
+/*  */
+
+/**
+ * Runtime helper for checking keyCodes from config.
+ * exposed as Vue.prototype._k
+ * passing in eventKeyName as last argument separately for backwards compat
+ */
+function checkKeyCodes (
+  eventKeyCode,
+  key,
+  builtInAlias,
+  eventKeyName
+) {
+  var keyCodes = config.keyCodes[key] || builtInAlias;
+  if (keyCodes) {
+    if (Array.isArray(keyCodes)) {
+      return keyCodes.indexOf(eventKeyCode) === -1
+    } else {
+      return keyCodes !== eventKeyCode
+    }
+  } else if (eventKeyName) {
+    return hyphenate(eventKeyName) !== key
+  }
+}
+
+/*  */
+
+/**
+ * Runtime helper for merging v-bind="object" into a VNode's data.
+ */
+function bindObjectProps (
+  data,
+  tag,
+  value,
+  asProp,
+  isSync
+) {
+  if (value) {
+    if (!isObject(value)) {
+      "development" !== 'production' && warn(
+        'v-bind without argument expects an Object or Array value',
+        this
+      );
+    } else {
+      if (Array.isArray(value)) {
+        value = toObject(value);
+      }
+      var hash;
+      var loop = function ( key ) {
+        if (
+          key === 'class' ||
+          key === 'style' ||
+          isReservedAttribute(key)
+        ) {
+          hash = data;
+        } else {
+          var type = data.attrs && data.attrs.type;
+          hash = asProp || config.mustUseProp(tag, type, key)
+            ? data.domProps || (data.domProps = {})
+            : data.attrs || (data.attrs = {});
+        }
+        if (!(key in hash)) {
+          hash[key] = value[key];
+
+          if (isSync) {
+            var on = data.on || (data.on = {});
+            on[("update:" + key)] = function ($event) {
+              value[key] = $event;
+            };
+          }
+        }
+      };
+
+      for (var key in value) loop( key );
+    }
+  }
+  return data
+}
+
+/*  */
+
+/**
+ * Runtime helper for rendering static trees.
+ */
+function renderStatic (
+  index,
+  isInFor,
+  isOnce
+) {
+  // render fns generated by compiler < 2.5.4 does not provide v-once
+  // information to runtime so be conservative
+  var isOldVersion = arguments.length < 3;
+  // if a static tree is generated by v-once, it is cached on the instance;
+  // otherwise it is purely static and can be cached on the shared options
+  // across all instances.
+  var renderFns = this.$options.staticRenderFns;
+  var cached = isOldVersion || isOnce
+    ? (this._staticTrees || (this._staticTrees = []))
+    : (renderFns.cached || (renderFns.cached = []));
+  var tree = cached[index];
+  // if has already-rendered static tree and not inside v-for,
+  // we can reuse the same tree by doing a shallow clone.
+  if (tree && !isInFor) {
+    return Array.isArray(tree)
+      ? cloneVNodes(tree)
+      : cloneVNode(tree)
+  }
+  // otherwise, render a fresh tree.
+  tree = cached[index] = renderFns[index].call(this._renderProxy, null, this);
+  markStatic(tree, ("__static__" + index), false);
+  return tree
+}
+
+/**
+ * Runtime helper for v-once.
+ * Effectively it means marking the node as static with a unique key.
+ */
+function markOnce (
+  tree,
+  index,
+  key
+) {
+  markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
+  return tree
+}
+
+function markStatic (
+  tree,
+  key,
+  isOnce
+) {
+  if (Array.isArray(tree)) {
+    for (var i = 0; i < tree.length; i++) {
+      if (tree[i] && typeof tree[i] !== 'string') {
+        markStaticNode(tree[i], (key + "_" + i), isOnce);
+      }
+    }
+  } else {
+    markStaticNode(tree, key, isOnce);
+  }
+}
+
+function markStaticNode (node, key, isOnce) {
+  node.isStatic = true;
+  node.key = key;
+  node.isOnce = isOnce;
+}
+
+/*  */
+
+function bindObjectListeners (data, value) {
+  if (value) {
+    if (!isPlainObject(value)) {
+      "development" !== 'production' && warn(
+        'v-on without argument expects an Object value',
+        this
+      );
+    } else {
+      var on = data.on = data.on ? extend({}, data.on) : {};
+      for (var key in value) {
+        var existing = on[key];
+        var ours = value[key];
+        on[key] = existing ? [].concat(existing, ours) : ours;
+      }
+    }
+  }
+  return data
+}
+
+/*  */
+
+function installRenderHelpers (target) {
+  target._o = markOnce;
+  target._n = toNumber;
+  target._s = toString;
+  target._l = renderList;
+  target._t = renderSlot;
+  target._q = looseEqual;
+  target._i = looseIndexOf;
+  target._m = renderStatic;
+  target._f = resolveFilter;
+  target._k = checkKeyCodes;
+  target._b = bindObjectProps;
+  target._v = createTextVNode;
+  target._e = createEmptyVNode;
+  target._u = resolveScopedSlots;
+  target._g = bindObjectListeners;
+}
+
+/*  */
+
+function FunctionalRenderContext (
+  data,
+  props,
+  children,
+  parent,
+  Ctor
+) {
+  var options = Ctor.options;
+  this.data = data;
+  this.props = props;
+  this.children = children;
+  this.parent = parent;
+  this.listeners = data.on || emptyObject;
+  this.injections = resolveInject(options.inject, parent);
+  this.slots = function () { return resolveSlots(children, parent); };
+
+  // ensure the createElement function in functional components
+  // gets a unique context - this is necessary for correct named slot check
+  var contextVm = Object.create(parent);
+  var isCompiled = isTrue(options._compiled);
+  var needNormalization = !isCompiled;
+
+  // support for compiled functional template
+  if (isCompiled) {
+    // exposing $options for renderStatic()
+    this.$options = options;
+    // pre-resolve slots for renderSlot()
+    this.$slots = this.slots();
+    this.$scopedSlots = data.scopedSlots || emptyObject;
+  }
+
+  if (options._scopeId) {
+    this._c = function (a, b, c, d) {
+      var vnode = createElement(contextVm, a, b, c, d, needNormalization);
+      if (vnode) {
+        vnode.functionalScopeId = options._scopeId;
+        vnode.functionalContext = parent;
+      }
+      return vnode
+    };
+  } else {
+    this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
+  }
+}
+
+installRenderHelpers(FunctionalRenderContext.prototype);
+
 function createFunctionalComponent (
   Ctor,
   propsData,
   data,
-  context,
+  contextVm,
   children
 ) {
+  var options = Ctor.options;
   var props = {};
-  var propOptions = Ctor.options.props;
+  var propOptions = options.props;
   if (isDef(propOptions)) {
     for (var key in propOptions) {
-      props[key] = validateProp(key, propOptions, propsData || {});
+      props[key] = validateProp(key, propOptions, propsData || emptyObject);
     }
   } else {
     if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
     if (isDef(data.props)) { mergeProps(props, data.props); }
   }
-  // ensure the createElement function in functional components
-  // gets a unique context - this is necessary for correct named slot check
-  var _context = Object.create(context);
-  var h = function (a, b, c, d) { return createElement(_context, a, b, c, d, true); };
-  var vnode = Ctor.options.render.call(null, h, {
-    data: data,
-    props: props,
-    children: children,
-    parent: context,
-    listeners: data.on || {},
-    injections: resolveInject(Ctor.options.inject, context),
-    slots: function () { return resolveSlots(children, context); }
-  });
+
+  var renderContext = new FunctionalRenderContext(
+    data,
+    props,
+    children,
+    contextVm,
+    Ctor
+  );
+
+  var vnode = options.render.call(null, renderContext._c, renderContext);
+
   if (vnode instanceof VNode) {
-    vnode.functionalContext = context;
-    vnode.functionalOptions = Ctor.options;
+    vnode.functionalContext = contextVm;
+    vnode.functionalOptions = options;
     if (data.slot) {
       (vnode.data || (vnode.data = {})).slot = data.slot;
     }
   }
+
   return vnode
 }
 
@@ -54391,7 +56153,7 @@ function _createElement (
   var vnode, ns;
   if (typeof tag === 'string') {
     var Ctor;
-    ns = config.getTagNamespace(tag);
+    ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
       vnode = new VNode(
@@ -54422,258 +56184,32 @@ function _createElement (
   }
 }
 
-function applyNS (vnode, ns) {
+function applyNS (vnode, ns, force) {
   vnode.ns = ns;
   if (vnode.tag === 'foreignObject') {
     // use default namespace inside foreignObject
-    return
+    ns = undefined;
+    force = true;
   }
   if (isDef(vnode.children)) {
     for (var i = 0, l = vnode.children.length; i < l; i++) {
       var child = vnode.children[i];
-      if (isDef(child.tag) && isUndef(child.ns)) {
-        applyNS(child, ns);
+      if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force))) {
+        applyNS(child, ns, force);
       }
     }
   }
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering v-for lists.
- */
-function renderList (
-  val,
-  render
-) {
-  var ret, i, l, keys, key;
-  if (Array.isArray(val) || typeof val === 'string') {
-    ret = new Array(val.length);
-    for (i = 0, l = val.length; i < l; i++) {
-      ret[i] = render(val[i], i);
-    }
-  } else if (typeof val === 'number') {
-    ret = new Array(val);
-    for (i = 0; i < val; i++) {
-      ret[i] = render(i + 1, i);
-    }
-  } else if (isObject(val)) {
-    keys = Object.keys(val);
-    ret = new Array(keys.length);
-    for (i = 0, l = keys.length; i < l; i++) {
-      key = keys[i];
-      ret[i] = render(val[key], key, i);
-    }
-  }
-  if (isDef(ret)) {
-    (ret)._isVList = true;
-  }
-  return ret
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering <slot>
- */
-function renderSlot (
-  name,
-  fallback,
-  props,
-  bindObject
-) {
-  var scopedSlotFn = this.$scopedSlots[name];
-  if (scopedSlotFn) { // scoped slot
-    props = props || {};
-    if (bindObject) {
-      props = extend(extend({}, bindObject), props);
-    }
-    return scopedSlotFn(props) || fallback
-  } else {
-    var slotNodes = this.$slots[name];
-    // warn duplicate slot usage
-    if (slotNodes && "development" !== 'production') {
-      slotNodes._rendered && warn(
-        "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
-        "- this will likely cause render errors.",
-        this
-      );
-      slotNodes._rendered = true;
-    }
-    return slotNodes || fallback
-  }
-}
-
-/*  */
-
-/**
- * Runtime helper for resolving filters
- */
-function resolveFilter (id) {
-  return resolveAsset(this.$options, 'filters', id, true) || identity
-}
-
-/*  */
-
-/**
- * Runtime helper for checking keyCodes from config.
- */
-function checkKeyCodes (
-  eventKeyCode,
-  key,
-  builtInAlias
-) {
-  var keyCodes = config.keyCodes[key] || builtInAlias;
-  if (Array.isArray(keyCodes)) {
-    return keyCodes.indexOf(eventKeyCode) === -1
-  } else {
-    return keyCodes !== eventKeyCode
-  }
-}
-
-/*  */
-
-/**
- * Runtime helper for merging v-bind="object" into a VNode's data.
- */
-function bindObjectProps (
-  data,
-  tag,
-  value,
-  asProp,
-  isSync
-) {
-  if (value) {
-    if (!isObject(value)) {
-      "development" !== 'production' && warn(
-        'v-bind without argument expects an Object or Array value',
-        this
-      );
-    } else {
-      if (Array.isArray(value)) {
-        value = toObject(value);
-      }
-      var hash;
-      var loop = function ( key ) {
-        if (
-          key === 'class' ||
-          key === 'style' ||
-          isReservedAttribute(key)
-        ) {
-          hash = data;
-        } else {
-          var type = data.attrs && data.attrs.type;
-          hash = asProp || config.mustUseProp(tag, type, key)
-            ? data.domProps || (data.domProps = {})
-            : data.attrs || (data.attrs = {});
-        }
-        if (!(key in hash)) {
-          hash[key] = value[key];
-
-          if (isSync) {
-            var on = data.on || (data.on = {});
-            on[("update:" + key)] = function ($event) {
-              value[key] = $event;
-            };
-          }
-        }
-      };
-
-      for (var key in value) loop( key );
-    }
-  }
-  return data
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering static trees.
- */
-function renderStatic (
-  index,
-  isInFor
-) {
-  var tree = this._staticTrees[index];
-  // if has already-rendered static tree and not inside v-for,
-  // we can reuse the same tree by doing a shallow clone.
-  if (tree && !isInFor) {
-    return Array.isArray(tree)
-      ? cloneVNodes(tree)
-      : cloneVNode(tree)
-  }
-  // otherwise, render a fresh tree.
-  tree = this._staticTrees[index] =
-    this.$options.staticRenderFns[index].call(this._renderProxy);
-  markStatic(tree, ("__static__" + index), false);
-  return tree
-}
-
-/**
- * Runtime helper for v-once.
- * Effectively it means marking the node as static with a unique key.
- */
-function markOnce (
-  tree,
-  index,
-  key
-) {
-  markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
-  return tree
-}
-
-function markStatic (
-  tree,
-  key,
-  isOnce
-) {
-  if (Array.isArray(tree)) {
-    for (var i = 0; i < tree.length; i++) {
-      if (tree[i] && typeof tree[i] !== 'string') {
-        markStaticNode(tree[i], (key + "_" + i), isOnce);
-      }
-    }
-  } else {
-    markStaticNode(tree, key, isOnce);
-  }
-}
-
-function markStaticNode (node, key, isOnce) {
-  node.isStatic = true;
-  node.key = key;
-  node.isOnce = isOnce;
-}
-
-/*  */
-
-function bindObjectListeners (data, value) {
-  if (value) {
-    if (!isPlainObject(value)) {
-      "development" !== 'production' && warn(
-        'v-on without argument expects an Object value',
-        this
-      );
-    } else {
-      var on = data.on = data.on ? extend({}, data.on) : {};
-      for (var key in value) {
-        var existing = on[key];
-        var ours = value[key];
-        on[key] = existing ? [].concat(ours, existing) : ours;
-      }
-    }
-  }
-  return data
 }
 
 /*  */
 
 function initRender (vm) {
   vm._vnode = null; // the root of the child tree
-  vm._staticTrees = null;
-  var parentVnode = vm.$vnode = vm.$options._parentVnode; // the placeholder node in parent tree
+  vm._staticTrees = null; // v-once cached trees
+  var options = vm.$options;
+  var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
   var renderContext = parentVnode && parentVnode.context;
-  vm.$slots = resolveSlots(vm.$options._renderChildren, renderContext);
+  vm.$slots = resolveSlots(options._renderChildren, renderContext);
   vm.$scopedSlots = emptyObject;
   // bind the createElement fn to this instance
   // so that we get proper render context inside it.
@@ -54687,21 +56223,25 @@ function initRender (vm) {
   // $attrs & $listeners are exposed for easier HOC creation.
   // they need to be reactive so that HOCs using them are always updated
   var parentData = parentVnode && parentVnode.data;
+
   /* istanbul ignore else */
   if (true) {
-    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs, function () {
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
       !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
     }, true);
-    defineReactive$$1(vm, '$listeners', vm.$options._parentListeners, function () {
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, function () {
       !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
     }, true);
   } else {
-    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs, null, true);
-    defineReactive$$1(vm, '$listeners', vm.$options._parentListeners, null, true);
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true);
   }
 }
 
 function renderMixin (Vue) {
+  // install runtime convenience helpers
+  installRenderHelpers(Vue.prototype);
+
   Vue.prototype.$nextTick = function (fn) {
     return nextTick(fn, this)
   };
@@ -54710,21 +56250,23 @@ function renderMixin (Vue) {
     var vm = this;
     var ref = vm.$options;
     var render = ref.render;
-    var staticRenderFns = ref.staticRenderFns;
     var _parentVnode = ref._parentVnode;
 
     if (vm._isMounted) {
-      // clone slot nodes on re-renders
+      // if the parent didn't update, the slot nodes will be the ones from
+      // last render. They need to be cloned to ensure "freshness" for this render.
       for (var key in vm.$slots) {
-        vm.$slots[key] = cloneVNodes(vm.$slots[key]);
+        var slot = vm.$slots[key];
+        // _rendered is a flag added by renderSlot, but may not be present
+        // if the slot is passed from manually written render functions
+        if (slot._rendered || (slot[0] && slot[0].elm)) {
+          vm.$slots[key] = cloneVNodes(slot, true /* deep */);
+        }
       }
     }
 
     vm.$scopedSlots = (_parentVnode && _parentVnode.data.scopedSlots) || emptyObject;
 
-    if (staticRenderFns && !vm._staticTrees) {
-      vm._staticTrees = [];
-    }
     // set parent vnode. this allows render functions to have access
     // to the data on the placeholder node.
     vm.$vnode = _parentVnode;
@@ -54733,14 +56275,21 @@ function renderMixin (Vue) {
     try {
       vnode = render.call(vm._renderProxy, vm.$createElement);
     } catch (e) {
-      handleError(e, vm, "render function");
+      handleError(e, vm, "render");
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
       if (true) {
-        vnode = vm.$options.renderError
-          ? vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
-          : vm._vnode;
+        if (vm.$options.renderError) {
+          try {
+            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+          } catch (e) {
+            handleError(e, vm, "renderError");
+            vnode = vm._vnode;
+          }
+        } else {
+          vnode = vm._vnode;
+        }
       } else {
         vnode = vm._vnode;
       }
@@ -54760,25 +56309,6 @@ function renderMixin (Vue) {
     vnode.parent = _parentVnode;
     return vnode
   };
-
-  // internal render helpers.
-  // these are exposed on the instance prototype to reduce generated render
-  // code size.
-  Vue.prototype._o = markOnce;
-  Vue.prototype._n = toNumber;
-  Vue.prototype._s = toString;
-  Vue.prototype._l = renderList;
-  Vue.prototype._t = renderSlot;
-  Vue.prototype._q = looseEqual;
-  Vue.prototype._i = looseIndexOf;
-  Vue.prototype._m = renderStatic;
-  Vue.prototype._f = resolveFilter;
-  Vue.prototype._k = checkKeyCodes;
-  Vue.prototype._b = bindObjectProps;
-  Vue.prototype._v = createTextVNode;
-  Vue.prototype._e = createEmptyVNode;
-  Vue.prototype._u = resolveScopedSlots;
-  Vue.prototype._g = bindObjectListeners;
 }
 
 /*  */
@@ -54794,7 +56324,7 @@ function initMixin (Vue) {
     var startTag, endTag;
     /* istanbul ignore if */
     if ("development" !== 'production' && config.performance && mark) {
-      startTag = "vue-perf-init:" + (vm._uid);
+      startTag = "vue-perf-start:" + (vm._uid);
       endTag = "vue-perf-end:" + (vm._uid);
       mark(startTag);
     }
@@ -54835,7 +56365,7 @@ function initMixin (Vue) {
     if ("development" !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false);
       mark(endTag);
-      measure(((vm._name) + " init"), startTag, endTag);
+      measure(("vue " + (vm._name) + " init"), startTag, endTag);
     }
 
     if (vm.$options.el) {
@@ -55101,8 +56631,6 @@ function initAssetRegisters (Vue) {
 
 /*  */
 
-var patternTypes = [String, RegExp, Array];
-
 function getComponentName (opts) {
   return opts && (opts.Ctor.options.name || opts.tag)
 }
@@ -55119,26 +56647,36 @@ function matches (pattern, name) {
   return false
 }
 
-function pruneCache (cache, current, filter) {
+function pruneCache (keepAliveInstance, filter) {
+  var cache = keepAliveInstance.cache;
+  var keys = keepAliveInstance.keys;
+  var _vnode = keepAliveInstance._vnode;
   for (var key in cache) {
     var cachedNode = cache[key];
     if (cachedNode) {
       var name = getComponentName(cachedNode.componentOptions);
       if (name && !filter(name)) {
-        if (cachedNode !== current) {
-          pruneCacheEntry(cachedNode);
-        }
-        cache[key] = null;
+        pruneCacheEntry(cache, key, keys, _vnode);
       }
     }
   }
 }
 
-function pruneCacheEntry (vnode) {
-  if (vnode) {
-    vnode.componentInstance.$destroy();
+function pruneCacheEntry (
+  cache,
+  key,
+  keys,
+  current
+) {
+  var cached$$1 = cache[key];
+  if (cached$$1 && cached$$1 !== current) {
+    cached$$1.componentInstance.$destroy();
   }
+  cache[key] = null;
+  remove(keys, key);
 }
+
+var patternTypes = [String, RegExp, Array];
 
 var KeepAlive = {
   name: 'keep-alive',
@@ -55146,55 +56684,71 @@ var KeepAlive = {
 
   props: {
     include: patternTypes,
-    exclude: patternTypes
+    exclude: patternTypes,
+    max: [String, Number]
   },
 
   created: function created () {
     this.cache = Object.create(null);
+    this.keys = [];
   },
 
   destroyed: function destroyed () {
     var this$1 = this;
 
     for (var key in this$1.cache) {
-      pruneCacheEntry(this$1.cache[key]);
+      pruneCacheEntry(this$1.cache, key, this$1.keys);
     }
   },
 
   watch: {
     include: function include (val) {
-      pruneCache(this.cache, this._vnode, function (name) { return matches(val, name); });
+      pruneCache(this, function (name) { return matches(val, name); });
     },
     exclude: function exclude (val) {
-      pruneCache(this.cache, this._vnode, function (name) { return !matches(val, name); });
+      pruneCache(this, function (name) { return !matches(val, name); });
     }
   },
 
   render: function render () {
-    var vnode = getFirstComponentChild(this.$slots.default);
+    var slot = this.$slots.default;
+    var vnode = getFirstComponentChild(slot);
     var componentOptions = vnode && vnode.componentOptions;
     if (componentOptions) {
       // check pattern
       var name = getComponentName(componentOptions);
-      if (name && (
-        (this.include && !matches(this.include, name)) ||
-        (this.exclude && matches(this.exclude, name))
+      if (!name || (
+        (this.exclude && matches(this.exclude, name)) ||
+        (this.include && !matches(this.include, name))
       )) {
         return vnode
       }
+
+      var ref = this;
+      var cache = ref.cache;
+      var keys = ref.keys;
       var key = vnode.key == null
         // same constructor may get registered as different local components
         // so cid alone is not enough (#3269)
         ? componentOptions.Ctor.cid + (componentOptions.tag ? ("::" + (componentOptions.tag)) : '')
         : vnode.key;
-      if (this.cache[key]) {
-        vnode.componentInstance = this.cache[key].componentInstance;
+      if (cache[key]) {
+        vnode.componentInstance = cache[key].componentInstance;
+        // make current key freshest
+        remove(keys, key);
+        keys.push(key);
       } else {
-        this.cache[key] = vnode;
+        cache[key] = vnode;
+        keys.push(key);
+        // prune oldest entry
+        if (this.max && keys.length > parseInt(this.max)) {
+          pruneCacheEntry(cache, keys[0], keys, this._vnode);
+        }
       }
+
       vnode.data.keepAlive = true;
     }
-    return vnode
+    return vnode || (slot && slot[0])
   }
 };
 
@@ -55224,7 +56778,7 @@ function initGlobalAPI (Vue) {
     warn: warn,
     extend: extend,
     mergeOptions: mergeOptions,
-    defineReactive: defineReactive$$1
+    defineReactive: defineReactive
   };
 
   Vue.set = set;
@@ -55261,7 +56815,7 @@ Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   }
 });
 
-Vue$3.version = '2.4.2';
+Vue$3.version = '2.5.6';
 
 /*  */
 
@@ -55270,7 +56824,7 @@ Vue$3.version = '2.4.2';
 var isReservedAttr = makeMap('style,class');
 
 // attributes that should be using props for binding
-var acceptValue = makeMap('input,textarea,option,select');
+var acceptValue = makeMap('input,textarea,option,select,progress');
 var mustUseProp = function (tag, type, attr) {
   return (
     (attr === 'value' && acceptValue(tag)) && type !== 'button' ||
@@ -55459,6 +57013,8 @@ function isUnknownElement (tag) {
   }
 }
 
+var isTextInputType = makeMap('text,number,password,search,email,tel,url');
+
 /*  */
 
 /**
@@ -55605,8 +57161,6 @@ function registerRef (vnode, isRemoval) {
  *
  * modified by Evan You (@yyx990803)
  *
-
-/*
  * Not type-checking this because this file is perf-critical and the cost
  * of making flow understand it is not worth it.
  */
@@ -55632,14 +57186,12 @@ function sameVnode (a, b) {
   )
 }
 
-// Some browsers do not support dynamically changing type for <input>
-// so they need to be treated as different nodes
 function sameInputType (a, b) {
   if (a.tag !== 'input') { return true }
   var i;
   var typeA = isDef(i = a.data) && isDef(i = i.attrs) && i.type;
   var typeB = isDef(i = b.data) && isDef(i = i.attrs) && i.type;
-  return typeA === typeB
+  return typeA === typeB || isTextInputType(typeA) && isTextInputType(typeB)
 }
 
 function createKeyToOldIdx (children, beginIdx, endIdx) {
@@ -55673,13 +57225,13 @@ function createPatchFunction (backend) {
   }
 
   function createRmCb (childElm, listeners) {
-    function remove$$1 () {
-      if (--remove$$1.listeners === 0) {
+    function remove () {
+      if (--remove.listeners === 0) {
         removeNode(childElm);
       }
     }
-    remove$$1.listeners = listeners;
-    return remove$$1
+    remove.listeners = listeners;
+    return remove
   }
 
   function removeNode (el) {
@@ -55690,7 +57242,23 @@ function createPatchFunction (backend) {
     }
   }
 
-  var inPre = 0;
+  function isUnknownElement$$1 (vnode, inVPre) {
+    return (
+      !inVPre &&
+      !vnode.ns &&
+      !(
+        config.ignoredElements.length &&
+        config.ignoredElements.some(function (ignore) {
+          return isRegExp(ignore)
+            ? ignore.test(vnode.tag)
+            : ignore === vnode.tag
+        })
+      ) &&
+      config.isUnknownElement(vnode.tag)
+    )
+  }
+
+  var creatingElmInVPre = 0;
   function createElm (vnode, insertedVnodeQueue, parentElm, refElm, nested) {
     vnode.isRootInsert = !nested; // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
@@ -55703,14 +57271,9 @@ function createPatchFunction (backend) {
     if (isDef(tag)) {
       if (true) {
         if (data && data.pre) {
-          inPre++;
+          creatingElmInVPre++;
         }
-        if (
-          !inPre &&
-          !vnode.ns &&
-          !(config.ignoredElements.length && config.ignoredElements.indexOf(tag) > -1) &&
-          config.isUnknownElement(tag)
-        ) {
+        if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
           warn(
             'Unknown custom element: <' + tag + '> - did you ' +
             'register the component correctly? For recursive components, ' +
@@ -55734,7 +57297,7 @@ function createPatchFunction (backend) {
       }
 
       if ("development" !== 'production' && data && data.pre) {
-        inPre--;
+        creatingElmInVPre--;
       }
     } else if (isTrue(vnode.isComment)) {
       vnode.elm = nodeOps.createComment(vnode.text);
@@ -55851,16 +57414,21 @@ function createPatchFunction (backend) {
   // of going through the normal attribute patching process.
   function setScope (vnode) {
     var i;
-    var ancestor = vnode;
-    while (ancestor) {
-      if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
-        nodeOps.setAttribute(vnode.elm, i, '');
+    if (isDef(i = vnode.functionalScopeId)) {
+      nodeOps.setAttribute(vnode.elm, i, '');
+    } else {
+      var ancestor = vnode;
+      while (ancestor) {
+        if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
+          nodeOps.setAttribute(vnode.elm, i, '');
+        }
+        ancestor = ancestor.parent;
       }
-      ancestor = ancestor.parent;
     }
     // for slot content they should also get the scopeId from the host instance.
     if (isDef(i = activeInstance) &&
       i !== vnode.context &&
+      i !== vnode.functionalContext &&
       isDef(i = i.$options._scopeId)
     ) {
       nodeOps.setAttribute(vnode.elm, i, '');
@@ -55939,7 +57507,7 @@ function createPatchFunction (backend) {
     var newEndIdx = newCh.length - 1;
     var newStartVnode = newCh[0];
     var newEndVnode = newCh[newEndIdx];
-    var oldKeyToIdx, idxInOld, elmToMove, refElm;
+    var oldKeyToIdx, idxInOld, vnodeToMove, refElm;
 
     // removeOnly is a special flag used only by <transition-group>
     // to ensure removed elements stay in correct relative positions
@@ -55971,30 +57539,30 @@ function createPatchFunction (backend) {
         newStartVnode = newCh[++newStartIdx];
       } else {
         if (isUndef(oldKeyToIdx)) { oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx); }
-        idxInOld = isDef(newStartVnode.key) ? oldKeyToIdx[newStartVnode.key] : null;
+        idxInOld = isDef(newStartVnode.key)
+          ? oldKeyToIdx[newStartVnode.key]
+          : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
         if (isUndef(idxInOld)) { // New element
           createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
-          newStartVnode = newCh[++newStartIdx];
         } else {
-          elmToMove = oldCh[idxInOld];
+          vnodeToMove = oldCh[idxInOld];
           /* istanbul ignore if */
-          if ("development" !== 'production' && !elmToMove) {
+          if ("development" !== 'production' && !vnodeToMove) {
             warn(
               'It seems there are duplicate keys that is causing an update error. ' +
               'Make sure each v-for item has a unique key.'
             );
           }
-          if (sameVnode(elmToMove, newStartVnode)) {
-            patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
+          if (sameVnode(vnodeToMove, newStartVnode)) {
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue);
             oldCh[idxInOld] = undefined;
-            canMove && nodeOps.insertBefore(parentElm, elmToMove.elm, oldStartVnode.elm);
-            newStartVnode = newCh[++newStartIdx];
+            canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
           } else {
             // same key but different element. treat as new element
             createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
-            newStartVnode = newCh[++newStartIdx];
           }
         }
+        newStartVnode = newCh[++newStartIdx];
       }
     }
     if (oldStartIdx > oldEndIdx) {
@@ -56002,6 +57570,13 @@ function createPatchFunction (backend) {
       addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else if (newStartIdx > newEndIdx) {
       removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+    }
+  }
+
+  function findIdxInOld (node, oldCh, start, end) {
+    for (var i = start; i < end; i++) {
+      var c = oldCh[i];
+      if (isDef(c) && sameVnode(node, c)) { return i }
     }
   }
 
@@ -56077,27 +57652,32 @@ function createPatchFunction (backend) {
     }
   }
 
-  var bailed = false;
+  var hydrationBailed = false;
   // list of modules that can skip create hook during hydration because they
   // are already rendered on the client or has no need for initialization
-  var isRenderedModule = makeMap('attrs,style,class,staticClass,staticStyle,key');
+  // Note: style is excluded because it relies on initial clone for future
+  // deep updates (#7063).
+  var isRenderedModule = makeMap('attrs,class,staticClass,staticStyle,key');
 
   // Note: this is a browser-only function so we can assume elms are DOM nodes.
-  function hydrate (elm, vnode, insertedVnodeQueue) {
-    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
-      vnode.elm = elm;
-      vnode.isAsyncPlaceholder = true;
-      return true
-    }
-    if (true) {
-      if (!assertNodeMatch(elm, vnode)) {
-        return false
-      }
-    }
-    vnode.elm = elm;
+  function hydrate (elm, vnode, insertedVnodeQueue, inVPre) {
+    var i;
     var tag = vnode.tag;
     var data = vnode.data;
     var children = vnode.children;
+    inVPre = inVPre || (data && data.pre);
+    vnode.elm = elm;
+
+    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
+      vnode.isAsyncPlaceholder = true;
+      return true
+    }
+    // assert node match
+    if (true) {
+      if (!assertNodeMatch(elm, vnode, inVPre)) {
+        return false
+      }
+    }
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.init)) { i(vnode, true /* hydrating */); }
       if (isDef(i = vnode.componentInstance)) {
@@ -56112,36 +57692,61 @@ function createPatchFunction (backend) {
         if (!elm.hasChildNodes()) {
           createChildren(vnode, children, insertedVnodeQueue);
         } else {
-          var childrenMatch = true;
-          var childNode = elm.firstChild;
-          for (var i$1 = 0; i$1 < children.length; i$1++) {
-            if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue)) {
-              childrenMatch = false;
-              break
+          // v-html and domProps: innerHTML
+          if (isDef(i = data) && isDef(i = i.domProps) && isDef(i = i.innerHTML)) {
+            if (i !== elm.innerHTML) {
+              /* istanbul ignore if */
+              if ("development" !== 'production' &&
+                typeof console !== 'undefined' &&
+                !hydrationBailed
+              ) {
+                hydrationBailed = true;
+                console.warn('Parent: ', elm);
+                console.warn('server innerHTML: ', i);
+                console.warn('client innerHTML: ', elm.innerHTML);
+              }
+              return false
             }
-            childNode = childNode.nextSibling;
-          }
-          // if childNode is not null, it means the actual childNodes list is
-          // longer than the virtual children list.
-          if (!childrenMatch || childNode) {
-            if ("development" !== 'production' &&
-              typeof console !== 'undefined' &&
-              !bailed
-            ) {
-              bailed = true;
-              console.warn('Parent: ', elm);
-              console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
+          } else {
+            // iterate and compare children lists
+            var childrenMatch = true;
+            var childNode = elm.firstChild;
+            for (var i$1 = 0; i$1 < children.length; i$1++) {
+              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue, inVPre)) {
+                childrenMatch = false;
+                break
+              }
+              childNode = childNode.nextSibling;
             }
-            return false
+            // if childNode is not null, it means the actual childNodes list is
+            // longer than the virtual children list.
+            if (!childrenMatch || childNode) {
+              /* istanbul ignore if */
+              if ("development" !== 'production' &&
+                typeof console !== 'undefined' &&
+                !hydrationBailed
+              ) {
+                hydrationBailed = true;
+                console.warn('Parent: ', elm);
+                console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
+              }
+              return false
+            }
           }
         }
       }
       if (isDef(data)) {
+        var fullInvoke = false;
         for (var key in data) {
           if (!isRenderedModule(key)) {
+            fullInvoke = true;
             invokeCreateHooks(vnode, insertedVnodeQueue);
             break
           }
+        }
+        if (!fullInvoke && data['class']) {
+          // ensure collecting deps for deep class bindings for future updates
+          traverse(data['class']);
         }
       }
     } else if (elm.data !== vnode.text) {
@@ -56150,10 +57755,10 @@ function createPatchFunction (backend) {
     return true
   }
 
-  function assertNodeMatch (node, vnode) {
+  function assertNodeMatch (node, vnode, inVPre) {
     if (isDef(vnode.tag)) {
-      return (
-        vnode.tag.indexOf('vue-component') === 0 ||
+      return vnode.tag.indexOf('vue-component') === 0 || (
+        !isUnknownElement$$1(vnode, inVPre) &&
         vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase())
       )
     } else {
@@ -56206,9 +57811,12 @@ function createPatchFunction (backend) {
           // create an empty node and replace it
           oldVnode = emptyNodeAt(oldVnode);
         }
+
         // replacing existing element
         var oldElm = oldVnode.elm;
         var parentElm$1 = nodeOps.parentNode(oldElm);
+
+        // create new node
         createElm(
           vnode,
           insertedVnodeQueue,
@@ -56219,21 +57827,37 @@ function createPatchFunction (backend) {
           nodeOps.nextSibling(oldElm)
         );
 
+        // update parent placeholder node element, recursively
         if (isDef(vnode.parent)) {
-          // component root element replaced.
-          // update parent placeholder node element, recursively
           var ancestor = vnode.parent;
+          var patchable = isPatchable(vnode);
           while (ancestor) {
-            ancestor.elm = vnode.elm;
-            ancestor = ancestor.parent;
-          }
-          if (isPatchable(vnode)) {
-            for (var i = 0; i < cbs.create.length; ++i) {
-              cbs.create[i](emptyNode, vnode.parent);
+            for (var i = 0; i < cbs.destroy.length; ++i) {
+              cbs.destroy[i](ancestor);
             }
+            ancestor.elm = vnode.elm;
+            if (patchable) {
+              for (var i$1 = 0; i$1 < cbs.create.length; ++i$1) {
+                cbs.create[i$1](emptyNode, ancestor);
+              }
+              // #6513
+              // invoke insert hooks that may have been merged by create hooks.
+              // e.g. for directives that uses the "inserted" hook.
+              var insert = ancestor.data.hook.insert;
+              if (insert.merged) {
+                // start at index 1 to avoid re-invoking component mounted hook
+                for (var i$2 = 1; i$2 < insert.fns.length; i$2++) {
+                  insert.fns[i$2]();
+                }
+              }
+            } else {
+              registerRef(ancestor);
+            }
+            ancestor = ancestor.parent;
           }
         }
 
+        // destroy old node
         if (isDef(parentElm$1)) {
           removeVnodes(parentElm$1, [oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
@@ -56299,14 +57923,14 @@ function _update (oldVnode, vnode) {
       }
     };
     if (isCreate) {
-      mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'insert', callInsert);
+      mergeVNodeHook(vnode, 'insert', callInsert);
     } else {
       callInsert();
     }
   }
 
   if (dirsWithPostpatch.length) {
-    mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'postpatch', function () {
+    mergeVNodeHook(vnode, 'postpatch', function () {
       for (var i = 0; i < dirsWithPostpatch.length; i++) {
         callHook$1(dirsWithPostpatch[i], 'componentUpdated', vnode, oldVnode);
       }
@@ -56392,8 +58016,9 @@ function updateAttrs (oldVnode, vnode) {
     }
   }
   // #4391: in IE9, setting type can reset value for input[type=radio]
+  // #6666: IE/Edge forces progress value down to 1 before setting a max
   /* istanbul ignore if */
-  if (isIE9 && attrs.value !== oldAttrs.value) {
+  if ((isIE9 || isEdge) && attrs.value !== oldAttrs.value) {
     setAttr(elm, 'value', attrs.value);
   }
   for (key in oldAttrs) {
@@ -56414,7 +58039,12 @@ function setAttr (el, key, value) {
     if (isFalsyAttrValue(value)) {
       el.removeAttribute(key);
     } else {
-      el.setAttribute(key, key);
+      // technically allowfullscreen is a boolean attribute for <iframe>,
+      // but Flash expects a value of "true" when used on <embed> tag
+      value = key === 'allowfullscreen' && el.tagName === 'EMBED'
+        ? 'true'
+        : key;
+      el.setAttribute(key, value);
     }
   } else if (isEnumeratedAttr(key)) {
     el.setAttribute(key, isFalsyAttrValue(value) || value === 'false' ? 'false' : 'true');
@@ -56616,39 +58246,59 @@ function addHandler (
   important,
   warn
 ) {
+  modifiers = modifiers || emptyObject;
   // warn prevent and passive modifier
   /* istanbul ignore if */
   if (
     "development" !== 'production' && warn &&
-    modifiers && modifiers.prevent && modifiers.passive
+    modifiers.prevent && modifiers.passive
   ) {
     warn(
       'passive and prevent can\'t be used together. ' +
       'Passive handler can\'t prevent default event.'
     );
   }
+
   // check capture modifier
-  if (modifiers && modifiers.capture) {
+  if (modifiers.capture) {
     delete modifiers.capture;
     name = '!' + name; // mark the event as captured
   }
-  if (modifiers && modifiers.once) {
+  if (modifiers.once) {
     delete modifiers.once;
     name = '~' + name; // mark the event as once
   }
   /* istanbul ignore if */
-  if (modifiers && modifiers.passive) {
+  if (modifiers.passive) {
     delete modifiers.passive;
     name = '&' + name; // mark the event as passive
   }
+
+  // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+  if (name === 'click') {
+    if (modifiers.right) {
+      name = 'contextmenu';
+      delete modifiers.right;
+    } else if (modifiers.middle) {
+      name = 'mouseup';
+    }
+  }
+
   var events;
-  if (modifiers && modifiers.native) {
+  if (modifiers.native) {
     delete modifiers.native;
     events = el.nativeEvents || (el.nativeEvents = {});
   } else {
     events = el.events || (el.events = {});
   }
-  var newHandler = { value: value, modifiers: modifiers };
+
+  var newHandler = { value: value };
+  if (modifiers !== emptyObject) {
+    newHandler.modifiers = modifiers;
+  }
+
   var handlers = events[name];
   /* istanbul ignore if */
   if (Array.isArray(handlers)) {
@@ -56678,7 +58328,15 @@ function getBindingAttr (
   }
 }
 
-function getAndRemoveAttr (el, name) {
+// note: this only removes the attr from the Array (attrsList) so that it
+// doesn't get processed by processAttrs.
+// By default it does NOT remove it from the map (attrsMap) because the map is
+// needed during codegen.
+function getAndRemoveAttr (
+  el,
+  name,
+  removeFromMap
+) {
   var val;
   if ((val = el.attrsMap[name]) != null) {
     var list = el.attrsList;
@@ -56688,6 +58346,9 @@ function getAndRemoveAttr (el, name) {
         break
       }
     }
+  }
+  if (removeFromMap) {
+    delete el.attrsMap[name];
   }
   return val
 }
@@ -56733,25 +58394,26 @@ function genAssignmentCode (
   value,
   assignment
 ) {
-  var modelRs = parseModel(value);
-  if (modelRs.idx === null) {
+  var res = parseModel(value);
+  if (res.key === null) {
     return (value + "=" + assignment)
   } else {
-    return ("$set(" + (modelRs.exp) + ", " + (modelRs.idx) + ", " + assignment + ")")
+    return ("$set(" + (res.exp) + ", " + (res.key) + ", " + assignment + ")")
   }
 }
 
 /**
- * parse directive model to do the array update transform. a[idx] = val => $$a.splice($$idx, 1, val)
+ * Parse a v-model expression into a base path and a final key segment.
+ * Handles both dot-path and possible square brackets.
  *
- * for loop possible cases:
+ * Possible cases:
  *
  * - test
- * - test[idx]
- * - test[test1[idx]]
- * - test["a"][idx]
- * - xxx.test[a[a].test1[idx]]
- * - test.xxx.a["asa"][test1[idx]]
+ * - test[key]
+ * - test[test1[key]]
+ * - test["a"][key]
+ * - xxx.test[a[a].test1[key]]
+ * - test.xxx.a["asa"][test1[key]]
  *
  */
 
@@ -56762,17 +58424,28 @@ var index$1;
 var expressionPos;
 var expressionEndPos;
 
+
+
 function parseModel (val) {
-  str = val;
-  len = str.length;
-  index$1 = expressionPos = expressionEndPos = 0;
+  len = val.length;
 
   if (val.indexOf('[') < 0 || val.lastIndexOf(']') < len - 1) {
-    return {
-      exp: val,
-      idx: null
+    index$1 = val.lastIndexOf('.');
+    if (index$1 > -1) {
+      return {
+        exp: val.slice(0, index$1),
+        key: '"' + val.slice(index$1 + 1) + '"'
+      }
+    } else {
+      return {
+        exp: val,
+        key: null
+      }
     }
   }
+
+  str = val;
+  index$1 = expressionPos = expressionEndPos = 0;
 
   while (!eof()) {
     chr = next();
@@ -56785,8 +58458,8 @@ function parseModel (val) {
   }
 
   return {
-    exp: val.substring(0, expressionPos),
-    idx: val.substring(expressionPos + 1, expressionEndPos)
+    exp: val.slice(0, expressionPos),
+    key: val.slice(expressionPos + 1, expressionEndPos)
   }
 }
 
@@ -56851,13 +58524,6 @@ function model (
   var type = el.attrsMap.type;
 
   if (true) {
-    var dynamicType = el.attrsMap['v-bind:type'] || el.attrsMap[':type'];
-    if (tag === 'input' && dynamicType) {
-      warn$1(
-        "<input :type=\"" + dynamicType + "\" v-model=\"" + value + "\">:\n" +
-        "v-model does not support dynamic input types. Use v-if branches instead."
-      );
-    }
     // inputs with type="file" are read only and setting the input's
     // value will throw an error.
     if (tag === 'input' && type === 'file') {
@@ -56914,14 +58580,14 @@ function genCheckboxModel (
           : (":_q(" + value + "," + trueValueBinding + ")")
       )
   );
-  addHandler(el, CHECKBOX_RADIO_TOKEN,
+  addHandler(el, 'change',
     "var $$a=" + value + "," +
         '$$el=$event.target,' +
         "$$c=$$el.checked?(" + trueValueBinding + "):(" + falseValueBinding + ");" +
     'if(Array.isArray($$a)){' +
       "var $$v=" + (number ? '_n(' + valueBinding + ')' : valueBinding) + "," +
           '$$i=_i($$a,$$v);' +
-      "if($$el.checked){$$i<0&&(" + value + "=$$a.concat($$v))}" +
+      "if($$el.checked){$$i<0&&(" + value + "=$$a.concat([$$v]))}" +
       "else{$$i>-1&&(" + value + "=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}" +
     "}else{" + (genAssignmentCode(value, '$$c')) + "}",
     null, true
@@ -56937,7 +58603,7 @@ function genRadioModel (
   var valueBinding = getBindingAttr(el, 'value') || 'null';
   valueBinding = number ? ("_n(" + valueBinding + ")") : valueBinding;
   addProp(el, 'checked', ("_q(" + value + "," + valueBinding + ")"));
-  addHandler(el, CHECKBOX_RADIO_TOKEN, genAssignmentCode(value, valueBinding), null, true);
+  addHandler(el, 'change', genAssignmentCode(value, valueBinding), null, true);
 }
 
 function genSelect (
@@ -56963,6 +58629,19 @@ function genDefaultModel (
   modifiers
 ) {
   var type = el.attrsMap.type;
+
+  // warn if v-bind:value conflicts with v-model
+  if (true) {
+    var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
+    if (value$1) {
+      var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
+      warn$1(
+        binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
+        'because the latter already expands to a value binding internally'
+      );
+    }
+  }
+
   var ref = modifiers || {};
   var lazy = ref.lazy;
   var number = ref.number;
@@ -57001,23 +58680,33 @@ function genDefaultModel (
 // the whole point is ensuring the v-model callback gets called before
 // user-attached handlers.
 function normalizeEvents (on) {
-  var event;
   /* istanbul ignore if */
   if (isDef(on[RANGE_TOKEN])) {
     // IE input[type=range] only supports `change` event
-    event = isIE ? 'change' : 'input';
+    var event = isIE ? 'change' : 'input';
     on[event] = [].concat(on[RANGE_TOKEN], on[event] || []);
     delete on[RANGE_TOKEN];
   }
+  // This was originally intended to fix #4521 but no longer necessary
+  // after 2.5. Keeping it for backwards compat with generated code from < 2.4
+  /* istanbul ignore if */
   if (isDef(on[CHECKBOX_RADIO_TOKEN])) {
-    // Chrome fires microtasks in between click/change, leads to #4521
-    event = isChrome ? 'click' : 'change';
-    on[event] = [].concat(on[CHECKBOX_RADIO_TOKEN], on[event] || []);
+    on.change = [].concat(on[CHECKBOX_RADIO_TOKEN], on.change || []);
     delete on[CHECKBOX_RADIO_TOKEN];
   }
 }
 
 var target$1;
+
+function createOnceHandler (handler, event, capture) {
+  var _target = target$1; // save current target element in closure
+  return function onceHandler () {
+    var res = handler.apply(null, arguments);
+    if (res !== null) {
+      remove$2(event, onceHandler, capture, _target);
+    }
+  }
+}
 
 function add$1 (
   event,
@@ -57026,18 +58715,8 @@ function add$1 (
   capture,
   passive
 ) {
-  if (once$$1) {
-    var oldHandler = handler;
-    var _target = target$1; // save current target element in closure
-    handler = function (ev) {
-      var res = arguments.length === 1
-        ? oldHandler(ev)
-        : oldHandler.apply(null, arguments);
-      if (res !== null) {
-        remove$2(event, handler, capture, _target);
-      }
-    };
-  }
+  handler = withMacroTask(handler);
+  if (once$$1) { handler = createOnceHandler(handler, event, capture); }
   target$1.addEventListener(
     event,
     handler,
@@ -57053,7 +58732,11 @@ function remove$2 (
   capture,
   _target
 ) {
-  (_target || target$1).removeEventListener(event, handler, capture);
+  (_target || target$1).removeEventListener(
+    event,
+    handler._withTask || handler,
+    capture
+  );
 }
 
 function updateDOMListeners (oldVnode, vnode) {
@@ -57065,6 +58748,7 @@ function updateDOMListeners (oldVnode, vnode) {
   target$1 = vnode.elm;
   normalizeEvents(on);
   updateListeners(on, oldOn, add$1, remove$2, vnode.context);
+  target$1 = undefined;
 }
 
 var events = {
@@ -57100,6 +58784,11 @@ function updateDOMProps (oldVnode, vnode) {
     if (key === 'textContent' || key === 'innerHTML') {
       if (vnode.children) { vnode.children.length = 0; }
       if (cur === oldProps[key]) { continue }
+      // #6601 work around Chrome version <= 55 bug where single textNode
+      // replaced by innerHTML/textContent retains its parentNode property
+      if (elm.childNodes.length === 1) {
+        elm.removeChild(elm.childNodes[0]);
+      }
     }
 
     if (key === 'value') {
@@ -57108,7 +58797,7 @@ function updateDOMProps (oldVnode, vnode) {
       elm._value = cur;
       // avoid resetting cursor position when value is the same
       var strCur = isUndef(cur) ? '' : String(cur);
-      if (shouldUpdateValue(elm, vnode, strCur)) {
+      if (shouldUpdateValue(elm, strCur)) {
         elm.value = strCur;
       }
     } else {
@@ -57120,13 +58809,9 @@ function updateDOMProps (oldVnode, vnode) {
 // check platforms/web/util/attrs.js acceptValue
 
 
-function shouldUpdateValue (
-  elm,
-  vnode,
-  checkVal
-) {
+function shouldUpdateValue (elm, checkVal) {
   return (!elm.composing && (
-    vnode.tag === 'option' ||
+    elm.tagName === 'OPTION' ||
     isDirty(elm, checkVal) ||
     isInputChanged(elm, checkVal)
   ))
@@ -57290,7 +58975,7 @@ function updateStyle (oldVnode, vnode) {
   var style = normalizeStyleBinding(vnode.data.style) || {};
 
   // store normalized style under a different key for next diff
-  // make sure to clone it if it's reactive, since the user likley wants
+  // make sure to clone it if it's reactive, since the user likely wants
   // to mutate it.
   vnode.data.normalizedStyle = isDef(style.__ob__)
     ? extend({}, style)
@@ -57381,20 +59066,20 @@ function removeClass (el, cls) {
 
 /*  */
 
-function resolveTransition (def$$1) {
-  if (!def$$1) {
+function resolveTransition (def) {
+  if (!def) {
     return
   }
   /* istanbul ignore else */
-  if (typeof def$$1 === 'object') {
+  if (typeof def === 'object') {
     var res = {};
-    if (def$$1.css !== false) {
-      extend(res, autoCssTransition(def$$1.name || 'v'));
+    if (def.css !== false) {
+      extend(res, autoCssTransition(def.name || 'v'));
     }
-    extend(res, def$$1);
+    extend(res, def);
     return res
-  } else if (typeof def$$1 === 'string') {
-    return autoCssTransition(def$$1)
+  } else if (typeof def === 'string') {
+    return autoCssTransition(def)
   }
 }
 
@@ -57435,9 +59120,11 @@ if (hasTransition) {
 }
 
 // binding to window is necessary to make hot reload work in IE in strict mode
-var raf = inBrowser && window.requestAnimationFrame
-  ? window.requestAnimationFrame.bind(window)
-  : setTimeout;
+var raf = inBrowser
+  ? window.requestAnimationFrame
+    ? window.requestAnimationFrame.bind(window)
+    : setTimeout
+  : /* istanbul ignore next */ function (fn) { return fn(); };
 
 function nextFrame (fn) {
   raf(function () {
@@ -57667,7 +59354,7 @@ function enter (vnode, toggleDisplay) {
 
   if (!vnode.data.show) {
     // remove pending leave element on enter by injecting an insert hook
-    mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'insert', function () {
+    mergeVNodeHook(vnode, 'insert', function () {
       var parent = el.parentNode;
       var pendingNode = parent && parent._pending && parent._pending[vnode.key];
       if (pendingNode &&
@@ -57718,12 +59405,12 @@ function leave (vnode, rm) {
   }
 
   var data = resolveTransition(vnode.data.transition);
-  if (isUndef(data)) {
+  if (isUndef(data) || el.nodeType !== 1) {
     return rm()
   }
 
   /* istanbul ignore if */
-  if (isDef(el._leaveCb) || el.nodeType !== 1) {
+  if (isDef(el._leaveCb)) {
     return
   }
 
@@ -57895,8 +59582,6 @@ var patch = createPatchFunction({ nodeOps: nodeOps, modules: modules });
  * properties to Elements.
  */
 
-var isTextInputType = makeMap('text,number,password,search,email,tel,url');
-
 /* istanbul ignore if */
 if (isIE9) {
   // http://www.matts411.com/post/internet-explorer-9-oninput/
@@ -57908,16 +59593,16 @@ if (isIE9) {
   });
 }
 
-var model$1 = {
-  inserted: function inserted (el, binding, vnode) {
+var directive = {
+  inserted: function inserted (el, binding, vnode, oldVnode) {
     if (vnode.tag === 'select') {
-      var cb = function () {
+      // #6903
+      if (oldVnode.elm && !oldVnode.elm._vOptions) {
+        mergeVNodeHook(vnode, 'postpatch', function () {
+          directive.componentUpdated(el, binding, vnode);
+        });
+      } else {
         setSelected(el, binding, vnode.context);
-      };
-      cb();
-      /* istanbul ignore if */
-      if (isIE || isEdge) {
-        setTimeout(cb, 0);
       }
       el._vOptions = [].map.call(el.options, getValue);
     } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
@@ -57939,6 +59624,7 @@ var model$1 = {
       }
     }
   },
+
   componentUpdated: function componentUpdated (el, binding, vnode) {
     if (vnode.tag === 'select') {
       setSelected(el, binding, vnode.context);
@@ -57949,13 +59635,30 @@ var model$1 = {
       var prevOptions = el._vOptions;
       var curOptions = el._vOptions = [].map.call(el.options, getValue);
       if (curOptions.some(function (o, i) { return !looseEqual(o, prevOptions[i]); })) {
-        trigger(el, 'change');
+        // trigger change event if
+        // no matching option found for at least one value
+        var needReset = el.multiple
+          ? binding.value.some(function (v) { return hasNoMatchingOption(v, curOptions); })
+          : binding.value !== binding.oldValue && hasNoMatchingOption(binding.value, curOptions);
+        if (needReset) {
+          trigger(el, 'change');
+        }
       }
     }
   }
 };
 
 function setSelected (el, binding, vm) {
+  actuallySetSelected(el, binding, vm);
+  /* istanbul ignore if */
+  if (isIE || isEdge) {
+    setTimeout(function () {
+      actuallySetSelected(el, binding, vm);
+    }, 0);
+  }
+}
+
+function actuallySetSelected (el, binding, vm) {
   var value = binding.value;
   var isMultiple = el.multiple;
   if (isMultiple && !Array.isArray(value)) {
@@ -57986,6 +59689,10 @@ function setSelected (el, binding, vm) {
   if (!isMultiple) {
     el.selectedIndex = -1;
   }
+}
+
+function hasNoMatchingOption (value, options) {
+  return options.every(function (o) { return !looseEqual(o, value); })
 }
 
 function getValue (option) {
@@ -58076,7 +59783,7 @@ var show = {
 };
 
 var platformDirectives = {
-  model: model$1,
+  model: directive,
   show: show
 };
 
@@ -58150,10 +59857,6 @@ function isSameChild (child, oldChild) {
   return oldChild.key === child.key && oldChild.tag === child.tag
 }
 
-function isAsyncPlaceholder (node) {
-  return node.isComment && node.asyncFactory
-}
-
 var Transition = {
   name: 'transition',
   props: transitionProps,
@@ -58162,7 +59865,7 @@ var Transition = {
   render: function render (h) {
     var this$1 = this;
 
-    var children = this.$options._renderChildren;
+    var children = this.$slots.default;
     if (!children) {
       return
     }
@@ -58241,11 +59944,13 @@ var Transition = {
       oldChild &&
       oldChild.data &&
       !isSameChild(child, oldChild) &&
-      !isAsyncPlaceholder(oldChild)
+      !isAsyncPlaceholder(oldChild) &&
+      // #6687 component root is a comment node
+      !(oldChild.componentInstance && oldChild.componentInstance._vnode.isComment)
     ) {
       // replace old child transition data with fresh one
       // important for dynamic transitions!
-      var oldData = oldChild && (oldChild.data.transition = extend({}, data));
+      var oldData = oldChild.data.transition = extend({}, data);
       // handle transition mode
       if (mode === 'out-in') {
         // return placeholder node and queue update when leave finishes
@@ -58362,8 +60067,9 @@ var TransitionGroup = {
     children.forEach(applyTranslation);
 
     // force reflow to put everything in position
-    var body = document.body;
-    var f = body.offsetHeight; // eslint-disable-line
+    // assign to this to avoid being removed in tree-shaking
+    // $flow-disable-line
+    this._reflow = document.body.offsetHeight;
 
     children.forEach(function (c) {
       if (c.data.moved) {
@@ -58471,7 +60177,7 @@ Vue$3.prototype.$mount = function (
 
 // devtools global hook
 /* istanbul ignore next */
-setTimeout(function () {
+Vue$3.nextTick(function () {
   if (config.devtools) {
     if (devtools) {
       devtools.emit('init', Vue$3);
@@ -58493,19 +60199,6 @@ setTimeout(function () {
     );
   }
 }, 0);
-
-/*  */
-
-// check whether current browser encodes a char inside attribute values
-function shouldDecode (content, encoded) {
-  var div = document.createElement('div');
-  div.innerHTML = "<div a=\"" + content + "\"/>";
-  return div.innerHTML.indexOf(encoded) > 0
-}
-
-// #3663
-// IE encodes newlines inside attribute values while other browsers don't
-var shouldDecodeNewlines = inBrowser ? shouldDecode('\n', '&#10;') : false;
 
 /*  */
 
@@ -58632,31 +60325,16 @@ var style$1 = {
   genData: genData$1
 };
 
-var modules$1 = [
-  klass$1,
-  style$1
-];
-
 /*  */
 
-function text (el, dir) {
-  if (dir.value) {
-    addProp(el, 'textContent', ("_s(" + (dir.value) + ")"));
+var decoder;
+
+var he = {
+  decode: function decode (html) {
+    decoder = decoder || document.createElement('div');
+    decoder.innerHTML = html;
+    return decoder.textContent
   }
-}
-
-/*  */
-
-function html (el, dir) {
-  if (dir.value) {
-    addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"));
-  }
-}
-
-var directives$1 = {
-  model: model,
-  text: text,
-  html: html
 };
 
 /*  */
@@ -58682,33 +60360,6 @@ var isNonPhrasingTag = makeMap(
   'title,tr,track'
 );
 
-/*  */
-
-var baseOptions = {
-  expectHTML: true,
-  modules: modules$1,
-  directives: directives$1,
-  isPreTag: isPreTag,
-  isUnaryTag: isUnaryTag,
-  mustUseProp: mustUseProp,
-  canBeLeftOpenTag: canBeLeftOpenTag,
-  isReservedTag: isReservedTag,
-  getTagNamespace: getTagNamespace,
-  staticKeys: genStaticKeys(modules$1)
-};
-
-/*  */
-
-var decoder;
-
-var he = {
-  decode: function decode (html) {
-    decoder = decoder || document.createElement('div');
-    decoder.innerHTML = html;
-    return decoder.textContent
-  }
-};
-
 /**
  * Not type-checking this file because it's mostly vendor code.
  */
@@ -58721,29 +60372,14 @@ var he = {
  */
 
 // Regular Expressions for parsing tags and attributes
-var singleAttrIdentifier = /([^\s"'<>/=]+)/;
-var singleAttrAssign = /(?:=)/;
-var singleAttrValues = [
-  // attr value double quotes
-  /"([^"]*)"+/.source,
-  // attr value, single quotes
-  /'([^']*)'+/.source,
-  // attr value, no quotes
-  /([^\s"'=<>`]+)/.source
-];
-var attribute = new RegExp(
-  '^\\s*' + singleAttrIdentifier.source +
-  '(?:\\s*(' + singleAttrAssign.source + ')' +
-  '\\s*(?:' + singleAttrValues.join('|') + '))?'
-);
-
+var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 // could use https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-QName
 // but for Vue templates we can enforce a simple charset
 var ncname = '[a-zA-Z_][\\w\\-\\.]*';
-var qnameCapture = '((?:' + ncname + '\\:)?' + ncname + ')';
-var startTagOpen = new RegExp('^<' + qnameCapture);
+var qnameCapture = "((?:" + ncname + "\\:)?" + ncname + ")";
+var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
-var endTag = new RegExp('^<\\/' + qnameCapture + '[^>]*>');
+var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
 var comment = /^<!--/;
 var conditionalComment = /^<!\[/;
@@ -58762,10 +60398,11 @@ var decodingMap = {
   '&gt;': '>',
   '&quot;': '"',
   '&amp;': '&',
-  '&#10;': '\n'
+  '&#10;': '\n',
+  '&#9;': '\t'
 };
 var encodedAttr = /&(?:lt|gt|quot|amp);/g;
-var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10);/g;
+var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10|#9);/g;
 
 // #5992
 var isIgnoreNewlineTag = makeMap('pre,textarea', true);
@@ -58956,12 +60593,12 @@ function parseHTML (html, options) {
         if (args[5] === '') { delete args[5]; }
       }
       var value = args[3] || args[4] || args[5] || '';
+      var shouldDecodeNewlines = tagName === 'a' && args[1] === 'href'
+        ? options.shouldDecodeNewlinesForHref
+        : options.shouldDecodeNewlines;
       attrs[i] = {
         name: args[1],
-        value: decodeAttr(
-          value,
-          options.shouldDecodeNewlines
-        )
+        value: decodeAttr(value, shouldDecodeNewlines)
       };
     }
 
@@ -59053,6 +60690,23 @@ var platformIsPreTag;
 var platformMustUseProp;
 var platformGetTagNamespace;
 
+
+
+function createASTElement (
+  tag,
+  attrs,
+  parent
+) {
+  return {
+    type: 1,
+    tag: tag,
+    attrsList: attrs,
+    attrsMap: makeAttrsMap(attrs),
+    parent: parent,
+    children: []
+  }
+}
+
 /**
  * Convert HTML string to AST.
  */
@@ -59103,6 +60757,7 @@ function parse (
     isUnaryTag: options.isUnaryTag,
     canBeLeftOpenTag: options.canBeLeftOpenTag,
     shouldDecodeNewlines: options.shouldDecodeNewlines,
+    shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
     shouldKeepComment: options.comments,
     start: function start (tag, attrs, unary) {
       // check namespace.
@@ -59115,14 +60770,7 @@ function parse (
         attrs = guardIESVGBug(attrs);
       }
 
-      var element = {
-        type: 1,
-        tag: tag,
-        attrsList: attrs,
-        attrsMap: makeAttrsMap(attrs),
-        parent: currentParent,
-        children: []
-      };
+      var element = createASTElement(tag, attrs, currentParent);
       if (ns) {
         element.ns = ns;
       }
@@ -59138,7 +60786,7 @@ function parse (
 
       // apply pre-transforms
       for (var i = 0; i < preTransforms.length; i++) {
-        preTransforms[i](element, options);
+        element = preTransforms[i](element, options) || element;
       }
 
       if (!inVPre) {
@@ -59152,23 +60800,13 @@ function parse (
       }
       if (inVPre) {
         processRawAttrs(element);
-      } else {
+      } else if (!element.processed) {
+        // structural directives
         processFor(element);
         processIf(element);
         processOnce(element);
-        processKey(element);
-
-        // determine whether this is a plain element after
-        // removing structural attributes
-        element.plain = !element.key && !attrs.length;
-
-        processRef(element);
-        processSlot(element);
-        processComponent(element);
-        for (var i$1 = 0; i$1 < transforms.length; i$1++) {
-          transforms[i$1](element, options);
-        }
-        processAttrs(element);
+        // element-scope stuff
+        processElement(element, options);
       }
 
       function checkRootConstraints (el) {
@@ -59226,8 +60864,8 @@ function parse (
         endPre(element);
       }
       // apply post-transforms
-      for (var i$2 = 0; i$2 < postTransforms.length; i$2++) {
-        postTransforms[i$2](element, options);
+      for (var i$1 = 0; i$1 < postTransforms.length; i$1++) {
+        postTransforms[i$1](element, options);
       }
     },
 
@@ -59319,6 +60957,22 @@ function processRawAttrs (el) {
     // non root node in pre blocks with no attributes
     el.plain = true;
   }
+}
+
+function processElement (element, options) {
+  processKey(element);
+
+  // determine whether this is a plain element after
+  // removing structural attributes
+  element.plain = !element.key && !element.attrsList.length;
+
+  processRef(element);
+  processSlot(element);
+  processComponent(element);
+  for (var i = 0; i < transforms.length; i++) {
+    element = transforms[i](element, options) || element;
+  }
+  processAttrs(element);
 }
 
 function processKey (el) {
@@ -59440,12 +61094,31 @@ function processSlot (el) {
       );
     }
   } else {
+    var slotScope;
+    if (el.tag === 'template') {
+      slotScope = getAndRemoveAttr(el, 'scope');
+      /* istanbul ignore if */
+      if ("development" !== 'production' && slotScope) {
+        warn$2(
+          "the \"scope\" attribute for scoped slots have been deprecated and " +
+          "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
+          "can also be used on plain elements in addition to <template> to " +
+          "denote scoped slots.",
+          true
+        );
+      }
+      el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
+    } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
+      el.slotScope = slotScope;
+    }
     var slotTarget = getBindingAttr(el, 'slot');
     if (slotTarget) {
       el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget;
-    }
-    if (el.tag === 'template') {
-      el.slotScope = getAndRemoveAttr(el, 'scope');
+      // preserve slot as an attribute for native shadow DOM compat
+      // only for non-scoped slots.
+      if (el.tag !== 'template' && !el.slotScope) {
+        addAttr(el, 'slot', slotTarget);
+      }
     }
   }
 }
@@ -59532,6 +61205,13 @@ function processAttrs (el) {
         }
       }
       addAttr(el, name, JSON.stringify(value));
+      // #6887 firefox doesn't update muted state if set via attribute
+      // even immediately after element creation
+      if (!el.component &&
+          name === 'muted' &&
+          platformMustUseProp(el.tag, el.attrsMap.type, name)) {
+        addProp(el, name, 'true');
+      }
     }
   }
 }
@@ -59616,6 +61296,125 @@ function checkForAliasModel (el, value) {
     _el = _el.parent;
   }
 }
+
+/*  */
+
+/**
+ * Expand input[v-model] with dyanmic type bindings into v-if-else chains
+ * Turn this:
+ *   <input v-model="data[type]" :type="type">
+ * into this:
+ *   <input v-if="type === 'checkbox'" type="checkbox" v-model="data[type]">
+ *   <input v-else-if="type === 'radio'" type="radio" v-model="data[type]">
+ *   <input v-else :type="type" v-model="data[type]">
+ */
+
+function preTransformNode (el, options) {
+  if (el.tag === 'input') {
+    var map = el.attrsMap;
+    if (map['v-model'] && (map['v-bind:type'] || map[':type'])) {
+      var typeBinding = getBindingAttr(el, 'type');
+      var ifCondition = getAndRemoveAttr(el, 'v-if', true);
+      var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : "";
+      var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
+      var elseIfCondition = getAndRemoveAttr(el, 'v-else-if', true);
+      // 1. checkbox
+      var branch0 = cloneASTElement(el);
+      // process for on the main node
+      processFor(branch0);
+      addRawAttr(branch0, 'type', 'checkbox');
+      processElement(branch0, options);
+      branch0.processed = true; // prevent it from double-processed
+      branch0.if = "(" + typeBinding + ")==='checkbox'" + ifConditionExtra;
+      addIfCondition(branch0, {
+        exp: branch0.if,
+        block: branch0
+      });
+      // 2. add radio else-if condition
+      var branch1 = cloneASTElement(el);
+      getAndRemoveAttr(branch1, 'v-for', true);
+      addRawAttr(branch1, 'type', 'radio');
+      processElement(branch1, options);
+      addIfCondition(branch0, {
+        exp: "(" + typeBinding + ")==='radio'" + ifConditionExtra,
+        block: branch1
+      });
+      // 3. other
+      var branch2 = cloneASTElement(el);
+      getAndRemoveAttr(branch2, 'v-for', true);
+      addRawAttr(branch2, ':type', typeBinding);
+      processElement(branch2, options);
+      addIfCondition(branch0, {
+        exp: ifCondition,
+        block: branch2
+      });
+
+      if (hasElse) {
+        branch0.else = true;
+      } else if (elseIfCondition) {
+        branch0.elseif = elseIfCondition;
+      }
+
+      return branch0
+    }
+  }
+}
+
+function cloneASTElement (el) {
+  return createASTElement(el.tag, el.attrsList.slice(), el.parent)
+}
+
+function addRawAttr (el, name, value) {
+  el.attrsMap[name] = value;
+  el.attrsList.push({ name: name, value: value });
+}
+
+var model$2 = {
+  preTransformNode: preTransformNode
+};
+
+var modules$1 = [
+  klass$1,
+  style$1,
+  model$2
+];
+
+/*  */
+
+function text (el, dir) {
+  if (dir.value) {
+    addProp(el, 'textContent', ("_s(" + (dir.value) + ")"));
+  }
+}
+
+/*  */
+
+function html (el, dir) {
+  if (dir.value) {
+    addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"));
+  }
+}
+
+var directives$1 = {
+  model: model,
+  text: text,
+  html: html
+};
+
+/*  */
+
+var baseOptions = {
+  expectHTML: true,
+  modules: modules$1,
+  directives: directives$1,
+  isPreTag: isPreTag,
+  isUnaryTag: isUnaryTag,
+  mustUseProp: mustUseProp,
+  canBeLeftOpenTag: canBeLeftOpenTag,
+  isReservedTag: isReservedTag,
+  getTagNamespace: getTagNamespace,
+  staticKeys: genStaticKeys(modules$1)
+};
 
 /*  */
 
@@ -59787,18 +61586,7 @@ function genHandlers (
 ) {
   var res = isNative ? 'nativeOn:{' : 'on:{';
   for (var name in events) {
-    var handler = events[name];
-    // #5330: warn click.right, since right clicks do not actually fire click events.
-    if ("development" !== 'production' &&
-      name === 'click' &&
-      handler && handler.modifiers && handler.modifiers.right
-    ) {
-      warn(
-        "Use \"contextmenu\" instead of \"click.right\" since right clicks " +
-        "do not actually fire \"click\" events."
-      );
-    }
-    res += "\"" + name + "\":" + (genHandler(name, handler)) + ",";
+    res += "\"" + name + "\":" + (genHandler(name, events[name])) + ",";
   }
   return res.slice(0, -1) + '}'
 }
@@ -59833,6 +61621,14 @@ function genHandler (
         if (keyCodes[key]) {
           keys.push(key);
         }
+      } else if (key === 'exact') {
+        var modifiers = (handler.modifiers);
+        genModifierCode += genGuard(
+          ['ctrl', 'shift', 'alt', 'meta']
+            .filter(function (keyModifier) { return !modifiers[keyModifier]; })
+            .map(function (keyModifier) { return ("$event." + keyModifier + "Key"); })
+            .join('||')
+        );
       } else {
         keys.push(key);
       }
@@ -59862,8 +61658,13 @@ function genFilterCode (key) {
   if (keyVal) {
     return ("$event.keyCode!==" + keyVal)
   }
-  var alias = keyCodes[key];
-  return ("_k($event.keyCode," + (JSON.stringify(key)) + (alias ? ',' + JSON.stringify(alias) : '') + ")")
+  var code = keyCodes[key];
+  return (
+    "_k($event.keyCode," +
+    (JSON.stringify(key)) + "," +
+    (JSON.stringify(code)) + "," +
+    "$event.key)"
+  )
 }
 
 /*  */
@@ -59952,10 +61753,10 @@ function genElement (el, state) {
 }
 
 // hoist static sub-trees out
-function genStatic (el, state) {
+function genStatic (el, state, once$$1) {
   el.staticProcessed = true;
   state.staticRenderFns.push(("with(this){return " + (genElement(el, state)) + "}"));
-  return ("_m(" + (state.staticRenderFns.length - 1) + (el.staticInFor ? ',true' : '') + ")")
+  return ("_m(" + (state.staticRenderFns.length - 1) + "," + (el.staticInFor ? 'true' : 'false') + "," + (once$$1 ? 'true' : 'false') + ")")
 }
 
 // v-once
@@ -59979,9 +61780,9 @@ function genOnce (el, state) {
       );
       return genElement(el, state)
     }
-    return ("_o(" + (genElement(el, state)) + "," + (state.onceId++) + (key ? ("," + key) : "") + ")")
+    return ("_o(" + (genElement(el, state)) + "," + (state.onceId++) + "," + key + ")")
   } else {
-    return genStatic(el, state)
+    return genStatic(el, state, true)
   }
 }
 
@@ -60101,7 +61902,8 @@ function genData$2 (el, state) {
     data += (genHandlers(el.nativeEvents, true, state.warn)) + ",";
   }
   // slot target
-  if (el.slotTarget) {
+  // only for non-scoped slots
+  if (el.slotTarget && !el.slotScope) {
     data += "slot:" + (el.slotTarget) + ",";
   }
   // scoped slots
@@ -60159,7 +61961,7 @@ function genDirectives (el, state) {
 function genInlineTemplate (el, state) {
   var ast = el.children[0];
   if ("development" !== 'production' && (
-    el.children.length > 1 || ast.type !== 1
+    el.children.length !== 1 || ast.type !== 1
   )) {
     state.warn('Inline-template components must have exactly one child element.');
   }
@@ -60186,10 +61988,13 @@ function genScopedSlot (
   if (el.for && !el.forProcessed) {
     return genForScopedSlot(key, el, state)
   }
-  return "{key:" + key + ",fn:function(" + (String(el.attrsMap.scope)) + "){" +
+  var fn = "function(" + (String(el.slotScope)) + "){" +
     "return " + (el.tag === 'template'
-      ? genChildren(el, state) || 'void 0'
-      : genElement(el, state)) + "}}"
+      ? el.if
+        ? ((el.if) + "?" + (genChildren(el, state) || 'undefined') + ":undefined")
+        : genChildren(el, state) || 'undefined'
+      : genElement(el, state)) + "}";
+  return ("{key:" + key + ",fn:" + fn + "}")
 }
 
 function genForScopedSlot (
@@ -60418,10 +62223,14 @@ function checkExpression (exp, text, errors) {
     if (keywordMatch) {
       errors.push(
         "avoid using JavaScript keyword as property name: " +
-        "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim())
+        "\"" + (keywordMatch[0]) + "\"\n  Raw expression: " + (text.trim())
       );
     } else {
-      errors.push(("invalid expression: " + (text.trim())));
+      errors.push(
+        "invalid expression: " + (e.message) + " in\n\n" +
+        "    " + exp + "\n\n" +
+        "  Raw expression: " + (text.trim()) + "\n"
+      );
     }
   }
 }
@@ -60445,7 +62254,9 @@ function createCompileToFunctionFn (compile) {
     options,
     vm
   ) {
-    options = options || {};
+    options = extend({}, options);
+    var warn$$1 = options.warn || warn;
+    delete options.warn;
 
     /* istanbul ignore if */
     if (true) {
@@ -60454,7 +62265,7 @@ function createCompileToFunctionFn (compile) {
         new Function('return 1');
       } catch (e) {
         if (e.toString().match(/unsafe-eval|CSP/)) {
-          warn(
+          warn$$1(
             'It seems you are using the standalone build of Vue.js in an ' +
             'environment with Content Security Policy that prohibits unsafe-eval. ' +
             'The template compiler cannot work in this environment. Consider ' +
@@ -60479,7 +62290,7 @@ function createCompileToFunctionFn (compile) {
     // check compilation errors/tips
     if (true) {
       if (compiled.errors && compiled.errors.length) {
-        warn(
+        warn$$1(
           "Error compiling template:\n\n" + template + "\n\n" +
           compiled.errors.map(function (e) { return ("- " + e); }).join('\n') + '\n',
           vm
@@ -60504,7 +62315,7 @@ function createCompileToFunctionFn (compile) {
     /* istanbul ignore if */
     if (true) {
       if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
-        warn(
+        warn$$1(
           "Failed to generate render function:\n\n" +
           fnGenErrors.map(function (ref) {
             var err = ref.err;
@@ -60599,6 +62410,21 @@ var compileToFunctions = ref$1.compileToFunctions;
 
 /*  */
 
+// check whether current browser encodes a char inside attribute values
+var div;
+function getShouldDecode (href) {
+  div = div || document.createElement('div');
+  div.innerHTML = href ? "<a href=\"\n\"/>" : "<div a=\"\n\"/>";
+  return div.innerHTML.indexOf('&#10;') > 0
+}
+
+// #3663: IE encodes newlines inside attribute values while other browsers don't
+var shouldDecodeNewlines = inBrowser ? getShouldDecode(false) : false;
+// #6828: chrome encodes content in a[href]
+var shouldDecodeNewlinesForHref = inBrowser ? getShouldDecode(true) : false;
+
+/*  */
+
 var idToTemplate = cached(function (id) {
   var el = query(id);
   return el && el.innerHTML
@@ -60654,6 +62480,7 @@ Vue$3.prototype.$mount = function (
 
       var ref = compileToFunctions(template, {
         shouldDecodeNewlines: shouldDecodeNewlines,
+        shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
         delimiters: options.delimiters,
         comments: options.comments
       }, this);
@@ -60665,7 +62492,7 @@ Vue$3.prototype.$mount = function (
       /* istanbul ignore if */
       if ("development" !== 'production' && config.performance && mark) {
         mark('compile end');
-        measure(((this._name) + " compile"), 'compile', 'compile end');
+        measure(("vue " + (this._name) + " compile"), 'compile', 'compile end');
       }
     }
   }
@@ -60690,10 +62517,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(5).setImmediate))
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -60721,12 +62548,12 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(17);
-__webpack_require__(18);
-module.exports = __webpack_require__(19);
+__webpack_require__(15);
+__webpack_require__(16);
+module.exports = __webpack_require__(17);
 
 
 /***/ })

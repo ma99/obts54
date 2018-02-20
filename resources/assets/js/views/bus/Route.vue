@@ -141,7 +141,7 @@
 
                     <div class="col-sm-4">
                       <div class="button-group">
-                        <button v-on:click.prevent="saveCities()" class="btn btn-primary" :disabled="disableSaveButton">Save</button>
+                        <button v-on:click.prevent="addRoute()" class="btn btn-primary" :disabled="disableSaveButton">Add</button>
                         <button v-on:click.prevent="reset()" class="btn btn-primary" :disabled="disableResetButton">Reset</button>
                       </div>
                     </div>                      
@@ -179,6 +179,9 @@
                         <th>
                           Fare
                         </th>
+                        <th>
+                          Route ID
+                        </th>
                         <th>Action</th>                                                         
                         <!-- <th>&nbsp;</th> -->
                       </tr>
@@ -195,6 +198,7 @@
                           Non-AC: {{ route.fare.details.non_ac }} </br> 
                           Deluxe: {{ route.fare.details.deluxe }} </br> 
                         </td>                              
+                        <td><strong>{{ route.id }}</strong></td>
                         <td> 
                             <button v-on:click.prevent="editRoute(route)" class="btn btn-primary" :disabled="route.fare == null">
                               <i class="fa fa-edit fa-fw"></i>Edit
@@ -322,6 +326,34 @@
             },
         },
         methods: {
+          addRoute() {
+            var vm = this;
+            //this.loading = true;
+            // console.log('cityId',this.selectedCity.id);
+            // console.log('cityName',this.selectedCity.name);
+            axios.post('/route', {
+                departure_city: this.selectedDepartureCity,
+                arrival_city: this.selectedArrivalCity,
+                distance: this.routeDistance,                
+                fare: this.fare
+            })          
+            .then(function (response) {
+                //console.log(response.data);
+                response.data.error ? vm.error = response.data.error : vm.response = response.data;
+                if (vm.response) {
+                   //console.log(vm.response);
+                   vm.fetchAvailableRoutes();
+                   //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
+                   vm.loading = false;
+                   vm.disableSaveButton = true;
+                   vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
+                   vm.reset();
+                   return;                   
+                }
+                vm.loading = false;
+                vm.disableSaveButton = true;
+            });
+          },            
           cancelEdit() {
             this.fare = '';            
             this.modal = false;
@@ -409,40 +441,46 @@
             var vm = this;            
             this.routeName = route.departure_city + ' to ' + route.arrival_city;
             swal({
-                  title: "Are you sure?",
-                  text: "This Route will be Removed from Route List!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Yes, Remove!",
-                  //closeOnConfirm: false,
-                  //closeOnCancel: false                       
-                },
-                function() {                       
-                        vm.loading = true;
-                        vm.response = '';
-                        vm.showAlert = false;
-                        axios.post('/delete/route', {                            
-                            route_id: route.id, 
-                        })          
-                        .then(function (response) {                                           
-                            // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
-                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+              title: "Are you sure?",
+              text: "This ROUTE will be Removed!",
+              icon: "error",                 
+              dangerMode: true,
+              buttons: {
+                  cancel: "cancel",
+                  confirm: {
+                    text: "Remove It!",
+                    value: true,
+                  },                                
+              },
+            })
+            .then((value) => {
+              if (value) {
 
-                            if (vm.response) {                                
-                                vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
-                                vm.loading = false;
-                                vm.actionStatus = 'Removed';
-                                vm.alertType = 'danger';
-                                vm.showAlert= true;
-                                return;                                                      
-                            }                            
-                            vm.loading = false;
+                vm.loading = true;
+                vm.response = '';
+                vm.showAlert = false;
+                axios.post('/delete/route', {                            
+                    route_id: route.id, 
+                })          
+                .then(function (response) {                                           
+                    // response.data.error ? vm.error = response.data.error : vm.availableRouteList = response.data;
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
-                        });    
-                        //swal("Deleted!", "Staff has been Removed.", "success");                      
-                    
-                });
+                    if (vm.response) {                                
+                        vm.removeRouteFromAvailableRouteList(route.id); // update the array after removing
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert= true;
+                        return;                                                      
+                    }                            
+                    vm.loading = false;
+
+                });   
+                
+              } 
+              
+            }); 
           },
          
           removeRouteFromAvailableRouteList(routeId) {
@@ -452,34 +490,7 @@
             this.availableRouteList.splice(indx, 1);
             //return;
           },
-          saveCities() {
-            var vm = this;
-            //this.loading = true;
-            // console.log('cityId',this.selectedCity.id);
-            // console.log('cityName',this.selectedCity.name);
-            axios.post('/route', {
-                departure_city: this.selectedDepartureCity,
-                arrival_city: this.selectedArrivalCity,
-                distance: this.routeDistance,                
-                fare: this.fare
-            })          
-            .then(function (response) {
-                //console.log(response.data);
-                response.data.error ? vm.error = response.data.error : vm.response = response.data;
-                if (vm.response) {
-                   //console.log(vm.response);
-                   vm.fetchAvailableRoutes();
-                   //vm.SortByCityNameAvailableRouteList(vm.availableRouteList);
-                   vm.loading = false;
-                   vm.disableSaveButton = true;
-                   vm.routeAddedAlert(vm.selectedDepartureCity, vm.selectedArrivalCity);
-                   vm.reset();
-                   return;                   
-                }
-                vm.loading = false;
-                vm.disableSaveButton = true;
-            });
-          },
+          
           reset() {
             this.selectedArrivalCity = '';
             this.selectedDepartureCity = '';
@@ -510,16 +521,21 @@
                 });
           },
           routeAddedAlert(depatureCity, arrivalCity) {
+              
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
-                //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-                html: true,
+                //title: '<span style="color:#A5DC86"> <strong>'+ depatureCity + '&nbsp;' +' to '+ '&nbsp;' + arrivalCity +'</strong></span></br> Route Added successfully!',
+                title: depatureCity + ''  +' to '+ ' ' + arrivalCity,
+                text: 'Route Added successfully!',
+                //text: '<span style="color:#F8BB86"> <strong>'+depatureCity+'</strong></span> Not Available.',
+                //html: true,
                 //type: "info",
-                type: "success",
-                timer: 1800,
-                showConfirmButton: false,
-                allowOutsideClick: true,
+                //type: "success",
+                //content: html,
+                icon: "success",
+                timer: 2000,
+                //showConfirmButton: false,
+                closeOnClickOutside: true,
               });
           },
           updateRouteFare() {

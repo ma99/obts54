@@ -9,6 +9,7 @@ Use App\User;
 Use App\Bus;
 //Use App\City;
 Use App\SeatPlan;
+Use App\Schedule;
 
 class BusController extends Controller
 {
@@ -38,22 +39,9 @@ class BusController extends Controller
 
     public function busIds()
     {
-       $error = ['error' => 'No results found'];
-       //users with roles
-         $busIds = Bus::pluck('id')->all(); //->get();         
-         
-         
-         
-         /*$staffs =json_decode(json_encode($staffs), FALSE); // object <-- works         
-         foreach ($staffs as $staff) {
-            //echo $staff['name']; //accesing as array
-            echo $staff->name;    // accessing as object
-         }*/         
-         
-         return $busIds;
-         //return response()->json($staffs);
-         //return json_decode(json_encode($staffs), FALSE);
-        // return $error;
+        $error = ['error' => 'No results found'];
+        $busIds = Bus::pluck('id')->all(); //->get();         
+        return $busIds;         
     }
 
     /*public function destroy()
@@ -67,6 +55,54 @@ class BusController extends Controller
         }
         return $error;
     }*/
+
+    public function destroy()
+    {
+        $error = ['error' => 'No results found'];
+        $busId = $this->request->input('bus_id');
+
+       
+        $bus = Bus::find($busId);
+        if ($bus) {
+            $this->deleteBusFromSchedule($busId);
+            $this->deleteBusFromSeatPlan($busId);
+            $bus->delete();
+            return 'success';            
+        }
+        return $error;
+    }
+
+    public function deleteBusFromSchedule($busId)
+    {
+        return Schedule::where('bus_id', $busId)->delete();
+    }
+
+    public function deleteBusFromSeatPlan($busId)
+    {
+        return SeatPlan::where('bus_id', $busId)->delete();
+    }
+
+    public function storeBus()
+    {        
+        $this->validate($this->request, [
+            'reg_no' => 'required|max:50',
+            'number_plate' => 'required',
+            'type' => 'required',
+            'total_seats' => 'required',
+        ]);
+        
+        Bus::updateOrCreate(
+            ['reg_no' => $this->request->input('reg_no')],
+            [
+              'number_plate' => $this->request->input('number_plate'),
+              'type' => $this->request->input('type'),
+              'total_seats' => $this->request->input('total_seats'),
+              'description' => $this->request->input('description')
+            ]            
+        );
+
+        return 'Success';
+    }
 
     public function storeSeatPlan()
     {        
@@ -85,9 +121,21 @@ class BusController extends Controller
             ['bus_id' => $busId],
             ['seat_list' => $seatList]
         );
-
+        $this->updateSeatPlanStatusInBus($busId);
         return 'Success';
 
+    }
+
+    public function updateSeatPlanStatusInBus($busId)
+    {
+        $bus = Bus::find($busId);
+        $bus->seat_plan = true;
+        $bus->save();
+        // Bus::updateOrCreate(
+        //     ['id' => $busId],
+        //     ['seat_plan' => true]
+        // );
+        return;
     }
 
     public function showSeat($busId)

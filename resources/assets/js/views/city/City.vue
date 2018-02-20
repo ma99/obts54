@@ -228,40 +228,46 @@
             var vm = this;
             this.cityName = city.name; 
             swal({
-                  title: "Are you sure?",
-                  text: "This city will be Removed from Bus Service available City List!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Yes, Remove!",
-                  //closeOnConfirm: false,
-                  //closeOnCancel: false                       
-                },
-                function() {                       
-                        vm.loading = true;
-                        vm.response = '';
-                        vm.showAlert = false;
-                        axios.post('/delete/city', {                            
-                            city_code: city.code, 
-                        })          
-                        .then(function (response) {                                           
-                            // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
-                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+              title: "Are you sure?",
+              text: "This CITY will be Removed!",
+              icon: "error",                 
+              dangerMode: true,
+              buttons: {
+                  cancel: "cancel",
+                  confirm: {
+                    text: "Remove It!",
+                    value: true,
+                  },                                
+              },
+            })
+            .then((value) => {
+              if (value) {
 
-                            if (vm.response) {                                
-                                vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
-                                vm.loading = false;
-                                vm.actionStatus = 'Removed';
-                                vm.alertType = 'danger';
-                                vm.showAlert= true;
-                                return;                                                      
-                            }                            
-                            vm.loading = false;
+                vm.loading = true;
+                vm.response = '';
+                vm.showAlert = false;
+                axios.post('/delete/city', {                            
+                    city_code: city.code, 
+                })          
+                .then(function (response) {                                           
+                    // response.data.error ? vm.error = response.data.error : vm.busAvailableToCityList = response.data;
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
-                        });    
-                        //swal("Deleted!", "Staff has been Removed.", "success");                      
-                    
-                });
+                    if (vm.response) {                                
+                        vm.removeCityFromBusAvailableToCityList(city.code); // update the array after removing
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert= true;
+                        return;                                                      
+                    }                            
+                    vm.loading = false;
+
+                });       
+                
+              } 
+              
+            }); 
           },
          
           removeCityFromBusAvailableToCityList(cityCode) {
@@ -338,14 +344,15 @@
           cityAddedAlert(cityName) {
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+                //title: '<span style="color:#A5DC86"> <strong>'+cityName+'</strong></span></br> Added successfully!',
+                title: cityName,
+                text: 'Added successfully!', 
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-                html: true,
+                //html: true,
                 //type: "info",
-                type: "success",
-                timer: 1800,
-                showConfirmButton: false,
-                allowOutsideClick: true,
+                icon: "success",
+                timer: 2000,
+                closeOnClickOutside: false,
               });
           }
         }

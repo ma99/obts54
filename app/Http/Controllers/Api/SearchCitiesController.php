@@ -53,7 +53,7 @@ class SearchCitiesController extends Controller
           $cityName = $this->request->input('q');
           // $city = City::where('name', $city_name)->first();
           // $cityId = $city->id;
-          $cityId = $this->findCityIdByCityName($cityName);
+          $cityId = $this->findCityCodeByCityName($cityName);
 
           $stops = Stop::where('city_id', $cityId)->get();
          // dd($cities);
@@ -66,19 +66,21 @@ class SearchCitiesController extends Controller
    {
         $error = ['error' => 'No results found'];
 
-        $cityName = $this->request->input('q');        
-        $cityId = $this->findCityIdByCityName($cityName);
+        $cityName = $this->request->input('q');      
+
+        $cityId = $this->findCityCodeByCityName($cityName);
 
         $stops = Stop::where('city_id', $cityId)->get();
         // dd($cities);
         return $stops->count() ? $stops : $error;
-        //return $cities;
+        //$city = $cityName.'/'.$cityId
+        //return $city;
    }
 
-   public function findCityIdByCityName($cityName)
+   public function findCityCodeByCityName($cityName)
    {
       $city = City::where('name', $cityName)->first();
-      return $city->id;
+      return $city->code;
    }
 
    public function cityList()

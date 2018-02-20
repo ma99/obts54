@@ -308,39 +308,43 @@
             var vm = this;
             this.deletedStopName = stop.name; 
             swal({
-                  title: "Are you sure?",
-                  text: "This Stop will be Removed from available Stop List!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Yes, Remove!",
-                  //closeOnConfirm: false,
-                  //closeOnCancel: false                       
-                },
-                function() {                       
-                        vm.loading = true;
-                        vm.response = '';
-                        vm.showAlert = false;
-                        axios.post('/delete/stop', {                            
-                            stop_id: stop.id, 
-                        })          
-                        .then(function (response) {                           
-                            response.data.error ? vm.error = response.data.error : vm.response = response.data;
+              title: "Are you sure?",
+              text: "This STOP will be Removed!",
+              icon: "error",                 
+              dangerMode: true,
+              buttons: {
+                  cancel: "cancel",
+                  confirm: {
+                    text: "Remove It!",
+                    value: true,
+                  },                                
+              },
+            })
+            .then((value) => {
+              if (value) {
 
-                            if (vm.response) {                                
-                                vm.removeStopFromAvailableStopList(index); // update the array after removing                                
-                                vm.loading = false;
-                                vm.actionStatus = 'Removed';
-                                vm.alertType = 'danger';
-                                vm.showAlert= true;
-                                return;                                                      
-                            }                            
-                            vm.loading = false;
+                vm.loading = true;
+                vm.response = '';
+                vm.showAlert = false;
+                axios.post('/delete/stop', {                            
+                    stop_id: stop.id, 
+                })          
+                .then(function (response) {                           
+                    response.data.error ? vm.error = response.data.error : vm.response = response.data;
 
-                        });    
-                        //swal("Deleted!", "Staff has been Removed.", "success");                      
-                    
-                });
+                    if (vm.response) {                                
+                        vm.removeStopFromAvailableStopList(index); // update the array after removing                                
+                        vm.loading = false;
+                        vm.actionStatus = 'Removed';
+                        vm.alertType = 'danger';
+                        vm.showAlert= true;
+                        return;                                                      
+                    }                            
+                    vm.loading = false;
+
+                });  
+              } 
+            }); 
           },
          
           removeStopFromAvailableStopList(index) {
@@ -368,7 +372,7 @@
                 if (vm.response) {                   
                    vm.fetchAvailableStopList();
                    vm.SortByStopNameAvailableStopList(vm.availableStopList);
-                   vm.stopList = '',
+                   vm.stopList = [],
                    vm.loading = false;
                    vm.disableSaveButton = true;
                    vm.cityAddedAlert(vm.selectedCity.name);
@@ -407,14 +411,14 @@
           cityAddedAlert(cityName) {
               swal({
                 //title: "Sorry! Not Available",
-                title: '<span style="color:#A5DC86"> Bus Stops for <strong>'+cityName+'</strong></span></br> Added successfully!',
+                title: 'Bus Stops for '+cityName+' ',
+                text: "Added successfully!",
                 //text: '<span style="color:#F8BB86"> <strong>'+val+'</strong></span> Not Available.',
-                html: true,
+                //html: true,
                 //type: "info",
-                type: "success",
-                timer: 1800,
-                showConfirmButton: false,
-                allowOutsideClick: true,
+                icon: "success",
+                timer: 2000,
+                closeOnClickOutside: true,
               });
           }
         }

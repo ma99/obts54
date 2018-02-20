@@ -93,6 +93,11 @@
               </router-link> 
           </li>
           <li>
+              <router-link to="/seat-plan">
+                  <i class="fa fa-list-alt" aria-hidden="true"></i>Seat Plan
+              </router-link> 
+          </li> 
+          <li>
               <router-link to="/schedule">
                   <i class="fa fa-list-alt" aria-hidden="true"></i>Schedule
               </router-link> 

@@ -85,6 +85,35 @@ class DashboardController extends Controller
         return $actionStatus;
     }
 
+    public function searchUser()
+    {
+        $error = ['error' => 'No results found'];
+        $search_string = $this->request->input('search_string');
+        $user = User::where('email', $search_string)
+                      ->orWhere('phone', $search_string)->first();  
+
+        if($user) {
+            return $user;
+        } 
+        return $error;
+    }
+
+    public function setRole()
+    {
+        $error = ['error' => 'No results found'];
+        
+        // $role = $this->request->input('role');
+        // $userId = $this->request->input('user_id');
+        Role::updateOrCreate(
+            ['user_id' => $this->request->input('user_id')],
+            ['name' => $this->request->input('role')]
+        );
+        
+        return 'Success';
+
+        
+    }
+
     public function updateStuffRole()
     {
         $user = $this->request->user();

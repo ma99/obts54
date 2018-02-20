@@ -50,7 +50,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'phone' => 'required|digits:5',            
+            'phone' => 'required|digits:13',            
             'password' => 'required|min:6|confirmed',
         ]);
     }

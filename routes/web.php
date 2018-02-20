@@ -39,12 +39,16 @@ Route::get('/forbidden', 'HomeController@forbidden');
 Route::get('/admin/dashboard', 'Admin\DashboardController@index');
 Route::get('/staffs', 'Admin\DashboardController@staffInfo');
 Route::post('/delete', 'Admin\DashboardController@destroy');
+Route::post('/search-user', 'Admin\DashboardController@searchUser');
+Route::post('/set-role', 'Admin\DashboardController@setRole');
 Route::post('/update', 'Admin\DashboardController@updateStuffRole');
 
 //bus
 Route::get('/bus/ids', 'Admin\BusController@busIds');
-Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
 Route::get('/bus/{id}', 'Admin\BusController@showSeat');
+Route::post('/bus', 'Admin\BusController@storeBus');
+Route::post('/bus/seatplan', 'Admin\BusController@storeSeatPlan');
+Route::post('/delete/bus', 'Admin\BusController@destroy');
 
 //route
 Route::post('/route', 'Admin\RouteController@store');
@@ -54,6 +58,12 @@ Route::post('/update/fare', 'Admin\RouteController@updateFare');
 //city
 Route::post('/cities', 'Admin\CityController@store');
 Route::post('/delete/city', 'Admin\CityController@destroy');
+
+//schedule
+Route::post('/schedule', 'Admin\ScheduleController@store');
+Route::post('/edit/schedule', 'Admin\ScheduleController@editSchedule');
+Route::post('/delete/schedule', 'Admin\ScheduleController@destroy');
+
 
 //stop
 Route::post('/stops', 'Admin\StopController@store');

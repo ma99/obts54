@@ -22,18 +22,28 @@ class SearchBusController extends Controller
    } 
    
 
-   public function busInfo()
-   {
-        //$city_name = $request->input('name');
-        //$city_name= 'dhaka';
-        $error = ['error' => 'No results found'];
+   // public function busInfo()
+   // {
+   //      //$city_name = $request->input('name');
+   //      //$city_name= 'dhaka';
+   //      $error = ['error' => 'No results found'];
         
-	      $busId = $this->request->input('q');
-          $busInfo = Bus::where('id', $busId)->first(); 
+	  //     $busId = $this->request->input('q');
+   //        $busInfo = Bus::where('id', $busId)->first(); 
 
-          //$array = json_decode(json_encode($object), true);  // object to array          
+   //        //$array = json_decode(json_encode($object), true);  // object to array          
          
-          return ($busInfo == null) ? $error : $busInfo;
+   //        return ($busInfo == null) ? $error : $busInfo;
+   // }
+
+   public function busList()
+   {
+        
+        $error = ['error' => 'No results found'];
+
+        $buses = Bus::all();
+        return $buses->count() ? $buses : $error;        
+        
    }
 
    public function routeList()
