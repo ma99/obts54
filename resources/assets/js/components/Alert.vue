@@ -1,5 +1,5 @@
 <template>
-    <div v-show="false" 
+    <div v-show="show" class="alert-style"
       v-bind:class="{                        
           'alert-danger': (alertType == 'danger') ? true : false,          
           'alert-info': (alertType == 'info') ? true : false,          
@@ -8,7 +8,7 @@
        }" 
        id="status-alert"
     >
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <button  v-on:click="close()" type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
 
@@ -19,9 +19,7 @@
 
 <script>
     export default {      
-      props: ['show', 'type'],
-      // created() {        
-      // },
+      props: ['show', 'type'],      
       data() {
         return {
           alertType: '',
@@ -35,7 +33,10 @@
           .slideUp(500, function(){
               $("#status-alert").slideUp(500);
           });   
-        }      
+        },
+        close() {
+          this.$emit('update:show', false);          
+        }         
       },
       mounted() {
           console.log('show alert Component mounted.');
@@ -44,9 +45,7 @@
       },
       watch: {
         show() {            
-            this.showAlert();
-            //this.$emit('cancel');
-            this.$emit('update.show', false);
+            this.showAlert();            
         },
         type() {
           this.alertType = this.type;
@@ -54,3 +53,9 @@
       }        
     }
 </script>
+<style lang="scss" scoped>
+  .alert-style {
+    font-size: 1rem;
+    padding: 0.625rem;  
+  }
+</style>
